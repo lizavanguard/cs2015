@@ -1,0 +1,163 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Application\Game\SceneGame.cpp" />
+    <ClCompile Include="src\Application\Game\SceneGameFactory.cpp" />
+    <ClCompile Include="src\Application\Object\AnimationObject\AnimationObject.cpp" />
+    <ClCompile Include="src\Application\Object\AnimationObject\TextureAnimation.cpp" />
+    <ClCompile Include="src\Application\Object\Object .cpp" />
+    <ClCompile Include="src\Application\Object\player.cpp" />
+    <ClCompile Include="src\Application\Object\Tori.cpp" />
+    <ClCompile Include="src\Application\Object\Uriel.cpp" />
+    <ClCompile Include="src\Application\Stage\Stage.cpp" />
+    <ClCompile Include="src\Framework\DebugProc\DebugProc.cpp" />
+    <ClCompile Include="src\Framework\GameManager\GameManager.cpp" />
+    <ClCompile Include="src\Framework\GameWindow\GameDirectX.cpp" />
+    <ClCompile Include="src\Framework\GameWindow\GameWindow.cpp" />
+    <ClCompile Include="src\Framework\Input\Input.cpp" />
+    <ClCompile Include="src\Framework\Input\InputDirect.cpp" />
+    <ClCompile Include="src\Framework\Input\InputKeyboard.cpp" />
+    <ClCompile Include="src\Framework\Input\InputManager.cpp" />
+    <ClCompile Include="src\Framework\Input\InputMouse.cpp" />
+    <ClCompile Include="src\Framework\Input\InputXInput.cpp" />
+    <ClCompile Include="src\Framework\Scene\SceneManager.cpp" />
+    <ClCompile Include="src\Framework\Texture\TextureManager.cpp" />
+    <ClCompile Include="src\Framework\Utility\Mutex.cpp" />
+    <ClCompile Include="src\Framework\Utility\MutexCreator.cpp" />
+    <ClCompile Include="src\main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Application\Game\SceneGame.h" />
+    <ClInclude Include="src\Application\Game\SceneGameFactory.h" />
+    <ClInclude Include="src\Application\Object\AnimationObject\AnimationObject.h" />
+    <ClInclude Include="src\Application\Object\AnimationObject\TextureAnimation.h" />
+    <ClInclude Include="src\Application\Object\Object.h" />
+    <ClInclude Include="src\Application\Object\player.h" />
+    <ClInclude Include="src\Application\Object\Tori.h" />
+    <ClInclude Include="src\Application\Object\Uriel.h" />
+    <ClInclude Include="src\Application\Stage\Stage.h" />
+    <ClInclude Include="src\Framework\DebugProc\DebugProc.h" />
+    <ClInclude Include="src\Framework\DirectX\DeviceHolder.h" />
+    <ClInclude Include="src\Framework\DirectX\DirectXConst.h" />
+    <ClInclude Include="src\Framework\GameManager\GameManager.h" />
+    <ClInclude Include="src\Framework\GameWindow\GameBase.h" />
+    <ClInclude Include="src\Framework\GameWindow\GameDirectX.h" />
+    <ClInclude Include="src\Framework\GameWindow\GameWindow.h" />
+    <ClInclude Include="src\Framework\Input\Input.h" />
+    <ClInclude Include="src\Framework\Input\InputDevice.h" />
+    <ClInclude Include="src\Framework\Input\InputDirect.h" />
+    <ClInclude Include="src\Framework\Input\InputKeyboard.h" />
+    <ClInclude Include="src\Framework\Input\InputManager.h" />
+    <ClInclude Include="src\Framework\Input\InputManagerHolder.h" />
+    <ClInclude Include="src\Framework\Input\InputMouse.h" />
+    <ClInclude Include="src\Framework\Input\InputXInput.h" />
+    <ClInclude Include="src\Framework\Scene\Scene.h" />
+    <ClInclude Include="src\Framework\Scene\SceneFactory.h" />
+    <ClInclude Include="src\Framework\Scene\SceneManager.h" />
+    <ClInclude Include="src\Framework\Texture\TextureManager.h" />
+    <ClInclude Include="src\Framework\Texture\TextureManagerHolder.h" />
+    <ClInclude Include="src\Framework\Utility\Creation.hpp" />
+    <ClInclude Include="src\Framework\Utility\HandyLeakCheck.h" />
+    <ClInclude Include="src\Framework\Utility\Lifetime.hpp" />
+    <ClInclude Include="src\Framework\Utility\Macro.h" />
+    <ClInclude Include="src\Framework\Utility\MathConst.h" />
+    <ClInclude Include="src\Framework\Utility\MathUtility.hpp" />
+    <ClInclude Include="src\Framework\Utility\Mutex.h" />
+    <ClInclude Include="src\Framework\Utility\MutexCreator.h" />
+    <ClInclude Include="src\Framework\Utility\SafeDelete.h" />
+    <ClInclude Include="src\Framework\Utility\SafeRelease.h" />
+    <ClInclude Include="src\Framework\Utility\SingletonHolder.hpp" />
+    <ClInclude Include="src\Framework\Utility\ThreadingModel.hpp" />
+    <ClInclude Include="src\Framework\Utility\Utility.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+    <None Include="src\Framework\Utility\MathUtility.inl" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{DE985E9B-605D-4A7D-898B-464847CB3B9D}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>CaseStudy</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <ForcedIncludeFiles>d3dx9.h</ForcedIncludeFiles>
+      <AdditionalIncludeDirectories>$(SolutionDir)\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <ForcedIncludeFiles>d3dx9.h</ForcedIncludeFiles>
+      <AdditionalIncludeDirectories>$(SolutionDir)\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
