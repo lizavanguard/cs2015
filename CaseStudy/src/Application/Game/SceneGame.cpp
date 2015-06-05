@@ -94,6 +94,7 @@ void SceneGame::Draw(void) {
   p_player->Draw();
   p_uriel_->Draw();
   p_tori_->Draw();
+  //
   if (start_event_)
     p_object_->Draw();
 }
