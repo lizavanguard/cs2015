@@ -15,13 +15,30 @@
 typedef struct STAGE_STR
 {
   int stage_id_;
+  int stage_data_id_;
   int texture_id_;
-  D3DXVECTOR3 pos_;
-//  D3DXVECTOR2 rot_;
-  D3DXVECTOR2 size_;
   bool alive_;
+  D3DXVECTOR3 pos_;
+  D3DXVECTOR2 size_;
 }STG_STR;
 
+typedef struct HIT_CHECK_
+{
+  int up;
+  int bottom;
+  int right;
+  int left;
+  int up_right;
+  int up_left;
+  int bottom_right;
+  int bottom_left;
+}HIT_CHECK;
+enum
+{
+  MAP_TYPE_NONE = 0,
+  MAP_TYPE_NORMAL,
+  MAP_TYPE_GOAL,
+};
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // class definition
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -46,14 +63,12 @@ public:
   D3DXVECTOR3 GetGoalMaptip();
 
   // Hit
-  void CheckMapTip(D3DXVECTOR3* pos,D3DXVECTOR3 size);
+  void CheckMapTip(D3DXVECTOR3* pos, D3DXVECTOR3 size, HIT_CHECK* check);
 
 private:
-  void HitManage(int type
-,D3DXVECTOR3* pos
-,D3DXVECTOR3  size
-,D3DXVECTOR3 mappos
-,D3DXVECTOR2 mapsize);
+  void HitManage(int id,HIT_CHECK* check);
+  void CheckInit(HIT_CHECK* check);
+
   int* texture_id_;
   bool is_alive_;
   int map_width_;
