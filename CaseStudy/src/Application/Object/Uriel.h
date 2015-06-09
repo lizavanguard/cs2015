@@ -44,7 +44,6 @@ typedef enum {
 // class
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 class Stage;
-
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // class definition
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -69,6 +68,9 @@ public:
   // ボーロチャージ(ボーロチャージ出来ればtrueが返る)
   bool BoroChage(void);
 
+  // hit処理(by Ohashi)
+  void HitManage();
+  
 private:
   void UpdateNeutral(void);
   void UpdateCrawl(void);

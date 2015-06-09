@@ -93,7 +93,7 @@ void Uriel::Update(void){
   }
 
   // 重力処理
-  //pos_.y += GRAVITY;
+  pos_.y += GRAVITY;
 
   // TODO
   // 目の前が壁なら反転
@@ -114,14 +114,11 @@ void Uriel::Update(void){
       boro_gage_ = 0;
     }
   }
-
-  // ステージの当たり判定
-  p_stage_->CheckMapTip(&pos_, D3DXVECTOR3(50.f, 50.f, 0.f));
-
   if (statas_ != URIEL_STATAS_NONE){
     // アニメーション更新
     p_texture_animation_->UpdateAnimation();
   }
+  HitManage();
 }
 
 // draw
@@ -300,5 +297,17 @@ void Uriel::UpdateChargeJump(void){
 void Uriel::UpdateGoal(void){
 
 }
-
+//
+//
+//
+void Uriel::HitManage()
+{
+  HIT_CHECK check;
+  D3DXVECTOR3 map(0.f,0.f,0.f);
+  map = p_stage_->CheckMapTip(&pos_, D3DXVECTOR3(size_.x / 4, 1.0f, 0.0f), &check);
+  if (check.center == MAP_TYPE_NORMAL || check.bottom == MAP_TYPE_NORMAL)
+  {
+	  pos_.y = map.y + 25.0f * 1.9f;
+  }
+}
 // EOF
