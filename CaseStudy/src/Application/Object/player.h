@@ -52,7 +52,7 @@ public:
   // update
   void Update(Uriel *uriel_);
   // draw
-  void Draw(void);
+  virtual void PreProccessOfDraw(void);
 
   // add pos
   void AddPos(const D3DXVECTOR3& pos) { pos_ += pos; }

@@ -12,6 +12,8 @@
 #include "Framework/Input/InputManagerHolder.h"
 #include "Framework/Input/InputKeyboard.h"
 
+Object* g_p_object = nullptr;
+
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // class definition
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -37,6 +39,7 @@ SceneGame::SceneGame()
   p_back_->SetSize(D3DXVECTOR2(1280, 720));
   p_back_->SetPos(D3DXVECTOR3(640, 360, 0));
 
+  g_p_object = new Object();
 }
 
 
@@ -89,14 +92,16 @@ void SceneGame::Update(SceneManager* pSceneManager, const float elapsedTime) {
 // Draw
 //------------------------------------------------
 void SceneGame::Draw(void) {
-  p_back_->Draw();
-  p_stage_->Draw();
-  p_player->Draw();
-  p_uriel_->Draw();
-  p_tori_->Draw();
-  //
-  if (start_event_)
-    p_object_->Draw();
+  g_p_object->Draw();
+
+  //p_back_->Draw();
+  //p_stage_->Draw();
+  //p_player->Draw();
+  //p_uriel_->Draw();
+  //p_tori_->Draw();
+
+  //if (start_event_)
+    //p_object_->Draw();
 }
 
 

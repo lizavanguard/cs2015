@@ -41,9 +41,6 @@
     <ClCompile Include="src\Application\Game\SceneGame.cpp">
       <Filter>Application\Game</Filter>
     </ClCompile>
-    <ClCompile Include="src\Application\Object\Object .cpp">
-      <Filter>Application\Object</Filter>
-    </ClCompile>
     <ClCompile Include="src\Framework\Texture\TextureManager.cpp">
       <Filter>Framework\Texture</Filter>
     </ClCompile>
@@ -69,6 +66,10 @@
       <Filter>Application\Stage</Filter>
     </ClCompile>
     <ClCompile Include="src\Application\Object\player.cpp">
+      <Filter>Application\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdafx.cpp" />
+    <ClCompile Include="src\Application\Object\Object.cpp">
       <Filter>Application\Object</Filter>
     </ClCompile>
   </ItemGroup>
@@ -243,9 +244,9 @@
     <ClInclude Include="src\Application\Object\player.h">
       <Filter>Application\Object</Filter>
     </ClInclude>
+    <ClInclude Include="src\stdafx.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram.cd" />
     <None Include="src\Framework\Utility\MathUtility.inl">
       <Filter>Framework\Utilty</Filter>
     </None>

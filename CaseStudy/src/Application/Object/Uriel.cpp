@@ -68,16 +68,7 @@ void Uriel::Update(void){
 }
 
 // draw
-void Uriel::Draw(void) {
-  auto p_device = DeviceHolder::Instance().GetDevice();
-
-  Vertex2D data[] = {
-    { D3DXVECTOR3(pos_.x - size_.x / 2, pos_.y - size_.y / 2, 0.0f), 1.0f, 0xffffffff, D3DXVECTOR2(0.0f, 0.0f) },
-    { D3DXVECTOR3(pos_.x + size_.x / 2, pos_.y - size_.y / 2, 0.0f), 1.0f, 0xffffffff, D3DXVECTOR2(1.0f, 0.0f) },
-    { D3DXVECTOR3(pos_.x - size_.x / 2, pos_.y + size_.y / 2, 0.0f), 1.0f, 0xffffffff, D3DXVECTOR2(0.0f, 1.0f) },
-    { D3DXVECTOR3(pos_.x + size_.x / 2, pos_.y + size_.y / 2, 0.0f), 1.0f, 0xffffffff, D3DXVECTOR2(1.0f, 1.0f) },
-  };
-
+void Uriel::PreProccessOfDraw(void) {
   D3DXVECTOR2 texture_uv_ = p_texture_animation_->GetTextureUV();
   D3DXVECTOR2 texture_uv_offset_ = p_texture_animation_->GetTextureUVOffset();
 
@@ -86,16 +77,8 @@ void Uriel::Draw(void) {
     texture_uv_offset_.x *= -1;
   }
 
-  data[0].tex = D3DXVECTOR2(texture_uv_.x, texture_uv_.y);
-  data[1].tex = D3DXVECTOR2(texture_uv_.x + texture_uv_offset_.x, texture_uv_.y);
-  data[2].tex = D3DXVECTOR2(texture_uv_.x, texture_uv_.y + texture_uv_offset_.y);
-  data[3].tex = D3DXVECTOR2(texture_uv_.x + texture_uv_offset_.x, texture_uv_.y + texture_uv_offset_.y);
-
-  TextureManagerHolder::Instance().GetTextureManager().SetTexture(texture_id_);
-
-  p_device->SetFVF(kVertexFVF2D);
-
-  p_device->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, data, sizeof(Vertex2D));
+  SetStartUV(D3DXVECTOR2(texture_uv_));
+  SetEndUV(D3DXVECTOR2(texture_uv_ + texture_uv_offset_));
 }
 
 //=============================================================================

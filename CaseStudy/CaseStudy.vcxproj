@@ -15,7 +15,7 @@
     <ClCompile Include="src\Application\Game\SceneGameFactory.cpp" />
     <ClCompile Include="src\Application\Object\AnimationObject\AnimationObject.cpp" />
     <ClCompile Include="src\Application\Object\AnimationObject\TextureAnimation.cpp" />
-    <ClCompile Include="src\Application\Object\Object .cpp" />
+    <ClCompile Include="src\Application\Object\Object.cpp" />
     <ClCompile Include="src\Application\Object\player.cpp" />
     <ClCompile Include="src\Application\Object\Tori.cpp" />
     <ClCompile Include="src\Application\Object\Uriel.cpp" />
@@ -35,6 +35,10 @@
     <ClCompile Include="src\Framework\Utility\Mutex.cpp" />
     <ClCompile Include="src\Framework\Utility\MutexCreator.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application\Game\SceneGame.h" />
@@ -79,9 +83,9 @@
     <ClInclude Include="src\Framework\Utility\SingletonHolder.hpp" />
     <ClInclude Include="src\Framework\Utility\ThreadingModel.hpp" />
     <ClInclude Include="src\Framework\Utility\Utility.h" />
+    <ClInclude Include="src\stdafx.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram.cd" />
     <None Include="src\Framework\Utility\MathUtility.inl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -121,14 +125,13 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <ForcedIncludeFiles>d3dx9.h</ForcedIncludeFiles>
+      <ForcedIncludeFiles>stdafx.h</ForcedIncludeFiles>
       <AdditionalIncludeDirectories>$(SolutionDir)\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -139,15 +142,14 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <ForcedIncludeFiles>d3dx9.h</ForcedIncludeFiles>
+      <ForcedIncludeFiles>stdafx.h</ForcedIncludeFiles>
       <AdditionalIncludeDirectories>$(SolutionDir)\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
