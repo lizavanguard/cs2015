@@ -85,6 +85,13 @@ void Uriel::Update(void){
     break;
   }
 
+  // 向きの調整
+  if (move_speed_ < 0){
+    move_direction_ = DIRECTION_RIGHT;
+  } else {
+    move_direction_ = DIRECTION_LEFT;
+  }
+
   // 重力処理
   //pos_.y += GRAVITY;
 
@@ -193,12 +200,6 @@ void Uriel::UpdateCrawl(void){
 
   // TODO
   // 目の前が穴ならジャンプ(1マスだけ)
-
-  if (move_speed_ < 0){
-    move_direction_ = DIRECTION_RIGHT;
-  } else {
-    move_direction_ = DIRECTION_LEFT;
-  }
 }
 
 //=============================================================================
@@ -224,12 +225,6 @@ void Uriel::UpdateRunaway(void){
     }
   } else {
     pos_.x += move_speed_;
-  }
-
-  if (move_speed_ < 0){
-    move_direction_ = DIRECTION_RIGHT;
-  } else {
-    move_direction_ = DIRECTION_LEFT;
   }
 
   // 一定時間暴走したら眠る
@@ -258,11 +253,25 @@ void Uriel::UpdateSleep(void){
 // ハイハイ(チャージ)状態の更新
 //-----------------------------------------------------------------------------
 void Uriel::UpdateChargeCrawl(void){
+  if (dest_position_ != D3DXVECTOR3(0.0f, 0.0f, 0.0f)){
+    if (dest_position_.x - pos_.x > 1.0f){
+      pos_.x += URIEL_MOVE_SPPD;
+      move_speed_ = URIEL_MOVE_SPPD;
+    } else if (dest_position_.x - pos_.x < -1.0f){
+      pos_.x -= URIEL_MOVE_SPPD;
+      move_speed_ = -URIEL_MOVE_SPPD;
+    } else {
+      dest_position_ = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+    }
+  } else {
+    pos_.x += move_speed_;
+  }
+
   // TODO
   // 目の前が穴ならジャンプ(２マスまで飛べる)
 
   // boro_interval_が0以下ならチャージモードを止める
-  if (boro_interval_ < 0){
+  if (boro_interval_ <= 0){
     charge_flag_ = false;
 
     // boro_gage_max_がtrueなら暴走
@@ -270,6 +279,10 @@ void Uriel::UpdateChargeCrawl(void){
       SetAnimaton(ANIMATION_URIEL_RUNAWAY);
       runaway_timer_ = URIEL_RUNAWAY_TIME;
       move_speed_ = URIEL_MOVE_RUNAWAY_SPPD;
+    } else {
+      // 通常に戻る
+      SetAnimaton(ANIMATION_URIEL_CRAWL);
+      move_speed_ = URIEL_MOVE_SPPD;
     }
   }
 }

@@ -34,7 +34,7 @@ static const ANIM_DATA s_AnimaitionData[] = {
   { 5, 4, 4, "data/Texture/tex_anim_00.png" },                    // ウリエルジャンプ
   { 2, 8, 16, "data/Texture/tex_anim_00.png" },                   // ウリエル暴走
   { 30, 8, 16, "data/Texture/tex_anim_00.png" },                  // ウリエル眠り
-  { 5, 8, 16, "data/Texture/tex_anim_00.png" },                   // ウリエルハイハイ(チャージ)
+  { 3, 8, 16, "data/Texture/tex_anim_00.png" },                   // ウリエルハイハイ(チャージ)
   { 5, 4, 4, "data/Texture/tex_anim_00.png" },                    // ウリエルジャンプ(チャージ)
   { 30, 8, 16, "data/Texture/tex_anim_00.png" },                  // ウリエル回転(ゴール時の演出)
   { 0, 0, 0, "data/Texture/tex_anim_00.png" },                    // ガラガラアニメーション無し
