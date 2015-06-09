@@ -22,17 +22,8 @@ AnimationObject::AnimationObject(ANIMATION_EVENT animation_event) : Object() {
   move_direction_ = DIRECTION_RIGHT;
   auto p_device = DeviceHolder::Instance().GetDevice();
 
-  pos_.x = 640;
-  pos_.y = 360;
-
-  // HACK:
-  p_device->CreateVertexBuffer(
-    sizeof(Vertex2D) * 4,
-    D3DUSAGE_WRITEONLY,
-    kVertexFVF2D,
-    D3DPOOL_MANAGED,
-    &p_vertex_buffer_,
-    nullptr);
+  pos_.x = 0;
+  pos_.y = 0;
 
   p_texture_animation_ = new TextureAnimation();
   texture_id_ = p_texture_animation_->SetAnimation(animation_event);
@@ -40,8 +31,6 @@ AnimationObject::AnimationObject(ANIMATION_EVENT animation_event) : Object() {
 
 // dtor
 AnimationObject::~AnimationObject() {
-  p_vertex_buffer_->Release();
-
   delete p_texture_animation_;
 }
 
@@ -50,7 +39,6 @@ AnimationObject *AnimationObject::Create(ANIMATION_EVENT animation_event, const 
   AnimationObject *obj = new AnimationObject(animation_event);
   obj->SetPos(pos);
   obj->SetSize(size);
-
   return obj;
 }
 
