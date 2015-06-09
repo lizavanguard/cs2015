@@ -46,6 +46,7 @@ Object::~Object() {
 void Object::Draw(void) {
   PreProccessOfDraw();
   _Draw();
+  PostProcessOfDraw();
 }
 
 //------------------------------------------------

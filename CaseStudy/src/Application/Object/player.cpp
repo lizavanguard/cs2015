@@ -74,10 +74,10 @@ void Player::Update(Uriel *uriel_){
   auto& pKeyboard = InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard();
   // 移動
   if (pKeyboard.IsPress(DIK_W)) {
-      AddPosY(-PLAYER_MOVE_SPEED);
+      AddPosY(PLAYER_MOVE_SPEED);
   }
   if (pKeyboard.IsPress(DIK_S)) {
-      AddPosY(PLAYER_MOVE_SPEED);
+      AddPosY(-PLAYER_MOVE_SPEED);
   }
   if (pKeyboard.IsPress(DIK_A)) {
       AddPosX(-PLAYER_MOVE_SPEED);
@@ -102,7 +102,7 @@ void Player::Update(Uriel *uriel_){
   }
   // 誘導モードが一定時間以上
 
-  // ギミックON/OFF  
+  // ギミックON/OFF
   //if (pKeyboard.IsTrigger(DIK_K)){
   //    SetAnimation(MODE_GIMMICK);
   //    action_flag_ = true;

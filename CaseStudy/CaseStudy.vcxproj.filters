@@ -72,6 +72,12 @@
     <ClCompile Include="src\Application\Object\Object.cpp">
       <Filter>Application\Object</Filter>
     </ClCompile>
+    <ClCompile Include="src\Application\Object\Ready.cpp">
+      <Filter>Application\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application\Object\BackGround.cpp">
+      <Filter>Application\Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Framework">
@@ -245,6 +251,12 @@
       <Filter>Application\Object</Filter>
     </ClInclude>
     <ClInclude Include="src\stdafx.h" />
+    <ClInclude Include="src\Application\Object\Ready.h">
+      <Filter>Application\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\Object\BackGround.h">
+      <Filter>Application\Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\Framework\Utility\MathUtility.inl">

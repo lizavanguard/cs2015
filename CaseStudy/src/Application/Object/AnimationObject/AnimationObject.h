@@ -37,6 +37,7 @@ public:
 
   // draw
   virtual void PreProccessOfDraw(void);
+  virtual void PostProcessOfDraw(void);
 
   // add pos
   void AddPos(const D3DXVECTOR3& pos);
