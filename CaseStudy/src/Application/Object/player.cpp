@@ -85,6 +85,10 @@ void Player::Update(Uriel *uriel_){
   if (pKeyboard.IsPress(DIK_D)) {
       AddPosX(PLAYER_MOVE_SPEED);
   }
+
+  if (pKeyboard.IsPress(DIK_9)) {
+	  uriel_->SetAnimaton(ANIMATION_URIEL_RUNAWAY);
+  }
   // ƒKƒ‰ƒKƒ‰ƒ‚[ƒhØ‘Ö
   // E—U“±
   if (pKeyboard.IsPress(DIK_RETURN)){

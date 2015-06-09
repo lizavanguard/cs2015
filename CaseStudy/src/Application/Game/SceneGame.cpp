@@ -94,14 +94,14 @@ void SceneGame::Update(SceneManager* pSceneManager, const float elapsedTime) {
 void SceneGame::Draw(void) {
   g_p_object->Draw();
 
-  //p_back_->Draw();
-  //p_stage_->Draw();
-  //p_player->Draw();
-  //p_uriel_->Draw();
-  //p_tori_->Draw();
+  p_back_->Draw();
+  p_stage_->Draw();
+  p_player->Draw();
+  p_uriel_->Draw();
+  p_tori_->Draw();
 
-  //if (start_event_)
-    //p_object_->Draw();
+  if (start_event_)
+    p_object_->Draw();
 }
 
 

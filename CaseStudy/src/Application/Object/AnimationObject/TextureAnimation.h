@@ -30,7 +30,8 @@ typedef enum
   ANIMATION_URIEL_JUMP,                 // ウリエルジャンプ
   ANIMATION_URIEL_RUNAWAY,              // ウリエル暴走
   ANIMATION_URIEL_SLEEP,                // ウリエル眠り
-  ANIMATION_URIEL_CHARGE,               // ウリエルチャージ
+  ANIMATION_URIEL_CHARGECRAWL,          // ウリエルハイハイ(チャージ)
+  ANIMATION_URIEL_CHARGEJUMP,           // ウリエルジャンプ(チャージ)
   ANIMATION_URIEL_GOAL,                 // ウリエル回転(ゴール時の演出)
   ANIMATION_PLAYER_RATTEL_NONE,         // ガラガラアニメーション無し
   ANIMATION_PLAYER_RATTEL_SHAKE,        // ガラガラを振る
