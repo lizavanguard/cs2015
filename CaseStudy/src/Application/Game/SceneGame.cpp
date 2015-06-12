@@ -60,6 +60,7 @@ SceneGame::~SceneGame() {
   delete p_tori_;
   delete p_stage_;
   delete p_back_;
+  delete g_p_object;
 }
 
 
@@ -99,9 +100,9 @@ void SceneGame::Draw(void) {
 
   p_player_->Draw();
 
-  //p_uriel_->Draw();
+  p_uriel_->Draw();
 
-  //p_tori_->Draw();
+  p_tori_->Draw();
 
   if (!p_ready_->IsEnd()) {
     p_ready_->Draw();

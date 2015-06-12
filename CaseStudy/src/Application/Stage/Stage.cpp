@@ -30,12 +30,6 @@ const int mapdata[] =
   0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 };
-enum
-{
-  MAP_TYPE_NONE = 0,
-  MAP_TYPE_NORMAL,
-  MAP_TYPE_GOAL,
-};
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // prttype
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -46,8 +40,7 @@ int Max_id_(int width,int height);
 // ctor
 Stage::Stage()
   : map_width_(0)
-  , map_height_(0)
-  , is_alive_(true) {
+  , map_height_(0){
   auto p_device = DeviceHolder::Instance().GetDevice();
 
   // HACK:
@@ -74,6 +67,7 @@ Stage::Stage()
   stage_ = new STG_STR[map_id_max];
   int id = 0;
   int map_work = 0;
+  int map_id = 0;
   for (int height = 0; height < map_height_; height++)
   {
     for(int width = 0; width < map_width_; width++)
@@ -81,8 +75,8 @@ Stage::Stage()
       if(mapdata[map_work] != 0)
       {
         stage_[id].pos_ = 
-        D3DXVECTOR3(WIDTH_LENGTH + WIDTH_LENGTH * 2 * width,
-                    HEIGHT_LENGTH + HEIGHT_LENGTH * 2 * height,
+        D3DXVECTOR3(-(map_width_ * WIDTH_LENGTH) + WIDTH_LENGTH + WIDTH_LENGTH * 2 * width,
+                    (map_height_ * HEIGHT_LENGTH) - ( HEIGHT_LENGTH + HEIGHT_LENGTH * 2 * height),
                     0.0f);
 
         stage_[id].size_ =
@@ -100,9 +94,11 @@ Stage::Stage()
           stage_[id].stage_id_ = MAP_TYPE_GOAL;
           break;
         }
+        stage_[id].stage_data_id_ = map_id;
         id++;
       }
-    map_work++;
+      map_work++;
+      map_id++;
     }
   }
   delete[] texture_id_;
@@ -110,36 +106,50 @@ Stage::Stage()
 
 // dtor
 Stage::~Stage() {
-  p_vertex_buffer_->Release();
   delete[] stage_;
+  p_vertex_buffer_->Release();
 }
 
 // draw
 void Stage::Draw(void) {
   auto p_device = DeviceHolder::Instance().GetDevice();
-
-  static const float kSize = 40.0f;
+  // turn lighting off
+  p_device->SetRenderState(D3DRS_LIGHTING, FALSE);
 
   for (int id = 0; id < map_id_max; id++)
   {
     if (!stage_[id].alive_ || stage_[id].stage_id_ == MAP_TYPE_GOAL) continue;
-    Vertex2D data[] ={
-      {D3DXVECTOR3(stage_[id].pos_.x - stage_[id].size_.x, stage_[id].pos_.y - stage_[id].size_.y, 0.0f), 1.0f, 0xffffffff, D3DXVECTOR2(0.0f, 0.0f)},
-      {D3DXVECTOR3(stage_[id].pos_.x + stage_[id].size_.x, stage_[id].pos_.y - stage_[id].size_.y, 0.0f), 1.0f, 0xffffffff, D3DXVECTOR2(1.0f, 0.0f)},
-      {D3DXVECTOR3(stage_[id].pos_.x - stage_[id].size_.x, stage_[id].pos_.y + stage_[id].size_.y, 0.0f), 1.0f, 0xffffffff, D3DXVECTOR2(0.0f, 1.0f)},
-      {D3DXVECTOR3(stage_[id].pos_.x + stage_[id].size_.x, stage_[id].pos_.y + stage_[id].size_.y, 0.0f), 1.0f, 0xffffffff, D3DXVECTOR2(1.0f, 1.0f)},
+    Vertex3D data[] ={
+      {D3DXVECTOR3( -stage_[id].size_.x, +stage_[id].size_.y, 0.0f), 0xffffffff, D3DXVECTOR2(0.0f, 0.0f)},
+      {D3DXVECTOR3( +stage_[id].size_.x, +stage_[id].size_.y, 0.0f), 0xffffffff, D3DXVECTOR2(1.0f, 0.0f)},
+      {D3DXVECTOR3( -stage_[id].size_.x, -stage_[id].size_.y, 0.0f), 0xffffffff, D3DXVECTOR2(0.0f, 1.0f)},
+      {D3DXVECTOR3( +stage_[id].size_.x, -stage_[id].size_.y, 0.0f), 0xffffffff, D3DXVECTOR2(1.0f, 1.0f)},
     };
+    // WVP
+    D3DXMATRIX mtx_world;
+    D3DXMatrixTranslation(&mtx_world
+                         , stage_[id].pos_.x
+                         , stage_[id].pos_.y
+                         , stage_[id].pos_.z);
+    p_device->SetTransform(D3DTS_WORLD, &mtx_world);
 
+    D3DXMATRIX mtx_view;
+    D3DXMatrixLookAtLH(&mtx_view, &D3DXVECTOR3(0, 0, -1), &D3DXVECTOR3(0, 0, 0), &D3DXVECTOR3(0, 1, 0));
+    p_device->SetTransform(D3DTS_VIEW, &mtx_view);
+
+    D3DXMATRIX mtx_projection;
+    D3DXMatrixOrthoLH(&mtx_projection, 1280.0f, 720.0f, 0.0f, 10.0f);
+    p_device->SetTransform(D3DTS_PROJECTION, &mtx_projection);
     //p_device->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
     TextureManagerHolder::Instance().GetTextureManager().SetTexture(stage_[id].texture_id_);
 
-    p_device->SetFVF(kVertexFVF2D);
+    p_device->SetFVF(kVertexFVF3D);
 
-    p_device->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, data, sizeof(Vertex2D));
+    p_device->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, data, sizeof(Vertex3D));
   }
 }
 
-void Stage::CheckMapTip(D3DXVECTOR3* pos, D3DXVECTOR3 size)
+D3DXVECTOR3 Stage::CheckMapTip(D3DXVECTOR3* pos, D3DXVECTOR3 size, HIT_CHECK* check)
 {
   // AABBîªíËÇÃÇΩÇﬂÇÃ4ì_íäèo
   D3DXVECTOR3 point[4] = 
@@ -151,7 +161,7 @@ void Stage::CheckMapTip(D3DXVECTOR3* pos, D3DXVECTOR3 size)
   };
   for (int id = 0; id < map_id_max; id++)
   {
-    if (!stage_[id].alive_) continue;
+    if (!stage_[id].alive_ ||stage_[id].stage_id_ == MAP_TYPE_GOAL) continue;
     D3DXVECTOR3 map_point[4] = 
     {
       D3DXVECTOR3(stage_[id].pos_.x - stage_[id].size_.x, stage_[id].pos_.y - stage_[id].size_.y, 0.0f),
@@ -163,35 +173,67 @@ void Stage::CheckMapTip(D3DXVECTOR3* pos, D3DXVECTOR3 size)
     {
       if (point[3].y >= map_point[0].y && point[0].y <= map_point[3].y)
       {
-        HitManage(stage_[id].stage_id_,pos,size,stage_[id].pos_,stage_[id].size_);
+        HitManage(stage_[id].stage_data_id_,check);
+        //HitManage(id,check);
+        //HitManage(stage_[id].stage_id_,pos,size,stage_[id].pos_,stage_[id].size_);
+		return stage_[id].pos_;
       } // if
     }// if
     if (point[3].x >= map_point[2].x && point[3].x <= map_point[2].x)
     {
       if (point[2].y >= map_point[1].y && point[2].y <= map_point[1].y)
       {
-        HitManage(stage_[id].stage_id_,pos,size,stage_[id].pos_,stage_[id].size_);
+        HitManage(stage_[id].stage_data_id_,check);
+		return stage_[id].pos_;
       }// if
     }// if
   }// for
+  return D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 }
-void Stage::HitManage(int type
-,D3DXVECTOR3* pos
-,D3DXVECTOR3  size
-,D3DXVECTOR3 mappos
-,D3DXVECTOR2 mapsize)
+void Stage::HitManage(int id, HIT_CHECK* check)
 {
-  switch (type)
+  CheckInit(check);
+  check->center = mapdata[id];
+  int data_id_ = map_width_ * map_height_;
+  //
+  if(id + map_height_ < data_id_)
   {
-  case MAP_TYPE_NORMAL:
-    if(pos->y + size.y < mappos.y + mapsize.y)
-    {
-      pos->y = mappos.y - mapsize.y * 1.8f;
-    }
-    break;
-  case MAP_TYPE_GOAL:
-    // ÉSÅ[ÉãÇÃèàóùì¸ÇÍÇƒÇÀÅÙ
-    break;
+    check->bottom = mapdata[id + map_height_];
+  }
+  //
+  if(id - map_height_ > 0)
+  {
+    check->up = mapdata[id - map_height_];
+  }
+  //
+  if(id % map_width_ + 1 != map_width_ )
+  {
+    check->right = mapdata[id + 1];
+  }
+  //
+  if(id % map_width_ - 1 != -1 )
+  {
+    check->right = mapdata[id - 1];
+  }
+  //
+  if (check->bottom != -1 && check->right != -1)
+  {
+    check->bottom_right = mapdata[id + map_height_ + 1];
+  }
+  //
+  if (check->bottom != -1 && check->left != -1)
+  {
+    check->bottom_right = mapdata[id + map_height_ - 1];
+  }
+  //
+  if (check->up != -1 && check->right != -1)
+  {
+    check->bottom_right = mapdata[id - map_height_ + 1];
+  }
+  //
+  if (check->up != -1 && check->left != -1)
+  {
+    check->bottom_right = mapdata[id - map_height_ - 1];
   }
 }
 D3DXVECTOR3 Stage::GetGoalMaptip()
@@ -204,6 +246,18 @@ D3DXVECTOR3 Stage::GetGoalMaptip()
     }
   }// for
   return D3DXVECTOR3(0.0f,0.0f,0.0f);
+}
+//
+void Stage::CheckInit(HIT_CHECK* check)
+{
+  check->up = -1;
+  check->bottom = -1;
+  check->right = -1;
+  check->left = -1;
+  check->up_right = -1;
+  check->up_left = -1;
+  check->bottom_right = -1;
+  check->bottom_left = -1;
 }
 // Max_id
 int Max_id_(int width, int height)

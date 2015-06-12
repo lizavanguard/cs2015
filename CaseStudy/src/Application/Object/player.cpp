@@ -77,6 +77,11 @@ void Player::Update(Uriel *uriel_){
     AddPosX(kPlayerMoveSpeed);
   }
 
+  if (pKeyboard.IsPress(DIK_9)) {
+	  //uriel_->SetAnimaton(ANIMATION_URIEL_RUNAWAY);
+	  uriel_->BoroChage();
+  }
+
   // ƒKƒ‰ƒKƒ‰ƒ‚[ƒhØ‘Ö
   // —U“±
   if (pKeyboard.IsPress(DIK_RETURN)){
