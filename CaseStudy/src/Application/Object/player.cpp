@@ -18,24 +18,14 @@
 #include "player.h"
 
 //******************************************************************************
-// マクロ定義
+// 定数定義
 //******************************************************************************
+namespace {
 
+const float kPlayerMoveSpeed = 10.0f;
+const int kBoroRecastTime = 60;
 
-//******************************************************************************
-// プロトタイプ宣言
-//******************************************************************************
-
-
-//******************************************************************************
-// メンバ変数:
-//******************************************************************************
-
-
-//******************************************************************************
-// グローバル変数:
-//******************************************************************************
-
+}
 
 //******************************************************************************
 // 関数定義
@@ -47,9 +37,11 @@
 // Author  :  SHOHEI MATSUMOTO
 // 更新日  :  2015/05/22
 //==============================================================================
-Player::Player(ANIMATION_EVENT animation_event) :AnimationObject(animation_event){
-  player_mode_ = MODE_NONE;
-  action_flag_ = false;
+Player::Player(ANIMATION_EVENT animation_event)
+  : AnimationObject(animation_event)
+  , player_mode_(MODE_NORMAL)
+  , count_(0)
+  , is_eat_(false) {
 }
 
 //==============================================================================
@@ -60,7 +52,6 @@ Player::Player(ANIMATION_EVENT animation_event) :AnimationObject(animation_event
 // 更新日  :  2015/05/22
 //==============================================================================
 Player::~Player(void){
-
 }
 
 //==============================================================================
@@ -74,42 +65,78 @@ void Player::Update(Uriel *uriel_){
   auto& pKeyboard = InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard();
   // 移動
   if (pKeyboard.IsPress(DIK_W)) {
-      AddPosY(PLAYER_MOVE_SPEED);
+    AddPosY(kPlayerMoveSpeed);
   }
   if (pKeyboard.IsPress(DIK_S)) {
-      AddPosY(-PLAYER_MOVE_SPEED);
+    AddPosY(-kPlayerMoveSpeed);
   }
   if (pKeyboard.IsPress(DIK_A)) {
-      AddPosX(-PLAYER_MOVE_SPEED);
+    AddPosX(-kPlayerMoveSpeed);
   }
   if (pKeyboard.IsPress(DIK_D)) {
-      AddPosX(PLAYER_MOVE_SPEED);
+    AddPosX(kPlayerMoveSpeed);
   }
+
   // ガラガラモード切替
-  // ・誘導
+  // 誘導
   if (pKeyboard.IsPress(DIK_RETURN)){
-      SetAnimation(MODE_GUIDE);
-      action_flag_ = true;
+    ChangeAnimation(MODE_GUIDE);
   }
   else if (pKeyboard.IsRelease(DIK_RETURN)){
-      SetAnimation(MODE_NONE);
-      action_flag_ = false;
+    ChangeAnimation(MODE_NORMAL);
   }
-
-
-  if (player_mode_ == MODE_GUIDE){
-      uriel_->SetDestPos(GetPos());
-  }
-  // 誘導モードが一定時間以上
-
   // ギミックON/OFF
-  //if (pKeyboard.IsTrigger(DIK_K)){
-  //    SetAnimation(MODE_GIMMICK);
-  //    action_flag_ = true;
-  //}
+  if (pKeyboard.IsTrigger(DIK_G)){
+    ChangeAnimation(MODE_GIMMICK);
+  }
+
+  // ボーロ
+  if (pKeyboard.IsTrigger(DIK_B)) {
+    // ウリエルちゃんが食べていなかったら ボーロが出る
+    if (!is_eat_) {
+      ChangeAnimation(MODE_BORO);
+    }
+  }
+  else if (pKeyboard.IsRelease(DIK_B)) {
+    ChangeAnimation(MODE_NORMAL);
+  }
+
+
+  // モード
+  switch (player_mode_) {
+    case MODE_NORMAL: // 通常時
+      break;
+    case MODE_BORO: // ボーロ
+      // if ウリエルちゃんがボーロ食べたら 通常状態に戻す
+      // if (uriel->BoroCharge()) {
+      if (pKeyboard.IsTrigger(DIK_N)) {
+         ChangeAnimation(MODE_NORMAL);
+         is_eat_ = true;
+       }
+
+      break;
+    case MODE_GUIDE: // 誘導
+      // ウリエルちゃん移動
+      uriel_->SetDestPos(GetPos());
+      // 誘導モードが一定時間以上
+      break;
+    case MODE_GIMMICK: // ギミック
+      // if ギミックのアニメーションが終了したら 通常モードに戻す
+      if (count_ >= /*p_texture_animation_->GetAnimationTime()*/ 60) {
+        ChangeAnimation(MODE_NORMAL);
+      }
+      break;
+  }
 
   // アニメーション更新
   p_texture_animation_->UpdateAnimation();
+
+  // ボーロが食べられていたら 一定時間経過で元に戻す
+  if (is_eat_ && count_ > kBoroRecastTime) {
+    is_eat_ = false;
+  }
+
+  ++count_;
 }
 
 //==============================================================================
@@ -139,21 +166,28 @@ void Player::PreProccessOfDraw(void){
 // Author  :  SHOHEI MATSUMOTO
 // 更新日  :  2015/05/29
 //==============================================================================
-void Player::SetAnimation(PLAYER_MODE mode_){
-    if (player_mode_ != mode_){
-        switch (mode_){
-        case MODE_NONE:
-            texture_id_ = p_texture_animation_->SetAnimation(ANIMATION_PLAYER_RATTEL_NONE);
-            break;
-        case MODE_GUIDE:
-            texture_id_ = p_texture_animation_->SetAnimation(ANIMATION_PLAYER_RATTEL_SHAKE);
-            break;
-        case MODE_GIMMICK:
-            texture_id_ = p_texture_animation_->SetAnimation(ANIMATION_PLAYER_RATTEL_SHAKE);
-            break;
-        }
-        player_mode_ = mode_;
+void Player::ChangeAnimation(PLAYER_MODE mode){
+  // if プレイヤーモードが一致していなかったら アニメーションの変更
+  if (player_mode_ != mode){
+    switch (mode){
+    case MODE_NORMAL:
+      texture_id_ = p_texture_animation_->SetAnimation(ANIMATION_PLAYER_RATTEL_NONE);
+      break;
+    case MODE_BORO:
+      texture_id_ = p_texture_animation_->SetAnimation(ANIMATION_PLAYER_RATTEL_BORO);
+      break;
+    case MODE_GUIDE:
+      texture_id_ = p_texture_animation_->SetAnimation(ANIMATION_PLAYER_RATTEL_SHAKE);
+      break;
+    case MODE_GIMMICK:
+      texture_id_ = p_texture_animation_->SetAnimation(ANIMATION_PLAYER_RATTEL_GIMMICK);
+      break;
     }
+    player_mode_ = mode;
+  }
+
+  // カウントリセット
+  count_ = 0;
 }
 
 // EOF

@@ -33,6 +33,8 @@ typedef enum
   ANIMATION_URIEL_CHARGE,               // ウリエルチャージ
   ANIMATION_URIEL_GOAL,                 // ウリエル回転(ゴール時の演出)
   ANIMATION_PLAYER_RATTEL_NONE,         // ガラガラアニメーション無し
+  ANIMATION_PLAYER_RATTEL_BORO,         // ボーロアニメーション
+  ANIMATION_PLAYER_RATTEL_GIMMICK,      // ギミック
   ANIMATION_PLAYER_RATTEL_SHAKE,        // ガラガラを振る
   ANIMATION_TORI_NONE,                  // 鳥アニメーション無し
   ANIMATION_TORI_HAPPY,                 // 鳥喜ぶ
