@@ -60,7 +60,6 @@ SceneGame::~SceneGame() {
   delete p_tori_;
   delete p_stage_;
   delete p_back_;
-  delete g_p_object;
 }
 
 
