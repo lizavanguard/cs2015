@@ -195,11 +195,9 @@ void Uriel::UpdateNeutral(void){
 //-----------------------------------------------------------------------------
 void Uriel::UpdateCrawl(void){
   if (dest_position_ != D3DXVECTOR3(0.0f, 0.0f, 0.0f)){
-    if (dest_position_.x - pos_.x > 1.0f){
-      pos_.x += URIEL_MOVE_SPPD;
+    if (dest_position_.x - pos_.x > URIEL_MOVE_SPPD){
       move_.x = URIEL_MOVE_SPPD;
-    } else if (dest_position_.x - pos_.x < -1.0f){
-      pos_.x -= URIEL_MOVE_SPPD;
+    } else if (dest_position_.x - pos_.x < -URIEL_MOVE_SPPD){
       move_.x = -URIEL_MOVE_SPPD;
     } else {
       dest_position_ = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -248,20 +246,6 @@ void Uriel::UpdateJump(void){
 // –\‘–ó‘Ô‚ÌXV
 //-----------------------------------------------------------------------------
 void Uriel::UpdateRunaway(void){
-  if (dest_position_ != D3DXVECTOR3(0.0f, 0.0f, 0.0f)){
-    if (dest_position_.x - pos_.x > 1.0f){
-      pos_.x += URIEL_MOVE_RUNAWAY_SPPD;
-      move_.x = URIEL_MOVE_RUNAWAY_SPPD;
-    } else if (dest_position_.x - pos_.x < -1.0f){
-      pos_.x -= URIEL_MOVE_RUNAWAY_SPPD;
-      move_.x = -URIEL_MOVE_RUNAWAY_SPPD;
-    } else {
-      dest_position_ = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-    }
-  } else {
-    pos_.x += move_.x;
-  }
-
   // ˆê’èŽžŠÔ–\‘–‚µ‚½‚ç–°‚é
   if (runaway_timer_ >= URIEL_RUNAWAY_TIME){
     SetAnimaton(ANIMATION_URIEL_SLEEP);
@@ -289,11 +273,9 @@ void Uriel::UpdateSleep(void){
 //-----------------------------------------------------------------------------
 void Uriel::UpdateChargeCrawl(void){
   if (dest_position_ != D3DXVECTOR3(0.0f, 0.0f, 0.0f)){
-    if (dest_position_.x - pos_.x > 1.0f){
-      pos_.x += URIEL_MOVE_SPPD;
+    if (dest_position_.x - pos_.x > URIEL_MOVE_SPPD){
       move_.x = URIEL_MOVE_SPPD;
-    } else if (dest_position_.x - pos_.x < -1.0f){
-      pos_.x -= URIEL_MOVE_SPPD;
+    } else if (dest_position_.x - pos_.x < -URIEL_MOVE_SPPD){
       move_.x = -URIEL_MOVE_SPPD;
     } else {
       dest_position_ = D3DXVECTOR3(0.0f, 0.0f, 0.0f);

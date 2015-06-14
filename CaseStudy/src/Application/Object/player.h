@@ -17,31 +17,18 @@
 #include "AnimationObject/AnimationObject.h"
 
 //******************************************************************************
-// ライブラリのリンク
-//******************************************************************************
-
-
-//******************************************************************************
-// マクロ定義
-//******************************************************************************
-#define PLAYER_MOVE_SPEED (10.0f)
-
-//******************************************************************************
-// 構造体定義
-//******************************************************************************
-
-
-//******************************************************************************
 // クラス定義
 //******************************************************************************
-class Player : public AnimationObject{
-  public:
+class Player : public AnimationObject {
+public:
   // modemanaged
   typedef enum {
-    MODE_NONE = 0,
-    MODE_GUIDE ,
-    MODE_GIMMICK
-  }PLAYER_MODE;
+    MODE_NORMAL = 0,
+    MODE_BORO,
+    MODE_GUIDE,
+    MODE_GIMMICK,
+    kModeMax
+  } PLAYER_MODE;
 
   // funciton ==================================
 public:
@@ -51,61 +38,24 @@ public:
   virtual ~Player();
   // update
   void Update(Uriel *uriel_);
+
   // draw
   virtual void PreProccessOfDraw(void);
 
-  // add pos
-  void AddPos(const D3DXVECTOR3& pos) { pos_ += pos; }
-  void AddPosX(float x) { pos_.x += x; }
-  void AddPosY(float y) { pos_.y += y; }
-  void AddPosZ(float z) { pos_.z += z; }
-
-  // add rot
-  void AddRot(const D3DXVECTOR2& rot) { rot_ += rot; }
-
-  // add size
-  void AddSize(const D3DXVECTOR2& size) { size_ += size; }
+  // アニメーションの変更
+  void ChangeAnimation(PLAYER_MODE mode);
 
   // get
-  D3DXVECTOR3 GetPos(void) const { return pos_; }
-  D3DXVECTOR2 GetRot(void) const { return rot_; }
-  D3DXVECTOR2 GetSize(void) const { return size_; }
-  bool IsAlive(void) const { return is_alive_; }
-  //actionGetter(ガラガラが何もしていなければfalse)
-  bool GetAction(void){ return action_flag_; }
-  PLAYER_MODE GetPlayerMode(void){ return player_mode_; }
-
-  // set
-  void SetPos(const D3DXVECTOR3& pos) { pos_ = pos; }
-  void SetRot(const D3DXVECTOR2& rot) { rot_ = rot; }
-  void SetSize(const D3DXVECTOR2& size) { size_ = size; }
-  void SetTextureID(int texture_id) { texture_id_ = texture_id; }
-  void OnAlive(void) { is_alive_ = true; }
-  void OffAlive(void) { is_alive_ = false; }
-  void SetAnimation(PLAYER_MODE mode_);
-
-protected:
-
-private:
-
+  bool IsActing(void) const { return player_mode_ != MODE_NORMAL; }
+  PLAYER_MODE GetPlayerMode(void) const { return player_mode_; }
 
   // parameter =================================
-public:
-
-protected:
-
 private:
-  // ガラガラモード
+  // プレイヤーのモード
   PLAYER_MODE player_mode_;
-  // アクションフラグ
-  bool action_flag_;
+  int count_;
+  bool is_eat_;
 };
-
-//******************************************************************************
-// プロトタイプ宣言
-//******************************************************************************
-
-
 
 #endif
 // EOF

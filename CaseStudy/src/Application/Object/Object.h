@@ -18,15 +18,13 @@ public:
   // dtor
   virtual ~Object();
 
-  // Update
-  virtual void Update(void) {}
-
   // Draw
   // ‚±‚ê‚ğŒp³‚µ‚¿‚áƒ_ƒ
   void Draw(void);
-  // Draw‚Ì‘Oˆ—
+  // Draw‚Ì‘OŒãˆ—
   // ‚±‚Á‚¿‚ğŒp³‚·‚é‚Ì
-  virtual void PreProccessOfDraw(void) {}
+  virtual void PreProccessOfDraw(void) = 0;
+  virtual void PostProcessOfDraw(void) = 0;
 
   // add pos
   void AddPos(const D3DXVECTOR3& pos) { pos_ += pos; }

@@ -13,12 +13,16 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 #include "Framework/Scene/Scene.h"
 
-// HACK:
-#include "Application/Object/Object.h"
-#include "Application/Object/Uriel.h"
-#include "Application/Object/Tori.h"
-#include "Application/Stage/Stage.h"
-#include "Application/Object/player.h"
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// class declaration
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+class BackGround;
+class Uriel;
+class Player;
+class Ready;
+class Stage;
+class Tori;
+
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // class definition
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -41,14 +45,12 @@ public:
 private:
   // property
   bool is_end_;
-  Object* p_object_;
-  Object* p_back_;
-  Uriel* p_uriel_;
-  Tori* p_tori_;
+  BackGround* p_back_;
+  Player* p_player_;
+  Ready* p_ready_;
   Stage* p_stage_;
-  Player* p_player;
-  bool start_event_;
-  int start_event_timer_;
+  Tori* p_tori_;
+  Uriel* p_uriel_;
 };
 
 

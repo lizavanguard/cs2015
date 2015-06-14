@@ -60,6 +60,10 @@ void AnimationObject::PreProccessOfDraw(void) {
   SetEndUV(D3DXVECTOR2(texture_uv_ + texture_uv_offset_));
 }
 
+// draw
+void AnimationObject::PostProcessOfDraw(void) {
+}
+
 //=============================================================================
 // アニメーションの設定
 //-----------------------------------------------------------------------------
