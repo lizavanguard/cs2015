@@ -39,6 +39,7 @@ enum
   MAP_TYPE_NONE = 0,
   MAP_TYPE_NORMAL,
   MAP_TYPE_GOAL,
+  MAP_TYPE_START,
 };
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // class definition
@@ -56,6 +57,9 @@ public:
 
 
   D3DXVECTOR3 GetGoalMaptip();
+
+  // スタート座標の取得(by Momoi)
+  D3DXVECTOR3 GetStartMaptip();
 
   // Hit
   D3DXVECTOR3 CheckMapTip(D3DXVECTOR3* pos, D3DXVECTOR3 size, HIT_CHECK* check);

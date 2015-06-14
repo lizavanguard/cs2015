@@ -16,7 +16,7 @@
 // マクロ定義
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 #define URIEL_MOVE_SPPD (5.0f)                               // ウリエルの移動速度(通常)
-#define URIEL_MOVE_RUNAWAY_SPPD (URIEL_MOVE_SPPD * 2.0f)     // ウリエルの移動速度(暴走)
+#define URIEL_MOVE_RUNAWAY_SPPD (URIEL_MOVE_SPPD * 1.5f)     // ウリエルの移動速度(暴走)
 #define URIEL_RUNAWAY_TIME (120)                             // ウリエルの暴走時間
 #define URIEL_INDUCIBLE (400.0f)                             // ウリエルの誘導可能距離
 #define URIEL_SLEEP_TIME (180)                               // ウリエルの眠り時間
@@ -28,17 +28,17 @@
 // 列挙体定義
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 typedef enum {
-  URIEL_STATAS_NONE = -1,                                 // 状態エラー
-  URIEL_STATAS_NEUTRAL = ANIMATION_URIEL_NEUTRAL,         // ニュートラル状態
-  URIEL_STATAS_CRAWL = ANIMATION_URIEL_CRAWL,             // ハイハイ状態
-  URIEL_STATAS_JUMP = ANIMATION_URIEL_JUMP,               // ジャンプ状態
-  URIEL_STATAS_RUNAWAY = ANIMATION_URIEL_RUNAWAY,         // 暴走状態
-  URIEL_STATAS_SLEEP = ANIMATION_URIEL_SLEEP,             // 眠り状態
-  URIEL_STATAS_CHARGECRAWL = ANIMATION_URIEL_CHARGECRAWL, // ハイハイ(チャージ)状態
-  URIEL_STATAS_CHARGEJUMP = ANIMATION_URIEL_CHARGEJUMP,   // ジャンプ(チャージ)状態
-  URIEL_STATAS_GOAL = ANIMATION_URIEL_GOAL,               // ゴール時の演出
-  URIEL_STATAS_MAX
-}URIEL_STATAS;
+  URIEL_STATUS_NONE = -1,                                 // 状態エラー
+  URIEL_STATUS_NEUTRAL = ANIMATION_URIEL_NEUTRAL,         // ニュートラル状態
+  URIEL_STATUS_CRAWL = ANIMATION_URIEL_CRAWL,             // ハイハイ状態
+  URIEL_STATUS_JUMP = ANIMATION_URIEL_JUMP,               // ジャンプ状態
+  URIEL_STATUS_RUNAWAY = ANIMATION_URIEL_RUNAWAY,         // 暴走状態
+  URIEL_STATUS_SLEEP = ANIMATION_URIEL_SLEEP,             // 眠り状態
+  URIEL_STATUS_CHARGECRAWL = ANIMATION_URIEL_CHARGECRAWL, // ハイハイ(チャージ)状態
+  URIEL_STATUS_CHARGEJUMP = ANIMATION_URIEL_CHARGEJUMP,   // ジャンプ(チャージ)状態
+  URIEL_STATUS_GOAL = ANIMATION_URIEL_GOAL,               // ゴール時の演出
+  URIEL_STATUS_MAX
+}URIEL_STATUS;
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // class
@@ -68,9 +68,6 @@ public:
   // ボーロチャージ(ボーロチャージ出来ればtrueが返る)
   bool BoroChage(void);
 
-  // hit処理(by Ohashi)
-  void HitManage();
-  
 private:
   void UpdateNeutral(void);
   void UpdateCrawl(void);
@@ -80,10 +77,15 @@ private:
   void UpdateChargeCrawl(void);
   void UpdateChargeJump(void);
   void UpdateGoal(void);
+  bool JumpCheck(void);
+  bool CrawlJumpCheck(void);
+  bool ChargeCrawlJumpCheck(void);
+  // ジャンプするたかさと距離とかかる重力を渡せば移動量が返ってくる(2D用)
+  D3DXVECTOR2 JumpAngleSeek(float top, float length, float gravity);
   D3DXVECTOR3 dest_position_;
-  float move_speed_;
+  D3DXVECTOR3 move_;
   Stage* p_stage_;
-  int statas_;
+  int status_;
   float boro_gage_;
   bool boro_gage_max_;
   int boro_interval_;
