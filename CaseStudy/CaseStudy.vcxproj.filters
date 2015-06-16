@@ -96,7 +96,10 @@
     <ClCompile Include="src\Application\Object\Object2D\Bar.cpp">
       <Filter>Application\Object\Object2D</Filter>
     </ClCompile>
-    <ClCompile Include="src\Application\Utility\ValueUpdater.cpp">
+    <ClCompile Include="src\Application\Utility\ValuePassiveUpdater.cpp">
+      <Filter>Application\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application\Utility\ValueActiveUpdater.cpp">
       <Filter>Application\Utility</Filter>
     </ClCompile>
   </ItemGroup>
@@ -305,7 +308,10 @@
     <ClInclude Include="src\Application\Object\Object2D\Bar.h">
       <Filter>Application\Object\Object2D</Filter>
     </ClInclude>
-    <ClInclude Include="src\Application\Utility\ValueUpdater.h">
+    <ClInclude Include="src\Application\Utility\ValuePassiveUpdater.h">
+      <Filter>Application\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\Utility\ValueActiveUpdater.h">
       <Filter>Application\Utility</Filter>
     </ClInclude>
   </ItemGroup>

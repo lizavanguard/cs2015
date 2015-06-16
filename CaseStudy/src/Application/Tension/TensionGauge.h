@@ -11,6 +11,8 @@
 class Bar;
 class Board;
 class Frame;
+class ValueActiveUpdater;
+class ValuePassiveUpdater;
 
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 // class definition
@@ -38,8 +40,12 @@ public:
   void CoolDown(void);
 
 private:
+  void _UpdateTension(void);
+
   float tension_;
   Bar* p_bar_;
   Board* p_board_;
   Frame* p_frame_;
+  ValueActiveUpdater* p_value_active_updater_;
+  ValuePassiveUpdater* p_value_passive_updater_;
 };

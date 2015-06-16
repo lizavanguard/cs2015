@@ -91,6 +91,15 @@ void SceneGame::Update(SceneManager* p_scene_manager, const float elapsed_time) 
   // プレイヤー更新
   p_player_->Update(p_uriel_);
 
+  p_tension_gauge_->Update();
+
+  if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_1)) {
+    p_tension_gauge_->IncreaseTension();
+  }
+  if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_2)) {
+    p_tension_gauge_->CoolDown();
+  }
+
   //p_tension_gauge_->Update();
 }
 
