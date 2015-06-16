@@ -83,6 +83,8 @@ private:
   // ジャンプするたかさと距離とかかる重力を渡せば移動量が返ってくる(2D用)
   D3DXVECTOR2 JumpAngleSeek(float top, float length, float gravity);
   D3DXVECTOR3 dest_position_;
+  D3DXVECTOR3 old_position_;
+  D3DXVECTOR3 jump_before_pos_;
   D3DXVECTOR3 move_;
   Stage* p_stage_;
   int status_;
