@@ -16,7 +16,7 @@
 // class implementation
 //==============================================================================
 // ctor
-Tori::Tori(ANIMATION_EVENT animation_event, Uriel *uriel) : AnimationObject(animation_event) {
+Tori::Tori(ANIMATION_EVENT animation_event, Uriel *uriel, const D3DXVECTOR3& pos) : AnimationObject(animation_event) {
   move_speed_ = FLY_TO_TOP_SPEED;
   motion_timer_ = 0;
   static const float kSize = 100.0f;
@@ -25,6 +25,7 @@ Tori::Tori(ANIMATION_EVENT animation_event, Uriel *uriel) : AnimationObject(anim
   hit_flag_ = false;
   happy_flag_ = false;
   animation_time_ = 0;
+  pos_ = pos;
 }
 
 // dtor
@@ -61,10 +62,7 @@ void Tori::Update(void){
       motion_timer_ = -animation_time_;
     }
   } else {
-    D3DXVECTOR3 uriel_pos_ = p_uriel_->GetPos();
-    D3DXVECTOR2 uriel_size_ = p_uriel_->GetSize();
-    if ((pos_.x + size_.x / 2) > (uriel_pos_.x - uriel_size_.x / 2) &&
-      (pos_.x - size_.x / 2) < (uriel_pos_.x - uriel_size_.x / 2)){
+    if (p_uriel_->CheckHit(pos_, size_)) {
       hit_flag_ = true;
       p_texture_animation_->SetAnimation(ANIMATION_TORI_HAPPY);
     }
@@ -72,7 +70,7 @@ void Tori::Update(void){
 }
 
 // draw
-void Tori::PreProccessOfDraw(void) {
+void Tori::_PreProcessOfDraw(void) {
   D3DXVECTOR2 texture_uv_ = p_texture_animation_->GetTextureUV();
   D3DXVECTOR2 texture_uv_offset_ = p_texture_animation_->GetTextureUVOffset();
 
@@ -81,8 +79,8 @@ void Tori::PreProccessOfDraw(void) {
     texture_uv_offset_.x *= -1;
   }
 
-  SetStartUV(D3DXVECTOR2(texture_uv_));
-  SetEndUV(D3DXVECTOR2(texture_uv_ + texture_uv_offset_));
+  start_uv_ = texture_uv_;
+  end_uv_ = texture_uv_ + texture_uv_offset_;
 }
 
 //=============================================================================

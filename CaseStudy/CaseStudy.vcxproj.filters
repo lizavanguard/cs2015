@@ -78,6 +78,24 @@
     <ClCompile Include="src\Application\Object\BackGround.cpp">
       <Filter>Application\Object</Filter>
     </ClCompile>
+    <ClCompile Include="src\Application\Object\ObjectBase.cpp">
+      <Filter>Application\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application\Object\Object2D\Object2D.cpp">
+      <Filter>Application\Object\Object2D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application\Object\Object2D\Frame.cpp">
+      <Filter>Application\Object\Object2D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application\Tension\TensionGauge.cpp">
+      <Filter>Application\Tension</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application\Object\Object2D\Board.cpp">
+      <Filter>Application\Object\Object2D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application\Object\Object2D\Bar.cpp">
+      <Filter>Application\Object\Object2D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Framework">
@@ -121,6 +139,15 @@
     </Filter>
     <Filter Include="Application\Stage">
       <UniqueIdentifier>{5134f3d7-42b3-41b2-b021-4dcc49abff76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Object\Object2D">
+      <UniqueIdentifier>{38779537-8e3c-4d87-b938-555cded9b21b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Tension">
+      <UniqueIdentifier>{fddd6bb5-c4ce-4087-8eea-f15e377c6305}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Utility">
+      <UniqueIdentifier>{68fbf595-3a3c-4487-8014-a2415cd9a7c0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -256,6 +283,24 @@
     </ClInclude>
     <ClInclude Include="src\Application\Object\BackGround.h">
       <Filter>Application\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\Object\ObjectBase.h">
+      <Filter>Application\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\Object\Object2D\Object2D.h">
+      <Filter>Application\Object\Object2D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\Object\Object2D\Frame.h">
+      <Filter>Application\Object\Object2D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\Tension\TensionGauge.h">
+      <Filter>Application\Tension</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\Object\Object2D\Board.h">
+      <Filter>Application\Object\Object2D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\Object\Object2D\Bar.h">
+      <Filter>Application\Object\Object2D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

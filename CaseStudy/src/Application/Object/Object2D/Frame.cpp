@@ -1,23 +1,20 @@
 //==============================================================================
 //
-// BackGround
+// Frame
 // Author: Shimizu Shoji
 //
 //==============================================================================
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 // include
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
-#include "BackGround.h"
+#include "Frame.h"
 
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 // const
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 namespace {
 
-const char* kTexturename = "data/Texture/îwåi.jpg";
-
-const D3DXVECTOR3 kPos = {0, -360, 0};
-const D3DXVECTOR2 kSize = {1280, 720};
+const char* kTextureFilename = "data/Texture/frame_score.png";
 
 }
 
@@ -27,24 +24,17 @@ const D3DXVECTOR2 kSize = {1280, 720};
 //------------------------------------------------
 // ctor
 //------------------------------------------------
-BackGround::BackGround() {
-  SetTexture(kTexturename);
-  size_ = kSize;
-  pos_ = kPos;
+Frame::Frame(const D3DXVECTOR3& pos, const D3DXVECTOR2& size) {
+  SetTexture(kTextureFilename);
+  pos_ = pos;
+  size_ = size;
 }
 
 //------------------------------------------------
-// dtor
+// DrawÇÃëOå„èàóù
 //------------------------------------------------
-BackGround::~BackGround() {
+void Frame::_PreProcessOfDraw(void) {
 }
 
-
-//------------------------------------------------
-// Draw
-//------------------------------------------------
-void BackGround::_PreProcessOfDraw(void) {
-}
-
-void BackGround::_PostProcessOfDraw(void) {
+void Frame::_PostProcessOfDraw(void) {
 }

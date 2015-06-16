@@ -122,7 +122,7 @@ void Uriel::Update(void){
 }
 
 // draw
-void Uriel::PreProccessOfDraw(void) {
+void Uriel::_PreProcessOfDraw(void) {
   D3DXVECTOR2 texture_uv_ = p_texture_animation_->GetTextureUV();
   D3DXVECTOR2 texture_uv_offset_ = p_texture_animation_->GetTextureUVOffset();
 
@@ -131,8 +131,8 @@ void Uriel::PreProccessOfDraw(void) {
     texture_uv_offset_.x *= -1;
   }
 
-  SetStartUV(D3DXVECTOR2(texture_uv_));
-  SetEndUV(D3DXVECTOR2(texture_uv_ + texture_uv_offset_));
+  start_uv_ = texture_uv_;
+  end_uv_ = texture_uv_ + texture_uv_offset_;
 }
 
 //=============================================================================
@@ -310,4 +310,14 @@ void Uriel::HitManage()
 	  pos_.y = map.y + 25.0f * 1.9f;
   }
 }
+
+//=============================================================================
+// オブジェクトとのHit判定(by Shimizu)
+//-----------------------------------------------------------------------------
+bool Uriel::CheckHit(const D3DXVECTOR3& pos, const D3DXVECTOR2& size) {
+  // if 矩形？？同士の判定っぽい TODO: 関数化
+  return (pos.x + size.x / 2) > (pos_.x - size_.x / 2) &&
+         (pos.x - size.x / 2) < (pos_.x - size_.x / 2);
+}
+
 // EOF

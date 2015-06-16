@@ -1,6 +1,6 @@
 //==============================================================================
 //
-// BackGround
+// Bar
 // Author: Shimizu Shoji
 //
 //==============================================================================
@@ -8,20 +8,28 @@
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 // include
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
-#include "Application/Object/Object.h"
+#include "Application/Object/Object2D/Object2D.h"
 
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 // class definition
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
-class BackGround : public Object {
+class Bar : public Object2D {
 public:
   // ctor
-  BackGround();
+  Bar(const D3DXVECTOR3& pos, const D3DXVECTOR2& size, float max_value);
 
-  // dtor
-  ~BackGround();
+  // update value
+  void UpdateValue(float value);
 
-  // Draw
-  virtual void _PreProcessOfDraw(void);
-  virtual void _PostProcessOfDraw(void);
+protected:
+  // DrawÇÃëOå„èàóù
+  void _PreProcessOfDraw(void) override;
+  void _PostProcessOfDraw(void) override;
+
+private:
+  void _UpdatePosAndSize(float rate);
+
+  float max_value_;
+  D3DXVECTOR3 original_position_;
+  D3DXVECTOR2 original_size_;
 };

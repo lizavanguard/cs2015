@@ -59,7 +59,7 @@ public:
   void Update(void);
 
   // draw
-  virtual void PreProccessOfDraw(void);
+  virtual void _PreProcessOfDraw(void);
 
   // set
   void SetAnimaton(ANIMATION_EVENT animation_event);
@@ -70,7 +70,10 @@ public:
 
   // hit処理(by Ohashi)
   void HitManage();
-  
+
+  // オブジェクトとのHit判定(by Shimizu)
+  bool CheckHit(const D3DXVECTOR3& pos, const D3DXVECTOR2& size);
+
 private:
   void UpdateNeutral(void);
   void UpdateCrawl(void);

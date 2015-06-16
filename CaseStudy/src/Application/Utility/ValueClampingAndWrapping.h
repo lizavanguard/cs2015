@@ -1,6 +1,6 @@
 //==============================================================================
 //
-// BackGround
+// ValueClampingAndWrapping
 // Author: Shimizu Shoji
 //
 //==============================================================================
@@ -8,20 +8,25 @@
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 // include
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
-#include "Application/Object/Object.h"
 
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 // class definition
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
-class BackGround : public Object {
+class ValueClampingAndWrapping {
 public:
   // ctor
-  BackGround();
+  ValueClampingAndWrapping(float min, float max);
 
   // dtor
-  ~BackGround();
+  ~ValueClampingAndWrapping();
 
-  // Draw
-  virtual void _PreProcessOfDraw(void);
-  virtual void _PostProcessOfDraw(void);
+  // Clamp
+  float Clamp(float value);
+
+  // Wrap
+  float Wrap(float value);
+
+private:
+  float min_;
+  float max_;
 };

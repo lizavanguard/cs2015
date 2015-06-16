@@ -18,6 +18,7 @@
 #include "Application/Object/Ready.h"
 #include "Application/Object/Tori.h"
 #include "Application/Object/Uriel.h"
+#include "Application/Tension/TensionGauge.h"
 #include "Application/Stage/Stage.h"
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -32,6 +33,7 @@ SceneGame::SceneGame()
     , p_player_(nullptr)
     , p_ready_(nullptr)
     , p_stage_(nullptr)
+    , p_tension_gauge_(nullptr)
     , p_tori_(nullptr)
     , p_uriel_(nullptr)
 {
@@ -41,8 +43,9 @@ SceneGame::SceneGame()
 
   p_uriel_ = new Uriel(ANIMATION_URIEL_CRAWL, p_stage_);
 
-  p_tori_ = new Tori(ANIMATION_TORI_NONE, p_uriel_);
-  p_tori_->SetPos(p_stage_->GetGoalMaptip());
+  p_tension_gauge_ = new TensionGauge();
+
+  p_tori_ = new Tori(ANIMATION_TORI_NONE, p_uriel_, p_stage_->GetGoalMaptip());
 
   p_ready_ = new Ready();
 
@@ -54,12 +57,13 @@ SceneGame::SceneGame()
 // dtor
 //------------------------------------------------
 SceneGame::~SceneGame() {
-  delete p_player_;
-  delete p_ready_;
-  delete p_uriel_;
-  delete p_tori_;
-  delete p_stage_;
-  delete p_back_;
+  SafeDelete(p_player_);
+  SafeDelete(p_ready_);
+  SafeDelete(p_uriel_);
+  SafeDelete(p_tori_);
+  SafeDelete(p_tension_gauge_);
+  SafeDelete(p_stage_);
+  SafeDelete(p_back_);
 }
 
 
@@ -86,6 +90,8 @@ void SceneGame::Update(SceneManager* p_scene_manager, const float elapsed_time) 
 
   // プレイヤー更新
   p_player_->Update(p_uriel_);
+
+  //p_tension_gauge_->Update();
 }
 
 
@@ -103,6 +109,8 @@ void SceneGame::Draw(void) {
 
   p_tori_->Draw();
 
+  p_tension_gauge_->Draw();
+   
   if (!p_ready_->IsEnd()) {
     p_ready_->Draw();
   }

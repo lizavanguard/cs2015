@@ -22,6 +22,7 @@ class Player;
 class Ready;
 class Stage;
 class Tori;
+class TensionGauge;
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // class definition
@@ -49,6 +50,7 @@ private:
   Player* p_player_;
   Ready* p_ready_;
   Stage* p_stage_;
+  TensionGauge* p_tension_gauge_;
   Tori* p_tori_;
   Uriel* p_uriel_;
 };

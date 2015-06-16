@@ -43,6 +43,7 @@ int TextureManager::LoadTexture(const char* const filename) {
   // ‹ó‚«IDŒŸõ
   // ‚à‚µ ID ‚ªŒŸõ‚Å‚«‚È‚©‚Á‚½‚ç -1 ‚ğ•Ô‚·
   const int id = _SearchNotUsedID();
+  assert(id != -1 && "ID‚ª‘«‚è‚Ü‚¹‚ñ");
   if (id == -1) {
     return -1;
   }

@@ -1,6 +1,6 @@
 //==============================================================================
 //
-// BackGround
+// Object2D
 // Author: Shimizu Shoji
 //
 //==============================================================================
@@ -8,20 +8,24 @@
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 // include
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
-#include "Application/Object/Object.h"
+#include "Application/Object/ObjectBase.h"
 
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 // class definition
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
-class BackGround : public Object {
+class Object2D : public ObjectBase {
 public:
   // ctor
-  BackGround();
+  Object2D();
 
   // dtor
-  ~BackGround();
+  ~Object2D();
 
-  // Draw
-  virtual void _PreProcessOfDraw(void);
-  virtual void _PostProcessOfDraw(void);
+protected:
+  // ï`âÊÇÃëOå„èàóù
+  virtual void _PreProcessOfDraw(void) = 0;
+  virtual void _PostProcessOfDraw(void) = 0;
+
+private:
+  void _Draw(void);
 };

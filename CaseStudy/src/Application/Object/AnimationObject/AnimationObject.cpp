@@ -37,13 +37,13 @@ AnimationObject::~AnimationObject() {
 // create
 AnimationObject *AnimationObject::Create(ANIMATION_EVENT animation_event, const D3DXVECTOR3& pos, const D3DXVECTOR2& size){
   AnimationObject *obj = new AnimationObject(animation_event);
-  obj->SetPos(pos);
-  obj->SetSize(size);
+  obj->pos_ = pos;
+  obj->size_ = size;
   return obj;
 }
 
 // draw
-void AnimationObject::PreProccessOfDraw(void) {
+void AnimationObject::_PreProcessOfDraw(void) {
   auto p_device = DeviceHolder::Instance().GetDevice();
 
   p_texture_animation_ -> UpdateAnimation();
@@ -56,12 +56,12 @@ void AnimationObject::PreProccessOfDraw(void) {
     texture_uv_offset_.x *= -1;
   }
 
-  SetStartUV(D3DXVECTOR2(texture_uv_));
-  SetEndUV(D3DXVECTOR2(texture_uv_ + texture_uv_offset_));
+  start_uv_ = texture_uv_;
+  end_uv_ = texture_uv_ + texture_uv_offset_;
 }
 
 // draw
-void AnimationObject::PostProcessOfDraw(void) {
+void AnimationObject::_PostProcessOfDraw(void) {
 }
 
 //=============================================================================

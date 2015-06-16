@@ -1,27 +1,45 @@
 //==============================================================================
 //
-// BackGround
+// TensionGauge
 // Author: Shimizu Shoji
 //
 //==============================================================================
 #pragma once
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
-// include
+// class declaration
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
-#include "Application/Object/Object.h"
+class Bar;
+class Board;
+class Frame;
 
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 // class definition
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
-class BackGround : public Object {
+class TensionGauge {
 public:
   // ctor
-  BackGround();
+  TensionGauge();
 
   // dtor
-  ~BackGround();
+  ~TensionGauge();
 
-  // Draw
-  virtual void _PreProcessOfDraw(void);
-  virtual void _PostProcessOfDraw(void);
+  // Update
+  void Update(void);
+
+  /// Draw
+  void Draw(void);
+
+  // tension up
+  // テンションが最大になったときに真を返す
+  bool IncreaseTension(void);
+
+  // Cool down Tension
+  // テンションを最低まで下げる
+  void CoolDown(void);
+
+private:
+  float tension_;
+  Bar* p_bar_;
+  Board* p_board_;
+  Frame* p_frame_;
 };

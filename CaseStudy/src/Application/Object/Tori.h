@@ -24,7 +24,7 @@
 class Tori : public AnimationObject {
 public:
   // ctor
-  Tori(ANIMATION_EVENT animation_event, Uriel *uriel);
+  Tori(ANIMATION_EVENT animation_event, Uriel *uriel, const D3DXVECTOR3& pos);
 
   // dtor
   virtual ~Tori();
@@ -33,7 +33,7 @@ public:
   void Update(void);
 
   // draw
-  virtual void PreProccessOfDraw(void);
+  virtual void _PreProcessOfDraw(void);
 
   // add pos
   void AddPos(const D3DXVECTOR3& pos);

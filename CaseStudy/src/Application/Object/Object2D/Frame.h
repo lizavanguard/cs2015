@@ -1,6 +1,6 @@
 //==============================================================================
 //
-// BackGround
+// Frame
 // Author: Shimizu Shoji
 //
 //==============================================================================
@@ -8,20 +8,18 @@
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 // include
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
-#include "Application/Object/Object.h"
+#include "Application/Object/Object2D/Object2D.h"
 
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 // class definition
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
-class BackGround : public Object {
+class Frame : public Object2D {
 public:
   // ctor
-  BackGround();
+  Frame(const D3DXVECTOR3& pos, const D3DXVECTOR2& size);
 
-  // dtor
-  ~BackGround();
-
-  // Draw
-  virtual void _PreProcessOfDraw(void);
-  virtual void _PostProcessOfDraw(void);
+protected:
+  // DrawÇÃëOå„èàóù
+  void _PreProcessOfDraw(void) override;
+  void _PostProcessOfDraw(void) override;
 };

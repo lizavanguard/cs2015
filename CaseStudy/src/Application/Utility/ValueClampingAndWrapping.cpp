@@ -1,25 +1,13 @@
 //==============================================================================
 //
-// BackGround
+// ValueClampingAndWrapping
 // Author: Shimizu Shoji
 //
 //==============================================================================
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 // include
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
-#include "BackGround.h"
-
-//--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
-// const
-//--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
-namespace {
-
-const char* kTexturename = "data/Texture/îwåi.jpg";
-
-const D3DXVECTOR3 kPos = {0, -360, 0};
-const D3DXVECTOR2 kSize = {1280, 720};
-
-}
+#include "ValueClampingAndWrapping.h"
 
 //==============================================================================
 // class implementation
@@ -27,24 +15,11 @@ const D3DXVECTOR2 kSize = {1280, 720};
 //------------------------------------------------
 // ctor
 //------------------------------------------------
-BackGround::BackGround() {
-  SetTexture(kTexturename);
-  size_ = kSize;
-  pos_ = kPos;
+ValueClampingAndWrapping::ValueClampingAndWrapping() {
 }
 
 //------------------------------------------------
 // dtor
 //------------------------------------------------
-BackGround::~BackGround() {
-}
-
-
-//------------------------------------------------
-// Draw
-//------------------------------------------------
-void BackGround::_PreProcessOfDraw(void) {
-}
-
-void BackGround::_PostProcessOfDraw(void) {
+ValueClampingAndWrapping::~ValueClampingAndWrapping() {
 }

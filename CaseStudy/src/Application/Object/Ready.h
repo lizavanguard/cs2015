@@ -25,8 +25,8 @@ public:
   virtual void Update(void);
 
   // Draw
-  virtual void PreProccessOfDraw(void);
-  virtual void PostProcessOfDraw(void);
+  virtual void _PreProcessOfDraw(void);
+  virtual void _PostProcessOfDraw(void);
 
   // get
   bool IsEnd(void) const { return is_end_; }

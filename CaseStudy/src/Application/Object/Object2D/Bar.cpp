@@ -1,30 +1,22 @@
 //==============================================================================
 //
-// Ready
+// Bar
 // Author: Shimizu Shoji
 //
 //==============================================================================
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 // include
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
-#include "Ready.h"
-#include "Framework/Texture/TextureManagerHolder.h"
+#include "Bar.h"
 
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 // const
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 namespace {
 
-const char* kTexturenames[] = {
-  "data/Texture/ready_sign_00.png",
-  "data/Texture/ready_sign_01.png",
-};
+const char* kTextureFilename = "data/Texture/square.png";
 
-const int kReadyDisplayTime = 30;
-const int kEndTime = 60;
-
-const D3DXVECTOR3 kInitialPos = {0, -180, 0};
-const D3DXVECTOR2 kSize = {640, 360};
+const DWORD kBarColor = 0xffff0000;
 
 }
 
@@ -34,43 +26,42 @@ const D3DXVECTOR2 kSize = {640, 360};
 //------------------------------------------------
 // ctor
 //------------------------------------------------
-Ready::Ready() : count_(0), is_end_(false) {
-  for (int texture_count = 0; texture_count < kTextureAnimationMax; ++texture_count) {
-    texture_ids_[texture_count] =
-      TextureManagerHolder::Instance().GetTextureManager().LoadTexture(kTexturenames[texture_count]);
-  }
-  texture_id_ = texture_ids_[0];
+Bar::Bar(const D3DXVECTOR3& pos, const D3DXVECTOR2& size, const float max_value)
+    : max_value_(max_value)
+    , original_position_(D3DXVECTOR3(pos.x - size.x * 0.5f, pos.y - size.y * 0.5f, pos.z))
+    , original_size_(size) {
+  assert(max_value > 0.0f);
+  SetTexture(kTextureFilename);
+  pos_ = pos;
+  size_ = size;
+  color_ = kBarColor;
 
-  size_ = kSize;
-  pos_ = kInitialPos;
+  _UpdatePosAndSize(0.5f);
 }
 
 //------------------------------------------------
-// dtor
+// update value
 //------------------------------------------------
-Ready::~Ready() {
+void Bar::UpdateValue(const float value) {
+  assert(value <= max_value_);
+  const float rate = value / max_value_;
+  _UpdatePosAndSize(rate);
 }
 
 //------------------------------------------------
-// Update
+// Drawの前後処理
 //------------------------------------------------
-void Ready::Update(void) {
-  ++count_;
+void Bar::_PreProcessOfDraw(void) {
+}
 
-  // if レディ表示時間が終了したら ゴー表示
-  if (count_ == kReadyDisplayTime) {
-    texture_id_ = texture_ids_[1];
-  }
-  else if (count_ > kEndTime) {
-    is_end_ = true;
-  }
+void Bar::_PostProcessOfDraw(void) {
 }
 
 //------------------------------------------------
-// Draw
+// Update pos and size
 //------------------------------------------------
-void Ready::_PreProcessOfDraw(void) {
-}
-
-void Ready::_PostProcessOfDraw(void) {
+void Bar::_UpdatePosAndSize(const float rate) {
+  assert(0.0f <= rate && rate <= 1.0f);
+  size_.x = original_size_.x * rate;
+  pos_.x = original_position_.x + size_.x * 0.5f;
 }
