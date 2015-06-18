@@ -24,15 +24,15 @@ typedef struct STAGE_STR
 
 typedef struct HIT_CHECK_
 {
-  int center;
-  int up;
-  int bottom;
-  int right;
-  int left;
-  int up_right;
-  int up_left;
-  int bottom_right;
-  int bottom_left;
+  char center;
+  char up;
+  char bottom;
+  char right;
+  char left;
+  char up_right;
+  char up_left;
+  char bottom_right;
+  char bottom_left;
 }HIT_CHECK;
 enum
 {
