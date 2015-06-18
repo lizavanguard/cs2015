@@ -40,6 +40,13 @@ typedef enum {
   URIEL_STATUS_MAX
 }URIEL_STATUS;
 
+typedef enum{
+  BLOCK_DATA_ERROR = -1,
+  BLOCK_DATA_STAIRS,
+  BLOCK_DATA_JUMP,
+  BLOCK_DATA_MAX
+}BLOCK_DATA;
+
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // class
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -77,15 +84,16 @@ private:
   void UpdateChargeCrawl(void);
   void UpdateChargeJump(void);
   void UpdateGoal(void);
-  bool JumpCheck(void);
-  bool CrawlJumpCheck(void);
-  bool ChargeCrawlJumpCheck(void);
-  // ジャンプするたかさと距離とかかる重力を渡せば移動量が返ってくる(2D用)
-  D3DXVECTOR2 JumpAngleSeek(float top, float length, float gravity);
+  BLOCK_DATA LoadCheck(void);
+  BLOCK_DATA CrawlLoadCheck(void);
+  BLOCK_DATA ChargeCrawlLoadCheck(void);
+  // ジャンプする高さと距離と目的地の高低差とかかる重力を渡せば移動量が返ってくる(2D用)
+  D3DXVECTOR2 JumpAngleSeek(float top, float length, float difference_in_height, float gravity);
   D3DXVECTOR3 dest_position_;
   D3DXVECTOR3 old_position_;
   D3DXVECTOR3 jump_before_pos_;
   D3DXVECTOR3 move_;
+  D3DXVECTOR3 map_;
   Stage* p_stage_;
   int status_;
   float boro_gage_;

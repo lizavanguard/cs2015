@@ -17,18 +17,18 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // define
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-#define WIDTH_LENGTH  (50.0f)
-#define HEIGHT_LENGTH  (50.0f)
+#define WIDTH_LENGTH	(50.0f)
+#define HEIGHT_LENGTH	(50.0f)
 const int mapdata[] = 
 {
-  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2,
-  1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1,
-  1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1,
+  4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
+  4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
+  4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
+  4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
+  4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
+  4, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 4,
+  4, 1, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1, 4,
+  4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4,
 };
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // prttype
@@ -50,7 +50,7 @@ Stage::Stage()
     kVertexFVF2D,
     D3DPOOL_MANAGED,
     &p_vertex_buffer_,
-  nullptr);
+	nullptr);
   texture_id_ = new int[2];
   texture_id_[0] = TextureManagerHolder::Instance().GetTextureManager().LoadTexture("data/Texture/block00.png");
   texture_id_[1] = TextureManagerHolder::Instance().GetTextureManager().LoadTexture("data/Texture/map001.jpg");
@@ -97,6 +97,10 @@ Stage::Stage()
           stage_[id].texture_id_ = texture_id_[MAP_TYPE_START - 1];
           stage_[id].stage_id_ = MAP_TYPE_START;
           break;
+          case MAP_TYPE_WALL:
+          stage_[id].texture_id_ = texture_id_[MAP_TYPE_NORMAL - 1];
+          stage_[id].stage_id_ = MAP_TYPE_WALL;
+          break;
         }
         stage_[id].stage_data_id_ = map_id;
         id++;
@@ -122,7 +126,7 @@ void Stage::Draw(void) {
 
   for (int id = 0; id < map_id_max; id++)
   {
-    if (!stage_[id].alive_ || stage_[id].stage_id_ == MAP_TYPE_GOAL) continue;
+    if (!stage_[id].alive_ || stage_[id].stage_id_ == MAP_TYPE_GOAL || stage_[id].stage_id_ == MAP_TYPE_START) continue;
     Vertex3D data[] ={
       {D3DXVECTOR3( -stage_[id].size_.x, +stage_[id].size_.y, 0.0f), 0xffffffff, D3DXVECTOR2(0.0f, 0.0f)},
       {D3DXVECTOR3( +stage_[id].size_.x, +stage_[id].size_.y, 0.0f), 0xffffffff, D3DXVECTOR2(1.0f, 0.0f)},
@@ -155,6 +159,7 @@ void Stage::Draw(void) {
 
 D3DXVECTOR3 Stage::CheckMapTip(D3DXVECTOR3* pos, D3DXVECTOR3 size, HIT_CHECK* check)
 {
+  CheckInit(check);
   // AABB”»’è‚Ì‚½‚ß‚Ì4“_’Šo
   D3DXVECTOR3 point[4] = 
   {
@@ -180,7 +185,7 @@ D3DXVECTOR3 Stage::CheckMapTip(D3DXVECTOR3* pos, D3DXVECTOR3 size, HIT_CHECK* ch
         HitManage(stage_[id].stage_data_id_,check);
         //HitManage(id,check);
         //HitManage(stage_[id].stage_id_,pos,size,stage_[id].pos_,stage_[id].size_);
-    return stage_[id].pos_;
+		return stage_[id].pos_;
       } // if
     }// if
     if (point[3].x >= map_point[2].x && point[3].x <= map_point[2].x)
@@ -188,7 +193,7 @@ D3DXVECTOR3 Stage::CheckMapTip(D3DXVECTOR3* pos, D3DXVECTOR3 size, HIT_CHECK* ch
       if (point[2].y >= map_point[1].y && point[2].y <= map_point[1].y)
       {
         HitManage(stage_[id].stage_data_id_,check);
-    return stage_[id].pos_;
+		return stage_[id].pos_;
       }// if
     }// if
   }// for
@@ -196,18 +201,17 @@ D3DXVECTOR3 Stage::CheckMapTip(D3DXVECTOR3* pos, D3DXVECTOR3 size, HIT_CHECK* ch
 }
 void Stage::HitManage(int id, HIT_CHECK* check)
 {
-  CheckInit(check);
   check->center = mapdata[id];
   int data_id_ = map_width_ * map_height_;
   //
-  if(id + map_height_ < data_id_)
+  if (id + map_width_ < data_id_)
   {
-    check->bottom = mapdata[id + map_height_];
+    check->bottom = mapdata[id + map_width_];
   }
   //
-  if(id - map_height_ > 0)
+  if (id - map_width_ > 0)
   {
-    check->up = mapdata[id - map_height_];
+    check->up = mapdata[id - map_width_];
   }
   //
   if(id % map_width_ + 1 != map_width_ )
@@ -222,22 +226,22 @@ void Stage::HitManage(int id, HIT_CHECK* check)
   //
   if (check->bottom != -1 && check->right != -1)
   {
-    check->bottom_right = mapdata[id + map_height_ + 1];
+    check->bottom_right = mapdata[id + map_width_ + 1];
   }
   //
   if (check->bottom != -1 && check->left != -1)
   {
-    check->bottom_left = mapdata[id + map_height_ - 1];
+    check->bottom_left = mapdata[id + map_width_ - 1];
   }
   //
   if (check->up != -1 && check->right != -1)
   {
-    check->up_right = mapdata[id - map_height_ + 1];
+    check->up_right = mapdata[id - map_width_ + 1];
   }
   //
   if (check->up != -1 && check->left != -1)
   {
-    check->up_left = mapdata[id - map_height_ - 1];
+    check->up_left = mapdata[id - map_width_ - 1];
   }
 }
 D3DXVECTOR3 Stage::GetGoalMaptip()
@@ -266,6 +270,7 @@ D3DXVECTOR3 Stage::GetStartMaptip()
 //
 void Stage::CheckInit(HIT_CHECK* check)
 {
+  check->center = -1;
   check->up = -1;
   check->bottom = -1;
   check->right = -1;

@@ -101,7 +101,7 @@ void SceneGame::Draw(void) {
 
   p_uriel_->Draw();
 
-  p_tori_->Draw();
+//  p_tori_->Draw();
 
   if (!p_ready_->IsEnd()) {
     p_ready_->Draw();
