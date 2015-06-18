@@ -78,6 +78,30 @@
     <ClCompile Include="src\Application\Object\BackGround.cpp">
       <Filter>Application\Object</Filter>
     </ClCompile>
+    <ClCompile Include="src\Application\Object\Object2D\Bar.cpp">
+      <Filter>Application\Object2D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application\Object\Object2D\Board.cpp">
+      <Filter>Application\Object2D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application\Object\Object2D\Frame.cpp">
+      <Filter>Application\Object2D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application\Object\Object2D\Object2D.cpp">
+      <Filter>Application\Object2D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application\Object\ObjectBase.cpp">
+      <Filter>Application\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application\Tension\TensionGauge.cpp">
+      <Filter>Application\Tension</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application\Utility\ValueActiveUpdater.cpp">
+      <Filter>Application\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application\Utility\ValuePassiveUpdater.cpp">
+      <Filter>Application\Utility</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Framework">
@@ -121,6 +145,15 @@
     </Filter>
     <Filter Include="Application\Stage">
       <UniqueIdentifier>{5134f3d7-42b3-41b2-b021-4dcc49abff76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Object2D">
+      <UniqueIdentifier>{e1afb4a2-425f-4e90-8a1c-74861c02ff28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Tension">
+      <UniqueIdentifier>{f5dc0ebe-66cf-4463-b143-e52940141718}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Utility">
+      <UniqueIdentifier>{906ad8d4-36fb-4575-bdc1-564def063152}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -256,6 +289,30 @@
     </ClInclude>
     <ClInclude Include="src\Application\Object\BackGround.h">
       <Filter>Application\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\Object\Object2D\Bar.h">
+      <Filter>Application\Object2D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\Object\Object2D\Board.h">
+      <Filter>Application\Object2D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\Object\Object2D\Frame.h">
+      <Filter>Application\Object2D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\Object\Object2D\Object2D.h">
+      <Filter>Application\Object2D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\Object\ObjectBase.h">
+      <Filter>Application\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\Tension\TensionGauge.h">
+      <Filter>Application\Tension</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\Utility\ValueActiveUpdater.h">
+      <Filter>Application\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\Utility\ValuePassiveUpdater.h">
+      <Filter>Application\Utility</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
