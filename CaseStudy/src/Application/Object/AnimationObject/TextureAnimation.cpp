@@ -46,6 +46,9 @@ static const ANIM_DATA s_AnimaitionData[] = {
   { 15, 2, 2, "data/Texture/tex_anim_01.png" },                   // 鳥が上へ飛ぶ
 };
 
+bool TextureAnimation::texture_load_ = false;
+int TextureAnimation::texture_id_data_[ANIMATION_MAX];
+
 //==============================================================================
 // class implementation
 //==============================================================================
@@ -56,6 +59,14 @@ TextureAnimation::TextureAnimation(){
   animation_number_ = 0;
   timer_ = 0;
   animation_end_flag_ = false;
+
+  if (!texture_load_){
+    for (int i = 0; i < ANIMATION_MAX; ++i){
+      texture_id_data_[i] = -1;
+    }
+    TextureLoad();
+    texture_load_ = true;
+  }
 }
 
 // dtor
@@ -112,7 +123,7 @@ int TextureAnimation::SetAnimation(ANIMATION_EVENT animation_event){
 
   animation_number_ = s_AnimaitionData[animation_].start_number_;
 
-  return TextureManagerHolder::Instance().GetTextureManager().LoadTexture(s_AnimaitionData[animation_].data_);
+  return texture_id_data_[animation_event];
 }
 
 //=============================================================================
@@ -127,6 +138,30 @@ int TextureAnimation::GetAnimationChangeTime(void){
 //-----------------------------------------------------------------------------
 int TextureAnimation::GetAnimationTime(void){
   return s_AnimaitionData[animation_].time_ * s_AnimaitionData[animation_].number_;
+}
+
+//=============================================================================
+// テクスチャーロード
+//-----------------------------------------------------------------------------
+void TextureAnimation::TextureLoad(void){
+  for (int i = 0; i < ANIMATION_MAX; ++i){
+    bool load = false;
+    for (int cnt = 0; cnt < i; ++cnt){
+      int name_len = 0;
+      char* name_cpy = s_AnimaitionData[i].data_;
+      while (*name_cpy++ != '\0'){
+        ++name_len;
+      }
+      if (strncmp(s_AnimaitionData[cnt].data_,s_AnimaitionData[i].data_,name_len) == 0){
+        texture_id_data_[i] = texture_id_data_[cnt];
+        load = true;
+        break;
+      }
+    }
+    if (!load){
+      texture_id_data_[i] = TextureManagerHolder::Instance().GetTextureManager().LoadTexture(s_AnimaitionData[i].data_);
+    }
+  }
 }
 
 // EOF

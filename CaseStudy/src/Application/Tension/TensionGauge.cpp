@@ -22,7 +22,7 @@
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 namespace {
 
-const D3DXVECTOR3 kPos = {200.0f, 50.0f, 0.0f};
+const D3DXVECTOR3 kPos = {200.0f, 25.0f, 0.0f};
 const D3DXVECTOR2 kSize = {300.0f, 20.0f};
 
 const float kTensionRiseValue = 0.4f;

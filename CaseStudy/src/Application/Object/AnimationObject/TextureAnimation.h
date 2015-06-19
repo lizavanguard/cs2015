@@ -70,11 +70,14 @@ public:
   int GetAnimationTime(void);
 
 private:
+  void TextureLoad(void);
   D3DXVECTOR2 texture_uv_;
   ANIMATION_EVENT animation_;
   int animation_number_;
   int timer_;
   bool animation_end_flag_;
+  static int texture_id_data_[ANIMATION_MAX];
+  static bool texture_load_;
 };
 
 #endif // __H_TEXTURE_ANIMATION_H__

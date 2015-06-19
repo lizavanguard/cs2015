@@ -15,42 +15,49 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // マクロ定義
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-#define URIEL_MOVE_SPPD (5.0f)                               // ウリエルの移動速度(通常)
+#define URIEL_MOVE_SPPD (3.0f)                               // ウリエルの移動速度(通常)
+#define URIEL_MOVE_CHARGE_SPEED (URIEL_MOVE_SPPD * 1.5f)     // ウリエルの移動速度(チャージ)
 #define URIEL_MOVE_RUNAWAY_SPPD (URIEL_MOVE_SPPD * 2.0f)     // ウリエルの移動速度(暴走)
 #define URIEL_RUNAWAY_TIME (120)                             // ウリエルの暴走時間
 #define URIEL_INDUCIBLE (400.0f)                             // ウリエルの誘導可能距離
-#define URIEL_SLEEP_TIME (180)                               // ウリエルの眠り時間
+#define URIEL_SLEEP_TIME (300)                               // ウリエルの眠り時間
 #define URIEL_BOROCHAGE_INTERVAL (60)                        // ボーロチャージできるまでのインターバル時間
-#define URIEL_BOROGAGE_ADD_AMOUNT (60.0f)                    // ボーロチャージで増えるゲージの量
-#define URIEL_BOROGAGE_SUB_AMOUNT (0.1f)                     // ボーロチャージゲージの減少量(暴走してない時)
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // 列挙体定義
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 typedef enum {
-  URIEL_STATAS_NONE = -1,                                 // 状態エラー
-  URIEL_STATAS_NEUTRAL = ANIMATION_URIEL_NEUTRAL,         // ニュートラル状態
-  URIEL_STATAS_CRAWL = ANIMATION_URIEL_CRAWL,             // ハイハイ状態
-  URIEL_STATAS_JUMP = ANIMATION_URIEL_JUMP,               // ジャンプ状態
-  URIEL_STATAS_RUNAWAY = ANIMATION_URIEL_RUNAWAY,         // 暴走状態
-  URIEL_STATAS_SLEEP = ANIMATION_URIEL_SLEEP,             // 眠り状態
-  URIEL_STATAS_CHARGECRAWL = ANIMATION_URIEL_CHARGECRAWL, // ハイハイ(チャージ)状態
-  URIEL_STATAS_CHARGEJUMP = ANIMATION_URIEL_CHARGEJUMP,   // ジャンプ(チャージ)状態
-  URIEL_STATAS_GOAL = ANIMATION_URIEL_GOAL,               // ゴール時の演出
-  URIEL_STATAS_MAX
-}URIEL_STATAS;
+  URIEL_STATUS_NONE = -1,                                 // 状態エラー
+  URIEL_STATUS_NEUTRAL = ANIMATION_URIEL_NEUTRAL,         // ニュートラル状態
+  URIEL_STATUS_CRAWL = ANIMATION_URIEL_CRAWL,             // ハイハイ状態
+  URIEL_STATUS_JUMP = ANIMATION_URIEL_JUMP,               // ジャンプ状態
+  URIEL_STATUS_RUNAWAY = ANIMATION_URIEL_RUNAWAY,         // 暴走状態
+  URIEL_STATUS_SLEEP = ANIMATION_URIEL_SLEEP,             // 眠り状態
+  URIEL_STATUS_CHARGECRAWL = ANIMATION_URIEL_CHARGECRAWL, // ハイハイ(チャージ)状態
+  URIEL_STATUS_CHARGEJUMP = ANIMATION_URIEL_CHARGEJUMP,   // ジャンプ(チャージ)状態
+  URIEL_STATUS_GOAL = ANIMATION_URIEL_GOAL,               // ゴール時の演出
+  URIEL_STATUS_MAX
+}URIEL_STATUS;
+
+typedef enum{
+  BLOCK_DATA_ERROR = -1,
+  BLOCK_DATA_STAIRS,
+  BLOCK_DATA_JUMP,
+  BLOCK_DATA_MAX
+}BLOCK_DATA;
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // class
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 class Stage;
+class TensionGauge;
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // class definition
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 class Uriel : public AnimationObject {
 public:
   // ctor
-  Uriel(ANIMATION_EVENT animation_event,Stage* stage);
+  Uriel(ANIMATION_EVENT animation_event,Stage* stage,TensionGauge* p_tension_gauge);
 
   // dtor
   virtual ~Uriel();
@@ -83,11 +90,19 @@ private:
   void UpdateChargeCrawl(void);
   void UpdateChargeJump(void);
   void UpdateGoal(void);
+  BLOCK_DATA LoadCheck(void);
+  BLOCK_DATA CrawlLoadCheck(void);
+  BLOCK_DATA ChargeCrawlLoadCheck(void);
+  // ジャンプする高さと距離と目的地の高低差とかかる重力を渡せば移動量が返ってくる(2D用)
+  D3DXVECTOR2 JumpAngleSeek(float top, float length, float difference_in_height, float gravity);
   D3DXVECTOR3 dest_position_;
-  float move_speed_;
+  D3DXVECTOR3 old_position_;
+  D3DXVECTOR3 jump_before_pos_;
+  D3DXVECTOR3 move_;
+  D3DXVECTOR3 map_;
   Stage* p_stage_;
-  int statas_;
-  float boro_gage_;
+  TensionGauge* p_tension_gauge_;
+  int status_;
   bool boro_gage_max_;
   int boro_interval_;
   bool charge_flag_;

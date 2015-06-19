@@ -78,25 +78,13 @@
     <ClCompile Include="src\Application\Object\ObjectBase.cpp">
       <Filter>Application\Object</Filter>
     </ClCompile>
-    <ClCompile Include="src\Application\Object\Object2D\Object2D.cpp">
-      <Filter>Application\Object\Object2D</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Application\Object\Object2D\Frame.cpp">
-      <Filter>Application\Object\Object2D</Filter>
-    </ClCompile>
     <ClCompile Include="src\Application\Tension\TensionGauge.cpp">
       <Filter>Application\Tension</Filter>
     </ClCompile>
-    <ClCompile Include="src\Application\Object\Object2D\Board.cpp">
-      <Filter>Application\Object\Object2D</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Application\Object\Object2D\Bar.cpp">
-      <Filter>Application\Object\Object2D</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Application\Utility\ValuePassiveUpdater.cpp">
+    <ClCompile Include="src\Application\Utility\ValueActiveUpdater.cpp">
       <Filter>Application\Utility</Filter>
     </ClCompile>
-    <ClCompile Include="src\Application\Utility\ValueActiveUpdater.cpp">
+    <ClCompile Include="src\Application\Utility\ValuePassiveUpdater.cpp">
       <Filter>Application\Utility</Filter>
     </ClCompile>
     <ClCompile Include="src\Application\Sound\sound.cpp">
@@ -104,6 +92,18 @@
     </ClCompile>
     <ClCompile Include="src\Framework\Texture\TextureManager.cpp">
       <Filter>Framework\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application\Object\Object2D\Bar.cpp">
+      <Filter>Application\Object\Object2D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application\Object\Object2D\Board.cpp">
+      <Filter>Application\Object\Object2D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application\Object\Object2D\Frame.cpp">
+      <Filter>Application\Object\Object2D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application\Object\Object2D\Object2D.cpp">
+      <Filter>Application\Object\Object2D</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -41,9 +41,9 @@ SceneGame::SceneGame()
 
   p_stage_ = new Stage();
 
-  p_uriel_ = new Uriel(ANIMATION_URIEL_CRAWL, p_stage_);
-
   p_tension_gauge_ = new TensionGauge();
+
+  p_uriel_ = new Uriel(ANIMATION_URIEL_CRAWL, p_stage_, p_tension_gauge_);
 
   p_tori_ = new Tori(ANIMATION_TORI_NONE, p_uriel_, p_stage_->GetGoalMaptip());
 
@@ -99,8 +99,6 @@ void SceneGame::Update(SceneManager* p_scene_manager, const float elapsed_time) 
   if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_2)) {
     p_tension_gauge_->CoolDown();
   }
-
-  //p_tension_gauge_->Update();
 }
 
 
@@ -112,11 +110,11 @@ void SceneGame::Draw(void) {
 
   p_stage_->Draw();
 
-  p_player_->Draw();
-
   p_uriel_->Draw();
 
-  p_tori_->Draw();
+  p_player_->Draw();
+
+//  p_tori_->Draw();
 
   p_tension_gauge_->Draw();
    
