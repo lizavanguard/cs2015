@@ -39,10 +39,10 @@ Ready::Ready() : count_(0), is_end_(false) {
     texture_ids_[texture_count] =
       TextureManagerHolder::Instance().GetTextureManager().LoadTexture(kTexturenames[texture_count]);
   }
-  SetTextureID(texture_ids_[0]);
+  texture_id_ = texture_ids_[0];
 
-  SetSize(kSize);
-  SetPos(kInitialPos);
+  size_ = kSize;
+  pos_ = kInitialPos;
 }
 
 //------------------------------------------------
@@ -59,7 +59,7 @@ void Ready::Update(void) {
 
   // if レディ表示時間が終了したら ゴー表示
   if (count_ == kReadyDisplayTime) {
-    SetTextureID(texture_ids_[1]);
+    texture_id_ = texture_ids_[1];
   }
   else if (count_ > kEndTime) {
     is_end_ = true;
@@ -69,8 +69,8 @@ void Ready::Update(void) {
 //------------------------------------------------
 // Draw
 //------------------------------------------------
-void Ready::PreProccessOfDraw(void) {
+void Ready::_PreProcessOfDraw(void) {
 }
 
-void Ready::PostProcessOfDraw(void) {
+void Ready::_PostProcessOfDraw(void) {
 }

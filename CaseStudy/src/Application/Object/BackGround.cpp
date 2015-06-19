@@ -9,8 +9,6 @@
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 #include "BackGround.h"
 
-#include "Framework/Texture/TextureManagerHolder.h"
-
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 // const
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
@@ -30,9 +28,9 @@ const D3DXVECTOR2 kSize = {1280, 720};
 // ctor
 //------------------------------------------------
 BackGround::BackGround() {
-  SetTextureID(TextureManagerHolder::Instance().GetTextureManager().LoadTexture(kTexturename));
-  SetSize(kSize);
-  SetPos(kPos);
+  SetTexture(kTexturename);
+  size_ = kSize;
+  pos_ = kPos;
 }
 
 //------------------------------------------------
@@ -45,8 +43,8 @@ BackGround::~BackGround() {
 //------------------------------------------------
 // Draw
 //------------------------------------------------
-void BackGround::PreProccessOfDraw(void) {
+void BackGround::_PreProcessOfDraw(void) {
 }
 
-void BackGround::PostProcessOfDraw(void) {
+void BackGround::_PostProcessOfDraw(void) {
 }

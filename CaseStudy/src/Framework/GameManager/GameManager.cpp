@@ -19,6 +19,8 @@
 
 #include "Application/Game/SceneGame.h"  // HACK: –³—‚â‚è
 
+#include "Application/Sound/sound.h"
+
 
 //==============================================================================
 // class implementation
@@ -45,17 +47,16 @@ GameManager::GameManager( HINSTANCE hInstance, HWND hWnd, LPDIRECT3DDEVICE9 pDev
   pDebugProc_ = new DebugProc();
   pDebugProc_->Init( pDevice_ );
 
-  // input manager
   pInputManager_ = new InputManager( hInstance, hWnd );
   InputManagerHolder::Instance().SetInputManager(pInputManager_);
 
-  // texture manager
   pTextureManager_ = new TextureManager(pDevice);
   TextureManagerHolder::Instance().SetTextureManager(pTextureManager_);
 
-  // scene manager
   Scene* pFirstScene = new SceneGame();
   pSceneManager_ = new SceneManager(pFirstScene);
+
+  //InitSound(hWnd);
 }
 
 
@@ -63,6 +64,8 @@ GameManager::GameManager( HINSTANCE hInstance, HWND hWnd, LPDIRECT3DDEVICE9 pDev
 // dtor
 //------------------------------------------------
 GameManager::~GameManager() {
+  //UninitSound();
+
   SafeDelete(pTextureManager_);
 
   SafeDelete(pSceneManager_);

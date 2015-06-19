@@ -22,6 +22,6 @@ public:
   ~BackGround();
 
   // Draw
-  virtual void PreProccessOfDraw(void);
-  virtual void PostProcessOfDraw(void);
+  virtual void _PreProcessOfDraw(void);
+  virtual void _PostProcessOfDraw(void);
 };

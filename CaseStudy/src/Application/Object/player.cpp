@@ -65,16 +65,16 @@ void Player::Update(Uriel *uriel_){
   auto& pKeyboard = InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard();
   // 移動
   if (pKeyboard.IsPress(DIK_W)) {
-    AddPosY(kPlayerMoveSpeed);
+    pos_.y += kPlayerMoveSpeed;
   }
   if (pKeyboard.IsPress(DIK_S)) {
-    AddPosY(-kPlayerMoveSpeed);
+    pos_.y -= kPlayerMoveSpeed;
   }
   if (pKeyboard.IsPress(DIK_A)) {
-    AddPosX(-kPlayerMoveSpeed);
+    pos_.x -= kPlayerMoveSpeed;
   }
   if (pKeyboard.IsPress(DIK_D)) {
-    AddPosX(kPlayerMoveSpeed);
+    pos_.x += kPlayerMoveSpeed;
   }
 
   if (pKeyboard.IsPress(DIK_9)) {
@@ -122,7 +122,7 @@ void Player::Update(Uriel *uriel_){
       break;
     case MODE_GUIDE: // 誘導
       // ウリエルちゃん移動
-      uriel_->SetDestPos(GetPos());
+      uriel_->SetDestPos(pos_);
       // 誘導モードが一定時間以上
       break;
     case MODE_GIMMICK: // ギミック
@@ -151,7 +151,7 @@ void Player::Update(Uriel *uriel_){
 // Author  :  SHOHEI MATSUMOTO
 // 更新日  :  2015/05/22
 //==============================================================================
-void Player::PreProccessOfDraw(void){
+void Player::_PreProcessOfDraw(void){
   D3DXVECTOR2 texture_uv_ = p_texture_animation_->GetTextureUV();
   D3DXVECTOR2 texture_uv_offset_ = p_texture_animation_->GetTextureUVOffset();
 
@@ -160,8 +160,8 @@ void Player::PreProccessOfDraw(void){
       texture_uv_offset_.x *= -1;
   }
 
-  SetStartUV(D3DXVECTOR2(texture_uv_));
-  SetEndUV(D3DXVECTOR2(texture_uv_ + texture_uv_offset_));
+  start_uv_ = texture_uv_;
+  end_uv_ = texture_uv_ + texture_uv_offset_;
 }
 
 //==============================================================================

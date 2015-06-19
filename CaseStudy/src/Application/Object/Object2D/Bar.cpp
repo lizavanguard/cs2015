@@ -36,7 +36,7 @@ Bar::Bar(const D3DXVECTOR3& pos, const D3DXVECTOR2& size, const float max_value)
   size_ = size;
   color_ = kBarColor;
 
-  _UpdatePosAndSize(0.5f);
+  _UpdatePosAndSize(0.0f);
 }
 
 //------------------------------------------------

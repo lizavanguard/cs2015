@@ -21,39 +21,13 @@
 //------------------------------------------------
 // ctor
 //------------------------------------------------
-Object::Object()
-    : pos_(D3DXVECTOR3(0.0f, 0.0f, 0.0f))
-    , rot_(D3DXVECTOR2(0.0f, 0.0f))
-    , size_(D3DXVECTOR2(0.0f, 0.0f))
-    , start_uv_(D3DXVECTOR2(0.0f, 0.0f))
-    , end_uv_(D3DXVECTOR2(1.0f, 1.0f))
-    , is_alive_(true)
-    , texture_id_(-1) {
-  static const float kSizeX = 128.0f;
-  static const float kSizeY = 128.0f;
-  size_ = D3DXVECTOR2(kSizeX, kSizeY);
+Object::Object() {
 }
 
 //------------------------------------------------
 // dtor
 //------------------------------------------------
 Object::~Object() {
-}
-
-//------------------------------------------------
-// Draw
-//------------------------------------------------
-void Object::Draw(void) {
-  PreProccessOfDraw();
-  _Draw();
-  PostProcessOfDraw();
-}
-
-//------------------------------------------------
-// SetTexture
-//------------------------------------------------
-void Object::SetTexture(char* texture_name){
-  texture_id_ = TextureManagerHolder::Instance().GetTextureManager().LoadTexture(texture_name);
 }
 
 //------------------------------------------------
@@ -68,10 +42,10 @@ void Object::_Draw(void) {
   // vertices
   const float half_x = size_.x * 0.5f;
   Vertex3D data[] = {
-    {D3DXVECTOR3(-half_x, size_.y, 0.0f), 0xffffffff, D3DXVECTOR2(start_uv_.x, start_uv_.y)},  // lt
-    {D3DXVECTOR3(+half_x, size_.y, 0.0f), 0xffffffff, D3DXVECTOR2(  end_uv_.x, start_uv_.y)},  // rt
-    {D3DXVECTOR3(-half_x,    0.0f, 0.0f), 0xffffffff, D3DXVECTOR2(start_uv_.x,   end_uv_.y)},  // lb
-    {D3DXVECTOR3(+half_x,    0.0f, 0.0f), 0xffffffff, D3DXVECTOR2(  end_uv_.x,   end_uv_.y)},  // rb
+    {D3DXVECTOR3(-half_x, size_.y, 0.0f), color_, D3DXVECTOR2(start_uv_.x, start_uv_.y)},  // lt
+    {D3DXVECTOR3(+half_x, size_.y, 0.0f), color_, D3DXVECTOR2(  end_uv_.x, start_uv_.y)},  // rt
+    {D3DXVECTOR3(-half_x,    0.0f, 0.0f), color_, D3DXVECTOR2(start_uv_.x,   end_uv_.y)},  // lb
+    {D3DXVECTOR3(+half_x,    0.0f, 0.0f), color_, D3DXVECTOR2(  end_uv_.x,   end_uv_.y)},  // rb
   };
 
   // WVP

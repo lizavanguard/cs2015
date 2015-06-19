@@ -36,8 +36,8 @@ public:
   static AnimationObject* Create(ANIMATION_EVENT animation_event, const D3DXVECTOR3& pos, const D3DXVECTOR2& size);
 
   // draw
-  virtual void PreProccessOfDraw(void);
-  virtual void PostProcessOfDraw(void);
+  virtual void _PreProcessOfDraw(void);
+  virtual void _PostProcessOfDraw(void);
 
   // add pos
   void AddPos(const D3DXVECTOR3& pos);

@@ -40,7 +40,7 @@ public:
   void Update(Uriel *uriel_);
 
   // draw
-  virtual void PreProccessOfDraw(void);
+  virtual void _PreProcessOfDraw(void);
 
   // アニメーションの変更
   void ChangeAnimation(PLAYER_MODE mode);
