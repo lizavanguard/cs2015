@@ -20,7 +20,9 @@
     <ClCompile Include="src\Application\Object\Object2D\Bar.cpp" />
     <ClCompile Include="src\Application\Object\Object2D\Board.cpp" />
     <ClCompile Include="src\Application\Object\Object2D\Frame.cpp" />
+    <ClCompile Include="src\Application\Object\Object2D\NumberObject.cpp" />
     <ClCompile Include="src\Application\Object\Object2D\Object2D.cpp" />
+    <ClCompile Include="src\Application\Object\Object2D\Timer.cpp" />
     <ClCompile Include="src\Application\Object\ObjectBase.cpp" />
     <ClCompile Include="src\Application\Object\player.cpp" />
     <ClCompile Include="src\Application\Object\Ready.cpp" />
@@ -61,7 +63,9 @@
     <ClInclude Include="src\Application\Object\Object2D\Bar.h" />
     <ClInclude Include="src\Application\Object\Object2D\Board.h" />
     <ClInclude Include="src\Application\Object\Object2D\Frame.h" />
+    <ClInclude Include="src\Application\Object\Object2D\NumberObject.h" />
     <ClInclude Include="src\Application\Object\Object2D\Object2D.h" />
+    <ClInclude Include="src\Application\Object\Object2D\Timer.h" />
     <ClInclude Include="src\Application\Object\ObjectBase.h" />
     <ClInclude Include="src\Application\Object\player.h" />
     <ClInclude Include="src\Application\Object\Ready.h" />

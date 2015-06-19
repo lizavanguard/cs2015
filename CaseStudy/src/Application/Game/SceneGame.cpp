@@ -19,6 +19,7 @@
 #include "Application/Object/Tori.h"
 #include "Application/Object/Uriel.h"
 #include "Application/Tension/TensionGauge.h"
+#include "Application\Object\Object2D\Timer.h"
 #include "Application/Stage/Stage.h"
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -36,6 +37,7 @@ SceneGame::SceneGame()
     , p_tension_gauge_(nullptr)
     , p_tori_(nullptr)
     , p_uriel_(nullptr)
+    , p_timer_(nullptr)
 {
   p_player_ = new Player(ANIMATION_PLAYER_RATTEL_NONE);
 
@@ -50,6 +52,8 @@ SceneGame::SceneGame()
   p_ready_ = new Ready();
 
   p_back_ = new BackGround();
+
+  p_timer_ = new Timer(D3DXVECTOR3(600.0f, 50.0f, 0.0f), 0.0f, D3DXVECTOR2(50.0f, 50.0f), TIMER);
 }
 
 
@@ -64,6 +68,7 @@ SceneGame::~SceneGame() {
   SafeDelete(p_tension_gauge_);
   SafeDelete(p_stage_);
   SafeDelete(p_back_);
+  SafeDelete(p_timer_);
 }
 
 
@@ -84,6 +89,8 @@ void SceneGame::Update(SceneManager* p_scene_manager, const float elapsed_time) 
 //  if (p_tori_->GetHitCheck()){
 //    return;
 //  }
+
+  p_timer_->Update();
 
   // ウリエル更新
   p_uriel_->Update();
@@ -113,6 +120,8 @@ void SceneGame::Draw(void) {
   p_uriel_->Draw();
 
   p_player_->Draw();
+
+  p_timer_->Draw();
 
 //  p_tori_->Draw();
 

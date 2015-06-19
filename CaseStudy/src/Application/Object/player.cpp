@@ -13,6 +13,7 @@
 #include "Framework/Input/InputManagerHolder.h"
 #include "Framework/Input/InputKeyboard.h"
 #include "Framework/Texture/TextureManagerHolder.h"
+#include "Framework/Input/InputXInput.h"
 #include "AnimationObject\TextureAnimation.h"
 #include "Uriel.h"
 #include "player.h"
@@ -63,18 +64,19 @@ Player::~Player(void){
 //==============================================================================
 void Player::Update(Uriel *uriel_){
   auto& pKeyboard = InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard();
+  auto& pJoypad = InputManagerHolder::Instance().GetInputManager().GetPrimaryDevice();
   // 移動
-  if (pKeyboard.IsPress(DIK_W)) {
-    pos_.y += kPlayerMoveSpeed;
+  if (pJoypad.IsPress(InputDevice::Pads::PAD_LTHUMB_UP) || pKeyboard.IsPress(DIK_W)) {
+      pos_.y += kPlayerMoveSpeed;
   }
-  if (pKeyboard.IsPress(DIK_S)) {
-    pos_.y -= kPlayerMoveSpeed;
+  if (pJoypad.IsPress(InputDevice::Pads::PAD_LTHUMB_RIGHT) || pKeyboard.IsPress(DIK_D)) {
+      pos_.x += kPlayerMoveSpeed;
   }
-  if (pKeyboard.IsPress(DIK_A)) {
-    pos_.x -= kPlayerMoveSpeed;
+  if (pJoypad.IsPress(InputDevice::Pads::PAD_LTHUMB_DOWN) || pKeyboard.IsPress(DIK_S)) {
+      pos_.y -= kPlayerMoveSpeed;
   }
-  if (pKeyboard.IsPress(DIK_D)) {
-    pos_.x += kPlayerMoveSpeed;
+  if (pJoypad.IsPress(InputDevice::Pads::PAD_LTHUMB_LEFT) || pKeyboard.IsPress(DIK_A)) {
+      pos_.x -= kPlayerMoveSpeed;
   }
 
   if (pKeyboard.IsPress(DIK_9)) {
@@ -84,26 +86,26 @@ void Player::Update(Uriel *uriel_){
 
   // ガラガラモード切替
   // 誘導
-  if (pKeyboard.IsPress(DIK_RETURN)){
-    ChangeAnimation(MODE_GUIDE);
+  if (pJoypad.IsPress(InputDevice::Pads::PAD_A) || pKeyboard.IsPress(DIK_RETURN)) {
+      ChangeAnimation(MODE_GUIDE);
   }
-  else if (pKeyboard.IsRelease(DIK_RETURN)){
-    ChangeAnimation(MODE_NORMAL);
+  else if (pJoypad.IsRelease(InputDevice::Pads::PAD_A) || pKeyboard.IsRelease(DIK_RETURN)) {
+      ChangeAnimation(MODE_NORMAL);
   }
   // ギミックON/OFF
-  if (pKeyboard.IsTrigger(DIK_G)){
-    ChangeAnimation(MODE_GIMMICK);
+  if (pJoypad.IsTrigger(InputDevice::Pads::PAD_Y) || pKeyboard.IsTrigger(DIK_G)) {
+      ChangeAnimation(MODE_GIMMICK);
   }
 
   // ボーロ
-  if (pKeyboard.IsTrigger(DIK_B)) {
-    // ウリエルちゃんが食べていなかったら ボーロが出る
-    if (!is_eat_) {
-      ChangeAnimation(MODE_BORO);
-    }
+  if (pJoypad.IsTrigger(InputDevice::Pads::PAD_X) || pKeyboard.IsTrigger(DIK_B)) {
+      // ウリエルちゃんが食べていなかったら ボーロが出る
+      if (!is_eat_) {
+          ChangeAnimation(MODE_BORO);
+      }
   }
-  else if (pKeyboard.IsRelease(DIK_B)) {
-    ChangeAnimation(MODE_NORMAL);
+  else if (pJoypad.IsRelease(InputDevice::Pads::PAD_X) || pKeyboard.IsRelease(DIK_B)){
+      ChangeAnimation(MODE_NORMAL);
   }
 
 
@@ -114,10 +116,10 @@ void Player::Update(Uriel *uriel_){
     case MODE_BORO: // ボーロ
       // if ウリエルちゃんがボーロ食べたら 通常状態に戻す
       // if (uriel->BoroCharge()) {
-      if (pKeyboard.IsTrigger(DIK_N)) {
-         ChangeAnimation(MODE_NORMAL);
-         is_eat_ = true;
-       }
+        if (pJoypad.IsTrigger(InputDevice::Pads::PAD_B) || pKeyboard.IsTrigger(DIK_N)) {
+            ChangeAnimation(MODE_NORMAL);
+            is_eat_ = true;
+        }
 
       break;
     case MODE_GUIDE: // 誘導

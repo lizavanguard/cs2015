@@ -105,6 +105,12 @@
     <ClCompile Include="src\Application\Object\Object2D\Object2D.cpp">
       <Filter>Application\Object\Object2D</Filter>
     </ClCompile>
+    <ClCompile Include="src\Application\Object\Object2D\Timer.cpp">
+      <Filter>Application\Object\Object2D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application\Object\Object2D\NumberObject.cpp">
+      <Filter>Application\Object\Object2D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Framework">
@@ -322,6 +328,12 @@
     </ClInclude>
     <ClInclude Include="src\Application\Sound\sound.h">
       <Filter>Application\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\Object\Object2D\Timer.h">
+      <Filter>Application\Object\Object2D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\Object\Object2D\NumberObject.h">
+      <Filter>Application\Object\Object2D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
