@@ -1,22 +1,24 @@
 //==============================================================================
 //
-// Bar
+// TensionTopLayer
 // Author: Shimizu Shoji
 //
 //==============================================================================
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 // include
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
-#include "Bar.h"
+#include "TensionTopLayer.h"
 
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 // const
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 namespace {
 
-const char* kTextureFilename = "data/Texture/square.png";
+const char* kTextureFilename = "data/Texture/UI_tension_max.png";
 
-const DWORD kBarColor = 0xffff0000;
+const float kTop = 56.0f / 289.0f;
+const float kBottom = 221.0f / 289.0f;
+const float kRange = kBottom - kTop;
 
 }
 
@@ -26,42 +28,32 @@ const DWORD kBarColor = 0xffff0000;
 //------------------------------------------------
 // ctor
 //------------------------------------------------
-Bar::Bar(const D3DXVECTOR3& pos, const D3DXVECTOR2& size, const float max_value)
+TensionTopLayer::TensionTopLayer(const D3DXVECTOR3& pos, const D3DXVECTOR2& size) 
     : Object2D(pos, size, kTextureFilename)
-    , max_value_(max_value)
-    , original_position_(D3DXVECTOR3(pos.x - size.x * 0.5f, pos.y - size.y * 0.5f, pos.z))
-    , original_size_(size) {
-  assert(max_value > 0.0f);
-  pos_ = pos;
-  size_ = size;
-  color_ = kBarColor;
-
-  _UpdatePosAndSize(0.0f);
+    , original_height_(size.y)
+    , original_bottom_(pos.y + size.y * 0.5f) {
+  end_uv_.y = kBottom;
+  UpdateSize(0.0f);
 }
 
 //------------------------------------------------
-// update value
+// Update size
+// 0-1の間で値を渡すとサイズを更新する
 //------------------------------------------------
-void Bar::UpdateValue(const float value) {
-  assert(value <= max_value_);
-  const float rate = value / max_value_;
-  _UpdatePosAndSize(rate);
+void TensionTopLayer::UpdateSize(const float rate) {
+  assert(0.0f <= rate && rate <= 1.0f);
+  size_.y = original_height_ * rate;
+  pos_.y = original_bottom_ - size_.y * 0.5f;
+
+  const float v_amount = (rate * kRange);
+  start_uv_.y = kBottom - v_amount;
 }
 
 //------------------------------------------------
 // Drawの前後処理
 //------------------------------------------------
-void Bar::_PreProcessOfDraw(void) {
+void TensionTopLayer::_PreProcessOfDraw(void) {
 }
 
-void Bar::_PostProcessOfDraw(void) {
-}
-
-//------------------------------------------------
-// Update pos and size
-//------------------------------------------------
-void Bar::_UpdatePosAndSize(const float rate) {
-  assert(0.0f <= rate && rate <= 1.0f);
-  size_.x = original_size_.x * rate;
-  pos_.x = original_position_.x + size_.x * 0.5f;
+void TensionTopLayer::_PostProcessOfDraw(void) {
 }

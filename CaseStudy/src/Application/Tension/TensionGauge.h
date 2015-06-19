@@ -8,9 +8,8 @@
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 // class declaration
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
-class Bar;
-class Board;
-class Frame;
+class Object2D;
+class TensionTopLayer;
 class ValueActiveUpdater;
 class ValuePassiveUpdater;
 
@@ -43,9 +42,8 @@ private:
   void _UpdateTension(void);
 
   float tension_;
-  Bar* p_bar_;
-  Board* p_board_;
-  Frame* p_frame_;
+  Object2D* p_frame_;
+  TensionTopLayer* p_top_layer_;
   ValueActiveUpdater* p_value_active_updater_;
   ValuePassiveUpdater* p_value_passive_updater_;
 };

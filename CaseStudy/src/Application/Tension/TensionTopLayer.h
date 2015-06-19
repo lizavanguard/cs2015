@@ -1,6 +1,6 @@
 //==============================================================================
 //
-// Object2D
+// TensionTopLayer
 // Author: Shimizu Shoji
 //
 //==============================================================================
@@ -8,24 +8,25 @@
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 // include
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
-#include "Application/Object/ObjectBase.h"
+#include "Application/Object/Object2D/Object2D.h"
 
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 // class definition
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
-class Object2D : public ObjectBase {
+class TensionTopLayer : public Object2D {
 public:
   // ctor
-  Object2D(const D3DXVECTOR3& pos, const D3DXVECTOR2& size, const char* p_texture_filename);
+  TensionTopLayer(const D3DXVECTOR3& pos, const D3DXVECTOR2& size);
 
-  // dtor
-  ~Object2D();
+  // Update size
+  // 0-1の間で値を渡すとサイズを更新する
+  void UpdateSize(float rate);
 
 protected:
-  // 描画の前後処理
-  void _PreProcessOfDraw(void) override {};
-  void _PostProcessOfDraw(void) override {};
+  // Drawの前後処理
+  void _PreProcessOfDraw(void) override;
+  void _PostProcessOfDraw(void) override;
 
-private:
-  void _Draw(void);
+  float original_height_;
+  float original_bottom_;
 };

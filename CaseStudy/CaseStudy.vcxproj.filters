@@ -105,6 +105,9 @@
     <ClCompile Include="src\Application\Object\Object2D\Object2D.cpp">
       <Filter>Application\Object\Object2D</Filter>
     </ClCompile>
+    <ClCompile Include="src\Application\Tension\TensionTopLayer.cpp">
+      <Filter>Application\Tension</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Framework">
@@ -322,6 +325,9 @@
     </ClInclude>
     <ClInclude Include="src\Application\Sound\sound.h">
       <Filter>Application\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\Tension\TensionTopLayer.h">
+      <Filter>Application\Tension</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

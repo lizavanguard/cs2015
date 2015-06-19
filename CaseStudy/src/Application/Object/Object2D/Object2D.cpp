@@ -19,7 +19,10 @@
 //------------------------------------------------
 // ctor
 //------------------------------------------------
-Object2D::Object2D() {
+Object2D::Object2D(const D3DXVECTOR3& pos, const D3DXVECTOR2& size, const char* p_texture_filename) {
+  SetTexture(p_texture_filename);
+  pos_ = pos;
+  size_ = size;
 }
 
 //------------------------------------------------

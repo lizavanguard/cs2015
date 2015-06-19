@@ -29,6 +29,7 @@
     <ClCompile Include="src\Application\Sound\sound.cpp" />
     <ClCompile Include="src\Application\Stage\Stage.cpp" />
     <ClCompile Include="src\Application\Tension\TensionGauge.cpp" />
+    <ClCompile Include="src\Application\Tension\TensionTopLayer.cpp" />
     <ClCompile Include="src\Application\Utility\ValueActiveUpdater.cpp" />
     <ClCompile Include="src\Application\Utility\ValuePassiveUpdater.cpp" />
     <ClCompile Include="src\Framework\DebugProc\DebugProc.cpp" />
@@ -70,6 +71,7 @@
     <ClInclude Include="src\Application\Sound\sound.h" />
     <ClInclude Include="src\Application\Stage\Stage.h" />
     <ClInclude Include="src\Application\Tension\TensionGauge.h" />
+    <ClInclude Include="src\Application\Tension\TensionTopLayer.h" />
     <ClInclude Include="src\Application\Utility\ValueActiveUpdater.h" />
     <ClInclude Include="src\Application\Utility\ValuePassiveUpdater.h" />
     <ClInclude Include="src\Framework\DebugProc\DebugProc.h" />
