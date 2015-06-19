@@ -26,7 +26,6 @@
     <ClCompile Include="src\Application\Object\Ready.cpp" />
     <ClCompile Include="src\Application\Object\Tori.cpp" />
     <ClCompile Include="src\Application\Object\Uriel.cpp" />
-    <ClCompile Include="src\Application\Sound\sound.cpp" />
     <ClCompile Include="src\Application\Stage\Stage.cpp" />
     <ClCompile Include="src\Application\Tension\TensionGauge.cpp" />
     <ClCompile Include="src\Application\Tension\TensionTopLayer.cpp" />
@@ -43,6 +42,7 @@
     <ClCompile Include="src\Framework\Input\InputMouse.cpp" />
     <ClCompile Include="src\Framework\Input\InputXInput.cpp" />
     <ClCompile Include="src\Framework\Scene\SceneManager.cpp" />
+    <ClCompile Include="src\Framework\Sound\sound.cpp" />
     <ClCompile Include="src\Framework\Texture\TextureManager.cpp" />
     <ClCompile Include="src\Framework\Utility\Mutex.cpp" />
     <ClCompile Include="src\Framework\Utility\MutexCreator.cpp" />
@@ -68,7 +68,6 @@
     <ClInclude Include="src\Application\Object\Ready.h" />
     <ClInclude Include="src\Application\Object\Tori.h" />
     <ClInclude Include="src\Application\Object\Uriel.h" />
-    <ClInclude Include="src\Application\Sound\sound.h" />
     <ClInclude Include="src\Application\Stage\Stage.h" />
     <ClInclude Include="src\Application\Tension\TensionGauge.h" />
     <ClInclude Include="src\Application\Tension\TensionTopLayer.h" />
@@ -92,6 +91,7 @@
     <ClInclude Include="src\Framework\Scene\Scene.h" />
     <ClInclude Include="src\Framework\Scene\SceneFactory.h" />
     <ClInclude Include="src\Framework\Scene\SceneManager.h" />
+    <ClInclude Include="src\Framework\Sound\sound.h" />
     <ClInclude Include="src\Framework\Texture\TextureManager.h" />
     <ClInclude Include="src\Framework\Texture\TextureManagerHolder.h" />
     <ClInclude Include="src\Framework\Utility\Creation.hpp" />

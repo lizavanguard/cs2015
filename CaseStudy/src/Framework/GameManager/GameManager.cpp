@@ -13,13 +13,13 @@
 #include "Framework/Input/InputManager.h"
 #include "Framework/Input/InputManagerHolder.h"
 #include "Framework/Scene/SceneManager.h"
+#include "Framework/Sound/sound.h"
 #include "Framework/Texture/TextureManager.h"
 #include "Framework/Texture/TextureManagerHolder.h"
 #include "Framework/Utility/Utility.h"
 
 #include "Application/Game/SceneGame.h"  // HACK: –³—‚â‚è
 
-#include "Application/Sound/sound.h"
 
 
 //==============================================================================
@@ -56,7 +56,7 @@ GameManager::GameManager( HINSTANCE hInstance, HWND hWnd, LPDIRECT3DDEVICE9 pDev
   Scene* pFirstScene = new SceneGame();
   pSceneManager_ = new SceneManager(pFirstScene);
 
-  //InitSound(hWnd);
+  InitSound(hWnd);
 }
 
 
@@ -64,7 +64,7 @@ GameManager::GameManager( HINSTANCE hInstance, HWND hWnd, LPDIRECT3DDEVICE9 pDev
 // dtor
 //------------------------------------------------
 GameManager::~GameManager() {
-  //UninitSound();
+  UninitSound();
 
   SafeDelete(pTextureManager_);
 
@@ -72,7 +72,7 @@ GameManager::~GameManager() {
 
   SafeDelete(pInputManager_);
 
-	pDebugProc_->Uninit();
+  pDebugProc_->Uninit();
   SafeDelete(pDebugProc_);
 }
 
