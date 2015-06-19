@@ -318,6 +318,7 @@ void Uriel::UpdateRunaway(void){
     SetAnimaton(ANIMATION_URIEL_SLEEP);
     runaway_timer_ = 0;
     p_tension_gauge_->CoolDown();
+    boro_gage_max_ = false;
   }
 
   ++runaway_timer_;
