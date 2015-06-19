@@ -41,9 +41,6 @@
     <ClCompile Include="src\Application\Game\SceneGame.cpp">
       <Filter>Application\Game</Filter>
     </ClCompile>
-    <ClCompile Include="src\Framework\Texture\TextureManager.cpp">
-      <Filter>Framework\Texture</Filter>
-    </ClCompile>
     <ClCompile Include="src\Framework\Utility\MutexCreator.cpp">
       <Filter>Framework\Utilty</Filter>
     </ClCompile>
@@ -102,6 +99,12 @@
     <ClCompile Include="src\Application\Utility\ValueActiveUpdater.cpp">
       <Filter>Application\Utility</Filter>
     </ClCompile>
+    <ClCompile Include="src\Application\Sound\sound.cpp">
+      <Filter>Application\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Framework\Texture\TextureManager.cpp">
+      <Filter>Framework\Texture</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Framework">
@@ -154,6 +157,9 @@
     </Filter>
     <Filter Include="Application\Utility">
       <UniqueIdentifier>{68fbf595-3a3c-4487-8014-a2415cd9a7c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Sound">
+      <UniqueIdentifier>{7685ae41-ee2b-4ee0-8afd-ec26a9c3f114}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -313,6 +319,9 @@
     </ClInclude>
     <ClInclude Include="src\Application\Utility\ValueActiveUpdater.h">
       <Filter>Application\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\Sound\sound.h">
+      <Filter>Application\Sound</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
