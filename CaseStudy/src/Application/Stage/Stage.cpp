@@ -24,10 +24,10 @@ const int mapdata[] =
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+  1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+  1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+  1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+  1, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 };
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -196,14 +196,14 @@ void Stage::HitManage(int id, HIT_CHECK* check)
   check->center = mapdata[id];
   int data_id_ = map_width_ * map_height_;
   //
-  if(id + map_height_ < data_id_)
+  if (id + map_width_ < data_id_)
   {
-    check->bottom = mapdata[id + map_height_];
+    check->bottom = mapdata[id + map_width_];
   }
   //
-  if(id - map_height_ > 0)
+  if (id - map_width_ > 0)
   {
-    check->up = mapdata[id - map_height_];
+    check->up = mapdata[id - map_width_];
   }
   //
   if(id % map_width_ + 1 != map_width_ )
@@ -213,27 +213,27 @@ void Stage::HitManage(int id, HIT_CHECK* check)
   //
   if(id % map_width_ - 1 != -1 )
   {
-    check->right = mapdata[id - 1];
+    check->left = mapdata[id - 1];
   }
   //
   if (check->bottom != -1 && check->right != -1)
   {
-    check->bottom_right = mapdata[id + map_height_ + 1];
+    check->bottom_right = mapdata[id + map_width_ + 1];
   }
   //
   if (check->bottom != -1 && check->left != -1)
   {
-    check->bottom_right = mapdata[id + map_height_ - 1];
+    check->bottom_left = mapdata[id + map_width_ - 1];
   }
   //
   if (check->up != -1 && check->right != -1)
   {
-    check->bottom_right = mapdata[id - map_height_ + 1];
+    check->up_right = mapdata[id - map_width_ + 1];
   }
   //
   if (check->up != -1 && check->left != -1)
   {
-    check->bottom_right = mapdata[id - map_height_ - 1];
+    check->up_left = mapdata[id - map_width_ - 1];
   }
 }
 D3DXVECTOR3 Stage::GetGoalMaptip()
