@@ -53,10 +53,10 @@ GameManager::GameManager( HINSTANCE hInstance, HWND hWnd, LPDIRECT3DDEVICE9 pDev
   pTextureManager_ = new TextureManager(pDevice);
   TextureManagerHolder::Instance().SetTextureManager(pTextureManager_);
 
+  InitSound(hWnd);
+ 
   Scene* pFirstScene = new SceneGame();
   pSceneManager_ = new SceneManager(pFirstScene);
-
-  InitSound(hWnd);
 }
 
 
@@ -64,11 +64,11 @@ GameManager::GameManager( HINSTANCE hInstance, HWND hWnd, LPDIRECT3DDEVICE9 pDev
 // dtor
 //------------------------------------------------
 GameManager::~GameManager() {
+  SafeDelete(pSceneManager_);
+
   UninitSound();
 
   SafeDelete(pTextureManager_);
-
-  SafeDelete(pSceneManager_);
 
   SafeDelete(pInputManager_);
 

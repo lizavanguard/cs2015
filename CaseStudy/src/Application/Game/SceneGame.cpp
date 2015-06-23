@@ -11,6 +11,7 @@
 #include "Framework/GameManager/GameManager.h"
 #include "Framework/Input/InputManagerHolder.h"
 #include "Framework/Input/InputKeyboard.h"
+#include "Framework/Sound/sound.h"
 
 #include "Application/Object/BackGround.h"
 #include "Application/Object/Object.h"
@@ -50,6 +51,8 @@ SceneGame::SceneGame()
   p_ready_ = new Ready();
 
   p_back_ = new BackGround();
+
+  PlaySound(SOUND_LABEL_BGM_DEMO0);
 }
 
 
@@ -57,6 +60,8 @@ SceneGame::SceneGame()
 // dtor
 //------------------------------------------------
 SceneGame::~SceneGame() {
+  StopSound(SOUND_LABEL_BGM_DEMO0);
+
   SafeDelete(p_player_);
   SafeDelete(p_ready_);
   SafeDelete(p_uriel_);

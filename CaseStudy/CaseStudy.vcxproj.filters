@@ -162,7 +162,7 @@
       <UniqueIdentifier>{68fbf595-3a3c-4487-8014-a2415cd9a7c0}</UniqueIdentifier>
     </Filter>
     <Filter Include="Framework\Sound">
-      <UniqueIdentifier>{f7962137-a462-401b-aa0c-87da2fb966bc}</UniqueIdentifier>
+      <UniqueIdentifier>{a60a3f9c-2c35-48ee-a1c3-fcd12fe60b69}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
