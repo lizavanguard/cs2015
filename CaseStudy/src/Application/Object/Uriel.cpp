@@ -179,13 +179,6 @@ void Uriel::_PreProcessOfDraw(void) {
 }
 
 //=============================================================================
-// ボーロチャージが可能な状態なら
-//-----------------------------------------------------------------------------
-bool Uriel::CanBoroCharge(void) const {
-  return true;
-}
-
-//=============================================================================
 // アニメーションの設定
 //-----------------------------------------------------------------------------
 void Uriel::SetAnimaton(ANIMATION_EVENT animation_event){
@@ -482,16 +475,6 @@ bool Uriel::CheckHit(const D3DXVECTOR3& pos, const D3DXVECTOR2& size) {
                         (pos.y - size.y / 2) < (pos_.y - size_.y / 2);
 
   return is_hit_x && is_hit_y;
-}
-
-//=============================================================================
-// ボーロ判定
-//-----------------------------------------------------------------------------
-bool Uriel::CheckImageHit(const D3DXVECTOR3& pos, const D3DXVECTOR2& size) {
-  D3DXVECTOR3 boro_pos = pos;
-  //boro_pos.y += size_.y * 0.5f;
-
-  return CheckHit(boro_pos, size);
 }
 
 //=============================================================================

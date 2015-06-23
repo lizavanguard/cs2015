@@ -51,7 +51,7 @@ void Collision::CollideUrielToPlayersBoro(void) {
   }
 
   // get uriels state
-  if (!uriel_.CanBoroCharge()) {
+  if (!uriel_.CheckBoro()) {
     return;
   }
 
