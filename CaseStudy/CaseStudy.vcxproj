@@ -12,6 +12,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Application\Collison\Collision.cpp" />
+    <ClCompile Include="src\Application\Camera\camera.cpp" />
+    <ClCompile Include="src\Application\Controller\InputController.cpp" />
     <ClCompile Include="src\Application\Game\SceneGame.cpp" />
     <ClCompile Include="src\Application\Game\SceneGameFactory.cpp" />
     <ClCompile Include="src\Application\Object\AnimationObject\AnimationObject.cpp" />
@@ -22,7 +24,9 @@
     <ClCompile Include="src\Application\Object\Object2D\Bar.cpp" />
     <ClCompile Include="src\Application\Object\Object2D\Board.cpp" />
     <ClCompile Include="src\Application\Object\Object2D\Frame.cpp" />
+    <ClCompile Include="src\Application\Object\Object2D\NumberObject.cpp" />
     <ClCompile Include="src\Application\Object\Object2D\Object2D.cpp" />
+    <ClCompile Include="src\Application\Object\Object2D\Timer.cpp" />
     <ClCompile Include="src\Application\Object\ObjectBase.cpp" />
     <ClCompile Include="src\Application\Object\player.cpp" />
     <ClCompile Include="src\Application\Object\Ready.cpp" />
@@ -57,6 +61,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application\Collison\Collision.h" />
+    <ClInclude Include="src\Application\Camera\camera.h" />
+    <ClInclude Include="src\Application\common.h" />
+    <ClInclude Include="src\Application\Controller\InputController.h" />
     <ClInclude Include="src\Application\Game\SceneGame.h" />
     <ClInclude Include="src\Application\Game\SceneGameFactory.h" />
     <ClInclude Include="src\Application\Object\AnimationObject\AnimationObject.h" />
@@ -67,7 +74,9 @@
     <ClInclude Include="src\Application\Object\Object2D\Bar.h" />
     <ClInclude Include="src\Application\Object\Object2D\Board.h" />
     <ClInclude Include="src\Application\Object\Object2D\Frame.h" />
+    <ClInclude Include="src\Application\Object\Object2D\NumberObject.h" />
     <ClInclude Include="src\Application\Object\Object2D\Object2D.h" />
+    <ClInclude Include="src\Application\Object\Object2D\Timer.h" />
     <ClInclude Include="src\Application\Object\ObjectBase.h" />
     <ClInclude Include="src\Application\Object\player.h" />
     <ClInclude Include="src\Application\Object\Ready.h" />
@@ -82,6 +91,7 @@
     <ClInclude Include="src\Framework\DebugProc\DebugProc.h" />
     <ClInclude Include="src\Framework\DirectX\DeviceHolder.h" />
     <ClInclude Include="src\Framework\DirectX\DirectXConst.h" />
+    <ClInclude Include="src\Framework\FrameworkOption.h" />
     <ClInclude Include="src\Framework\GameManager\GameManager.h" />
     <ClInclude Include="src\Framework\GameWindow\GameBase.h" />
     <ClInclude Include="src\Framework\GameWindow\GameDirectX.h" />

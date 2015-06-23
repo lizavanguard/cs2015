@@ -13,9 +13,12 @@
 #include "Framework/Input/InputManagerHolder.h"
 #include "Framework/Input/InputKeyboard.h"
 #include "Framework/Sound/sound.h"
+#include "Framework\FrameworkOption.h"
 #include "Framework/Texture/TextureManagerHolder.h"
+#include "Framework/Input/InputXInput.h"
 #include "AnimationObject\TextureAnimation.h"
-#include "Uriel.h"
+#include "Application\Stage\Stage.h"
+#include "Application\Camera\camera.h"
 #include "player.h"
 
 //******************************************************************************
@@ -38,11 +41,13 @@ const int kBoroRecastTime = 60;
 // Author  :  SHOHEI MATSUMOTO
 // 更新日  :  2015/05/22
 //==============================================================================
-Player::Player(ANIMATION_EVENT animation_event)
+Player::Player(ANIMATION_EVENT animation_event , Stage* stage)
   : AnimationObject(animation_event)
   , player_mode_(MODE_NORMAL)
   , count_(0)
   , is_eat_(false) {
+    stage_ = stage;
+    stageSize_ = stage_->GetStageSize();
 }
 
 //==============================================================================
@@ -64,18 +69,31 @@ Player::~Player(void){
 //==============================================================================
 void Player::Update(Uriel *uriel_){
   auto& pKeyboard = InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard();
+  auto& pJoypad = InputManagerHolder::Instance().GetInputManager().GetPrimaryDevice();
   // 移動
-  if (pKeyboard.IsPress(DIK_W)) {
-    pos_.y += kPlayerMoveSpeed;
+  if (pJoypad.IsPress(InputDevice::Pads::PAD_LTHUMB_UP) || pKeyboard.IsPress(DIK_W)) {
+      pos_.y += kPlayerMoveSpeed;
+      if (pos_.y + size_.y * 0.5f > stageSize_.y / 2.0f){
+          pos_.y = stageSize_.y / 2.0f - size_.y * 0.5f;
+      }
   }
-  if (pKeyboard.IsPress(DIK_S)) {
-    pos_.y -= kPlayerMoveSpeed;
+  if (pJoypad.IsPress(InputDevice::Pads::PAD_LTHUMB_RIGHT) || pKeyboard.IsPress(DIK_D)) {
+      pos_.x += kPlayerMoveSpeed;
+      if (pos_.x + size_.x * 0.5f > stageSize_.x / 2.0f){
+          pos_.x = stageSize_.x / 2.0f - size_.x * 0.5f;
+      }
   }
-  if (pKeyboard.IsPress(DIK_A)) {
-    pos_.x -= kPlayerMoveSpeed;
+  if (pJoypad.IsPress(InputDevice::Pads::PAD_LTHUMB_DOWN) || pKeyboard.IsPress(DIK_S)) {
+      pos_.y -= kPlayerMoveSpeed;
+      if (pos_.y - size_.y * 0.5f < -stageSize_.y / 2.0f){
+          pos_.y = -stageSize_.y / 2.0f + size_.y * 0.5f;
+      }
   }
-  if (pKeyboard.IsPress(DIK_D)) {
-    pos_.x += kPlayerMoveSpeed;
+  if (pJoypad.IsPress(InputDevice::Pads::PAD_LTHUMB_LEFT) || pKeyboard.IsPress(DIK_A)) {
+      pos_.x -= kPlayerMoveSpeed;
+      if (pos_.x - size_.x * 0.5f < -stageSize_.x / 2.0f){
+          pos_.x = -stageSize_.x / 2.0f + size_.x * 0.5f;
+      }
   }
 
   if (pKeyboard.IsPress(DIK_9)) {
@@ -85,26 +103,26 @@ void Player::Update(Uriel *uriel_){
 
   // ガラガラモード切替
   // 誘導
-  if (pKeyboard.IsPress(DIK_RETURN)){
+  if (pJoypad.IsPress(InputDevice::Pads::PAD_A) || pKeyboard.IsPress(DIK_RETURN)) {
     ChangeAnimation(MODE_GUIDE);
     PlaySound(SOUND_LABEL_SE_CALL0);
   }
-  else if (pKeyboard.IsRelease(DIK_RETURN)){
-    ChangeAnimation(MODE_NORMAL);
+  else if (pJoypad.IsRelease(InputDevice::Pads::PAD_A) || pKeyboard.IsRelease(DIK_RETURN)) {
+      ChangeAnimation(MODE_NORMAL);
   }
   // ギミックON/OFF
-  if (pKeyboard.IsTrigger(DIK_G)){
+  if (pJoypad.IsTrigger(InputDevice::Pads::PAD_Y) || pKeyboard.IsTrigger(DIK_G)) {
     ChangeAnimation(MODE_GIMMICK);
     PlaySound(SOUND_LABEL_SE_CALL1);
   }
 
   // ボーロ
   if (!is_eat_) {
-    if (pKeyboard.IsTrigger(DIK_B)) {
+    if (pJoypad.IsTrigger(InputDevice::Pads::PAD_X) || pKeyboard.IsTrigger(DIK_B)) {
       ChangeAnimation(MODE_BORO);
       PlaySound(SOUND_LABEL_SE_EAT);
     }
-    else if (pKeyboard.IsRelease(DIK_B)) {
+    else if (pJoypad.IsRelease(InputDevice::Pads::PAD_X) || pKeyboard.IsRelease(DIK_B)){
       ChangeAnimation(MODE_NORMAL);
     }
   }

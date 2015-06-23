@@ -24,6 +24,8 @@ class Ready;
 class Stage;
 class Tori;
 class TensionGauge;
+class Timer;
+class Camera;
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // class definition
@@ -55,6 +57,8 @@ private:
   TensionGauge* p_tension_gauge_;
   Tori* p_tori_;
   Uriel* p_uriel_;
+  Timer* p_timer_;
+  Camera* p_camera;
 };
 
 

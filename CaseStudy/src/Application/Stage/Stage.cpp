@@ -153,13 +153,6 @@ void Stage::Draw(void) {
                          , stage_[id].pos_.z);
     p_device->SetTransform(D3DTS_WORLD, &mtx_world);
 
-    D3DXMATRIX mtx_view;
-    D3DXMatrixLookAtLH(&mtx_view, &D3DXVECTOR3(0, 0, -1), &D3DXVECTOR3(0, 0, 0), &D3DXVECTOR3(0, 1, 0));
-    p_device->SetTransform(D3DTS_VIEW, &mtx_view);
-
-    D3DXMATRIX mtx_projection;
-    D3DXMatrixOrthoLH(&mtx_projection, 1280.0f, 720.0f, 0.0f, 10.0f);
-    p_device->SetTransform(D3DTS_PROJECTION, &mtx_projection);
     //p_device->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
     TextureManagerHolder::Instance().GetTextureManager().SetTexture(stage_[id].texture_id_);
 

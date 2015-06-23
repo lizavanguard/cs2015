@@ -102,6 +102,7 @@
     <ClCompile Include="src\Application\Object\Object2D\Object2D.cpp">
       <Filter>Application\Object\Object2D</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="src\Application\Object\BackGround\BackGround.cpp">
       <Filter>Application\Object\BackGround</Filter>
     </ClCompile>
@@ -118,6 +119,19 @@
     </ClCompile>
     <ClCompile Include="src\Framework\Sound\sound.cpp">
       <Filter>Framework\Sound</Filter>
+=======
+    <ClCompile Include="src\Application\Object\Object2D\Timer.cpp">
+      <Filter>Application\Object\Object2D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application\Object\Object2D\NumberObject.cpp">
+      <Filter>Application\Object\Object2D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application\Controller\InputController.cpp">
+      <Filter>Application\Controler</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application\Camera\camera.cpp">
+      <Filter>Application\Camera</Filter>
+>>>>>>> rockman
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -183,6 +197,12 @@
     </Filter>
     <Filter Include="Framework\Collision">
       <UniqueIdentifier>{7de7ffc2-cac3-423a-82c8-581ad7a733cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Controler">
+      <UniqueIdentifier>{46d0886d-b649-4083-962b-ef4adafe807b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Camera">
+      <UniqueIdentifier>{ed525701-73be-458c-8b24-a0a64ef62b38}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -360,6 +380,24 @@
     </ClInclude>
     <ClInclude Include="src\Framework\Collision\CollisionHelper.h">
       <Filter>Framework\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\Object\Object2D\Timer.h">
+      <Filter>Application\Object\Object2D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\Object\Object2D\NumberObject.h">
+      <Filter>Application\Object\Object2D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\Controller\InputController.h">
+      <Filter>Application\Controler</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\Camera\camera.h">
+      <Filter>Application\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\common.h">
+      <Filter>Application</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Framework\FrameworkOption.h">
+      <Filter>Framework</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

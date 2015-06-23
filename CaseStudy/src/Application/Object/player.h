@@ -14,6 +14,7 @@
 //******************************************************************************
 // インクルードファイル
 //******************************************************************************
+#include "Uriel.h"
 #include "AnimationObject/AnimationObject.h"
 
 //******************************************************************************
@@ -33,7 +34,7 @@ public:
   // funciton ==================================
 public:
   // ctor
-  Player(ANIMATION_EVENT animation_event);
+  Player(ANIMATION_EVENT animation_event , Stage* stage);
   // dtor
   virtual ~Player();
   // update
@@ -60,6 +61,8 @@ private:
   PLAYER_MODE player_mode_;
   int count_;
   bool is_eat_;
+  Stage* stage_;
+  D3DXVECTOR2 stageSize_;
 };
 
 #endif
