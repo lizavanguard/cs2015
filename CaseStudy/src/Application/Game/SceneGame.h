@@ -16,7 +16,7 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // class declaration
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-class BackGround;
+class BackGroundManager;
 class Uriel;
 class Player;
 class Ready;
@@ -46,7 +46,7 @@ public:
 private:
   // property
   bool is_end_;
-  BackGround* p_back_;
+  BackGroundManager* p_background_manager_;
   Player* p_player_;
   Ready* p_ready_;
   Stage* p_stage_;

@@ -12,7 +12,7 @@
 #include "Framework/Input/InputManagerHolder.h"
 #include "Framework/Input/InputKeyboard.h"
 
-#include "Application/Object/BackGround.h"
+#include "Application/Object/BackGround/BackGroundManager.h"
 #include "Application/Object/Object.h"
 #include "Application/Object/player.h"
 #include "Application/Object/Ready.h"
@@ -29,7 +29,7 @@
 //------------------------------------------------
 SceneGame::SceneGame()
     : is_end_(false)
-    , p_back_(nullptr)
+    , p_background_manager_(nullptr)
     , p_player_(nullptr)
     , p_ready_(nullptr)
     , p_stage_(nullptr)
@@ -49,7 +49,7 @@ SceneGame::SceneGame()
 
   p_ready_ = new Ready();
 
-  p_back_ = new BackGround();
+  p_background_manager_ = new BackGroundManager();
 }
 
 
@@ -63,7 +63,7 @@ SceneGame::~SceneGame() {
   SafeDelete(p_tori_);
   SafeDelete(p_tension_gauge_);
   SafeDelete(p_stage_);
-  SafeDelete(p_back_);
+  SafeDelete(p_background_manager_);
 }
 
 
@@ -84,6 +84,8 @@ void SceneGame::Update(SceneManager* p_scene_manager, const float elapsed_time) 
 //  if (p_tori_->GetHitCheck()){
 //    return;
 //  }
+
+  p_background_manager_->Update();
 
   // ウリエル更新
   p_uriel_->Update();
@@ -106,7 +108,7 @@ void SceneGame::Update(SceneManager* p_scene_manager, const float elapsed_time) 
 // Draw
 //------------------------------------------------
 void SceneGame::Draw(void) {
-  p_back_->Draw();
+  p_background_manager_->Draw();
 
   p_stage_->Draw();
 

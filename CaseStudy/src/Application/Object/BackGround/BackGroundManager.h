@@ -1,6 +1,6 @@
 //==============================================================================
 //
-// BackGround
+// BackGroundManager
 // Author: Shimizu Shoji
 //
 //==============================================================================
@@ -8,20 +8,32 @@
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 // include
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
-#include "Application/Object/Object.h"
+#include <list>
+
+//--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
+// class declaration
+//--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
+class BackGround;
 
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 // class definition
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
-class BackGround : public Object {
+class BackGroundManager {
 public:
   // ctor
-  BackGround();
+  BackGroundManager();
 
   // dtor
-  ~BackGround();
+  ~BackGroundManager();
+
+  // Update
+  void Update(void);
 
   // Draw
-  virtual void _PreProcessOfDraw(void);
-  virtual void _PostProcessOfDraw(void);
+  void Draw(void);
+
+private:
+  void _ForEach(void (*function)(BackGround*));
+
+  std::list<BackGround*> back_grounds_;
 };

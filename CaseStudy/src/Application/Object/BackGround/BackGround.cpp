@@ -14,10 +14,10 @@
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 namespace {
 
-const char* kTexturename = "data/Texture/îwåi.jpg";
 
 const D3DXVECTOR3 kPos = {0, -360, 0};
 const D3DXVECTOR2 kSize = {1280, 720};
+
 
 }
 
@@ -27,8 +27,9 @@ const D3DXVECTOR2 kSize = {1280, 720};
 //------------------------------------------------
 // ctor
 //------------------------------------------------
-BackGround::BackGround() {
-  SetTexture(kTexturename);
+BackGround::BackGround(const char* p_filename, const float speed_u)
+    : speed_u_(speed_u) {
+  SetTexture(p_filename);
   size_ = kSize;
   pos_ = kPos;
 }
@@ -39,6 +40,13 @@ BackGround::BackGround() {
 BackGround::~BackGround() {
 }
 
+//------------------------------------------------
+// Update
+//------------------------------------------------
+void BackGround::Update(void) {
+  start_uv_.x += speed_u_;
+  end_uv_.x += speed_u_;
+}
 
 //------------------------------------------------
 // Draw
