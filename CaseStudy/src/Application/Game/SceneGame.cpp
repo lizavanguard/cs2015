@@ -12,6 +12,7 @@
 #include "Framework/Input/InputManagerHolder.h"
 #include "Framework/Input/InputKeyboard.h"
 
+#include "Application/Collison/Collision.h"
 #include "Application/Object/BackGround.h"
 #include "Application/Object/Object.h"
 #include "Application/Object/player.h"
@@ -30,6 +31,7 @@
 SceneGame::SceneGame()
     : is_end_(false)
     , p_back_(nullptr)
+    , p_collision_(nullptr)
     , p_player_(nullptr)
     , p_ready_(nullptr)
     , p_stage_(nullptr)
@@ -50,6 +52,8 @@ SceneGame::SceneGame()
   p_ready_ = new Ready();
 
   p_back_ = new BackGround();
+
+  p_collision_ = new Collision(*p_player_, *p_uriel_);
 }
 
 
@@ -57,6 +61,7 @@ SceneGame::SceneGame()
 // dtor
 //------------------------------------------------
 SceneGame::~SceneGame() {
+  SafeDelete(p_collision_);
   SafeDelete(p_player_);
   SafeDelete(p_ready_);
   SafeDelete(p_uriel_);
@@ -92,6 +97,9 @@ void SceneGame::Update(SceneManager* p_scene_manager, const float elapsed_time) 
   p_player_->Update(p_uriel_);
 
   p_tension_gauge_->Update();
+
+  // Uriel x Player's boro
+  p_collision_->CollideUrielToPlayersBoro();
 
   if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_1)) {
     p_tension_gauge_->IncreaseTension();

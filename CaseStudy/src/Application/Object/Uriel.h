@@ -72,6 +72,9 @@ public:
   void SetAnimaton(ANIMATION_EVENT animation_event);
   void SetDestPos(const D3DXVECTOR3& pos);
 
+  // ボーロチャージが可能な状態なら
+  bool CanBoroCharge(void) const;
+
   // ボーロチャージ(ボーロチャージ出来ればtrueが返る)
   bool BoroChage(void);
 
@@ -80,6 +83,12 @@ public:
 
   // オブジェクトとのHit判定(by Shimizu)
   bool CheckHit(const D3DXVECTOR3& pos, const D3DXVECTOR2& size);
+
+  // 表示オブジェクトとのHit判定(by Shimizu)
+  bool CheckImageHit(const D3DXVECTOR3& pos, const D3DXVECTOR2& size);
+
+  // get
+  const D3DXVECTOR3& GetPos(void) const {return pos_;}
 
 private:
   void UpdateNeutral(void);

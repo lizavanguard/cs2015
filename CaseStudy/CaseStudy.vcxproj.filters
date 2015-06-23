@@ -105,6 +105,12 @@
     <ClCompile Include="src\Application\Object\Object2D\Object2D.cpp">
       <Filter>Application\Object\Object2D</Filter>
     </ClCompile>
+    <ClCompile Include="src\Application\Collison\Collision.cpp">
+      <Filter>Application\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Framework\Collision\CollisionHelper.cpp">
+      <Filter>Framework\Collision</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Framework">
@@ -160,6 +166,12 @@
     </Filter>
     <Filter Include="Application\Sound">
       <UniqueIdentifier>{7685ae41-ee2b-4ee0-8afd-ec26a9c3f114}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Collision">
+      <UniqueIdentifier>{913f5645-3923-4e97-a42d-5d7d84973616}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Collision">
+      <UniqueIdentifier>{7de7ffc2-cac3-423a-82c8-581ad7a733cb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -322,6 +334,12 @@
     </ClInclude>
     <ClInclude Include="src\Application\Sound\sound.h">
       <Filter>Application\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\Collison\Collision.h">
+      <Filter>Application\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Framework\Collision\CollisionHelper.h">
+      <Filter>Framework\Collision</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

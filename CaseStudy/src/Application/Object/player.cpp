@@ -96,29 +96,20 @@ void Player::Update(Uriel *uriel_){
   }
 
   // ボーロ
-  if (pKeyboard.IsTrigger(DIK_B)) {
-    // ウリエルちゃんが食べていなかったら ボーロが出る
-    if (!is_eat_) {
+  if (!is_eat_) {
+    if (pKeyboard.IsTrigger(DIK_B)) {
       ChangeAnimation(MODE_BORO);
     }
+    else if (pKeyboard.IsRelease(DIK_B)) {
+      ChangeAnimation(MODE_NORMAL);
+    }
   }
-  else if (pKeyboard.IsRelease(DIK_B)) {
-    ChangeAnimation(MODE_NORMAL);
-  }
-
 
   // モード
   switch (player_mode_) {
     case MODE_NORMAL: // 通常時
       break;
     case MODE_BORO: // ボーロ
-      // if ウリエルちゃんがボーロ食べたら 通常状態に戻す
-      // if (uriel->BoroCharge()) {
-      if (pKeyboard.IsTrigger(DIK_N)) {
-         ChangeAnimation(MODE_NORMAL);
-         is_eat_ = true;
-       }
-
       break;
     case MODE_GUIDE: // 誘導
       // ウリエルちゃん移動
@@ -194,5 +185,18 @@ void Player::ChangeAnimation(PLAYER_MODE mode){
   // カウントリセット
   count_ = 0;
 }
+
+//==============================================================================
+// ボーロ状態の終了
+// 引数    :  void
+// 戻り値  :  無し
+// Author  :  SHOJI SHIMIZU
+// 更新日  :  2015/06/22
+//==============================================================================
+void Player::FinishBoroState(void) {
+  ChangeAnimation(MODE_NORMAL);
+  is_eat_ = true;
+}
+
 
 // EOF
