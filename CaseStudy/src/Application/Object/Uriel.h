@@ -18,9 +18,9 @@
 #define URIEL_MOVE_SPPD (3.0f)                               // ウリエルの移動速度(通常)
 #define URIEL_MOVE_CHARGE_SPEED (URIEL_MOVE_SPPD * 1.5f)     // ウリエルの移動速度(チャージ)
 #define URIEL_MOVE_RUNAWAY_SPPD (URIEL_MOVE_SPPD * 2.0f)     // ウリエルの移動速度(暴走)
-#define URIEL_RUNAWAY_TIME (120)                             // ウリエルの暴走時間
+#define URIEL_RUNAWAY_TIME (180)                             // ウリエルの暴走時間
 #define URIEL_INDUCIBLE (400.0f)                             // ウリエルの誘導可能距離
-#define URIEL_SLEEP_TIME (300)                               // ウリエルの眠り時間
+#define URIEL_SLEEP_TIME (180)                               // ウリエルの眠り時間
 #define URIEL_BOROCHAGE_INTERVAL (60)                        // ボーロチャージできるまでのインターバル時間
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -41,7 +41,8 @@ typedef enum {
 
 typedef enum{
   BLOCK_DATA_ERROR = -1,
-  BLOCK_DATA_STAIRS,
+  BLOCK_DATA_UP_STAIRS,
+  BLOCK_DATA_DOWN_STAIRS,
   BLOCK_DATA_JUMP,
   BLOCK_DATA_MAX
 }BLOCK_DATA;
