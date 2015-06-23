@@ -11,6 +11,7 @@
 #include "Framework/GameManager/GameManager.h"
 #include "Framework/Input/InputManagerHolder.h"
 #include "Framework/Input/InputKeyboard.h"
+#include "Framework/Sound/sound.h"
 
 #include "Application/Collison/Collision.h"
 #include "Application/Object/BackGround/BackGroundManager.h"
@@ -54,6 +55,8 @@ SceneGame::SceneGame()
   p_background_manager_ = new BackGroundManager();
 
   p_collision_ = new Collision(*p_player_, *p_uriel_);
+
+  PlaySound(SOUND_LABEL_BGM_DEMO0);
 }
 
 
@@ -61,6 +64,8 @@ SceneGame::SceneGame()
 // dtor
 //------------------------------------------------
 SceneGame::~SceneGame() {
+  StopSound(SOUND_LABEL_BGM_DEMO0);
+
   SafeDelete(p_collision_);
   SafeDelete(p_player_);
   SafeDelete(p_ready_);

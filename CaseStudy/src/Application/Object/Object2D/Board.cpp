@@ -25,10 +25,8 @@ const DWORD kBoardColor = 0xff000000;
 //------------------------------------------------
 // ctor
 //------------------------------------------------
-Board::Board(const D3DXVECTOR3& pos, const D3DXVECTOR2& size) {
-  SetTexture(kTextureFilename);
-  pos_ = pos;
-  size_ = size;
+Board::Board(const D3DXVECTOR3& pos, const D3DXVECTOR2& size)
+    : Object2D(pos, size, kTextureFilename) {
   color_ = kBoardColor;
 }
 

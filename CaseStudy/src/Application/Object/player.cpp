@@ -12,6 +12,7 @@
 #include "Framework/DirectXHelper/DirectXConst.h"
 #include "Framework/Input/InputManagerHolder.h"
 #include "Framework/Input/InputKeyboard.h"
+#include "Framework/Sound/sound.h"
 #include "Framework/Texture/TextureManagerHolder.h"
 #include "AnimationObject\TextureAnimation.h"
 #include "Uriel.h"
@@ -86,6 +87,7 @@ void Player::Update(Uriel *uriel_){
   // 誘導
   if (pKeyboard.IsPress(DIK_RETURN)){
     ChangeAnimation(MODE_GUIDE);
+    PlaySound(SOUND_LABEL_SE_CALL0);
   }
   else if (pKeyboard.IsRelease(DIK_RETURN)){
     ChangeAnimation(MODE_NORMAL);
@@ -93,12 +95,14 @@ void Player::Update(Uriel *uriel_){
   // ギミックON/OFF
   if (pKeyboard.IsTrigger(DIK_G)){
     ChangeAnimation(MODE_GIMMICK);
+    PlaySound(SOUND_LABEL_SE_CALL1);
   }
 
   // ボーロ
   if (!is_eat_) {
     if (pKeyboard.IsTrigger(DIK_B)) {
       ChangeAnimation(MODE_BORO);
+      PlaySound(SOUND_LABEL_SE_EAT);
     }
     else if (pKeyboard.IsRelease(DIK_B)) {
       ChangeAnimation(MODE_NORMAL);
