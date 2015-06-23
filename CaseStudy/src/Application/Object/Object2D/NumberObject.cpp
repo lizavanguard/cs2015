@@ -49,14 +49,14 @@ static const char *s_NumberData[] = {
 // Author  :  SHOHEI MATSUMOTO
 // çXêVì˙  :  2015/06/12
 //==============================================================================
-NumberObject::NumberObject(const D3DXVECTOR3 &pos, const float &rot, const D3DXVECTOR2 &size, NUMBER_TYPE type) :Object2D(){
+NumberObject::NumberObject(const D3DXVECTOR3 &pos, const float &rot, const D3DXVECTOR2 &size, NUMBER_TYPE type) :Object2D(pos, size, s_NumberData[type]) {
   value_ = 0;
 
-  pos_ = pos;
+  //pos_ = pos;
   rot_ = rot;
-  size_ = size;
+  //size_ = size;
   type_ = type;
-  SetTexture(s_NumberData[type]);
+  //SetTexture(s_NumberData[type]);
 }
 
 //==============================================================================
