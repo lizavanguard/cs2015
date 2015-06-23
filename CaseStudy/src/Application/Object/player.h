@@ -45,8 +45,13 @@ public:
   // アニメーションの変更
   void ChangeAnimation(PLAYER_MODE mode);
 
+  // ボーロ状態の終了
+  void FinishBoroState(void);
+
   // get
+  const D3DXVECTOR3& GetPos(void) const { return pos_; }
   bool IsActing(void) const { return player_mode_ != MODE_NORMAL; }
+  bool IsBoroState(void) const { return player_mode_ == MODE_BORO; }
   PLAYER_MODE GetPlayerMode(void) const { return player_mode_; }
 
   // parameter =================================
