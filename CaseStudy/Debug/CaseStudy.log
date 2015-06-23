@@ -1,0 +1,52 @@
+﻿2015/06/23 14:19:21 にビルドを開始しました。
+     1>ノード 2 上のプロジェクト "E:\ＨＡＬ\4年\AT4C\プログラム\a版++\CaseStudy_2015_06_19_1435\CaseStudy.vcxproj" (Build ターゲット)。
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"E:\ＨＡＬ\4年\AT4C\プログラム\a版++\CaseStudy_2015_06_19_1435\\src" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _MBCS /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Debug\CaseStudy.pch" /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /FIstdafx.h /analyze- /errorReport:prompt src\Application\Camera\camera.cpp
+         camera.cpp
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\ＨＡＬ\4年\AT4C\プログラム\a版++\CaseStudy_2015_06_19_1435\Debug\CaseStudy.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\ＨＡＬ\4年\AT4C\プログラム\a版++\CaseStudy_2015_06_19_1435\Debug\CaseStudy.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\ＨＡＬ\4年\AT4C\プログラム\a版++\CaseStudy_2015_06_19_1435\Debug\CaseStudy.lib" /MACHINE:X86 Debug\camera.obj
+         Debug\InputController.obj
+         Debug\SceneGame.obj
+         Debug\SceneGameFactory.obj
+         Debug\AnimationObject.obj
+         Debug\TextureAnimation.obj
+         Debug\BackGround.obj
+         Debug\Object.obj
+         Debug\Bar.obj
+         Debug\Board.obj
+         Debug\Frame.obj
+         Debug\NumberObject.obj
+         Debug\Object2D.obj
+         Debug\Timer.obj
+         Debug\ObjectBase.obj
+         Debug\player.obj
+         Debug\Ready.obj
+         Debug\Tori.obj
+         Debug\Uriel.obj
+         Debug\sound.obj
+         Debug\Stage.obj
+         Debug\TensionGauge.obj
+         Debug\ValueActiveUpdater.obj
+         Debug\ValuePassiveUpdater.obj
+         Debug\DebugProc.obj
+         Debug\GameManager.obj
+         Debug\GameDirectX.obj
+         Debug\GameWindow.obj
+         Debug\Input.obj
+         Debug\InputDirect.obj
+         Debug\InputKeyboard.obj
+         Debug\InputManager.obj
+         Debug\InputMouse.obj
+         Debug\InputXInput.obj
+         Debug\SceneManager.obj
+         Debug\TextureManager.obj
+         Debug\Mutex.obj
+         Debug\MutexCreator.obj
+         Debug\main.obj
+         Debug\stdafx.obj
+         CaseStudy.vcxproj -> E:\ＨＡＬ\4年\AT4C\プログラム\a版++\CaseStudy_2015_06_19_1435\Debug\CaseStudy.exe
+     1>プロジェクト "E:\ＨＡＬ\4年\AT4C\プログラム\a版++\CaseStudy_2015_06_19_1435\CaseStudy.vcxproj" (Build ターゲット) のビルドが完了しました。
+
+ビルドに成功しました。
+
+経過時間 00:00:00.85

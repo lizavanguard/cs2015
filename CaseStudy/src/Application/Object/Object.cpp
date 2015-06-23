@@ -15,6 +15,7 @@
 #include "Framework/GameWindow/GameDirectX.h"
 #include "Framework/Texture/TextureManagerHolder.h"
 
+
 //==============================================================================
 // class implementation
 //==============================================================================
@@ -48,18 +49,19 @@ void Object::_Draw(void) {
     {D3DXVECTOR3(+half_x,    0.0f, 0.0f), color_, D3DXVECTOR2(  end_uv_.x,   end_uv_.y)},  // rb
   };
 
+
   // WVP
   D3DXMATRIX mtx_world;
   D3DXMatrixTranslation(&mtx_world, pos_.x, pos_.y, pos_.z);
   p_device->SetTransform(D3DTS_WORLD, &mtx_world);
 
-  D3DXMATRIX mtx_view;
-  D3DXMatrixLookAtLH(&mtx_view, &D3DXVECTOR3(0, 0, -1), &D3DXVECTOR3(0, 0, 0), &D3DXVECTOR3(0, 1, 0));
-  p_device->SetTransform(D3DTS_VIEW, &mtx_view);
+  //D3DXMATRIX mtx_view;
+  //D3DXMatrixLookAtLH(&mtx_view, &D3DXVECTOR3(0, 0, -1), &D3DXVECTOR3(0, 0, 0), &D3DXVECTOR3(0, 1, 0));
+  //p_device->SetTransform(D3DTS_VIEW, &mtx_view);
 
-  D3DXMATRIX mtx_projection;
-  D3DXMatrixOrthoLH(&mtx_projection, 1280.0f, 720.0f, 0.0f, 10.0f);
-  p_device->SetTransform(D3DTS_PROJECTION, &mtx_projection);
+  //D3DXMATRIX mtx_projection;
+  //D3DXMatrixOrthoLH(&mtx_projection, 1280.0f, 720.0f, 0.0f, 10.0f);
+  //p_device->SetTransform(D3DTS_PROJECTION, &mtx_projection);
 
   // set texture
   TextureManagerHolder::Instance().GetTextureManager().SetTexture(texture_id_);

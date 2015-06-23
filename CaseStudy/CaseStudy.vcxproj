@@ -11,6 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Application\Camera\camera.cpp" />
+    <ClCompile Include="src\Application\Controller\InputController.cpp" />
     <ClCompile Include="src\Application\Game\SceneGame.cpp" />
     <ClCompile Include="src\Application\Game\SceneGameFactory.cpp" />
     <ClCompile Include="src\Application\Object\AnimationObject\AnimationObject.cpp" />
@@ -54,6 +56,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Application\Camera\camera.h" />
+    <ClInclude Include="src\Application\common.h" />
+    <ClInclude Include="src\Application\Controller\InputController.h" />
     <ClInclude Include="src\Application\Game\SceneGame.h" />
     <ClInclude Include="src\Application\Game\SceneGameFactory.h" />
     <ClInclude Include="src\Application\Object\AnimationObject\AnimationObject.h" />
@@ -79,6 +84,7 @@
     <ClInclude Include="src\Framework\DebugProc\DebugProc.h" />
     <ClInclude Include="src\Framework\DirectX\DeviceHolder.h" />
     <ClInclude Include="src\Framework\DirectX\DirectXConst.h" />
+    <ClInclude Include="src\Framework\FrameworkOption.h" />
     <ClInclude Include="src\Framework\GameManager\GameManager.h" />
     <ClInclude Include="src\Framework\GameWindow\GameBase.h" />
     <ClInclude Include="src\Framework\GameWindow\GameDirectX.h" />

@@ -10,15 +10,14 @@
 #include "GameWindow.h"
 #include <MMSystem.h>
 #pragma comment( lib, "winmm.lib" )
+#include "Framework\FrameworkOption.h"
 #include "GameBase.h"
-
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // constant definition
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 namespace {
 	const char* kWindowClassName = "WindowClassName";
-	const unsigned int kFPS = 30;
 	const float kSecondPerFrame = 1 / kFPS;
 	const float kMSecondPerFrame = 1000 / kFPS;
 }

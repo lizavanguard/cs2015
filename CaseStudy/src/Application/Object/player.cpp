@@ -12,10 +12,12 @@
 #include "Framework/DirectXHelper/DirectXConst.h"
 #include "Framework/Input/InputManagerHolder.h"
 #include "Framework/Input/InputKeyboard.h"
+#include "Framework\FrameworkOption.h"
 #include "Framework/Texture/TextureManagerHolder.h"
 #include "Framework/Input/InputXInput.h"
 #include "AnimationObject\TextureAnimation.h"
-#include "Uriel.h"
+#include "Application\Stage\Stage.h"
+#include "Application\Camera\camera.h"
 #include "player.h"
 
 //******************************************************************************
@@ -38,11 +40,13 @@ const int kBoroRecastTime = 60;
 // Author  :  SHOHEI MATSUMOTO
 // XV“ú  :  2015/05/22
 //==============================================================================
-Player::Player(ANIMATION_EVENT animation_event)
+Player::Player(ANIMATION_EVENT animation_event , Stage* stage)
   : AnimationObject(animation_event)
   , player_mode_(MODE_NORMAL)
   , count_(0)
   , is_eat_(false) {
+    stage_ = stage;
+    stageSize_ = stage_->GetStageSize();
 }
 
 //==============================================================================
@@ -68,15 +72,27 @@ void Player::Update(Uriel *uriel_){
   // ˆÚ“®
   if (pJoypad.IsPress(InputDevice::Pads::PAD_LTHUMB_UP) || pKeyboard.IsPress(DIK_W)) {
       pos_.y += kPlayerMoveSpeed;
+      if (pos_.y + size_.y * 0.5f > stageSize_.y / 2.0f){
+          pos_.y = stageSize_.y / 2.0f - size_.y * 0.5f;
+      }
   }
   if (pJoypad.IsPress(InputDevice::Pads::PAD_LTHUMB_RIGHT) || pKeyboard.IsPress(DIK_D)) {
       pos_.x += kPlayerMoveSpeed;
+      if (pos_.x + size_.x * 0.5f > stageSize_.x / 2.0f){
+          pos_.x = stageSize_.x / 2.0f - size_.x * 0.5f;
+      }
   }
   if (pJoypad.IsPress(InputDevice::Pads::PAD_LTHUMB_DOWN) || pKeyboard.IsPress(DIK_S)) {
       pos_.y -= kPlayerMoveSpeed;
+      if (pos_.y - size_.y * 0.5f < -stageSize_.y / 2.0f){
+          pos_.y = -stageSize_.y / 2.0f + size_.y * 0.5f;
+      }
   }
   if (pJoypad.IsPress(InputDevice::Pads::PAD_LTHUMB_LEFT) || pKeyboard.IsPress(DIK_A)) {
       pos_.x -= kPlayerMoveSpeed;
+      if (pos_.x - size_.x * 0.5f < -stageSize_.x / 2.0f){
+          pos_.x = -stageSize_.x / 2.0f + size_.x * 0.5f;
+      }
   }
 
   if (pKeyboard.IsPress(DIK_9)) {
