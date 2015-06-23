@@ -72,6 +72,12 @@
     <ClCompile Include="src\Application\Object\Ready.cpp">
       <Filter>Application\Object</Filter>
     </ClCompile>
+<<<<<<< HEAD
+=======
+    <ClCompile Include="src\Application\Object\BackGround.cpp">
+      <Filter>Application\Object</Filter>
+    </ClCompile>
+>>>>>>> origin/uriel
     <ClCompile Include="src\Application\Object\ObjectBase.cpp">
       <Filter>Application\Object</Filter>
     </ClCompile>
@@ -102,12 +108,15 @@
     <ClCompile Include="src\Application\Object\Object2D\Object2D.cpp">
       <Filter>Application\Object\Object2D</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="src\Application\Object\BackGround\BackGround.cpp">
       <Filter>Application\Object\BackGround</Filter>
     </ClCompile>
     <ClCompile Include="src\Application\Object\BackGround\BackGroundManager.cpp">
       <Filter>Application\Object\BackGround</Filter>
     </ClCompile>
+=======
+>>>>>>> origin/uriel
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Framework">
@@ -163,9 +172,12 @@
     </Filter>
     <Filter Include="Application\Sound">
       <UniqueIdentifier>{7685ae41-ee2b-4ee0-8afd-ec26a9c3f114}</UniqueIdentifier>
+<<<<<<< HEAD
     </Filter>
     <Filter Include="Application\Object\BackGround">
       <UniqueIdentifier>{fe9ca15b-dfef-447d-8438-cd58c166c0bc}</UniqueIdentifier>
+=======
+>>>>>>> origin/uriel
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -302,6 +314,12 @@
     <ClInclude Include="src\Application\Object\ObjectBase.h">
       <Filter>Application\Object</Filter>
     </ClInclude>
+<<<<<<< HEAD
+=======
+    <ClInclude Include="src\Application\Object\ObjectBase.h">
+      <Filter>Application\Object</Filter>
+    </ClInclude>
+>>>>>>> origin/uriel
     <ClInclude Include="src\Application\Object\Object2D\Object2D.h">
       <Filter>Application\Object\Object2D</Filter>
     </ClInclude>
@@ -326,12 +344,15 @@
     <ClInclude Include="src\Application\Sound\sound.h">
       <Filter>Application\Sound</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="src\Application\Object\BackGround\BackGround.h">
       <Filter>Application\Object\BackGround</Filter>
     </ClInclude>
     <ClInclude Include="src\Application\Object\BackGround\BackGroundManager.h">
       <Filter>Application\Object\BackGround</Filter>
     </ClInclude>
+=======
+>>>>>>> origin/uriel
   </ItemGroup>
   <ItemGroup>
     <None Include="src\Framework\Utility\MathUtility.inl">

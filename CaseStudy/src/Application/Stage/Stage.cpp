@@ -26,10 +26,21 @@ const int mapdata[] =
   4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
   4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
   4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
-  4, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 4,
-  4, 1, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1, 4,
+  4, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
+  4, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 4,
   4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4,
 };
+//const int mapdata[] = 
+//{
+//  4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
+//  4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
+//  4, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
+//  4, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 4,
+//  4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 4,
+//  4, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 4,
+//  4, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4,
+//  4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4,
+//};
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // prttype
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -55,6 +66,7 @@ Stage::Stage()
   texture_id_[0] = TextureManagerHolder::Instance().GetTextureManager().LoadTexture("data/Texture/block00.png");
   texture_id_[1] = TextureManagerHolder::Instance().GetTextureManager().LoadTexture("data/Texture/map001.jpg");
   map_width_ = 13;
+  //map_width_ = 21;
   map_height_ = 8;
   map_id_max = 0;
   for (int check = 0; check < map_height_ * map_width_; check++)
@@ -170,7 +182,7 @@ D3DXVECTOR3 Stage::CheckMapTip(D3DXVECTOR3* pos, D3DXVECTOR3 size, HIT_CHECK* ch
   };
   for (int id = 0; id < map_id_max; id++)
   {
-    if (!stage_[id].alive_ ||stage_[id].stage_id_ == MAP_TYPE_GOAL) continue;
+    if (!stage_[id].alive_/* || stage_[id].stage_id_ == MAP_TYPE_GOAL || stage_[id].stage_id_ == MAP_TYPE_START || stage_[id].stage_id_ == MAP_TYPE_WALL*/) continue;
     D3DXVECTOR3 map_point[4] = 
     {
       D3DXVECTOR3(stage_[id].pos_.x - stage_[id].size_.x, stage_[id].pos_.y - stage_[id].size_.y, 0.0f),
@@ -183,9 +195,7 @@ D3DXVECTOR3 Stage::CheckMapTip(D3DXVECTOR3* pos, D3DXVECTOR3 size, HIT_CHECK* ch
       if (point[3].y >= map_point[0].y && point[0].y <= map_point[3].y)
       {
         HitManage(stage_[id].stage_data_id_,check);
-        //HitManage(id,check);
-        //HitManage(stage_[id].stage_id_,pos,size,stage_[id].pos_,stage_[id].size_);
-		return stage_[id].pos_;
+        return stage_[id].pos_;
       } // if
     }// if
     if (point[3].x >= map_point[2].x && point[3].x <= map_point[2].x)
@@ -193,7 +203,7 @@ D3DXVECTOR3 Stage::CheckMapTip(D3DXVECTOR3* pos, D3DXVECTOR3 size, HIT_CHECK* ch
       if (point[2].y >= map_point[1].y && point[2].y <= map_point[1].y)
       {
         HitManage(stage_[id].stage_data_id_,check);
-		return stage_[id].pos_;
+        return stage_[id].pos_;
       }// if
     }// if
   }// for
@@ -203,45 +213,52 @@ void Stage::HitManage(int id, HIT_CHECK* check)
 {
   check->center = mapdata[id];
   int data_id_ = map_width_ * map_height_;
-  //
-  if (id + map_width_ < data_id_)
+  int map_uriel_h = id - map_width_ * 2;
+  int map_uriel_w = id - map_width_;
+  // マップチェック
+  bool bottom	= id < data_id_;
+  bool up = map_uriel_h > 0;
+  bool right = map_uriel_w % (map_width_) + 1 != map_width_;
+  bool left = map_uriel_w % (map_width_) - 1 != -1;
+  // bottom
+  if (bottom)
   {
-    check->bottom = mapdata[id + map_width_];
+    check->bottom = mapdata[id];
+  }
+  // up
+  if (up)
+  {
+    check->up = mapdata[map_uriel_h];
+  }
+  // right
+  if (right)
+  {
+    check->right = mapdata[map_uriel_w + 1];
+  }
+  // left
+  if (left)
+  {
+    check->left = mapdata[map_uriel_w - 1];
+  }
+  // bottom_right
+  if (bottom && right)
+  {
+    check->bottom_right = mapdata[id + 1];
   }
   //
-  if (id - map_width_ > 0)
+  if (bottom && left)
   {
-    check->up = mapdata[id - map_width_];
+    check->bottom_left = mapdata[id - 1];
   }
   //
-  if(id % map_width_ + 1 != map_width_ )
+  if (up && right)
   {
-    check->right = mapdata[id + 1];
+    check->up_right = mapdata[map_uriel_h + 1];
   }
   //
-  if(id % map_width_ - 1 != -1 )
+  if (up && left)
   {
-    check->left = mapdata[id - 1];
-  }
-  //
-  if (check->bottom != -1 && check->right != -1)
-  {
-    check->bottom_right = mapdata[id + map_width_ + 1];
-  }
-  //
-  if (check->bottom != -1 && check->left != -1)
-  {
-    check->bottom_left = mapdata[id + map_width_ - 1];
-  }
-  //
-  if (check->up != -1 && check->right != -1)
-  {
-    check->up_right = mapdata[id - map_width_ + 1];
-  }
-  //
-  if (check->up != -1 && check->left != -1)
-  {
-    check->up_left = mapdata[id - map_width_ - 1];
+    check->up_left = mapdata[map_uriel_h - 1];
   }
 }
 D3DXVECTOR3 Stage::GetGoalMaptip()

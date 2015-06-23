@@ -43,10 +43,10 @@ Uriel::Uriel(ANIMATION_EVENT animation_event, Stage* stage, TensionGauge* p_tens
   pos_ = stage->GetStartMaptip();
   HIT_CHECK check;
   D3DXVECTOR3 map(0.f, 0.f, 0.f);
-  map = p_stage_->CheckMapTip(&pos_, D3DXVECTOR3(size_.x / 4, 1.0f, 0.0f), &check);
+  map = p_stage_->CheckMapTip(&D3DXVECTOR3(pos_.x, pos_.y - size_.y, pos_.z), D3DXVECTOR3(size_.x / 4, 1.0f, 0.0f), &check);
   // 下が地面なら
   if (check.bottom == MAP_TYPE_NORMAL){
-    pos_.y = map.y - 25.0f * 1.9f;
+    pos_.y = map.y + 25.0f * 1.9f;
     move_.y = 0;
   }
 
@@ -63,6 +63,27 @@ Uriel::~Uriel() {
 void Uriel::Update(void){
   // 重力処理
   move_.y += GRAVITY;
+
+  if (status_ == URIEL_STATUS_CRAWL ||
+    status_ == URIEL_STATUS_CHARGECRAWL){
+    if (dest_position_ != D3DXVECTOR3(0.0f, 0.0f, 0.0f)){
+      if (dest_position_.x - pos_.x > URIEL_MOVE_SPPD){
+        move_.x = URIEL_MOVE_SPPD;
+      } else if (dest_position_.x - pos_.x < -URIEL_MOVE_SPPD){
+        move_.x = -URIEL_MOVE_SPPD;
+      } else {
+        dest_position_ = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+      }
+    }
+  }
+
+  if ((dest_position_.x - pos_.x > (move_.x))){
+	  dest_position_ = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+  }
+  else if (dest_position_.x - pos_.x < -(move_.x)){
+	  dest_position_ = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+  }
+
 
   // 状態別の更新
   switch (status_){
@@ -106,18 +127,8 @@ void Uriel::Update(void){
   // 向きの調整
   if (move_.x > 0){
     move_direction_ = DIRECTION_RIGHT;
-  } else {
+  } else if(move_.x < 0){
     move_direction_ = DIRECTION_LEFT;
-  }
-
-  if (dest_position_ != D3DXVECTOR3(0.0f, 0.0f, 0.0f)){
-    if (dest_position_.x - pos_.x > URIEL_MOVE_SPPD){
-      move_.x = URIEL_MOVE_SPPD;
-    } else if (dest_position_.x - pos_.x < -URIEL_MOVE_SPPD){
-      move_.x = -URIEL_MOVE_SPPD;
-    } else {
-      dest_position_ = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-    }
   }
 
   // 前回の座標保存
@@ -229,9 +240,19 @@ void Uriel::UpdateCrawl(void){
   map = p_stage_->CheckMapTip(&pos_, D3DXVECTOR3(size_.x / 4, 1.0f, 0.0f), &check);
 
   // 下が地面なら
-  if (check.center == MAP_TYPE_NORMAL){
-      pos_.y = map.y + 25.0f * 1.9f;
-      move_.y = 0;
+  if (check.bottom == MAP_TYPE_NORMAL){
+    pos_.y = map.y + 25.0f * 1.9f;
+    move_.y = 0;
+  } else {
+    move_.x = 0;
+  }
+
+  if (move_.x == 0 && check.bottom == MAP_TYPE_NORMAL){
+    if (move_direction_ == DIRECTION_RIGHT){
+      move_.x = URIEL_MOVE_SPPD;
+    } else {
+      move_.x = -URIEL_MOVE_SPPD;
+    }
   }
 
   // ジャンプするかチェックしてジャンプできるならジャンプ
@@ -246,10 +267,10 @@ void Uriel::UpdateCrawl(void){
     jump_before_pos_ = pos_;
   }
 
-  // 階段なら上る
-  else if (data == BLOCK_DATA_STAIRS){
+  // 登り階段なら上る
+  else if (data == BLOCK_DATA_UP_STAIRS){
     SetAnimaton(ANIMATION_URIEL_JUMP);
-    D3DXVECTOR2 vector = JumpAngleSeek(100.0f, 50.0f, 100.0f, GRAVITY);
+    D3DXVECTOR2 vector = JumpAngleSeek(100.0f, 75.0f, 100.0f, GRAVITY);
     move_.x = vector.x;
     move_.y = vector.y;
     // ジャンプ前の座標を保存
@@ -261,17 +282,15 @@ void Uriel::UpdateCrawl(void){
 // ジャンプ状態の更新
 //-----------------------------------------------------------------------------
 void Uriel::UpdateJump(void){
-  // 跳べる距離の限界で地面が無かったら
-  if (jump_before_pos_.y > pos_.y){
-    //move_.x = 0.0f;
-  }
   // 地面との当たり判定
   HIT_CHECK check;
   D3DXVECTOR3 map(0.f, 0.f, 0.f);
   map = p_stage_->CheckMapTip(&pos_, D3DXVECTOR3(size_.x / 4, 1.0f, 0.0f), &check);
-  if (check.center == MAP_TYPE_NORMAL){
+  if (check.bottom == MAP_TYPE_NORMAL){
     SetAnimaton(ANIMATION_URIEL_CRAWL);
     move_.x = URIEL_MOVE_SPPD * (move_.x / abs(move_.x));
+    pos_.y = map.y + 25.0f * 1.9f;
+    move_.y = 0.0f;
   }
 }
 
@@ -285,19 +304,19 @@ void Uriel::UpdateRunaway(void){
   map = p_stage_->CheckMapTip(&pos_, D3DXVECTOR3(size_.x / 4, 1.0f, 0.0f), &check);
 
   // 下が地面なら
-  if (check.center == MAP_TYPE_NORMAL){
+  if (check.bottom == MAP_TYPE_NORMAL){
       pos_.y = map.y + 25.0f * 1.9f;
       move_.y = 0;
   }
 
   if (move_direction_ == DIRECTION_LEFT){
     map = p_stage_->CheckMapTip(&D3DXVECTOR3(pos_.x + size_.x,pos_.y,pos_.z), D3DXVECTOR3(size_.x / 4, 1.0f, 0.0f), &check);
-    if (check.up_left == MAP_TYPE_NORMAL){
+    if (check.left == MAP_TYPE_NORMAL){
       move_.x *= -1;
     }
   } else {
     map = p_stage_->CheckMapTip(&pos_, D3DXVECTOR3(size_.x / 4, 1.0f, 0.0f), &check);
-    if (check.up_right == MAP_TYPE_NORMAL){
+    if (check.right == MAP_TYPE_NORMAL){
       move_.x *= -1;
     }
   }
@@ -306,6 +325,8 @@ void Uriel::UpdateRunaway(void){
   if (runaway_timer_ >= URIEL_RUNAWAY_TIME){
     SetAnimaton(ANIMATION_URIEL_SLEEP);
     runaway_timer_ = 0;
+    p_tension_gauge_->CoolDown();
+    boro_gage_max_ = false;
   }
 
   ++runaway_timer_;
@@ -321,7 +342,7 @@ void Uriel::UpdateSleep(void){
   map = p_stage_->CheckMapTip(&pos_, D3DXVECTOR3(size_.x / 4, 1.0f, 0.0f), &check);
 
   // 下が地面なら
-  if (check.center == MAP_TYPE_NORMAL){
+  if (check.bottom == MAP_TYPE_NORMAL){
       pos_.y = map.y + 25.0f * 1.9f;
       move_.y = 0;
   }
@@ -345,10 +366,21 @@ void Uriel::UpdateChargeCrawl(void){
   map = p_stage_->CheckMapTip(&pos_, D3DXVECTOR3(size_.x / 4, 1.0f, 0.0f), &check);
 
   // 下が地面なら
-  if (check.center == MAP_TYPE_NORMAL){
+  if (check.bottom == MAP_TYPE_NORMAL){
       pos_.y = map.y + 25.0f * 1.9f;
       move_.y = 0;
-  }
+  } else {
+    move_.x = 0;
+ }
+
+ if (move_.x == 0 && check.bottom == MAP_TYPE_NORMAL){
+    if (move_direction_ == DIRECTION_RIGHT){
+       move_.x = URIEL_MOVE_CHARGE_SPEED;
+    }
+    else {
+       move_.x = -URIEL_MOVE_CHARGE_SPEED;
+    }
+ }
 
   // ジャンプするかチェックしてジャンプできるならジャンプ
   BLOCK_DATA data;
@@ -356,6 +388,16 @@ void Uriel::UpdateChargeCrawl(void){
   if (data == BLOCK_DATA_JUMP){
     SetAnimaton(ANIMATION_URIEL_CHARGEJUMP);
     D3DXVECTOR2 vector = JumpAngleSeek(50.0f, 250.0f, 0.0f, GRAVITY);
+    move_.x = vector.x;
+    move_.y = vector.y;
+    // ジャンプ前の座標を保存
+    jump_before_pos_ = pos_;
+  }
+
+  // 登り階段なら上る
+  else if (data == BLOCK_DATA_UP_STAIRS){
+    SetAnimaton(ANIMATION_URIEL_CHARGEJUMP);
+    D3DXVECTOR2 vector = JumpAngleSeek(100.0f, 50.0f, 100.0f, GRAVITY);
     move_.x = vector.x;
     move_.y = vector.y;
     // ジャンプ前の座標を保存
@@ -383,17 +425,15 @@ void Uriel::UpdateChargeCrawl(void){
 // ジャンプ(チャージ)状態の更新
 //-----------------------------------------------------------------------------
 void Uriel::UpdateChargeJump(void){
-  // 跳べる距離の限界で地面が無かったら
-  if (jump_before_pos_.y > pos_.y){
-    //move_.x = 0.0f;
-  }
   // 地面との当たり判定
   HIT_CHECK check;
   D3DXVECTOR3 map(0.f, 0.f, 0.f);
   map = p_stage_->CheckMapTip(&pos_, D3DXVECTOR3(size_.x / 4, 1.0f, 0.0f), &check);
-  if (check.center == MAP_TYPE_NORMAL){
+  if (check.bottom == MAP_TYPE_NORMAL){
     SetAnimaton(ANIMATION_URIEL_CHARGECRAWL);
     move_.x = URIEL_MOVE_CHARGE_SPEED * (move_.x / abs(move_.x));
+    pos_.y = map.y + 25.0f * 1.9f;
+    move_.y = 0.0f;
   }
 }
 
@@ -440,92 +480,57 @@ BLOCK_DATA Uriel::CrawlLoadCheck(void){
   p_stage_->CheckMapTip(&old_position_, D3DXVECTOR3(size_.x / 4, 1.0f, 0.0f), &checkold);
 
   // 目の前に地面が無くてその向こうにジャンプできる地面がある場合
-#if 1
-  if (check.center == MAP_TYPE_NORMAL){
+  if (check.bottom == MAP_TYPE_NORMAL){
     // 右に進んでる場合
     if (move_direction_ == DIRECTION_RIGHT){
-      if (check.right == MAP_TYPE_NONE){
+      if (check.bottom_right == MAP_TYPE_NONE){
         p_stage_->CheckMapTip(&D3DXVECTOR3(pos_.x + size_.x, pos_.y, pos_.z),
                                D3DXVECTOR3(size_.x / 4, 1.0f, 0.0f), &check);
-        if (check.right == MAP_TYPE_NORMAL){
+        if (check.bottom_right == MAP_TYPE_NORMAL){
           return BLOCK_DATA_JUMP;
         }
       }
     }
     // 左に進んでる場合
     else if (move_direction_ == DIRECTION_LEFT){
-      if (check.left == MAP_TYPE_NONE){
+      if (check.bottom_left == MAP_TYPE_NONE){
         p_stage_->CheckMapTip(&D3DXVECTOR3(pos_.x - size_.x, pos_.y, pos_.z),
                                D3DXVECTOR3(size_.x / 4, 1.0f, 0.0f), &check);
-        if (check.left == MAP_TYPE_NORMAL){
+        if (check.bottom_left == MAP_TYPE_NORMAL){
           return BLOCK_DATA_JUMP;
         }
       }
     }
   }
-#endif
 
-  // 目の前に地面が無い場合
-#if 0
-  if (check.center == MAP_TYPE_NORMAL &&
-	  checkold.center == MAP_TYPE_NORMAL){
+  // 登り階段か調べる
+  map_ = p_stage_->CheckMapTip(&D3DXVECTOR3(pos_.x, pos_.y, pos_.z),
+                                D3DXVECTOR3(size_.x / 4, size_.y / 4, 0.0f), &check);
+  if (check.bottom == MAP_TYPE_NORMAL){
     // 右に進んでる場合
     if (move_direction_ == DIRECTION_RIGHT){
-		if (checkold.right == MAP_TYPE_NONE &&
-			check.right == MAP_TYPE_NONE){
-			check.right = check.right;
-		}
-		if (checkold.right != check.right){
-			check.right = check.right;
-			return BLOCK_DATA_JUMP;
-		}
-		if (checkold.right == MAP_TYPE_NORMAL &&
-			check.right == MAP_TYPE_NORMAL){
-			check.right = check.right;
-		}
-      if (checkold.right == MAP_TYPE_NONE &&
-          check.right == MAP_TYPE_NORMAL){
-          return BLOCK_DATA_JUMP;
-      }
-    }
-    // 左に進んでる場合
-    else if (move_direction_ == DIRECTION_LEFT){
-      if (check.left == 0){
-        if (checkold.left == MAP_TYPE_NONE &&
-          check.left == MAP_TYPE_NORMAL){
-          return BLOCK_DATA_JUMP;
-        }
-      }
-    }
-  }
-#endif
-
-  // 階段か調べる
-  map_ = p_stage_->CheckMapTip(&D3DXVECTOR3(pos_.x + size_.x / 4, pos_.y, pos_.z),
-                                D3DXVECTOR3(size_.x / 4, 1.0f, 0.0f), &check);
-  if (check.center == MAP_TYPE_NORMAL){
-    // 右に進んでる場合
-    if (move_direction_ == DIRECTION_RIGHT){
-      if(check.up_right == MAP_TYPE_NORMAL){
-        p_stage_->CheckMapTip(&D3DXVECTOR3(pos_.x + size_.x / 4, pos_.y + size_.y, pos_.z),
-                               D3DXVECTOR3(size_.x / 4, 1.0f, 0.0f), &check);
-        if (check.up_left == MAP_TYPE_NONE ||
-            check.up_left == MAP_TYPE_START ||
-            check.up_left == MAP_TYPE_GOAL){
-          return BLOCK_DATA_STAIRS;
+      if(check.right == MAP_TYPE_NORMAL){
+        map_ = p_stage_->CheckMapTip(&D3DXVECTOR3(pos_.x + size_.x / 4, pos_.y, pos_.z),
+                                D3DXVECTOR3(size_.x / 4, size_.y / 4, 0.0f), &check);
+        if (check.up_right == MAP_TYPE_NONE ||
+            check.up_right == MAP_TYPE_START ||
+            check.up_right == MAP_TYPE_GOAL){
+          if (abs(pos_.x - map_.x) < size_.x / 4)
+            return BLOCK_DATA_UP_STAIRS;
         }
       }
     }
 
     // 左に進んでる場合
     else{
-      if(check.up_left == MAP_TYPE_NORMAL){
-        p_stage_->CheckMapTip(&D3DXVECTOR3(pos_.x - size_.x + size_.x / 4 * 3, pos_.y + size_.y, pos_.z),
+      if(check.left == MAP_TYPE_NORMAL){
+        p_stage_->CheckMapTip(&D3DXVECTOR3(pos_.x - size_.x + size_.x / 10 * 7, pos_.y, pos_.z),
                                D3DXVECTOR3(size_.x / 4, 1.0f, 0.0f), &check);
         if (check.up_left == MAP_TYPE_NONE ||
             check.up_left == MAP_TYPE_START ||
             check.up_left == MAP_TYPE_GOAL){
-          return BLOCK_DATA_STAIRS;
+          if (abs(pos_.x - map_.x) < size_.x / 4)
+            return BLOCK_DATA_UP_STAIRS;
         }
       }
     }
@@ -541,14 +546,19 @@ BLOCK_DATA Uriel::ChargeCrawlLoadCheck(void){
   HIT_CHECK check;
   p_stage_->CheckMapTip(&pos_, D3DXVECTOR3(size_.x / 4, 1.0f, 0.0f), &check);
 
-  if (check.center == MAP_TYPE_NORMAL){
+  if (check.bottom == MAP_TYPE_NORMAL){
     // 右に進んでる場合
     if (move_direction_ == DIRECTION_RIGHT){
       p_stage_->CheckMapTip(&pos_, D3DXVECTOR3(size_.x / 4 * 3, 1.0f, 0.0f), &check);
-      if (check.right == MAP_TYPE_NONE){
+      if (check.bottom_right == MAP_TYPE_NONE){
+        p_stage_->CheckMapTip(&D3DXVECTOR3(pos_.x + size_.x, pos_.y, pos_.z),
+                               D3DXVECTOR3(size_.x / 4, 1.0f, 0.0f), &check);
+        if (check.bottom_left == MAP_TYPE_NORMAL){
+          return BLOCK_DATA_JUMP;
+        }
         p_stage_->CheckMapTip(&D3DXVECTOR3(pos_.x + size_.x * 2, pos_.y, pos_.z),
                                D3DXVECTOR3(size_.x / 4, 1.0f, 0.0f), &check);
-        if (check.right == MAP_TYPE_NORMAL){
+        if (check.bottom_right == MAP_TYPE_NORMAL){
           return BLOCK_DATA_JUMP;
         }
       }
@@ -556,16 +566,47 @@ BLOCK_DATA Uriel::ChargeCrawlLoadCheck(void){
     // 左に進んでる場合
     else if (move_direction_ == DIRECTION_LEFT){
       p_stage_->CheckMapTip(&D3DXVECTOR3(pos_.x + size_.x, pos_.y, pos_.z), D3DXVECTOR3(1.0f, 1.0f, 0.0f), &check);
-      if (check.left == MAP_TYPE_NONE){
+      if (check.bottom_left == MAP_TYPE_NONE){
         p_stage_->CheckMapTip(&D3DXVECTOR3(pos_.x - size_.x, pos_.y, pos_.z),
                                D3DXVECTOR3(size_.x / 4, 1.0f, 0.0f), &check);
-        if (check.left == MAP_TYPE_NORMAL){
+        if (check.bottom_left == MAP_TYPE_NORMAL){
           return BLOCK_DATA_JUMP;
         }
         p_stage_->CheckMapTip(&D3DXVECTOR3(pos_.x - size_.x * 2, pos_.y, pos_.z),
                                D3DXVECTOR3(size_.x / 4, 1.0f, 0.0f), &check);
-        if (check.left == MAP_TYPE_NORMAL){
+        if (check.bottom_left == MAP_TYPE_NORMAL){
           return BLOCK_DATA_JUMP;
+        }
+      }
+    }
+  }
+
+  // 登り階段か調べる
+  map_ = p_stage_->CheckMapTip(&D3DXVECTOR3(pos_.x + size_.x / 4, pos_.y, pos_.z),
+                                D3DXVECTOR3(size_.x / 4, 1.0f, 0.0f), &check);
+  if (check.bottom == MAP_TYPE_NORMAL){
+    // 右に進んでる場合
+    if (move_direction_ == DIRECTION_RIGHT){
+      if(check.right == MAP_TYPE_NORMAL){
+        p_stage_->CheckMapTip(&D3DXVECTOR3(pos_.x + size_.x / 4, pos_.y + size_.y, pos_.z),
+                               D3DXVECTOR3(size_.x / 4, 1.0f, 0.0f), &check);
+        if (check.right == MAP_TYPE_NONE ||
+            check.right == MAP_TYPE_START ||
+            check.right == MAP_TYPE_GOAL){
+          return BLOCK_DATA_UP_STAIRS;
+        }
+      }
+    }
+
+    // 左に進んでる場合
+    else{
+      if(check.left == MAP_TYPE_NORMAL){
+        p_stage_->CheckMapTip(&D3DXVECTOR3(pos_.x - size_.x + size_.x / 4 * 3, pos_.y + size_.y, pos_.z),
+                               D3DXVECTOR3(size_.x / 4, 1.0f, 0.0f), &check);
+        if (check.left == MAP_TYPE_NONE ||
+            check.left == MAP_TYPE_START ||
+            check.left == MAP_TYPE_GOAL){
+          return BLOCK_DATA_UP_STAIRS;
         }
       }
     }

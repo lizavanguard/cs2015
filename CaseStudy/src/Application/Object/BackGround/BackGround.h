@@ -28,7 +28,6 @@ protected:
   // Draw
   virtual void _PreProcessOfDraw(void);
   virtual void _PostProcessOfDraw(void);
-
 private:
   float speed_u_;
 };
