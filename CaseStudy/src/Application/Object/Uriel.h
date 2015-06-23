@@ -76,6 +76,9 @@ public:
   // ボーロチャージ(ボーロチャージ出来ればtrueが返る)
   bool BoroChage(void);
 
+  // ボーロチャージ可能ならtrueが返る
+  bool CheckBoro(void){ return !charge_flag_; }
+
   // hit処理(by Ohashi)
   void HitManage();
 

@@ -26,8 +26,8 @@ const int mapdata[] =
   4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
   4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
   4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
-  4, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 4,
-  4, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 4,
+  4, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
+  4, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 4,
   4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4,
 };
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -170,7 +170,7 @@ D3DXVECTOR3 Stage::CheckMapTip(D3DXVECTOR3* pos, D3DXVECTOR3 size, HIT_CHECK* ch
   };
   for (int id = 0; id < map_id_max; id++)
   {
-    if (!stage_[id].alive_ ||stage_[id].stage_id_ == MAP_TYPE_GOAL) continue;
+    if (!stage_[id].alive_/* || stage_[id].stage_id_ == MAP_TYPE_GOAL || stage_[id].stage_id_ == MAP_TYPE_START || stage_[id].stage_id_ == MAP_TYPE_WALL*/) continue;
     D3DXVECTOR3 map_point[4] = 
     {
       D3DXVECTOR3(stage_[id].pos_.x - stage_[id].size_.x, stage_[id].pos_.y - stage_[id].size_.y, 0.0f),
