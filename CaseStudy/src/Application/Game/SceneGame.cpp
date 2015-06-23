@@ -114,7 +114,7 @@ void SceneGame::Draw(void) {
 
   p_player_->Draw();
 
-//  p_tori_->Draw();
+  p_tori_->Draw();
 
   p_tension_gauge_->Draw();
    
