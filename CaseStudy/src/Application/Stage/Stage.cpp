@@ -53,6 +53,34 @@ Stage::Stage()
   : map_width_(0)
   , map_height_(0){
   auto p_device = DeviceHolder::Instance().GetDevice();
+  //-----------そのうちこちらへ移行-----------
+  //int no = 1;						// すでにあった場合の変数
+  //char *filename;					// 保存する画像の名前
+  //filename = (char *)malloc(200);
+  //sprintf(filename, "data/Texture/map%03d.png", no);
+  //while (1)
+  //{
+  //  if (fopen(filename, "r") == NULL)
+  //  {
+  //    //ファイルはねえよ！
+  //    break;
+  //  }else
+  //  {
+  //    //ファイルはあるよ!次だ！次っ！
+  //    no++;
+  //    memset(filename, 0, 200);
+  //    sprintf(filename, "data/Texture/map%03d.png", no);
+  //  }
+  //}
+  //texture_id_ = new int[no];
+  //for (int i = 0; i < no;i++)
+  //{
+  //  memset(filename, 0, 200);
+  //  sprintf(filename, "data/Texture/map%03d.png", i);
+  //  texture_id_[i] = TextureManagerHolder::Instance().GetTextureManager().LoadTexture(filename);
+  //}
+
+//------------------------------------------------------------------------------ 使うのは今のみ
 
   // HACK:
   p_device->CreateVertexBuffer(
@@ -77,6 +105,7 @@ Stage::Stage()
     }
   }
   stage_ = new STG_STR[map_id_max];
+  m_mapdata = new int[map_height_ * map_width_];
   int id = 0;
   int map_work = 0;
   int map_id = 0;
@@ -84,6 +113,7 @@ Stage::Stage()
   {
     for(int width = 0; width < map_width_; width++)
     {
+      m_mapdata[map_id] = mapdata[map_id];
       if(mapdata[map_work] != 0)
       {
         stage_[id].pos_ = 
@@ -122,14 +152,94 @@ Stage::Stage()
     }
   }
   delete[] texture_id_;
+//------------------------------------------------------------------------------
 }
 
 // dtor
 Stage::~Stage() {
   delete[] stage_;
+  delete[] m_mapdata;
   p_vertex_buffer_->Release();
 }
 
+void Stage::SelectStage(char* mapfile) {
+
+  //FILE* fp;
+  //int id = 0;
+  //if (map_height_ > 0 || map_width_ > 0)
+  //{
+  //  delete[] stage_;
+  //  delete[] m_mapdata;
+  //}
+  //fp = fopen(mapfile, "rb");
+  //fscanf(fp, "%d,%d\n", &map_width_, &map_height_);
+  //int map_id;
+  //id = 0;
+  //map_id_max = 0;
+  //m_mapdata = new int[map_height_ * map_height_];
+  //for (int x = 0; x < map_width_; x++)
+  //{
+  //  for (int y = 0; y < map_height_; y++)
+  //  {
+  //    fscanf(fp, "%2d,", &map_id);
+  //    m_mapdata[id] = map_id;
+  //    id++;
+  //    if(m_mapdata[id] != 0)
+  //    {
+  //      map_id_max ++;
+  //    }
+  //  }
+  //fprintf(fp, "\n");
+  //}
+  //fclose(fp);
+  //
+  //stage_ = new STG_STR[map_id_max];
+  //m_mapdata = new int[map_height_ * map_width_];
+  //int id = 0;
+  //int map_work = 0;
+  //int map_id = 0;
+  //for (int height = 0; height < map_height_; height++)
+  //{
+  //  for(int width = 0; width < map_width_; width++)
+  //  {
+  //    if(m_mapdata[map_work] != 0)
+  //    {
+  //      stage_[id].pos_ = 
+  //      D3DXVECTOR3(-(map_width_ * WIDTH_LENGTH) + WIDTH_LENGTH + WIDTH_LENGTH * 2 * width,
+  //                  (map_height_ * HEIGHT_LENGTH) - ( HEIGHT_LENGTH + HEIGHT_LENGTH * 2 * height),
+  //                  0.0f);
+
+  //      stage_[id].size_ =
+  //      D3DXVECTOR2(WIDTH_LENGTH,
+  //                  HEIGHT_LENGTH);
+  //      stage_[id].alive_ = true;
+  //      switch (mapdata[map_work])
+  //      {
+  //        case MAP_TYPE_NORMAL:
+  //        stage_[id].texture_id_ = texture_id_[MAP_TYPE_NORMAL - 1];
+  //        stage_[id].stage_id_ = MAP_TYPE_NORMAL;
+  //        break;
+  //        case MAP_TYPE_GOAL:
+  //        stage_[id].texture_id_ = texture_id_[MAP_TYPE_GOAL - 1];
+  //        stage_[id].stage_id_ = MAP_TYPE_GOAL;
+  //        break;
+  //        case MAP_TYPE_START:
+  //        stage_[id].texture_id_ = texture_id_[MAP_TYPE_START - 1];
+  //        stage_[id].stage_id_ = MAP_TYPE_START;
+  //        break;
+  //        case MAP_TYPE_WALL:
+  //        stage_[id].texture_id_ = texture_id_[MAP_TYPE_NORMAL - 1];
+  //        stage_[id].stage_id_ = MAP_TYPE_WALL;
+  //        break;
+  //      }
+  //      stage_[id].stage_data_id_ = map_id;
+  //      id++;
+  //    }
+  //    map_work++;
+  //    map_id++;
+  //  }
+  //}
+}
 // draw
 void Stage::Draw(void) {
   auto p_device = DeviceHolder::Instance().GetDevice();
@@ -211,7 +321,7 @@ D3DXVECTOR3 Stage::CheckMapTip(D3DXVECTOR3* pos, D3DXVECTOR3 size, HIT_CHECK* ch
 }
 void Stage::HitManage(int id, HIT_CHECK* check)
 {
-  check->center = mapdata[id];
+  check->center = m_mapdata[id + map_width_];
   int data_id_ = map_width_ * map_height_;
   int map_uriel_h = id - map_width_ * 2;
   int map_uriel_w = id - map_width_;
@@ -223,42 +333,42 @@ void Stage::HitManage(int id, HIT_CHECK* check)
   // bottom
   if (bottom)
   {
-    check->bottom = mapdata[id];
+    check->bottom = m_mapdata[id];
   }
   // up
   if (up)
   {
-    check->up = mapdata[map_uriel_h];
+    check->up = m_mapdata[map_uriel_h];
   }
   // right
   if (right)
   {
-    check->right = mapdata[map_uriel_w + 1];
+    check->right = m_mapdata[map_uriel_w + 1];
   }
   // left
   if (left)
   {
-    check->left = mapdata[map_uriel_w - 1];
+    check->left = m_mapdata[map_uriel_w - 1];
   }
   // bottom_right
   if (bottom && right)
   {
-    check->bottom_right = mapdata[id + 1];
+    check->bottom_right = m_mapdata[id + 1];
   }
   //
   if (bottom && left)
   {
-    check->bottom_left = mapdata[id - 1];
+    check->bottom_left = m_mapdata[id - 1];
   }
   //
   if (up && right)
   {
-    check->up_right = mapdata[map_uriel_h + 1];
+    check->up_right = m_mapdata[map_uriel_h + 1];
   }
   //
   if (up && left)
   {
-    check->up_left = mapdata[map_uriel_h - 1];
+    check->up_left = m_mapdata[map_uriel_h - 1];
   }
 }
 D3DXVECTOR3 Stage::GetGoalMaptip()
