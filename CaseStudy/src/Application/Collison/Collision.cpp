@@ -11,9 +11,10 @@
 #include "Application/Object/Uriel.h"
 #include "Application/Object/player.h"
 
+#include "Framework/Collision/CollisionHelper.h"
 #include "Framework/Input/InputManagerHolder.h"
 #include "Framework/Input/InputKeyboard.h"
-#include "Framework/Collision/CollisionHelper.h"
+#include "Framework/Sound/Sound.h"
 
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 // const
@@ -64,9 +65,6 @@ void Collision::CollideUrielToPlayersBoro(void) {
   if (is_hit) {
     player_.FinishBoroState();
     uriel_.BoroChage();
+    PlaySound(SOUND_LABEL_SE_EAT);
   }
-
-  // get uriels position
-  // get players position
-  // collision uriel x player
 }
