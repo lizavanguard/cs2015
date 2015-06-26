@@ -20,6 +20,7 @@
 #include "Application\Stage\Stage.h"
 #include "Application\Camera\camera.h"
 #include "player.h"
+#include "Framework/DrawDebugPrimitive/DrawPrimitive.h"
 
 //******************************************************************************
 // íËêîíËã`
@@ -155,6 +156,8 @@ void Player::Update(Uriel *uriel_){
   }
 
   ++count_;
+
+  DrawCircle3D(pos_, 10.0f, 0xffff0000);
 }
 
 //==============================================================================

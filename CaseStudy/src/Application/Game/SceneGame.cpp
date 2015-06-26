@@ -8,6 +8,7 @@
 // include
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 #include "SceneGame.h"
+#include "Framework/DrawDebugPrimitive/DrawPrimitive.h"
 #include "Framework/GameManager/GameManager.h"
 #include "Framework/Input/InputManagerHolder.h"
 #include "Framework/Input/InputKeyboard.h"
@@ -22,7 +23,7 @@
 #include "Application/Object/Uriel.h"
 #include "Application/Tension/TensionGauge.h"
 #include "Application\Object\Object2D\Timer.h"
-#include"Application\Camera\camera.h"
+#include "Application\Camera\camera.h"
 #include "Application/Stage/Stage.h"
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -137,6 +138,7 @@ void SceneGame::Update(SceneManager* p_scene_manager, const float elapsed_time) 
 //------------------------------------------------
 void SceneGame::Draw(void) {
   p_camera->Set();
+  SetMatrixViewProjectionViewport(p_camera->GetMatrixViewProjectionViewPort());
 
   p_background_manager_->Draw();
 
