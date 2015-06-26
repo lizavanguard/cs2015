@@ -11,15 +11,7 @@
 #include "Framework/Utility/HandyLeakCheck.h"
 #include "Framework/GameWindow/GameWindow.h"
 #include "Framework/GameWindow/GameDirectX.h"
-
-
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-// constant definition
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-namespace {
-	const unsigned int kWindowWidth = 1280;
-	const unsigned int kWindowHeight = 760;
-}
+#include "Framework/FrameworkOption.h"
 
 
 //==============================================================================
@@ -32,8 +24,8 @@ int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow ) {
 		hInstance,
 		nCmdShow,
 		"WindowTest",
-		kWindowWidth,
-		kWindowHeight,
+        kWindowWidth,
+        kWindowHeight,
 		new GameDirectX()
 	);
 

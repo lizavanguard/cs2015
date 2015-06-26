@@ -143,7 +143,7 @@ void Uriel::Update(void){
   HIT_CHECK check;
   D3DXVECTOR3 map(0.f, 0.f, 0.f);
   if (move_direction_ == DIRECTION_LEFT){
-    map = p_stage_->CheckMapTip(&D3DXVECTOR3(pos_.x + size_.x,pos_.y,pos_.z), D3DXVECTOR3(size_.x / 4, 1.0f, 0.0f), &check);
+    map = p_stage_->CheckMapTip(&D3DXVECTOR3(pos_.x + size_.x - size_.x / 4,pos_.y,pos_.z), D3DXVECTOR3(size_.x / 4, 1.0f, 0.0f), &check);
     if (check.left == MAP_TYPE_WALL){
       move_.x *= -1;
     }
@@ -176,6 +176,13 @@ void Uriel::_PreProcessOfDraw(void) {
 
   start_uv_ = texture_uv_;
   end_uv_ = texture_uv_ + texture_uv_offset_;
+}
+
+//=============================================================================
+// ボーロチャージが可能な状態なら
+//-----------------------------------------------------------------------------
+bool Uriel::CanBoroCharge(void) const {
+  return true;
 }
 
 //=============================================================================
@@ -467,8 +474,24 @@ BLOCK_DATA Uriel::LoadCheck(void){
 //-----------------------------------------------------------------------------
 bool Uriel::CheckHit(const D3DXVECTOR3& pos, const D3DXVECTOR2& size) {
   // if 矩形？？同士の判定っぽい TODO: 関数化
-  return (pos.x + size.x / 2) > (pos_.x - size_.x / 2) &&
-         (pos.x - size.x / 2) < (pos_.x - size_.x / 2);
+  
+
+  const bool is_hit_x = (pos.x + size.x / 2) > (pos_.x - size_.x / 2) &&
+                        (pos.x - size.x / 2) < (pos_.x - size_.x / 2);
+  const bool is_hit_y = (pos.y + size.y / 2) > (pos_.y - size_.y / 2) &&
+                        (pos.y - size.y / 2) < (pos_.y - size_.y / 2);
+
+  return is_hit_x && is_hit_y;
+}
+
+//=============================================================================
+// ボーロ判定
+//-----------------------------------------------------------------------------
+bool Uriel::CheckImageHit(const D3DXVECTOR3& pos, const D3DXVECTOR2& size) {
+  D3DXVECTOR3 boro_pos = pos;
+  //boro_pos.y += size_.y * 0.5f;
+
+  return CheckHit(boro_pos, size);
 }
 
 //=============================================================================
@@ -582,18 +605,19 @@ BLOCK_DATA Uriel::ChargeCrawlLoadCheck(void){
   }
 
   // 登り階段か調べる
-  map_ = p_stage_->CheckMapTip(&D3DXVECTOR3(pos_.x + size_.x / 4, pos_.y, pos_.z),
-                                D3DXVECTOR3(size_.x / 4, 1.0f, 0.0f), &check);
+  map_ = p_stage_->CheckMapTip(&D3DXVECTOR3(pos_.x, pos_.y, pos_.z),
+                                D3DXVECTOR3(size_.x / 4, size_.y / 4, 0.0f), &check);
   if (check.bottom == MAP_TYPE_NORMAL){
     // 右に進んでる場合
     if (move_direction_ == DIRECTION_RIGHT){
       if(check.right == MAP_TYPE_NORMAL){
-        p_stage_->CheckMapTip(&D3DXVECTOR3(pos_.x + size_.x / 4, pos_.y + size_.y, pos_.z),
-                               D3DXVECTOR3(size_.x / 4, 1.0f, 0.0f), &check);
-        if (check.right == MAP_TYPE_NONE ||
-            check.right == MAP_TYPE_START ||
-            check.right == MAP_TYPE_GOAL){
-          return BLOCK_DATA_UP_STAIRS;
+        map_ = p_stage_->CheckMapTip(&D3DXVECTOR3(pos_.x + size_.x / 4, pos_.y, pos_.z),
+                                D3DXVECTOR3(size_.x / 4, size_.y / 4, 0.0f), &check);
+        if (check.up_right == MAP_TYPE_NONE ||
+            check.up_right == MAP_TYPE_START ||
+            check.up_right == MAP_TYPE_GOAL){
+          if (abs(pos_.x - map_.x) < size_.x / 4)
+            return BLOCK_DATA_UP_STAIRS;
         }
       }
     }
@@ -601,16 +625,18 @@ BLOCK_DATA Uriel::ChargeCrawlLoadCheck(void){
     // 左に進んでる場合
     else{
       if(check.left == MAP_TYPE_NORMAL){
-        p_stage_->CheckMapTip(&D3DXVECTOR3(pos_.x - size_.x + size_.x / 4 * 3, pos_.y + size_.y, pos_.z),
+        p_stage_->CheckMapTip(&D3DXVECTOR3(pos_.x - size_.x + size_.x / 10 * 7, pos_.y, pos_.z),
                                D3DXVECTOR3(size_.x / 4, 1.0f, 0.0f), &check);
-        if (check.left == MAP_TYPE_NONE ||
-            check.left == MAP_TYPE_START ||
-            check.left == MAP_TYPE_GOAL){
-          return BLOCK_DATA_UP_STAIRS;
+        if (check.up_left == MAP_TYPE_NONE ||
+            check.up_left == MAP_TYPE_START ||
+            check.up_left == MAP_TYPE_GOAL){
+          if (abs(pos_.x - map_.x) < size_.x / 4)
+            return BLOCK_DATA_UP_STAIRS;
         }
       }
     }
   }
+
   return BLOCK_DATA_ERROR;
 }
 

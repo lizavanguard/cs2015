@@ -14,6 +14,7 @@
 //******************************************************************************
 // インクルードファイル
 //******************************************************************************
+#include "Uriel.h"
 #include "AnimationObject/AnimationObject.h"
 
 //******************************************************************************
@@ -33,7 +34,7 @@ public:
   // funciton ==================================
 public:
   // ctor
-  Player(ANIMATION_EVENT animation_event);
+  Player(ANIMATION_EVENT animation_event , Stage* stage);
   // dtor
   virtual ~Player();
   // update
@@ -45,8 +46,13 @@ public:
   // アニメーションの変更
   void ChangeAnimation(PLAYER_MODE mode);
 
+  // ボーロ状態の終了
+  void FinishBoroState(void);
+
   // get
+  const D3DXVECTOR3& GetPos(void) const { return pos_; }
   bool IsActing(void) const { return player_mode_ != MODE_NORMAL; }
+  bool IsBoroState(void) const { return player_mode_ == MODE_BORO; }
   PLAYER_MODE GetPlayerMode(void) const { return player_mode_; }
 
   // parameter =================================
@@ -55,6 +61,8 @@ private:
   PLAYER_MODE player_mode_;
   int count_;
   bool is_eat_;
+  Stage* stage_;
+  D3DXVECTOR2 stageSize_;
 };
 
 #endif

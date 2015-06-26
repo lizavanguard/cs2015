@@ -16,15 +16,15 @@
 class Object2D : public ObjectBase {
 public:
   // ctor
-  Object2D();
+  Object2D(const D3DXVECTOR3& pos, const D3DXVECTOR2& size, const char* p_texture_filename);
 
   // dtor
   ~Object2D();
 
 protected:
   // ï`âÊÇÃëOå„èàóù
-  virtual void _PreProcessOfDraw(void) = 0;
-  virtual void _PostProcessOfDraw(void) = 0;
+  void _PreProcessOfDraw(void) override {};
+  void _PostProcessOfDraw(void) override {};
 
 private:
   void _Draw(void);

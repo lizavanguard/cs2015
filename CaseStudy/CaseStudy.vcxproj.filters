@@ -87,9 +87,6 @@
     <ClCompile Include="src\Application\Utility\ValuePassiveUpdater.cpp">
       <Filter>Application\Utility</Filter>
     </ClCompile>
-    <ClCompile Include="src\Application\Sound\sound.cpp">
-      <Filter>Application\Sound</Filter>
-    </ClCompile>
     <ClCompile Include="src\Framework\Texture\TextureManager.cpp">
       <Filter>Framework\Texture</Filter>
     </ClCompile>
@@ -104,6 +101,36 @@
     </ClCompile>
     <ClCompile Include="src\Application\Object\Object2D\Object2D.cpp">
       <Filter>Application\Object\Object2D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application\Object\BackGround\BackGround.cpp">
+      <Filter>Application\Object\BackGround</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application\Object\BackGround\BackGroundManager.cpp">
+      <Filter>Application\Object\BackGround</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application\Collison\Collision.cpp">
+      <Filter>Application\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Framework\Collision\CollisionHelper.cpp">
+      <Filter>Framework\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application\Tension\TensionTopLayer.cpp">
+      <Filter>Application\Tension</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Framework\Sound\sound.cpp">
+      <Filter>Framework\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application\Object\Object2D\Timer.cpp">
+      <Filter>Application\Object\Object2D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application\Object\Object2D\NumberObject.cpp">
+      <Filter>Application\Object\Object2D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application\Controller\InputController.cpp">
+      <Filter>Application\Controler</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application\Camera\camera.cpp">
+      <Filter>Application\Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -158,8 +185,23 @@
     <Filter Include="Application\Utility">
       <UniqueIdentifier>{68fbf595-3a3c-4487-8014-a2415cd9a7c0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Application\Sound">
-      <UniqueIdentifier>{7685ae41-ee2b-4ee0-8afd-ec26a9c3f114}</UniqueIdentifier>
+    <Filter Include="Framework\Sound">
+      <UniqueIdentifier>{a60a3f9c-2c35-48ee-a1c3-fcd12fe60b69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Object\BackGround">
+      <UniqueIdentifier>{fe9ca15b-dfef-447d-8438-cd58c166c0bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Collision">
+      <UniqueIdentifier>{913f5645-3923-4e97-a42d-5d7d84973616}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Collision">
+      <UniqueIdentifier>{7de7ffc2-cac3-423a-82c8-581ad7a733cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Controler">
+      <UniqueIdentifier>{46d0886d-b649-4083-962b-ef4adafe807b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Camera">
+      <UniqueIdentifier>{ed525701-73be-458c-8b24-a0a64ef62b38}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -293,7 +335,7 @@
     <ClInclude Include="src\Application\Object\Ready.h">
       <Filter>Application\Object</Filter>
     </ClInclude>
-    <ClInclude Include="src\Application\Object\BackGround.h">
+    <ClInclude Include="src\Application\Object\ObjectBase.h">
       <Filter>Application\Object</Filter>
     </ClInclude>
     <ClInclude Include="src\Application\Object\ObjectBase.h">
@@ -320,8 +362,41 @@
     <ClInclude Include="src\Application\Utility\ValueActiveUpdater.h">
       <Filter>Application\Utility</Filter>
     </ClInclude>
-    <ClInclude Include="src\Application\Sound\sound.h">
-      <Filter>Application\Sound</Filter>
+    <ClInclude Include="src\Application\Tension\TensionTopLayer.h">
+      <Filter>Application\Tension</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Framework\Sound\sound.h">
+      <Filter>Framework\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\Object\BackGround\BackGround.h">
+      <Filter>Application\Object\BackGround</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\Object\BackGround\BackGroundManager.h">
+      <Filter>Application\Object\BackGround</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\Collison\Collision.h">
+      <Filter>Application\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Framework\Collision\CollisionHelper.h">
+      <Filter>Framework\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\Object\Object2D\Timer.h">
+      <Filter>Application\Object\Object2D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\Object\Object2D\NumberObject.h">
+      <Filter>Application\Object\Object2D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\Controller\InputController.h">
+      <Filter>Application\Controler</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\Camera\camera.h">
+      <Filter>Application\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\common.h">
+      <Filter>Application</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Framework\FrameworkOption.h">
+      <Filter>Framework</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

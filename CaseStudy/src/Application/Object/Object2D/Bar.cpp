@@ -27,11 +27,11 @@ const DWORD kBarColor = 0xffff0000;
 // ctor
 //------------------------------------------------
 Bar::Bar(const D3DXVECTOR3& pos, const D3DXVECTOR2& size, const float max_value)
-    : max_value_(max_value)
+    : Object2D(pos, size, kTextureFilename)
+    , max_value_(max_value)
     , original_position_(D3DXVECTOR3(pos.x - size.x * 0.5f, pos.y - size.y * 0.5f, pos.z))
     , original_size_(size) {
   assert(max_value > 0.0f);
-  SetTexture(kTextureFilename);
   pos_ = pos;
   size_ = size;
   color_ = kBarColor;
