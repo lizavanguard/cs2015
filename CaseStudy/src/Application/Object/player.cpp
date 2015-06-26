@@ -48,6 +48,7 @@ Player::Player(ANIMATION_EVENT animation_event , Stage* stage)
   , is_eat_(false) {
     stage_ = stage;
     stageSize_ = stage_->GetStageSize();
+    pos_ = stage_->GetStartMaptip();
 }
 
 //==============================================================================

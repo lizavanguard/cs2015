@@ -8,12 +8,12 @@
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 // include
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
-#include "Application/Object/Object.h"
+#include "Application/Object/Object2D/Object2D.h"
 
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 // class definition
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
-class BackGround : public Object {
+class BackGround : public Object2D {
 public:
   // ctor
   BackGround(const char* p_filename, float speed_u);

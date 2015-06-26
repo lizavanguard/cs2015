@@ -22,8 +22,8 @@ namespace {
 
 const char* kFrameTextureFilename = "data/Texture/UI_tension_min.png";
 
-const float kRateToFixSize = 0.5f;
-const D3DXVECTOR3 kPos = {200.0f, 150.0f, 0.0f};
+const float kRateToFixSize = 0.4f;
+const D3DXVECTOR3 kPos = {150.0f, 100.0f, 0.0f};
 const D3DXVECTOR2 kSize = {1277.0f, 289.0f};
 
 const D3DXVECTOR2 kFixedSize = kSize * kRateToFixSize;

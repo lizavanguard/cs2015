@@ -30,7 +30,7 @@ const float kUSpeed = 0.0005f;
 // ctor
 //------------------------------------------------
 BackGroundManager::BackGroundManager() {
-  back_grounds_.push_back(new BackGround( kTexturename, kUSpeed));
+  back_grounds_.push_back(new BackGround(kTexturename, kUSpeed));
 }
 
 //------------------------------------------------

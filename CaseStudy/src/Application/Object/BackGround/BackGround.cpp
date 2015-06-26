@@ -14,10 +14,8 @@
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 namespace {
 
-
-const D3DXVECTOR3 kPos = {0, -360, 0};
-const D3DXVECTOR2 kSize = {1280, 720};
-
+const D3DXVECTOR3 kPos = {640.0f, 380.0f, 10.0f};
+const D3DXVECTOR2 kSize = {1280.0f, 760.0f};
 
 }
 
@@ -28,10 +26,11 @@ const D3DXVECTOR2 kSize = {1280, 720};
 // ctor
 //------------------------------------------------
 BackGround::BackGround(const char* p_filename, const float speed_u)
-    : speed_u_(speed_u) {
-  SetTexture(p_filename);
-  size_ = kSize;
-  pos_ = kPos;
+    : Object2D(kPos, kSize, p_filename)
+    , speed_u_(speed_u) {
+  //SetTexture(p_filename);
+  //size_ = kSize;
+  //pos_ = kPos;
 }
 
 //------------------------------------------------

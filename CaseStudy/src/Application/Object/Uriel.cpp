@@ -143,7 +143,7 @@ void Uriel::Update(void){
   HIT_CHECK check;
   D3DXVECTOR3 map(0.f, 0.f, 0.f);
   if (move_direction_ == DIRECTION_LEFT){
-    map = p_stage_->CheckMapTip(&D3DXVECTOR3(pos_.x + size_.x,pos_.y,pos_.z), D3DXVECTOR3(size_.x / 4, 1.0f, 0.0f), &check);
+    map = p_stage_->CheckMapTip(&D3DXVECTOR3(pos_.x + size_.x/4*3,pos_.y,pos_.z), D3DXVECTOR3(size_.x / 4, 1.0f, 0.0f), &check);
     if (check.left == MAP_TYPE_WALL){
       move_.x *= -1;
     }
@@ -474,7 +474,7 @@ bool Uriel::CheckHit(const D3DXVECTOR3& pos, const D3DXVECTOR2& size) {
   const bool is_hit_y = (pos.y + size.y / 2) > (pos_.y - size_.y / 2) &&
                         (pos.y - size.y / 2) < (pos_.y - size_.y / 2);
 
-  return is_hit_x && is_hit_y;
+  return is_hit_x; //&& is_hit_y;
 }
 
 //=============================================================================
