@@ -69,6 +69,8 @@ public:
   // Hit
   D3DXVECTOR3 CheckMapTip(D3DXVECTOR3* pos, D3DXVECTOR3 size, HIT_CHECK* check);
 
+  // Hit
+  D3DXVECTOR3 CheckMapTip2(D3DXVECTOR3* pos, D3DXVECTOR3 size, HIT_CHECK* check);
 private:
   void HitManage(int id,HIT_CHECK* check);
   void CheckInit(HIT_CHECK* check);

@@ -17,8 +17,8 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // define
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-#define WIDTH_LENGTH	(50.0f)
-#define HEIGHT_LENGTH	(50.0f)
+#define WIDTH_LENGTH  (50.0f)
+#define HEIGHT_LENGTH  (50.0f)
 const int mapdata[] = 
 {
   4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
@@ -30,6 +30,18 @@ const int mapdata[] =
   4, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 4,
   4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4,
 };
+//
+//const int mapdata[] =
+//{
+//  4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4,
+//  4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4,
+//  4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4,
+//  4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4,
+//  4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4,
+//  4, 4, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4,
+//  4, 4, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 4, 4,
+//  4, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 4,
+//};
 //const int mapdata[] = 
 //{
 //  4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
@@ -54,8 +66,8 @@ Stage::Stage()
   , map_height_(0){
   auto p_device = DeviceHolder::Instance().GetDevice();
   //-----------そのうちこちらへ移行-----------
-  //int no = 1;						// すでにあった場合の変数
-  //char *filename;					// 保存する画像の名前
+  //int no = 1;            // すでにあった場合の変数
+  //char *filename;          // 保存する画像の名前
   //filename = (char *)malloc(200);
   //sprintf(filename, "data/Texture/map%03d.png", no);
   //while (1)
@@ -79,9 +91,9 @@ Stage::Stage()
   //  sprintf(filename, "data/Texture/map%03d.png", i);
   //  texture_id_[i] = TextureManagerHolder::Instance().GetTextureManager().LoadTexture(filename);
   //}
+  //-----------そのうちこちらへ移行-----------
 
 //------------------------------------------------------------------------------ 使うのは今のみ
-
   // HACK:
   p_device->CreateVertexBuffer(
     sizeof(Vertex2D) * 4,
@@ -89,11 +101,13 @@ Stage::Stage()
     kVertexFVF2D,
     D3DPOOL_MANAGED,
     &p_vertex_buffer_,
-	nullptr);
+    nullptr);
   texture_id_ = new int[2];
   texture_id_[0] = TextureManagerHolder::Instance().GetTextureManager().LoadTexture("data/Texture/block00.png");
   texture_id_[1] = TextureManagerHolder::Instance().GetTextureManager().LoadTexture("data/Texture/map001.jpg");
+
   map_width_ = 13;
+  //map_width_ = 13;
   //map_width_ = 21;
   map_height_ = 8;
   map_id_max = 0;
@@ -152,7 +166,7 @@ Stage::Stage()
     }
   }
   delete[] texture_id_;
-//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------ 使うのは今のみ
 }
 
 // dtor
@@ -319,6 +333,52 @@ D3DXVECTOR3 Stage::CheckMapTip(D3DXVECTOR3* pos, D3DXVECTOR3 size, HIT_CHECK* ch
   }// for
   return D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 }
+D3DXVECTOR3 Stage::CheckMapTip2(D3DXVECTOR3* pos, D3DXVECTOR3 size, HIT_CHECK* check)
+{
+  CheckInit(check);
+  int w_id = -1;
+  int h_id = -1;
+  w_id = (pos->x + map_width_ * WIDTH_LENGTH) / 100;
+  h_id = -(pos->y - map_height_ * HEIGHT_LENGTH) / 100;
+  int check_id = w_id + h_id * map_width_;
+  HitManage(check_id, check);
+
+  // AABB判定のための4点抽出
+  D3DXVECTOR3 point[4] =
+  {
+    D3DXVECTOR3(pos->x - size.x, pos->y - size.y, 0.0f),
+    D3DXVECTOR3(pos->x + size.x, pos->y - size.y, 0.0f),
+    D3DXVECTOR3(pos->x - size.x, pos->y + size.y, 0.0f),
+    D3DXVECTOR3(pos->x + size.x, pos->y + size.y, 0.0f),
+  };
+  D3DXVECTOR3 map_pos = 
+  D3DXVECTOR3(-(map_width_ * WIDTH_LENGTH) + WIDTH_LENGTH + WIDTH_LENGTH * 2 * w_id,
+             (map_height_ * HEIGHT_LENGTH) - ( HEIGHT_LENGTH + HEIGHT_LENGTH * 2 * h_id),
+                    0.0f);
+  
+  D3DXVECTOR3 map_point[4] =
+  {
+    D3DXVECTOR3(map_pos.x - WIDTH_LENGTH, map_pos.y - HEIGHT_LENGTH, 0.0f),
+    D3DXVECTOR3(map_pos.x + WIDTH_LENGTH, map_pos.y - HEIGHT_LENGTH, 0.0f),
+    D3DXVECTOR3(map_pos.x - WIDTH_LENGTH, map_pos.y + HEIGHT_LENGTH, 0.0f),
+    D3DXVECTOR3(map_pos.x + WIDTH_LENGTH, map_pos.y + HEIGHT_LENGTH, 0.0f),
+  };
+  if (point[1].x >= map_point[0].x && point[0].x <= map_point[1].x)
+  {
+    if (point[3].y >= map_point[0].y && point[0].y <= map_point[3].y)
+    {
+      return map_pos;
+    } // if
+  }// if
+  if (point[3].x >= map_point[2].x && point[3].x <= map_point[2].x)
+  {
+    if (point[2].y >= map_point[1].y && point[2].y <= map_point[1].y)
+    {
+      return map_pos;
+    }// if
+  }// if
+  return *pos;
+}
 void Stage::HitManage(int id, HIT_CHECK* check)
 {
   check->center = m_mapdata[id + map_width_];
@@ -326,7 +386,7 @@ void Stage::HitManage(int id, HIT_CHECK* check)
   int map_uriel_h = id - map_width_ * 2;
   int map_uriel_w = id - map_width_;
   // マップチェック
-  bool bottom	= id < data_id_;
+  bool bottom  = id < data_id_;
   bool up = map_uriel_h > 0;
   bool right = map_uriel_w % (map_width_) + 1 != map_width_;
   bool left = map_uriel_w % (map_width_) - 1 != -1;
