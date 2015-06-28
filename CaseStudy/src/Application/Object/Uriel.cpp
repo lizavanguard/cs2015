@@ -26,7 +26,6 @@ Uriel::Uriel(ANIMATION_EVENT animation_event, Stage* stage, TensionGauge* p_tens
   dest_position_ = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
   move_ = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
   move_.x = URIEL_MOVE_SPPD;
-  jump_before_pos_ = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
   map_ = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
   p_stage_ = stage;
   p_tension_gauge_ = p_tension_gauge;
@@ -179,13 +178,6 @@ void Uriel::_PreProcessOfDraw(void) {
 }
 
 //=============================================================================
-// ボーロチャージが可能な状態なら
-//-----------------------------------------------------------------------------
-bool Uriel::CanBoroCharge(void) const {
-  return true;
-}
-
-//=============================================================================
 // アニメーションの設定
 //-----------------------------------------------------------------------------
 void Uriel::SetAnimaton(ANIMATION_EVENT animation_event){
@@ -251,15 +243,8 @@ void Uriel::UpdateCrawl(void){
     pos_.y = map.y + 25.0f * 1.9f;
     move_.y = 0;
   } else {
+    SetAnimaton(ANIMATION_URIEL_JUMP);
     move_.x = 0;
-  }
-
-  if (move_.x == 0 && check.bottom == MAP_TYPE_NORMAL){
-    if (move_direction_ == DIRECTION_RIGHT){
-      move_.x = URIEL_MOVE_SPPD;
-    } else {
-      move_.x = -URIEL_MOVE_SPPD;
-    }
   }
 
   // ジャンプするかチェックしてジャンプできるならジャンプ
@@ -270,8 +255,6 @@ void Uriel::UpdateCrawl(void){
     D3DXVECTOR2 vector = JumpAngleSeek(50.0f, 150.0f, 0.0f, GRAVITY);
     move_.x = vector.x;
     move_.y = vector.y;
-    // ジャンプ前の座標を保存
-    jump_before_pos_ = pos_;
   }
 
   // 登り階段なら上る
@@ -280,8 +263,6 @@ void Uriel::UpdateCrawl(void){
     D3DXVECTOR2 vector = JumpAngleSeek(100.0f, 75.0f, 100.0f, GRAVITY);
     move_.x = vector.x;
     move_.y = vector.y;
-    // ジャンプ前の座標を保存
-    jump_before_pos_ = pos_;
   }
 }
 
@@ -295,7 +276,11 @@ void Uriel::UpdateJump(void){
   map = p_stage_->CheckMapTip(&pos_, D3DXVECTOR3(size_.x / 4, 1.0f, 0.0f), &check);
   if (check.bottom == MAP_TYPE_NORMAL){
     SetAnimaton(ANIMATION_URIEL_CRAWL);
-    move_.x = URIEL_MOVE_SPPD * (move_.x / abs(move_.x));
+    if (move_direction_ == DIRECTION_RIGHT){
+      move_.x = URIEL_MOVE_SPPD;
+    } else {
+      move_.x = -URIEL_MOVE_SPPD;
+    }
     pos_.y = map.y + 25.0f * 1.9f;
     move_.y = 0.0f;
   }
@@ -377,16 +362,8 @@ void Uriel::UpdateChargeCrawl(void){
       pos_.y = map.y + 25.0f * 1.9f;
       move_.y = 0;
   } else {
+    SetAnimaton(ANIMATION_URIEL_CHARGEJUMP);
     move_.x = 0;
- }
-
- if (move_.x == 0 && check.bottom == MAP_TYPE_NORMAL){
-    if (move_direction_ == DIRECTION_RIGHT){
-       move_.x = URIEL_MOVE_CHARGE_SPEED;
-    }
-    else {
-       move_.x = -URIEL_MOVE_CHARGE_SPEED;
-    }
  }
 
   // ジャンプするかチェックしてジャンプできるならジャンプ
@@ -397,8 +374,6 @@ void Uriel::UpdateChargeCrawl(void){
     D3DXVECTOR2 vector = JumpAngleSeek(50.0f, 250.0f, 0.0f, GRAVITY);
     move_.x = vector.x;
     move_.y = vector.y;
-    // ジャンプ前の座標を保存
-    jump_before_pos_ = pos_;
   }
 
   // 登り階段なら上る
@@ -407,8 +382,6 @@ void Uriel::UpdateChargeCrawl(void){
     D3DXVECTOR2 vector = JumpAngleSeek(100.0f, 50.0f, 100.0f, GRAVITY);
     move_.x = vector.x;
     move_.y = vector.y;
-    // ジャンプ前の座標を保存
-    jump_before_pos_ = pos_;
   }
 
   // boro_interval_が0以下ならチャージモードを止める
@@ -419,11 +392,19 @@ void Uriel::UpdateChargeCrawl(void){
     if (boro_gage_max_){
       SetAnimaton(ANIMATION_URIEL_RUNAWAY);
       runaway_timer_ = 0;
-      move_.x = URIEL_MOVE_RUNAWAY_SPPD * (move_.x / abs(move_.x));
+      if (move_direction_ == DIRECTION_RIGHT){
+        move_.x = URIEL_MOVE_RUNAWAY_SPPD;
+      } else {
+        move_.x = -URIEL_MOVE_RUNAWAY_SPPD;
+      }
     } else {
       // 通常に戻る
       SetAnimaton(ANIMATION_URIEL_CRAWL);
-      move_.x = URIEL_MOVE_SPPD * (move_.x / abs(move_.x));
+      if (move_direction_ == DIRECTION_RIGHT){
+        move_.x = URIEL_MOVE_SPPD;
+      } else {
+        move_.x = -URIEL_MOVE_SPPD;
+      }
     }
   }
 }
@@ -438,7 +419,11 @@ void Uriel::UpdateChargeJump(void){
   map = p_stage_->CheckMapTip(&pos_, D3DXVECTOR3(size_.x / 4, 1.0f, 0.0f), &check);
   if (check.bottom == MAP_TYPE_NORMAL){
     SetAnimaton(ANIMATION_URIEL_CHARGECRAWL);
-    move_.x = URIEL_MOVE_CHARGE_SPEED * (move_.x / abs(move_.x));
+    if (move_direction_ == DIRECTION_RIGHT){
+      move_.x = URIEL_MOVE_CHARGE_SPEED;
+    } else {
+      move_.x = -URIEL_MOVE_CHARGE_SPEED;
+    }
     pos_.y = map.y + 25.0f * 1.9f;
     move_.y = 0.0f;
   }

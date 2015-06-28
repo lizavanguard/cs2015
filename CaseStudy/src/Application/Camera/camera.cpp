@@ -51,8 +51,9 @@ static const float kStartZoomRate = 2.0f;
 Camera::Camera(Player* player , Stage* stage){
   player_ = player;
   stage_ = stage;
-  posP_ = D3DXVECTOR3(0.0f , 0.0f , -5.0f);
-  posR_ = D3DXVECTOR3(0.0f , 0.0f , 0.0f);
+  const D3DXVECTOR3 player_start_position = player->GetPos();
+  posP_ = D3DXVECTOR3(player_start_position.x, player_start_position.y, -5.0f);
+  posR_ = player_start_position;
   vecU_ = D3DXVECTOR3(0.0f , 1.0f , 0.0f);
   rot_ = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
   zoomRate_ = kStartZoomRate;

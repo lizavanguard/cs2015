@@ -23,8 +23,8 @@ const char* kTexturenames[] = {
 const int kReadyDisplayTime = 30;
 const int kEndTime = 60;
 
-const D3DXVECTOR3 kInitialPos = {0, -180, 0};
-const D3DXVECTOR2 kSize = {640, 360};
+const D3DXVECTOR3 kInitialPos = {640.0f, 360.0f, 0.0f};
+const D3DXVECTOR2 kSize = {640.0f, 360.0f};
 
 }
 
@@ -34,15 +34,15 @@ const D3DXVECTOR2 kSize = {640, 360};
 //------------------------------------------------
 // ctor
 //------------------------------------------------
-Ready::Ready() : count_(0), is_end_(false) {
+Ready::Ready()
+    : Object2D(kInitialPos, kSize, nullptr)
+    , count_(0)
+    , is_end_(false) {
   for (int texture_count = 0; texture_count < kTextureAnimationMax; ++texture_count) {
     texture_ids_[texture_count] =
       TextureManagerHolder::Instance().GetTextureManager().LoadTexture(kTexturenames[texture_count]);
   }
   texture_id_ = texture_ids_[0];
-
-  size_ = kSize;
-  pos_ = kInitialPos;
 }
 
 //------------------------------------------------

@@ -27,7 +27,7 @@
 namespace {
 
 const float kPlayerMoveSpeed = 10.0f;
-const int kBoroRecastTime = 60;
+const int kBoroRecastTime = 30;
 
 }
 
@@ -48,6 +48,7 @@ Player::Player(ANIMATION_EVENT animation_event , Stage* stage)
   , is_eat_(false) {
     stage_ = stage;
     stageSize_ = stage_->GetStageSize();
+    pos_ = stage_->GetStartMaptip();
 }
 
 //==============================================================================
@@ -120,7 +121,6 @@ void Player::Update(Uriel *uriel_){
   if (!is_eat_) {
     if (pJoypad.IsTrigger(InputDevice::Pads::PAD_X) || pKeyboard.IsTrigger(DIK_B)) {
       ChangeAnimation(MODE_BORO);
-      PlaySound(SOUND_LABEL_SE_EAT);
     }
     else if (pJoypad.IsRelease(InputDevice::Pads::PAD_X) || pKeyboard.IsRelease(DIK_B)){
       ChangeAnimation(MODE_NORMAL);

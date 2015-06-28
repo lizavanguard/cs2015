@@ -72,9 +72,6 @@ public:
   void SetAnimaton(ANIMATION_EVENT animation_event);
   void SetDestPos(const D3DXVECTOR3& pos);
 
-  // ボーロチャージが可能な状態なら
-  bool CanBoroCharge(void) const;
-
   // ボーロチャージ(ボーロチャージ出来ればtrueが返る)
   bool BoroChage(void);
 
@@ -109,7 +106,6 @@ private:
   D3DXVECTOR2 JumpAngleSeek(float top, float length, float difference_in_height, float gravity);
   D3DXVECTOR3 dest_position_;
   D3DXVECTOR3 old_position_;
-  D3DXVECTOR3 jump_before_pos_;
   D3DXVECTOR3 move_;
   D3DXVECTOR3 map_;
   Stage* p_stage_;

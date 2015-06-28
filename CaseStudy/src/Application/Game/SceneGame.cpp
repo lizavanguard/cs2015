@@ -64,7 +64,7 @@ SceneGame::SceneGame()
 
   p_timer_ = new Timer(D3DXVECTOR3(600.0f, 50.0f, 0.0f), 0.0f, D3DXVECTOR2(50.0f, 50.0f), TIMER);
 
-  PlaySound(SOUND_LABEL_BGM_DEMO0);
+  //PlaySound(SOUND_LABEL_BGM_DEMO0);
 }
 
 
@@ -96,16 +96,17 @@ void SceneGame::Update(SceneManager* p_scene_manager, const float elapsed_time) 
     p_ready_->Update();
     return;
   }
-  
+
   // GAME
-//  // 鳥更新
-//  p_tori_->Update();
-//
-//  if (p_tori_->GetHitCheck()){
-//    return;
-//  }
+  // 鳥更新
+  p_tori_->Update();
+  if (p_tori_->GetHitCheck()){
+    return;
+  }
+
   // カメラ更新
   p_camera->Update();
+
   // タイマー更新
   p_timer_->Update();
 
@@ -135,21 +136,22 @@ void SceneGame::Update(SceneManager* p_scene_manager, const float elapsed_time) 
 // Draw
 //------------------------------------------------
 void SceneGame::Draw(void) {
-  p_background_manager_->Draw();
   p_camera->Set();
 
+  p_background_manager_->Draw();
+
   p_stage_->Draw();
+
+  p_tori_->Draw();
 
   p_uriel_->Draw();
 
   p_player_->Draw();
 
-  p_tori_->Draw();
+  p_tension_gauge_->Draw();
 
   p_timer_->Draw();
 
-  p_tension_gauge_->Draw();
-   
   if (!p_ready_->IsEnd()) {
     p_ready_->Draw();
   }
