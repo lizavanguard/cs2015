@@ -50,6 +50,10 @@ public:
   // ctor
   Stage();
 
+  // ctor
+  void SelectStage(char*);
+
+
   // dtor
   virtual ~Stage();
 
@@ -80,7 +84,7 @@ private:
   int map_height_;
   int map_id_max;
   STG_STR* stage_;
-
+  int* m_mapdata;
 
   LPDIRECT3DVERTEXBUFFER9 p_vertex_buffer_;
 };
