@@ -64,7 +64,7 @@ SceneGame::SceneGame()
 
   p_timer_ = new Timer(D3DXVECTOR3(600.0f, 50.0f, 0.0f), 0.0f, D3DXVECTOR2(50.0f, 50.0f), TIMER);
 
-  PlaySound(SOUND_LABEL_BGM_DEMO0);
+  //PlaySound(SOUND_LABEL_BGM_DEMO0);
 }
 
 

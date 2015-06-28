@@ -27,15 +27,16 @@
 // 列挙体定義
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 typedef enum {
-  URIEL_STATUS_NONE = -1,                                 // 状態エラー
-  URIEL_STATUS_NEUTRAL = ANIMATION_URIEL_NEUTRAL,         // ニュートラル状態
-  URIEL_STATUS_CRAWL = ANIMATION_URIEL_CRAWL,             // ハイハイ状態
-  URIEL_STATUS_JUMP = ANIMATION_URIEL_JUMP,               // ジャンプ状態
-  URIEL_STATUS_RUNAWAY = ANIMATION_URIEL_RUNAWAY,         // 暴走状態
-  URIEL_STATUS_SLEEP = ANIMATION_URIEL_SLEEP,             // 眠り状態
-  URIEL_STATUS_CHARGECRAWL = ANIMATION_URIEL_CHARGECRAWL, // ハイハイ(チャージ)状態
-  URIEL_STATUS_CHARGEJUMP = ANIMATION_URIEL_CHARGEJUMP,   // ジャンプ(チャージ)状態
-  URIEL_STATUS_GOAL = ANIMATION_URIEL_GOAL,               // ゴール時の演出
+  URIEL_STATUS_NONE = -1,                                   // 状態エラー
+  URIEL_STATUS_NEUTRAL = ANIMATION_URIEL_NEUTRAL,           // ニュートラル状態
+  URIEL_STATUS_CRAWL = ANIMATION_URIEL_CRAWL,               // ハイハイ状態
+  URIEL_STATUS_JUMP = ANIMATION_URIEL_JUMP,                 // ジャンプ状態
+  URIEL_STATUS_RUNAWAY = ANIMATION_URIEL_RUNAWAY,           // 暴走状態
+  URIEL_STATUS_RUNAWAY_JUMP = ANIMATION_URIEL_RUNAWAY_JUMP, // 暴走状態でのジャンプ
+  URIEL_STATUS_SLEEP = ANIMATION_URIEL_SLEEP,               // 眠り状態
+  URIEL_STATUS_CHARGE_CRAWL = ANIMATION_URIEL_CHARGE_CRAWL, // ハイハイ(チャージ)状態
+  URIEL_STATUS_CHARGE_JUMP = ANIMATION_URIEL_CHARGE_JUMP,   // ジャンプ(チャージ)状態
+  URIEL_STATUS_GOAL = ANIMATION_URIEL_GOAL,                 // ゴール時の演出
   URIEL_STATUS_MAX
 }URIEL_STATUS;
 
@@ -95,6 +96,7 @@ private:
   void UpdateCrawl(void);
   void UpdateJump(void);
   void UpdateRunaway(void);
+  void UpdateRunawayJump(void);
   void UpdateSleep(void);
   void UpdateChargeCrawl(void);
   void UpdateChargeJump(void);
