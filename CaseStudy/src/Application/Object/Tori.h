@@ -16,15 +16,17 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // マクロ定義
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-#define FLY_TO_TOP_SPEED (9.0f)  // 上へ飛ぶ速度
+#define FLY_TO_TOP_SPEED (9.0f)            // 上へ飛ぶ速度
+#define TIME_TO_FLY_TO_BECOME_GEALTHY (30) // 元気になってから飛ぶまでの時間
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // class definition
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+class Stage;
 class Tori : public AnimationObject {
 public:
   // ctor
-  Tori(ANIMATION_EVENT animation_event, Uriel *uriel, const D3DXVECTOR3& pos);
+  Tori(ANIMATION_EVENT animation_event, Uriel *uriel, Stage *stage);
 
   // dtor
   virtual ~Tori();
@@ -46,6 +48,7 @@ private:
   float move_speed_;
   int motion_timer_;
   Uriel *p_uriel_;
+  Stage *p_stage_;
   bool hit_flag_;
   bool happy_flag_;
   int animation_time_;

@@ -35,9 +35,9 @@ const int mapdata[] =
   4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
   4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
   4, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4,
-  4, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 4,
-  4, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 4,
-  4, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 4,
+  4, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 4,
+  4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 4,
+  4, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 4,
   4, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4,
   4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4,
 };
@@ -202,6 +202,54 @@ D3DXVECTOR3 Stage::CheckMapTip(D3DXVECTOR3* pos, D3DXVECTOR3 size, HIT_CHECK* ch
   }// for
   return D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 }
+
+D3DXVECTOR3 Stage::CheckMapTip2(D3DXVECTOR3* pos, D3DXVECTOR3 size, HIT_CHECK* check)
+{
+  CheckInit(check);
+  int w_id = -1;
+  int h_id = -1;
+  w_id = (int)(pos->x + map_width_ * WIDTH_LENGTH) / 100;
+  h_id = -(int)(pos->y - map_height_ * HEIGHT_LENGTH) / 100;
+  int check_id = w_id + h_id * map_width_;
+  HitManage(check_id, check);
+
+  // AABB”»’è‚Ì‚½‚ß‚Ì4“_’Šo
+  D3DXVECTOR3 point[4] =
+  {
+    D3DXVECTOR3(pos->x - size.x, pos->y - size.y, 0.0f),
+    D3DXVECTOR3(pos->x + size.x, pos->y - size.y, 0.0f),
+    D3DXVECTOR3(pos->x - size.x, pos->y + size.y, 0.0f),
+    D3DXVECTOR3(pos->x + size.x, pos->y + size.y, 0.0f),
+  };
+  D3DXVECTOR3 map_pos = 
+  D3DXVECTOR3(-(map_width_ * WIDTH_LENGTH) + WIDTH_LENGTH + WIDTH_LENGTH * 2 * w_id,
+             (map_height_ * HEIGHT_LENGTH) - ( HEIGHT_LENGTH + HEIGHT_LENGTH * 2 * h_id + 1),
+                    0.0f);
+  
+  D3DXVECTOR3 map_point[4] =
+  {
+    D3DXVECTOR3(map_pos.x - WIDTH_LENGTH, map_pos.y - HEIGHT_LENGTH, 0.0f),
+    D3DXVECTOR3(map_pos.x + WIDTH_LENGTH, map_pos.y - HEIGHT_LENGTH, 0.0f),
+    D3DXVECTOR3(map_pos.x - WIDTH_LENGTH, map_pos.y + HEIGHT_LENGTH, 0.0f),
+    D3DXVECTOR3(map_pos.x + WIDTH_LENGTH, map_pos.y + HEIGHT_LENGTH, 0.0f),
+  };
+  if (point[1].x >= map_point[0].x && point[0].x <= map_point[1].x)
+  {
+    if (point[3].y >= map_point[0].y && point[0].y <= map_point[3].y)
+    {
+      return map_pos;
+    } // if
+  }// if
+  if (point[3].x >= map_point[2].x && point[3].x <= map_point[2].x)
+  {
+    if (point[2].y >= map_point[1].y && point[2].y <= map_point[1].y)
+    {
+      return map_pos;
+    }// if
+  }// if
+  return *pos;
+}
+
 void Stage::HitManage(int id, HIT_CHECK* check)
 {
   check->center = mapdata[id];
