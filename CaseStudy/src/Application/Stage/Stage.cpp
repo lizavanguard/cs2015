@@ -93,15 +93,8 @@ Stage::Stage()
   texture_id_ = new int[2];
   texture_id_[0] = TextureManagerHolder::Instance().GetTextureManager().LoadTexture("data/Texture/block00.png");
   texture_id_[1] = TextureManagerHolder::Instance().GetTextureManager().LoadTexture("data/Texture/map001.jpg");
-<<<<<<< HEAD
   //map_width_ = 13;
   map_width_ = 21;
-=======
-
-  map_width_ = 13;
-  //map_width_ = 13;
-  //map_width_ = 21;
->>>>>>> map_oha
   map_height_ = 8;
   map_id_max = 0;
   for (int check = 0; check < map_height_ * map_width_; check++)
@@ -319,22 +312,14 @@ D3DXVECTOR3 Stage::CheckMapTip(D3DXVECTOR3* pos, D3DXVECTOR3 size, HIT_CHECK* ch
   }// for
   return D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 }
-<<<<<<< HEAD
 
-=======
->>>>>>> map_oha
 D3DXVECTOR3 Stage::CheckMapTip2(D3DXVECTOR3* pos, D3DXVECTOR3 size, HIT_CHECK* check)
 {
   CheckInit(check);
   int w_id = -1;
   int h_id = -1;
-<<<<<<< HEAD
   w_id = (int)(pos->x + map_width_ * WIDTH_LENGTH) / 100;
   h_id = -(int)(pos->y - map_height_ * HEIGHT_LENGTH) / 100;
-=======
-  w_id = (pos->x + map_width_ * WIDTH_LENGTH) / 100;
-  h_id = -(pos->y - map_height_ * HEIGHT_LENGTH) / 100;
->>>>>>> map_oha
   int check_id = w_id + h_id * map_width_;
   HitManage(check_id, check);
 
@@ -374,10 +359,7 @@ D3DXVECTOR3 Stage::CheckMapTip2(D3DXVECTOR3* pos, D3DXVECTOR3 size, HIT_CHECK* c
   }// if
   return *pos;
 }
-<<<<<<< HEAD
 
-=======
->>>>>>> map_oha
 void Stage::HitManage(int id, HIT_CHECK* check)
 {
   check->center = m_mapdata[id + map_width_];
