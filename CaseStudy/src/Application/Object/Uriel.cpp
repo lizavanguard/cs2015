@@ -18,6 +18,14 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 #define GRAVITY	(-0.49f)
 
+namespace {
+
+const D3DXVECTOR3 kEatPosOffset = {
+  25.0f, 21.0f, 0.0f
+};
+
+}
+
 //==============================================================================
 // class implementation
 //==============================================================================
@@ -640,5 +648,16 @@ D3DXVECTOR2 Uriel::JumpAngleSeek(float top, float length, float difference_in_he
   move.y = move.y * -1;
 
   return move;
+}
+
+//=============================================================================
+// H‚×‚éˆÊ’u‚ð•Ô‚·
+//-----------------------------------------------------------------------------
+const D3DXVECTOR3 Uriel::GetEatPos(void) const {
+  D3DXVECTOR3 pos_offset = kEatPosOffset;
+  if (this->move_direction_ == AnimationObject::DIRECTION::DIRECTION_LEFT) {
+    pos_offset.x *= -1;
+  }
+  return pos_ + pos_offset;
 }
 // EOF

@@ -53,6 +53,8 @@ static LPDIRECT3DVERTEXDECLARATION9 g_vertex_declaration = NULL;
 // HACK: 初期化
 //------------------------------------------------
 HRESULT InitDrawPrimitive(LPDIRECT3DDEVICE9 p_device) {
+#ifdef _DEBUG
+
   g_p_device = p_device;
 
 	// 点用のバッファ確保
@@ -95,7 +97,8 @@ HRESULT InitDrawPrimitive(LPDIRECT3DDEVICE9 p_device) {
 	if( FAILED( hr ) ) {
 		return E_FAIL;
 	}
-	return S_OK;
+#endif
+  return S_OK;
 }
 
 
@@ -103,7 +106,9 @@ HRESULT InitDrawPrimitive(LPDIRECT3DDEVICE9 p_device) {
 // HACK:終了処理
 //------------------------------------------------
 void UninitDrawPrimitive( void ) {
-	//SafeRelease( g_point_buffer );
+#ifdef _DEBUG
+  
+  //SafeRelease( g_point_buffer );
 	//SafeRelease( g_line_buffer );
 	if( g_point_buffer != NULL ) {
 		g_point_buffer->Release();
@@ -113,6 +118,8 @@ void UninitDrawPrimitive( void ) {
 		g_line_buffer->Release();
 		g_line_buffer = NULL;
 	}
+
+#endif
 }
 
 
@@ -120,6 +127,8 @@ void UninitDrawPrimitive( void ) {
 // 点の描画
 //------------------------------------------------
 void DrawPoint( const int x, const int y, const D3DCOLOR color ) {
+#ifdef _DEBUG
+
 	// 頂点情報の設定
 	VERTEX_2D* vtx;
 
@@ -166,6 +175,8 @@ void DrawPoint( const float x, const float y, const D3DCOLOR color ) {
 	//g_p_device->SetTexture( 0, NULL );
 	//g_p_device->DrawPrimitive( D3DPT_POINTLIST, 0, 1 );
 	++g_cnt;
+
+#endif
 }
 
 
@@ -177,6 +188,8 @@ void DrawLine(
 	const float bx, const float by,
 	const D3DCOLOR a_color, const D3DCOLOR b_color
 ) {
+#ifdef _DEBUG
+
 	// 頂点情報の設定
 	VERTEX_2D* vtx;
 
@@ -205,6 +218,8 @@ void DrawLine(
 	//g_p_device->SetTexture( 0, NULL );
 	//g_p_device->DrawPrimitive( D3DPT_LINELIST, 0, 2 );
 	g_line_cnt+=2;
+
+#endif
 }
 
 
@@ -212,6 +227,8 @@ void DrawLine(
 // 円の描画
 //------------------------------------------------
 void DrawCircle( const float cx, const float cy, const float r, const D3DCOLOR color, bool is_fill ) {
+#ifdef _DEBUG
+
 	if( r == 0 ) {
 		return;
 	}
@@ -242,10 +259,14 @@ void DrawCircle( const float cx, const float cy, const float r, const D3DCOLOR c
 			DrawLine( cx - rx, cy - ry, cx + rx, cy - ry, color, color );
 		}
 	}
+
+#endif
 }
 
 
 void DrawCircle2( const float _cx, const float _cy, float _diameter, const D3DCOLOR color, bool is_fill ) {
+#ifdef _DEBUG
+
 	POINT center = { (int)_cx, (int)_cy };
 	int diameter = (int)_diameter;
 	LONG cx = 0, cy= diameter/2+1;
@@ -281,10 +302,14 @@ void DrawCircle2( const float _cx, const float _cy, float _diameter, const D3DCO
 		d += dx;
 		dx+=8;
 	}
+
+#endif
 }
 
 // 整数版ニュートン法
 int root_i(int x){
+#ifdef _DEBUG
+
     int s=1, s2=1;
     do {
         s=(x/s+s)/2; 
@@ -292,10 +317,14 @@ int root_i(int x){
         if (s*s<=x && x<s2*s2) break;
     } while(1);
     return s;
+
+#endif
 }
 
 
 void DrawCircle3( const float _cx, const float _cy, float _diameter, const D3DCOLOR color, bool is_fill ) {
+#ifdef _DEBUG
+
 	RECT _rc = { 0, 0, 1280, 720 };
 	RECT* rc = &_rc;
 	POINT center = { (int)_cx, (int)_cy };
@@ -448,18 +477,26 @@ void DrawCircle3( const float _cx, const float _cy, float _diameter, const D3DCO
 			dx+=8;
 		}
 	}
+
+#endif
 }
 
 void DrawCircle3D(const D3DXVECTOR3& position, const float diameter, const D3DCOLOR color, const bool is_fill) {
+#ifdef _DEBUG
+
   D3DXVECTOR3 transformed_position;
   D3DXVec3TransformCoord(&transformed_position, &position, &g_view_projection_viewport);
   DrawCircle2(transformed_position.x, transformed_position.y, diameter, color);
+
+#endif
 }
 
 //------------------------------------------------
 // 矩形の描画
 //------------------------------------------------
 void DrawRect( const float ax, const float ay, const float bx, const float by, const D3DCOLOR color, bool is_fill ) {
+#ifdef _DEBUG
+
 	// 左
 	DrawLine( ax, ay, ax, by, color, color );
 	// 上
@@ -477,6 +514,7 @@ void DrawRect( const float ax, const float ay, const float bx, const float by, c
 		}
 	}
 
+#endif
 }
 
 
@@ -488,11 +526,15 @@ void DrawCube(
 	const float width, const float height, const float depth,
 	const D3DCOLOR color
 ) {
+#ifdef _DEBUG
 
+#endif
 }
 
 
 void DrawCube( float cx, float cy, float cz, float width, float height, float depth, D3DCOLOR color, const D3DXMATRIX& mtx ) {
+#ifdef _DEBUG
+
 	// 頂点情報の設定
 	float half_width = width * 0.5f;
 	float half_depth = depth * 0.5f;
@@ -529,13 +571,21 @@ void DrawCube( float cx, float cy, float cz, float width, float height, float de
 	DrawLine( g_cube_pos4[ 6 ].x, g_cube_pos4[ 6 ].y, g_cube_pos4[ 7 ].x, g_cube_pos4[ 7 ].y, color, color );
 	DrawLine( g_cube_pos4[ 4 ].x, g_cube_pos4[ 4 ].y, g_cube_pos4[ 6 ].x, g_cube_pos4[ 6 ].y, color, color );
 	DrawLine( g_cube_pos4[ 5 ].x, g_cube_pos4[ 5 ].y, g_cube_pos4[ 7 ].x, g_cube_pos4[ 7 ].y, color, color );
+
+#endif
 }
 
 void SetMatrixViewProjectionViewport(const D3DXMATRIX& view_projection_viewport) {
+#ifdef _DEBUG
+
   g_view_projection_viewport = view_projection_viewport;
+
+#endif
 }
 
 void DrawAll( void ) {
+#ifdef _DEBUG
+
   if (g_cnt != 0) {
 	g_p_device->SetStreamSource( 0, g_point_buffer, 0, sizeof( VERTEX_2D ) );
 	//g_p_device->SetFVF( FVF_VERTEX_2D );
@@ -553,4 +603,6 @@ void DrawAll( void ) {
 	g_p_device->DrawPrimitive( D3DPT_LINELIST, 0, g_line_cnt );
 	g_line_cnt = 0;
   }
+
+#endif
 }

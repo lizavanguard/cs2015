@@ -86,6 +86,7 @@ public:
 
   // get
   const D3DXVECTOR3& GetPos(void) const {return pos_;}
+  const D3DXVECTOR3 GetEatPos(void) const;
 
 private:
   void UpdateNeutral(void);

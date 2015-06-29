@@ -20,7 +20,6 @@
 #include "Application\Stage\Stage.h"
 #include "Application\Camera\camera.h"
 #include "player.h"
-#include "Framework/DrawDebugPrimitive/DrawPrimitive.h"
 
 //******************************************************************************
 // 定数定義
@@ -29,6 +28,10 @@ namespace {
 
 const float kPlayerMoveSpeed = 10.0f;
 const int kBoroRecastTime = 30;
+
+const D3DXVECTOR3 kBoroPosOffset = {
+  -10.0f, 100.0f, 0.0f
+};
 
 }
 
@@ -156,8 +159,17 @@ void Player::Update(Uriel *uriel_){
   }
 
   ++count_;
+}
 
-  DrawCircle3D(pos_, 10.0f, 0xffff0000);
+//==============================================================================
+// ボーロの位置を返す
+// 引数    :  無し
+// 戻り値  :  const D3DXVECTOR3
+// Author  :  SHOJI SHIMIZU
+// 更新日  :  2015/06/29
+//==============================================================================
+const D3DXVECTOR3 Player::GetBoroPos(void) const {
+  return pos_ + kBoroPosOffset;
 }
 
 //==============================================================================

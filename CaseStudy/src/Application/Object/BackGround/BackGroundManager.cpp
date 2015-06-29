@@ -18,8 +18,14 @@
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 namespace {
 
-const char* kTexturename = "data/Texture/îwåi.jpg";
-const float kUSpeed = 0.0005f;
+const struct {
+  char* p_texturename;
+  float scroll_speed;
+} kBackGroundData[] = {
+  {"data/Texture/bg_sky1.png", 0.00025f},
+  {"data/Texture/bg_sky2.png", 0.001f},
+};
+const unsigned int kBGMax = sizeof(kBackGroundData) / sizeof(*kBackGroundData);
 
 }
 
@@ -30,7 +36,10 @@ const float kUSpeed = 0.0005f;
 // ctor
 //------------------------------------------------
 BackGroundManager::BackGroundManager() {
-  back_grounds_.push_back(new BackGround(kTexturename, kUSpeed));
+  for (int bg_count = 0; bg_count < kBGMax; ++bg_count) {
+    back_grounds_.push_back(
+      new BackGround(kBackGroundData[bg_count].p_texturename, kBackGroundData[bg_count].scroll_speed));
+  }
 }
 
 //------------------------------------------------
