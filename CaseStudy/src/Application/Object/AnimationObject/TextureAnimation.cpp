@@ -34,7 +34,7 @@ static const ANIM_DATA s_AnimaitionData[] = {
   { 5, 8, 16, "data/Texture/tex_anim_00.png" },                   // ウリエルジャンプ
   { 2, 4, 8, "data/Texture/tex_anim_02.png" },                    // ウリエル暴走
   { 2, 4, 8, "data/Texture/tex_anim_02.png" },                    // ウリエル暴走ジャンプ
-  { 5, 12, 4, "data/Texture/tex_anim_02.png" },                   // ウリエル眠り
+  { 10, 12, 4, "data/Texture/tex_anim_02.png" },                  // ウリエル眠り
   { 3, 0, 4, "data/Texture/tex_anim_02.png" },                    // ウリエルハイハイ(チャージ)
   { 5, 0, 4, "data/Texture/tex_anim_02.png" },                    // ウリエルジャンプ(チャージ)
   { 30, 8, 16, "data/Texture/tex_anim_00.png" },                  // ウリエル回転(ゴール時の演出)
@@ -164,5 +164,3 @@ void TextureAnimation::TextureLoad(void){
     }
   }
 }
-
-// EOF

@@ -345,10 +345,10 @@ void Uriel::UpdateRunaway(void){
   } else if (move_direction_ == DIRECTION_LEFT &&
              check_right.left == MAP_TYPE_NORMAL){
     move_.x *= -1;
-  } else {
-    if (check_left.right == MAP_TYPE_NORMAL){
-      move_.x *= -1;
-    }
+  }
+  else if (move_direction_ == DIRECTION_RIGHT &&
+           check_left.right == MAP_TYPE_NORMAL){
+    move_.x *= -1;
   }
 
   // ˆê’èŽžŠÔ–\‘–‚µ‚½‚ç–°‚é
