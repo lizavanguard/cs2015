@@ -69,8 +69,10 @@ void Collision::CollideUrielToPlayersBoro(void) {
                                    player_pos.x, player_pos.y, kBoroRange);
 
   if (is_hit) {
+    if (!uriel_.BoroChage()) {
+      return;
+    }
     player_.FinishBoroState();
-    uriel_.BoroChage();
     PlaySound(SOUND_LABEL_SE_EAT);
   }
 }

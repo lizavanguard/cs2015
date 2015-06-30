@@ -201,6 +201,7 @@ bool Uriel::BoroChage(void){
   if (status_ == URIEL_STATUS_JUMP ||
     status_ == URIEL_STATUS_CHARGE_JUMP ||
     status_ == URIEL_STATUS_RUNAWAY ||
+    status_ == URIEL_STATUS_RUNAWAY_JUMP ||
     status_ == URIEL_STATUS_SLEEP) {
     return false;
   }
