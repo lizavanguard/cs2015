@@ -52,10 +52,17 @@ Timer::Timer(const D3DXVECTOR3 &pos, const float &rot, const D3DXVECTOR2 &size, 
 
   p_numberObject_ = new NumberObject * [2];
 
+  // 桁の設定変数
+  unsigned int figure = (unsigned int)pow((float)FIGURE_DEFINE, MAX_FIGURE);
   for (int num = 0; num < MAX_FIGURE; num++)
   {
-      p_numberObject_[num] = new NumberObject(D3DXVECTOR3(pos.x + 40.0f*num, pos.y, pos.z), rot, size, type);
-      p_numberObject_[num]->SetValue(0);
+    // 特定の桁の値を入れる
+    int value = (value_ % figure) / (figure / FIGURE_DEFINE);
+    // 値をセット
+    p_numberObject_[num] = new NumberObject(D3DXVECTOR3(pos.x + 40.0f*num, pos.y, pos.z), rot, size, type);
+    p_numberObject_[num]->SetValue(value);
+    // 桁ずらし
+    figure /= FIGURE_DEFINE;
   }
 }
 
