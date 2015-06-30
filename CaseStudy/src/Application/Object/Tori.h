@@ -14,12 +14,6 @@
 #include "Uriel.h"
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-// マクロ定義
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-#define FLY_TO_TOP_SPEED (9.0f)            // 上へ飛ぶ速度
-#define TIME_TO_FLY_TO_BECOME_GEALTHY (30) // 元気になってから飛ぶまでの時間
-
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // class definition
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 class Stage;
@@ -45,6 +39,8 @@ public:
   bool GetHitCheck(void){ return hit_flag_; }
 
 private:
+  static const int kFlyToTopSpeed = 9;                 // 上へ飛ぶ速度
+  static const int kTimeToFlyToBecomeGealthy = 30;     // 元気になってから飛ぶまでの時間
   float move_speed_;
   int motion_timer_;
   Uriel *p_uriel_;

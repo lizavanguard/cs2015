@@ -25,7 +25,7 @@
 Uriel::Uriel(ANIMATION_EVENT animation_event, Stage* stage, TensionGauge* p_tension_gauge) : AnimationObject(animation_event) {
   dest_position_ = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
   move_ = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-  move_.x = URIEL_MOVE_SPPD;
+  move_.x = kUrielMoveSpped;
   map_ = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
   p_stage_ = stage;
   p_tension_gauge_ = p_tension_gauge;
@@ -182,7 +182,7 @@ void Uriel::SetDestPos(const D3DXVECTOR3& pos){
   if (check.center == MAP_TYPE_WALL){
     return;
   }
-  if (abs(pos.x - pos_.x) < URIEL_INDUCIBLE)
+  if (abs(pos.x - pos_.x) < kUrielInducible)
     dest_position_ = pos;
 }
 
@@ -199,8 +199,8 @@ bool Uriel::BoroChage(void){
   if (!charge_flag_ && boro_interval_ <= 0){
     SetAnimaton(ANIMATION_URIEL_CHARGE_CRAWL);
     charge_flag_ = true;
-    move_.x = (move_.x / abs(move_.x)) * URIEL_MOVE_CHARGE_SPEED;
-    boro_interval_ = URIEL_BOROCHAGE_INTERVAL;
+    move_.x = (move_.x / abs(move_.x)) * kUrielMoveChargeSpeed;
+    boro_interval_ = kUrielBorochageInterval;
     if (p_tension_gauge_->IncreaseTension()){
       boro_gage_max_ = true;
     }
@@ -223,10 +223,10 @@ void Uriel::UpdateNeutral(void){
 void Uriel::UpdateCrawl(void){
   // 目的地へ向かう処理
   if (dest_position_ != D3DXVECTOR3(0.0f, 0.0f, 0.0f)){
-    if (dest_position_.x - pos_.x > URIEL_MOVE_SPPD){
-      move_.x = URIEL_MOVE_SPPD;
-    } else if (dest_position_.x - pos_.x < -URIEL_MOVE_SPPD){
-      move_.x = -URIEL_MOVE_SPPD;
+    if (dest_position_.x - pos_.x > kUrielMoveSpped){
+      move_.x = kUrielMoveSpped;
+    } else if (dest_position_.x - pos_.x < -kUrielMoveSpped){
+      move_.x = -kUrielMoveSpped;
     } else {
       dest_position_ = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
     }
@@ -276,8 +276,8 @@ void Uriel::UpdateCrawl(void){
 void Uriel::UpdateJump(void){
   // 目的地へ向かう処理
   if (dest_position_ != D3DXVECTOR3(0.0f, 0.0f, 0.0f)){
-    if (dest_position_.x - pos_.x < URIEL_MOVE_SPPD &&
-        dest_position_.x - pos_.x > -URIEL_MOVE_SPPD){
+    if (dest_position_.x - pos_.x < kUrielMoveSpped &&
+        dest_position_.x - pos_.x > -kUrielMoveSpped){
       dest_position_ = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
     }
   }
@@ -289,9 +289,9 @@ void Uriel::UpdateJump(void){
   if (check.bottom == MAP_TYPE_NORMAL){
     SetAnimaton(ANIMATION_URIEL_CRAWL);
     if (move_direction_ == DIRECTION_RIGHT){
-      move_.x = URIEL_MOVE_SPPD;
+      move_.x = kUrielMoveSpped;
     } else {
-      move_.x = -URIEL_MOVE_SPPD;
+      move_.x = -kUrielMoveSpped;
     }
     pos_.y = map.y + 25.0f * 1.9f;
     move_.y = 0.0f;
@@ -304,10 +304,10 @@ void Uriel::UpdateJump(void){
 void Uriel::UpdateRunaway(void){
   // 目的地へ向かう処理
   if (dest_position_ != D3DXVECTOR3(0.0f, 0.0f, 0.0f)){
-    if (dest_position_.x - pos_.x > URIEL_MOVE_RUNAWAY_SPPD){
-      move_.x = URIEL_MOVE_RUNAWAY_SPPD;
-    } else if (dest_position_.x - pos_.x < -URIEL_MOVE_RUNAWAY_SPPD){
-      move_.x = -URIEL_MOVE_RUNAWAY_SPPD;
+    if (dest_position_.x - pos_.x > kUrielMoveRunawaySpped){
+      move_.x = kUrielMoveRunawaySpped;
+    } else if (dest_position_.x - pos_.x < -kUrielMoveRunawaySpped){
+      move_.x = -kUrielMoveRunawaySpped;
     } else {
       dest_position_ = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
     }
@@ -344,7 +344,7 @@ void Uriel::UpdateRunaway(void){
   }
 
   // 一定時間暴走したら眠る
-  if (runaway_timer_ >= URIEL_RUNAWAY_TIME){
+  if (runaway_timer_ >= kUrielRunnawayTime){
     SetAnimaton(ANIMATION_URIEL_SLEEP);
     runaway_timer_ = 0;
     p_tension_gauge_->CoolDown();
@@ -360,8 +360,8 @@ void Uriel::UpdateRunaway(void){
 void Uriel::UpdateRunawayJump(){
   // 目的地へ向かう処理
   if (dest_position_ != D3DXVECTOR3(0.0f, 0.0f, 0.0f)){
-    if (dest_position_.x - pos_.x < URIEL_MOVE_RUNAWAY_SPPD &&
-        dest_position_.x - pos_.x > -URIEL_MOVE_RUNAWAY_SPPD){
+    if (dest_position_.x - pos_.x < kUrielMoveRunawaySpped &&
+        dest_position_.x - pos_.x > -kUrielMoveRunawaySpped){
       dest_position_ = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
     }
   }
@@ -373,9 +373,9 @@ void Uriel::UpdateRunawayJump(){
   if (check.bottom == MAP_TYPE_NORMAL){
     SetAnimaton(ANIMATION_URIEL_RUNAWAY);
     if (move_direction_ == DIRECTION_RIGHT){
-      move_.x = URIEL_MOVE_RUNAWAY_SPPD;
+      move_.x = kUrielMoveRunawaySpped;
     } else {
-      move_.x = -URIEL_MOVE_RUNAWAY_SPPD;
+      move_.x = -kUrielMoveRunawaySpped;
     }
     pos_.y = map.y + 25.0f * 1.9f;
     move_.y = 0.0f;
@@ -399,13 +399,13 @@ void Uriel::UpdateSleep(void){
 
   ++ sleep_timer_;
 
-  if (sleep_timer_ > URIEL_SLEEP_TIME){
+  if (sleep_timer_ > kUrielSleepTime){
     SetAnimaton(ANIMATION_URIEL_CRAWL);
     sleep_timer_ = 0;
     if (move_direction_ == DIRECTION_RIGHT){
-      move_.x = URIEL_MOVE_SPPD;
+      move_.x = kUrielMoveSpped;
     } else {
-      move_.x = -URIEL_MOVE_SPPD;
+      move_.x = -kUrielMoveSpped;
     }
   }
 }
@@ -416,10 +416,10 @@ void Uriel::UpdateSleep(void){
 void Uriel::UpdateChargeCrawl(void){
   // 目的地へ向かう処理
   if (dest_position_ != D3DXVECTOR3(0.0f, 0.0f, 0.0f)){
-    if (dest_position_.x - pos_.x > URIEL_MOVE_CHARGE_SPEED){
-      move_.x = URIEL_MOVE_CHARGE_SPEED;
-    } else if (dest_position_.x - pos_.x < -URIEL_MOVE_CHARGE_SPEED){
-      move_.x = -URIEL_MOVE_CHARGE_SPEED;
+    if (dest_position_.x - pos_.x > kUrielMoveChargeSpeed){
+      move_.x = kUrielMoveChargeSpeed;
+    } else if (dest_position_.x - pos_.x < -kUrielMoveChargeSpeed){
+      move_.x = -kUrielMoveChargeSpeed;
     } else {
       dest_position_ = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
     }
@@ -456,7 +456,7 @@ void Uriel::UpdateChargeCrawl(void){
   // 登り階段なら上る
   else if (data == BLOCK_DATA_UP_STAIRS){
     SetAnimaton(ANIMATION_URIEL_CHARGE_JUMP);
-    D3DXVECTOR2 vector = JumpAngleSeek(100.0f, 50.0f, 100.0f, GRAVITY);
+    D3DXVECTOR2 vector = JumpAngleSeek(100.0f, 75.0f, 100.0f, GRAVITY);
     move_.x = vector.x;
     move_.y = vector.y;
   }
@@ -470,17 +470,17 @@ void Uriel::UpdateChargeCrawl(void){
       SetAnimaton(ANIMATION_URIEL_RUNAWAY);
       runaway_timer_ = 0;
       if (move_direction_ == DIRECTION_RIGHT){
-        move_.x = URIEL_MOVE_RUNAWAY_SPPD;
+        move_.x = kUrielMoveRunawaySpped;
       } else {
-        move_.x = -URIEL_MOVE_RUNAWAY_SPPD;
+        move_.x = -kUrielMoveRunawaySpped;
       }
     } else {
       // 通常に戻る
       SetAnimaton(ANIMATION_URIEL_CRAWL);
       if (move_direction_ == DIRECTION_RIGHT){
-        move_.x = URIEL_MOVE_SPPD;
+        move_.x = kUrielMoveSpped;
       } else {
-        move_.x = -URIEL_MOVE_SPPD;
+        move_.x = -kUrielMoveSpped;
       }
     }
   }
@@ -492,8 +492,8 @@ void Uriel::UpdateChargeCrawl(void){
 void Uriel::UpdateChargeJump(void){
   // 目的地へ向かう処理
   if (dest_position_ != D3DXVECTOR3(0.0f, 0.0f, 0.0f)){
-    if (dest_position_.x - pos_.x < URIEL_MOVE_CHARGE_SPEED &&
-        dest_position_.x - pos_.x > -URIEL_MOVE_CHARGE_SPEED){
+    if (dest_position_.x - pos_.x < kUrielMoveChargeSpeed &&
+        dest_position_.x - pos_.x > -kUrielMoveChargeSpeed){
       dest_position_ = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
     }
   }
@@ -505,9 +505,9 @@ void Uriel::UpdateChargeJump(void){
   if (check.bottom == MAP_TYPE_NORMAL){
     SetAnimaton(ANIMATION_URIEL_CHARGE_CRAWL);
     if (move_direction_ == DIRECTION_RIGHT){
-      move_.x = URIEL_MOVE_CHARGE_SPEED;
+      move_.x = kUrielMoveChargeSpeed;
     } else {
-      move_.x = -URIEL_MOVE_CHARGE_SPEED;
+      move_.x = -kUrielMoveChargeSpeed;
     }
     pos_.y = map.y + 25.0f * 1.9f;
     move_.y = 0.0f;
@@ -617,7 +617,7 @@ BLOCK_DATA Uriel::CrawlLoadCheck(void){
     // 左に進んでる場合
     else{
       if(check.left == MAP_TYPE_NORMAL){
-        p_stage_->CheckMapTip2(&D3DXVECTOR3(pos_.x - size_.x + size_.x / 10 * 7, pos_.y, pos_.z),
+        p_stage_->CheckMapTip2(&D3DXVECTOR3(pos_.x - size_.x / 4, pos_.y, pos_.z),
                                 D3DXVECTOR3(size_.x / 4, 1.0f, 0.0f), &check);
         if (check.up_left == MAP_TYPE_NONE ||
             check.up_left == MAP_TYPE_START ||
@@ -697,7 +697,7 @@ BLOCK_DATA Uriel::ChargeCrawlLoadCheck(void){
     // 左に進んでる場合
     else{
       if(check.left == MAP_TYPE_NORMAL){
-        p_stage_->CheckMapTip2(&D3DXVECTOR3(pos_.x - size_.x + size_.x / 10 * 7, pos_.y, pos_.z),
+        p_stage_->CheckMapTip2(&D3DXVECTOR3(pos_.x + size_.x / 4, pos_.y, pos_.z),
                                 D3DXVECTOR3(size_.x / 4, 1.0f, 0.0f), &check);
         if (check.up_left == MAP_TYPE_NONE ||
             check.up_left == MAP_TYPE_START ||

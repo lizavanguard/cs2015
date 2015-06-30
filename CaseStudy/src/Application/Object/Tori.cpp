@@ -18,7 +18,7 @@
 //==============================================================================
 // ctor
 Tori::Tori(ANIMATION_EVENT animation_event, Uriel *uriel, Stage *stage) : AnimationObject(animation_event) {
-  move_speed_ = FLY_TO_TOP_SPEED;
+  move_speed_ = kFlyToTopSpeed;
   motion_timer_ = 0;
   static const float kSize = 100.0f;
   size_ = D3DXVECTOR2(kSize, kSize);
@@ -53,19 +53,19 @@ void Tori::Update(void){
       pos_.y += move_speed_;
     }
 
-    move_speed_ -= (FLY_TO_TOP_SPEED / (animation_time_ * 2));
+    move_speed_ -= (kFlyToTopSpeed / (animation_time_ * 2));
 
     if (motion_timer_ >= animation_time_){
       motion_timer_ = -animation_time_;
     }
     else if (motion_timer_ == 0){
-      move_speed_ = FLY_TO_TOP_SPEED;
+      move_speed_ = kFlyToTopSpeed;
     }
 
   } else if (hit_flag_ && !happy_flag_){
     ++motion_timer_;
 
-    if (motion_timer_ >= TIME_TO_FLY_TO_BECOME_GEALTHY){
+    if (motion_timer_ >= kTimeToFlyToBecomeGealthy){
       happy_flag_ = true;
       move_speed_ = 0;
       p_texture_animation_->SetAnimation(ANIMATION_TORI_FLY_TOP);

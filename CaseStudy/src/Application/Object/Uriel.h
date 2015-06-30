@@ -13,17 +13,6 @@
 #include "AnimationObject/AnimationObject.h"
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-// マクロ定義
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-#define URIEL_MOVE_SPPD (3.0f)                               // ウリエルの移動速度(通常)
-#define URIEL_MOVE_CHARGE_SPEED (URIEL_MOVE_SPPD * 1.5f)     // ウリエルの移動速度(チャージ)
-#define URIEL_MOVE_RUNAWAY_SPPD (URIEL_MOVE_SPPD * 2.0f)     // ウリエルの移動速度(暴走)
-#define URIEL_RUNAWAY_TIME (180)                             // ウリエルの暴走時間
-#define URIEL_INDUCIBLE (400.0f)                             // ウリエルの誘導可能距離
-#define URIEL_SLEEP_TIME (180)                               // ウリエルの眠り時間
-#define URIEL_BOROCHAGE_INTERVAL (60)                        // ボーロチャージできるまでのインターバル時間
-
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // 列挙体定義
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 typedef enum {
@@ -92,6 +81,13 @@ public:
   const D3DXVECTOR3& GetPos(void) const {return pos_;}
 
 private:
+  static const int kUrielMoveSpped = 3;                                      // ウリエルの移動速度(通常)
+  static const int kUrielMoveChargeSpeed = (int)(kUrielMoveSpped * 1.5f);    // ウリエルの移動速度(チャージ)
+  static const int kUrielMoveRunawaySpped = (int)(kUrielMoveSpped * 2.0f);   // ウリエルの移動速度(暴走)
+  static const int kUrielRunnawayTime = 180;                                 // ウリエルの暴走時間
+  static const int kUrielInducible = 400;                                    // ウリエルの誘導可能距離
+  static const int kUrielSleepTime = 180;                                    // ウリエルの眠り時間
+  static const int kUrielBorochageInterval = 60;                             // ボーロチャージできるまでのインターバル時間
   void UpdateNeutral(void);
   void UpdateCrawl(void);
   void UpdateJump(void);
