@@ -8,6 +8,7 @@
 // include
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 #include "SceneGame.h"
+#include "Framework/DrawDebugPrimitive/DrawPrimitive.h"
 #include "Framework/GameManager/GameManager.h"
 #include "Framework/Input/InputManagerHolder.h"
 #include "Framework/Input/InputKeyboard.h"
@@ -22,7 +23,7 @@
 #include "Application/Object/Uriel.h"
 #include "Application/Tension/TensionGauge.h"
 #include "Application\Object\Object2D\Timer.h"
-#include"Application\Camera\camera.h"
+#include "Application\Camera\camera.h"
 #include "Application/Stage/Stage.h"
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -52,7 +53,7 @@ SceneGame::SceneGame()
 
   p_uriel_ = new Uriel(ANIMATION_URIEL_CRAWL, p_stage_, p_tension_gauge_);
 
-  p_tori_ = new Tori(ANIMATION_TORI_NONE, p_uriel_, p_stage_);
+  p_tori_ = new Tori(ANIMATION_TORI_DROP, p_uriel_, p_stage_);
 
   p_ready_ = new Ready();
 
@@ -64,7 +65,7 @@ SceneGame::SceneGame()
 
   p_timer_ = new Timer(D3DXVECTOR3(600.0f, 50.0f, 0.0f), 0.0f, D3DXVECTOR2(50.0f, 50.0f), TIMER);
 
-  //PlaySound(SOUND_LABEL_BGM_DEMO0);
+  PlaySound(SOUND_LABEL_BGM_DEMO0);
 }
 
 
@@ -137,6 +138,7 @@ void SceneGame::Update(SceneManager* p_scene_manager, const float elapsed_time) 
 //------------------------------------------------
 void SceneGame::Draw(void) {
   p_camera->Set();
+  SetMatrixViewProjectionViewport(p_camera->GetMatrixViewProjectionViewPort());
 
   p_background_manager_->Draw();
 

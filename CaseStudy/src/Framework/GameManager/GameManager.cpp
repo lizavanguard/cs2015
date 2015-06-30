@@ -10,6 +10,7 @@
 #include "GameManager.h"
 
 #include "Framework/DebugProc/DebugProc.h"
+#include "Framework/DrawDebugPrimitive/DrawPrimitive.h"
 #include "Framework/Input/InputManager.h"
 #include "Framework/Input/InputManagerHolder.h"
 #include "Framework/Scene/SceneManager.h"
@@ -54,6 +55,8 @@ GameManager::GameManager( HINSTANCE hInstance, HWND hWnd, LPDIRECT3DDEVICE9 pDev
   TextureManagerHolder::Instance().SetTextureManager(pTextureManager_);
 
   InitSound(hWnd);
+
+  InitDrawPrimitive(pDevice);
  
   Scene* pFirstScene = new SceneGame();
   pSceneManager_ = new SceneManager(pFirstScene);
@@ -65,6 +68,8 @@ GameManager::GameManager( HINSTANCE hInstance, HWND hWnd, LPDIRECT3DDEVICE9 pDev
 //------------------------------------------------
 GameManager::~GameManager() {
   SafeDelete(pSceneManager_);
+
+  UninitDrawPrimitive();
 
   UninitSound();
 
@@ -95,6 +100,9 @@ void GameManager::Update( const float elapsedTime ) {
 void GameManager::Draw( void ) {
   // scene
   pSceneManager_->Draw();
+
+  // draw debug
+  DrawAll();
 
   // debug
 	pDebugProc_->Draw();

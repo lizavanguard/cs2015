@@ -29,6 +29,10 @@ namespace {
 const float kPlayerMoveSpeed = 10.0f;
 const int kBoroRecastTime = 30;
 
+const D3DXVECTOR3 kBoroPosOffset = {
+  -20.0f, 93.0f, 0.0f
+};
+
 }
 
 //******************************************************************************
@@ -104,12 +108,17 @@ void Player::Update(Uriel *uriel_){
 
   // ガラガラモード切替
   // 誘導
+  static bool is_press = false;
   if (pJoypad.IsPress(InputDevice::Pads::PAD_A) || pKeyboard.IsPress(DIK_RETURN)) {
     ChangeAnimation(MODE_GUIDE);
-    PlaySound(SOUND_LABEL_SE_CALL0);
+    if (!is_press) {
+      //PlaySound(SOUND_LABEL_SE_CALL0);
+    }
+    is_press = true;
   }
   else if (pJoypad.IsRelease(InputDevice::Pads::PAD_A) || pKeyboard.IsRelease(DIK_RETURN)) {
-      ChangeAnimation(MODE_NORMAL);
+    is_press = false;
+    ChangeAnimation(MODE_NORMAL);
   }
   // ギミックON/OFF
   if (pJoypad.IsTrigger(InputDevice::Pads::PAD_Y) || pKeyboard.IsTrigger(DIK_G)) {
@@ -155,6 +164,17 @@ void Player::Update(Uriel *uriel_){
   }
 
   ++count_;
+}
+
+//==============================================================================
+// ボーロの位置を返す
+// 引数    :  無し
+// 戻り値  :  const D3DXVECTOR3
+// Author  :  SHOJI SHIMIZU
+// 更新日  :  2015/06/29
+//==============================================================================
+const D3DXVECTOR3 Player::GetBoroPos(void) const {
+  return pos_ + kBoroPosOffset;
 }
 
 //==============================================================================

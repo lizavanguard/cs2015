@@ -51,6 +51,7 @@ public:
 
   // get
   const D3DXVECTOR3& GetPos(void) const { return pos_; }
+  const D3DXVECTOR3 GetBoroPos(void) const;
   bool IsActing(void) const { return player_mode_ != MODE_NORMAL; }
   bool IsBoroState(void) const { return player_mode_ == MODE_BORO; }
   PLAYER_MODE GetPlayerMode(void) const { return player_mode_; }
