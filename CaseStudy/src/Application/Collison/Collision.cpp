@@ -23,7 +23,7 @@
 namespace {
 
 const float kEatRange = 5.0f;
-const float kBoroRange = 15.0f;
+const float kBoroRange = 16.5f;
 
 }
 

@@ -30,7 +30,7 @@ const float kPlayerMoveSpeed = 10.0f;
 const int kBoroRecastTime = 30;
 
 const D3DXVECTOR3 kBoroPosOffset = {
-  -10.0f, 100.0f, 0.0f
+  -20.0f, 93.0f, 0.0f
 };
 
 }
