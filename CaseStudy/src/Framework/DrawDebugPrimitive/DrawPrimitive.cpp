@@ -114,6 +114,12 @@ void UninitDrawPrimitive( void ) {
 		g_point_buffer->Release();
 		g_point_buffer = NULL;
 	}
+
+  if (g_vertex_declaration) {
+    g_vertex_declaration->Release();
+    g_vertex_declaration = NULL;
+  }
+
 	if( g_line_buffer != NULL ) {
 		g_line_buffer->Release();
 		g_line_buffer = NULL;
