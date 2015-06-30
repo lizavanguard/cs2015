@@ -53,7 +53,7 @@ SceneGame::SceneGame()
 
   p_uriel_ = new Uriel(ANIMATION_URIEL_CRAWL, p_stage_, p_tension_gauge_);
 
-  p_tori_ = new Tori(ANIMATION_TORI_NONE, p_uriel_, p_stage_->GetGoalMaptip());
+  p_tori_ = new Tori(ANIMATION_TORI_NONE, p_uriel_, p_stage_);
 
   p_ready_ = new Ready();
 
@@ -113,11 +113,11 @@ void SceneGame::Update(SceneManager* p_scene_manager, const float elapsed_time) 
 
   p_background_manager_->Update();
 
-  // ウリエル更新
-  p_uriel_->Update();
-
   // プレイヤー更新
   p_player_->Update(p_uriel_);
+
+  // ウリエル更新
+  p_uriel_->Update();
 
   p_tension_gauge_->Update();
 

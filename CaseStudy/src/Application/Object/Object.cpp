@@ -49,6 +49,7 @@ void Object::_Draw(void) {
     {D3DXVECTOR3(+half_x,    0.0f, 0.0f), color_, D3DXVECTOR2(  end_uv_.x,   end_uv_.y)},  // rb
   };
 
+
   // WVP
   D3DXMATRIX mtx_world;
   D3DXMatrixTranslation(&mtx_world, pos_.x, pos_.y, pos_.z);

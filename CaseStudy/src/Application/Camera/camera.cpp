@@ -59,7 +59,6 @@ Camera::Camera(Player* player , Stage* stage){
   zoomRate_ = kStartZoomRate;
   localView_ = D3DXVECTOR2(kWindowWidth / zoomRate_, kWindowHeight / zoomRate_);
   localScreenFrame_ = localView_;
-
   _CreateViewPortMatrix(&mtxViewport_, static_cast<unsigned int>(kWindowWidth), static_cast<unsigned int>(kWindowHeight));
 }
 
@@ -147,6 +146,4 @@ D3DXMATRIX* Camera::_CreateViewPortMatrix(D3DXMATRIX* out, const unsigned int w,
 
   return out;
 }
-
-
 // EOF
