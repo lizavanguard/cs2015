@@ -11,13 +11,14 @@
 #include "Framework/DirectXHelper/DeviceHolder.h"
 #include "Framework/DirectXHelper/DirectXConst.h"
 #include "Framework/Texture/TextureManagerHolder.h"
+#include "Application/Stage/Stage.h"
 
 //==============================================================================
 // class implementation
 //==============================================================================
 // ctor
-Tori::Tori(ANIMATION_EVENT animation_event, Uriel *uriel, const D3DXVECTOR3& pos) : AnimationObject(animation_event) {
-  move_speed_ = FLY_TO_TOP_SPEED;
+Tori::Tori(ANIMATION_EVENT animation_event, Uriel *uriel, Stage *stage) : AnimationObject(animation_event) {
+  move_speed_ = kFlyToTopSpeed;
   motion_timer_ = 0;
   static const float kSize = 100.0f;
   size_ = D3DXVECTOR2(kSize, kSize);
@@ -25,7 +26,16 @@ Tori::Tori(ANIMATION_EVENT animation_event, Uriel *uriel, const D3DXVECTOR3& pos
   hit_flag_ = false;
   happy_flag_ = false;
   animation_time_ = 0;
-  pos_ = pos;
+  p_stage_ = stage;
+  pos_ = stage->GetGoalMaptip();
+  HIT_CHECK check;
+  D3DXVECTOR3 map(0.f, 0.f, 0.f);
+  map = p_stage_->CheckMapTip2(&D3DXVECTOR3(pos_.x, pos_.y - size_.y, pos_.z), D3DXVECTOR3(size_.x / 4, 1.0f, 0.0f), &check);
+  // ‰º‚ª’n–Ê‚È‚ç
+  if (check.bottom == MAP_TYPE_NORMAL){
+    pos_.y = map.y + 25.0f * 1.9f;
+  }
+
 }
 
 // dtor
@@ -39,22 +49,23 @@ void Tori::Update(void){
 
   if (hit_flag_ && happy_flag_){
     ++motion_timer_;
-    if (move_speed_ <= 0.2f){
+    if (move_speed_ >= 0.2f){
       pos_.y += move_speed_;
     }
-    move_speed_ -= (FLY_TO_TOP_SPEED / (animation_time_ * 2));
+
+    move_speed_ -= (kFlyToTopSpeed / (animation_time_ * 2));
 
     if (motion_timer_ >= animation_time_){
       motion_timer_ = -animation_time_;
     }
     else if (motion_timer_ == 0){
-      move_speed_ = FLY_TO_TOP_SPEED;
+      move_speed_ = kFlyToTopSpeed;
     }
 
   } else if (hit_flag_ && !happy_flag_){
     ++motion_timer_;
 
-    if (motion_timer_ >= 20){
+    if (motion_timer_ >= kTimeToFlyToBecomeGealthy){
       happy_flag_ = true;
       move_speed_ = 0;
       p_texture_animation_->SetAnimation(ANIMATION_TORI_FLY_TOP);

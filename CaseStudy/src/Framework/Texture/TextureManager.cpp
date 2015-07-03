@@ -40,6 +40,10 @@ TextureManager::~TextureManager() {
 // -1が帰ってきた場合は、読み込みエラー
 //------------------------------------------------
 int TextureManager::LoadTexture(const char* const filename) {
+  if (!filename) {
+    return -1;
+  }
+
   // 空きID検索
   // もし ID が検索できなかったら -1 を返す
   const int id = _SearchNotUsedID();

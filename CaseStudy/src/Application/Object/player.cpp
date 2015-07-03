@@ -12,6 +12,7 @@
 #include "Framework/DirectXHelper/DirectXConst.h"
 #include "Framework/Input/InputManagerHolder.h"
 #include "Framework/Input/InputKeyboard.h"
+#include "Framework/Sound/sound.h"
 #include "Framework\FrameworkOption.h"
 #include "Framework/Texture/TextureManagerHolder.h"
 #include "Framework/Input/InputXInput.h"
@@ -26,7 +27,11 @@
 namespace {
 
 const float kPlayerMoveSpeed = 10.0f;
-const int kBoroRecastTime = 60;
+const int kBoroRecastTime = 30;
+
+const D3DXVECTOR3 kBoroPosOffset = {
+  -20.0f, 93.0f, 0.0f
+};
 
 }
 
@@ -47,6 +52,7 @@ Player::Player(ANIMATION_EVENT animation_event , Stage* stage)
   , is_eat_(false) {
     stage_ = stage;
     stageSize_ = stage_->GetStageSize();
+    pos_ = stage_->GetStartMaptip();
 }
 
 //==============================================================================
@@ -102,41 +108,39 @@ void Player::Update(Uriel *uriel_){
 
   // ガラガラモード切替
   // 誘導
+  static bool is_press = false;
   if (pJoypad.IsPress(InputDevice::Pads::PAD_A) || pKeyboard.IsPress(DIK_RETURN)) {
-      ChangeAnimation(MODE_GUIDE);
+    ChangeAnimation(MODE_GUIDE);
+    if (!is_press) {
+      PlaySound(SOUND_LABEL_SE_CALL0);
+    }
+    is_press = true;
   }
   else if (pJoypad.IsRelease(InputDevice::Pads::PAD_A) || pKeyboard.IsRelease(DIK_RETURN)) {
-      ChangeAnimation(MODE_NORMAL);
+    is_press = false;
+    ChangeAnimation(MODE_NORMAL);
   }
   // ギミックON/OFF
   if (pJoypad.IsTrigger(InputDevice::Pads::PAD_Y) || pKeyboard.IsTrigger(DIK_G)) {
-      ChangeAnimation(MODE_GIMMICK);
+    ChangeAnimation(MODE_GIMMICK);
+    PlaySound(SOUND_LABEL_SE_CALL1);
   }
 
   // ボーロ
-  if (pJoypad.IsTrigger(InputDevice::Pads::PAD_X) || pKeyboard.IsTrigger(DIK_B)) {
-      // ウリエルちゃんが食べていなかったら ボーロが出る
-      if (!is_eat_) {
-          ChangeAnimation(MODE_BORO);
-      }
-  }
-  else if (pJoypad.IsRelease(InputDevice::Pads::PAD_X) || pKeyboard.IsRelease(DIK_B)){
+  if (!is_eat_) {
+    if (pJoypad.IsTrigger(InputDevice::Pads::PAD_X) || pKeyboard.IsTrigger(DIK_B)) {
+      ChangeAnimation(MODE_BORO);
+    }
+    else if (pJoypad.IsRelease(InputDevice::Pads::PAD_X) || pKeyboard.IsRelease(DIK_B)){
       ChangeAnimation(MODE_NORMAL);
+    }
   }
-
 
   // モード
   switch (player_mode_) {
     case MODE_NORMAL: // 通常時
       break;
     case MODE_BORO: // ボーロ
-      // if ウリエルちゃんがボーロ食べたら 通常状態に戻す
-      // if (uriel->BoroCharge()) {
-        if (pJoypad.IsTrigger(InputDevice::Pads::PAD_B) || pKeyboard.IsTrigger(DIK_N)) {
-            ChangeAnimation(MODE_NORMAL);
-            is_eat_ = true;
-        }
-
       break;
     case MODE_GUIDE: // 誘導
       // ウリエルちゃん移動
@@ -160,6 +164,17 @@ void Player::Update(Uriel *uriel_){
   }
 
   ++count_;
+}
+
+//==============================================================================
+// ボーロの位置を返す
+// 引数    :  無し
+// 戻り値  :  const D3DXVECTOR3
+// Author  :  SHOJI SHIMIZU
+// 更新日  :  2015/06/29
+//==============================================================================
+const D3DXVECTOR3 Player::GetBoroPos(void) const {
+  return pos_ + kBoroPosOffset;
 }
 
 //==============================================================================
@@ -212,5 +227,18 @@ void Player::ChangeAnimation(PLAYER_MODE mode){
   // カウントリセット
   count_ = 0;
 }
+
+//==============================================================================
+// ボーロ状態の終了
+// 引数    :  void
+// 戻り値  :  無し
+// Author  :  SHOJI SHIMIZU
+// 更新日  :  2015/06/22
+//==============================================================================
+void Player::FinishBoroState(void) {
+  ChangeAnimation(MODE_NORMAL);
+  is_eat_ = true;
+}
+
 
 // EOF

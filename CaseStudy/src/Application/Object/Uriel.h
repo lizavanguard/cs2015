@@ -13,35 +13,25 @@
 #include "AnimationObject/AnimationObject.h"
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-// マクロ定義
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-#define URIEL_MOVE_SPPD (3.0f)                               // ウリエルの移動速度(通常)
-#define URIEL_MOVE_CHARGE_SPEED (URIEL_MOVE_SPPD * 1.5f)     // ウリエルの移動速度(チャージ)
-#define URIEL_MOVE_RUNAWAY_SPPD (URIEL_MOVE_SPPD * 2.0f)     // ウリエルの移動速度(暴走)
-#define URIEL_RUNAWAY_TIME (120)                             // ウリエルの暴走時間
-#define URIEL_INDUCIBLE (400.0f)                             // ウリエルの誘導可能距離
-#define URIEL_SLEEP_TIME (300)                               // ウリエルの眠り時間
-#define URIEL_BOROCHAGE_INTERVAL (60)                        // ボーロチャージできるまでのインターバル時間
-
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // 列挙体定義
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 typedef enum {
-  URIEL_STATUS_NONE = -1,                                 // 状態エラー
-  URIEL_STATUS_NEUTRAL = ANIMATION_URIEL_NEUTRAL,         // ニュートラル状態
-  URIEL_STATUS_CRAWL = ANIMATION_URIEL_CRAWL,             // ハイハイ状態
-  URIEL_STATUS_JUMP = ANIMATION_URIEL_JUMP,               // ジャンプ状態
-  URIEL_STATUS_RUNAWAY = ANIMATION_URIEL_RUNAWAY,         // 暴走状態
-  URIEL_STATUS_SLEEP = ANIMATION_URIEL_SLEEP,             // 眠り状態
-  URIEL_STATUS_CHARGECRAWL = ANIMATION_URIEL_CHARGECRAWL, // ハイハイ(チャージ)状態
-  URIEL_STATUS_CHARGEJUMP = ANIMATION_URIEL_CHARGEJUMP,   // ジャンプ(チャージ)状態
-  URIEL_STATUS_GOAL = ANIMATION_URIEL_GOAL,               // ゴール時の演出
+  URIEL_STATUS_NONE = -1,                                   // 状態エラー
+  URIEL_STATUS_NEUTRAL = ANIMATION_URIEL_NEUTRAL,           // ニュートラル状態
+  URIEL_STATUS_CRAWL = ANIMATION_URIEL_CRAWL,               // ハイハイ状態
+  URIEL_STATUS_JUMP = ANIMATION_URIEL_JUMP,                 // ジャンプ状態
+  URIEL_STATUS_RUNAWAY = ANIMATION_URIEL_RUNAWAY,           // 暴走状態
+  URIEL_STATUS_RUNAWAY_JUMP = ANIMATION_URIEL_RUNAWAY_JUMP, // 暴走状態でのジャンプ
+  URIEL_STATUS_SLEEP = ANIMATION_URIEL_SLEEP,               // 眠り状態
+  URIEL_STATUS_CHARGE_CRAWL = ANIMATION_URIEL_CHARGE_CRAWL, // ハイハイ(チャージ)状態
+  URIEL_STATUS_CHARGE_JUMP = ANIMATION_URIEL_CHARGE_JUMP,   // ジャンプ(チャージ)状態
+  URIEL_STATUS_GOAL = ANIMATION_URIEL_GOAL,                 // ゴール時の演出
   URIEL_STATUS_MAX
 }URIEL_STATUS;
 
 typedef enum{
   BLOCK_DATA_ERROR = -1,
-  BLOCK_DATA_STAIRS,
+  BLOCK_DATA_UP_STAIRS,
   BLOCK_DATA_JUMP,
   BLOCK_DATA_MAX
 }BLOCK_DATA;
@@ -75,17 +65,34 @@ public:
   // ボーロチャージ(ボーロチャージ出来ればtrueが返る)
   bool BoroChage(void);
 
+  // ボーロチャージ可能ならtrueが返る
+  bool CheckBoro(void){ return !charge_flag_; }
+
   // hit処理(by Ohashi)
   void HitManage();
 
-  // オブジェクトとのHit判定(by Shimizu)
+  // オブジェクトとのHit判定
   bool CheckHit(const D3DXVECTOR3& pos, const D3DXVECTOR2& size);
 
+  // get
+  const D3DXVECTOR3& GetPos(void) const {return pos_;}
+  const D3DXVECTOR3 GetEatPos(void) const;
+  // 表示オブジェクトとのHit判定(by Shimizu)
+  bool CheckImageHit(const D3DXVECTOR3& pos, const D3DXVECTOR2& size);
+
 private:
+  static const int kUrielMoveSpped = 3;                                      // ウリエルの移動速度(通常)
+  static const int kUrielMoveChargeSpeed = (int)(kUrielMoveSpped * 1.5f);    // ウリエルの移動速度(チャージ)
+  static const int kUrielMoveRunawaySpped = (int)(kUrielMoveSpped * 2.0f);   // ウリエルの移動速度(暴走)
+  static const int kUrielRunnawayTime = 180;                                 // ウリエルの暴走時間
+  static const int kUrielInducible = 400;                                    // ウリエルの誘導可能距離
+  static const int kUrielSleepTime = 180;                                    // ウリエルの眠り時間
+  static const int kUrielBorochageInterval = 60;                             // ボーロチャージできるまでのインターバル時間
   void UpdateNeutral(void);
   void UpdateCrawl(void);
   void UpdateJump(void);
   void UpdateRunaway(void);
+  void UpdateRunawayJump(void);
   void UpdateSleep(void);
   void UpdateChargeCrawl(void);
   void UpdateChargeJump(void);
@@ -97,7 +104,6 @@ private:
   D3DXVECTOR2 JumpAngleSeek(float top, float length, float difference_in_height, float gravity);
   D3DXVECTOR3 dest_position_;
   D3DXVECTOR3 old_position_;
-  D3DXVECTOR3 jump_before_pos_;
   D3DXVECTOR3 move_;
   D3DXVECTOR3 map_;
   Stage* p_stage_;

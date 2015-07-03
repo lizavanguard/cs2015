@@ -10,16 +10,18 @@
 #include "GameManager.h"
 
 #include "Framework/DebugProc/DebugProc.h"
+#include "Framework/DrawDebugPrimitive/DrawPrimitive.h"
 #include "Framework/Input/InputManager.h"
 #include "Framework/Input/InputManagerHolder.h"
 #include "Framework/Scene/SceneManager.h"
+#include "Framework/Sound/sound.h"
 #include "Framework/Texture/TextureManager.h"
 #include "Framework/Texture/TextureManagerHolder.h"
 #include "Framework/Utility/Utility.h"
 
 #include "Application/Game/SceneGame.h"  // HACK: –³—‚â‚è
+#include "Application/Title/SceneTitle.h"
 
-#include "Application/Sound/sound.h"
 
 
 //==============================================================================
@@ -53,10 +55,12 @@ GameManager::GameManager( HINSTANCE hInstance, HWND hWnd, LPDIRECT3DDEVICE9 pDev
   pTextureManager_ = new TextureManager(pDevice);
   TextureManagerHolder::Instance().SetTextureManager(pTextureManager_);
 
-  Scene* pFirstScene = new SceneGame();
-  pSceneManager_ = new SceneManager(pFirstScene);
+  InitSound(hWnd);
 
-  //InitSound(hWnd);
+  InitDrawPrimitive(pDevice);
+ 
+  Scene* pFirstScene = new SceneTitle();
+  pSceneManager_ = new SceneManager(pFirstScene);
 }
 
 
@@ -64,15 +68,17 @@ GameManager::GameManager( HINSTANCE hInstance, HWND hWnd, LPDIRECT3DDEVICE9 pDev
 // dtor
 //------------------------------------------------
 GameManager::~GameManager() {
-  //UninitSound();
+  SafeDelete(pSceneManager_);
+
+  UninitDrawPrimitive();
+
+  UninitSound();
 
   SafeDelete(pTextureManager_);
 
-  SafeDelete(pSceneManager_);
-
   SafeDelete(pInputManager_);
 
-	pDebugProc_->Uninit();
+  pDebugProc_->Uninit();
   SafeDelete(pDebugProc_);
 }
 
@@ -95,6 +101,9 @@ void GameManager::Update( const float elapsedTime ) {
 void GameManager::Draw( void ) {
   // scene
   pSceneManager_->Draw();
+
+  // draw debug
+  DrawAll();
 
   // debug
 	pDebugProc_->Draw();

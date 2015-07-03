@@ -11,9 +11,7 @@
 
 #include <algorithm>
 
-#include "Application/Object/Object2D/Bar.h"
-#include "Application/Object/Object2D/Board.h"
-#include "Application/Object/Object2D/Frame.h"
+#include "Application/Tension/TensionTopLayer.h"
 #include "Application/Utility/ValueActiveUpdater.h"
 #include "Application/Utility/ValuePassiveUpdater.h"
 
@@ -22,8 +20,17 @@
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 namespace {
 
-const D3DXVECTOR3 kPos = {200.0f, 25.0f, 0.0f};
-const D3DXVECTOR2 kSize = {300.0f, 20.0f};
+const char* kFrameTextureFilename = "data/Texture/UI_tension_min.png";
+
+const float kRateToFixSize = 0.4f;
+const D3DXVECTOR3 kPos = {150.0f, 100.0f, 0.0f};
+const D3DXVECTOR2 kSize = {1277.0f, 289.0f};
+
+const D3DXVECTOR2 kFixedSize = kSize * kRateToFixSize;
+const D3DXVECTOR2 kGaugeSize = {kSize.x, 221.0f - 56.0f};
+const D3DXVECTOR2 kFixedGaugeSize = kGaugeSize * kRateToFixSize;
+
+const D3DXVECTOR3 kGaugePos = {kPos.x, (kPos.y - kFixedSize.y * 0.5f) + (56.0f * kRateToFixSize + kFixedGaugeSize.y * 0.5f), 0.0f};
 
 const float kTensionRiseValue = 0.4f;
 const float kTensionMaxValue = 1.0f;
@@ -41,14 +48,12 @@ const float kTensionActiveSpeedDownAmount = 0.05f;
 //------------------------------------------------
 TensionGauge::TensionGauge()
     : tension_(0.0f)
-    , p_bar_(nullptr)
-    , p_board_(nullptr)
     , p_frame_(nullptr)
+    , p_top_layer_(nullptr)
     , p_value_active_updater_(nullptr)
     , p_value_passive_updater_(nullptr) {
-  p_bar_ = new Bar(kPos, kSize, kTensionMaxValue);
-  p_board_ = new Board(kPos, kSize);
-  p_frame_ = new Frame(kPos, kSize);
+  p_frame_ = new Object2D(kPos, kFixedSize, kFrameTextureFilename);
+  p_top_layer_ = new TensionTopLayer(kGaugePos, kFixedGaugeSize);
   p_value_active_updater_ = new ValueActiveUpdater(0.0f, kTensionActiveSpeedUpAmount, 0.0f, kTensionMaxValue);
   p_value_passive_updater_ = new ValuePassiveUpdater(0.0f, -kTensionPassiveChangeAmount, 0.0f, kTensionMaxValue);
 }
@@ -59,9 +64,8 @@ TensionGauge::TensionGauge()
 TensionGauge::~TensionGauge() {
   SafeDelete(p_value_passive_updater_);
   SafeDelete(p_value_active_updater_);
+  SafeDelete(p_top_layer_);
   SafeDelete(p_frame_);
-  SafeDelete(p_board_);
-  SafeDelete(p_bar_);
 }
 
 //------------------------------------------------
@@ -69,17 +73,15 @@ TensionGauge::~TensionGauge() {
 //------------------------------------------------
 void TensionGauge::Update(void) {
   _UpdateTension();
-
-  p_bar_->UpdateValue(tension_);
+  p_top_layer_->UpdateSize(tension_);
 }
 
 //------------------------------------------------
 // Draw‚Ì‘OŒãˆ—
 //------------------------------------------------
 void TensionGauge::Draw(void) {
-  p_board_->Draw();
-  p_bar_->Draw();
   p_frame_->Draw();
+  p_top_layer_->Draw();
 }
 
 //------------------------------------------------

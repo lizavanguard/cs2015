@@ -24,10 +24,8 @@ const char* kTextureFilename = "data/Texture/frame_score.png";
 //------------------------------------------------
 // ctor
 //------------------------------------------------
-Frame::Frame(const D3DXVECTOR3& pos, const D3DXVECTOR2& size) {
-  SetTexture(kTextureFilename);
-  pos_ = pos;
-  size_ = size;
+Frame::Frame(const D3DXVECTOR3& pos, const D3DXVECTOR2& size) 
+    : Object2D(pos, size, kTextureFilename) {
 }
 
 //------------------------------------------------

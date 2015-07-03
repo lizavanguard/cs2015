@@ -24,15 +24,15 @@ typedef struct STAGE_STR
 
 typedef struct HIT_CHECK_
 {
-  char center;
-  char up;
-  char bottom;
-  char right;
-  char left;
-  char up_right;
-  char up_left;
-  char bottom_right;
-  char bottom_left;
+  int center;
+  int up;
+  int bottom;
+  int right;
+  int left;
+  int up_right;
+  int up_left;
+  int bottom_right;
+  int bottom_left;
 }HIT_CHECK;
 enum
 {
@@ -50,6 +50,10 @@ public:
   // ctor
   Stage();
 
+  // ctor
+  void SelectStage(char*);
+
+
   // dtor
   virtual ~Stage();
 
@@ -65,6 +69,9 @@ public:
   // Hit
   D3DXVECTOR3 CheckMapTip(D3DXVECTOR3* pos, D3DXVECTOR3 size, HIT_CHECK* check);
 
+  // Hit
+  D3DXVECTOR3 CheckMapTip2(D3DXVECTOR3* pos, D3DXVECTOR3 size, HIT_CHECK* check);
+
   // ステージサイズの取得(by rockman)
   D3DXVECTOR2 GetStageSize(void){return D3DXVECTOR2(map_width_*100.0f, map_height_*100.0f); }
 
@@ -77,7 +84,7 @@ private:
   int map_height_;
   int map_id_max;
   STG_STR* stage_;
-
+  int* m_mapdata;
 
   LPDIRECT3DVERTEXBUFFER9 p_vertex_buffer_;
 };

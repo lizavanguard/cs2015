@@ -51,13 +51,15 @@ static const float kStartZoomRate = 2.0f;
 Camera::Camera(Player* player , Stage* stage){
   player_ = player;
   stage_ = stage;
-  posP_ = D3DXVECTOR3(0.0f , 0.0f , -5.0f);
-  posR_ = D3DXVECTOR3(0.0f , 0.0f , 0.0f);
+  const D3DXVECTOR3 player_start_position = player->GetPos();
+  posP_ = D3DXVECTOR3(player_start_position.x, player_start_position.y, -5.0f);
+  posR_ = player_start_position;
   vecU_ = D3DXVECTOR3(0.0f , 1.0f , 0.0f);
   rot_ = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
   zoomRate_ = kStartZoomRate;
   localView_ = D3DXVECTOR2(kWindowWidth / zoomRate_, kWindowHeight / zoomRate_);
   localScreenFrame_ = localView_;
+  _CreateViewPortMatrix(&mtxViewport_, static_cast<unsigned int>(kWindowWidth), static_cast<unsigned int>(kWindowHeight));
 }
 
 //==============================================================================
@@ -132,4 +134,16 @@ void Camera::Set(void){
   p_device->SetTransform(D3DTS_PROJECTION, &mtxProjection_);
 }
 
+D3DXMATRIX* Camera::_CreateViewPortMatrix(D3DXMATRIX* out, const unsigned int w, const unsigned int h) {
+  float W = w * 0.5f;
+  float H = h * 0.5f;
+
+  // スケール(W,-H)と平行移動(W,H)の合成変換
+  out->_11 = W; out->_12 = 0; out->_13 = 0; out->_14 = 0;
+  out->_21 = 0; out->_22 = -H; out->_23 = 0; out->_24 = 0;
+  out->_31 = 0; out->_32 = 0; out->_33 = 1; out->_34 = 0;
+  out->_41 = W; out->_42 = H; out->_43 = 0; out->_44 = 1;
+
+  return out;
+}
 // EOF

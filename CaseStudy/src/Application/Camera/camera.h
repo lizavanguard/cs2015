@@ -74,6 +74,7 @@ public:
   D3DXVECTOR3 GetRot(void) const { return rot_; }
   D3DXMATRIX GetView(void) const { return mtxView_; }
   D3DXMATRIX GetProjection(void) const { return mtxProjection_; }
+  D3DXMATRIX GetMatrixViewProjectionViewPort(void) const { return mtxView_ * mtxProjection_ * mtxViewport_; }
 
   // set
   void SetPosP(const D3DXVECTOR3& pos) { posP_ = pos; }
@@ -94,12 +95,15 @@ public:
 protected:
 
 private:
+  D3DXMATRIX* _CreateViewPortMatrix(D3DXMATRIX* out, const unsigned int w, const unsigned int h);
+
   D3DXVECTOR3 posP_;            // カメラの視点
   D3DXVECTOR3 posR_;            // カメラの注視点(向き)
   D3DXVECTOR3 vecU_;            // カメラの上方向ベクトル
   D3DXVECTOR3 rot_;             // カメラの向き
   D3DXMATRIX mtxView_;          // ビューマトリックス
   D3DXMATRIX mtxProjection_;    // プロジェクションマトリックス
+  D3DXMATRIX mtxViewport_;      // ビューポートマトリックス
   float zoomRate_;
   D3DXVECTOR2 localView_;
   D3DXVECTOR2 localScreenFrame_;
