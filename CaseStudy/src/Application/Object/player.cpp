@@ -112,7 +112,7 @@ void Player::Update(Uriel *uriel_){
   if (pJoypad.IsPress(InputDevice::Pads::PAD_A) || pKeyboard.IsPress(DIK_RETURN)) {
     ChangeAnimation(MODE_GUIDE);
     if (!is_press) {
-      //PlaySound(SOUND_LABEL_SE_CALL0);
+      PlaySound(SOUND_LABEL_SE_CALL0);
     }
     is_press = true;
   }

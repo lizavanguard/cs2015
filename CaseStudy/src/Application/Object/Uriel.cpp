@@ -13,7 +13,6 @@
 #include "Framework/Texture/TextureManagerHolder.h"
 #include "Application/Stage/Stage.h"
 #include "Application/Tension/TensionGauge.h"
-#include "Framework/Sound/sound.h"
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // define
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -183,8 +182,7 @@ void Uriel::SetAnimaton(ANIMATION_EVENT animation_event){
 void Uriel::SetDestPos(const D3DXVECTOR3& pos){
   if (status_ == URIEL_STATUS_JUMP ||
     status_ == URIEL_STATUS_CHARGE_JUMP ||
-    status_ == URIEL_STATUS_RUNAWAY ||
-    status_ == URIEL_STATUS_RUNAWAY_JUMP) {
+    status_ == URIEL_STATUS_RUNAWAY) {
     return;
   }
   HIT_CHECK check;
@@ -192,10 +190,8 @@ void Uriel::SetDestPos(const D3DXVECTOR3& pos){
   if (check.center == MAP_TYPE_WALL){
     return;
   }
-  if (abs(pos.x - pos_.x) < kUrielInducible){
+  if (abs(pos.x - pos_.x) < kUrielInducible)
     dest_position_ = pos;
-    PlaySound(SOUND_LABEL_SE_CALL0);
-  }
 }
 
 //=============================================================================
