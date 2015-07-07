@@ -9,15 +9,29 @@
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 #include "Cursor.h"
 
+//--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
+// const
+//--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
+namespace {
+
+}
+
 //==============================================================================
 // class implementation
 //==============================================================================
 //------------------------------------------------
 // ctor
 //------------------------------------------------
-Cursor::Cursor(const D3DXVECTOR3& position, const D3DXVECTOR2& size, const char* p_filename)
-    : Object2D(position, size, p_filename)
-    , time_(0.0f) {
+Cursor::Cursor(const D3DXVECTOR3& position,
+               const D3DXVECTOR2& size,
+               const char* p_standard_texture_filename,
+               const char* p_pushed_texture_filename)
+    : Object2D(position, size, p_pushed_texture_filename)
+    , standard_texture_id_(-1)
+    , pushed_texture_id_(texture_id_)
+    , is_pushed_(false) {
+  SetTexture(p_standard_texture_filename);
+  standard_texture_id_ = texture_id_;
 }
 
 //------------------------------------------------
@@ -29,6 +43,12 @@ Cursor::~Cursor() {
 //------------------------------------------------
 // Update
 //------------------------------------------------
-void Cursor::Update(const float elapsed_time) {
-  time_ += elapsed_time;
+void Cursor::Update(void) {
+  if (is_pushed_) {
+    texture_id_ = pushed_texture_id_;
+  }
+  else {
+    texture_id_ = standard_texture_id_;
+  }
+  is_pushed_ = false;
 }

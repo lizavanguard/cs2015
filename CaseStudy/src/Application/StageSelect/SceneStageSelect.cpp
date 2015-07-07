@@ -50,7 +50,8 @@ const D3DXVECTOR2 kNameSize = {400.0f, 100.0f};
 const char* kNameTextureFilename = "data/Texture/tex_anim_04.png";
 
 const D3DXVECTOR2 kCursorSize = {100.0f, 100.0f};
-const char* kCursorTextureFilename = "data/Texture/bo-ro.png";
+const D3DXVECTOR3 kCursorOffset = {90.0f, 90.0f, 0.0f};
+
 }
 
 //==============================================================================
@@ -80,9 +81,9 @@ SceneStageSelect::SceneStageSelect()
 
   GameCursor::PositionContainer position_list;
   for (int thumb_count = 0; thumb_count < kNumThumb; ++thumb_count) {
-    position_list.push_back(p_thumbnails_[thumb_count]->GetPosition());
+    position_list.push_back(p_thumbnails_[thumb_count]->GetPosition() + kCursorOffset);
   }
-  p_cursor_ = new GameCursor(kCursorSize, DIK_RIGHT, DIK_LEFT, position_list);
+  p_cursor_ = new GameCursor(kCursorSize, DIK_RIGHT, DIK_LEFT, DIK_RETURN, position_list);
 }
 
 //------------------------------------------------
