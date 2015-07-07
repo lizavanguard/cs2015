@@ -30,7 +30,7 @@ public:
   }
 
   // get
-  int GetCursor(void) const { return value_; }
+  int GetValue(void) const { return value_; }
 
 private:
   unsigned int max_;

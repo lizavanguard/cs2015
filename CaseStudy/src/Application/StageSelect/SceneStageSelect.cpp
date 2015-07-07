@@ -13,6 +13,7 @@
 #include "Application/GameCursor/GameCursor.h"
 #include "Application/Object/BackGround/BackGroundManager.h"
 #include "Application/Object/Object2D/Object2D.h"
+#include "Application/Thumbnail/Thumbnail.h"
 #include "Framework/FrameworkOption.h"
 #include "Framework/Input/InputKeyboard.h"
 #include "Framework/Input/InputManagerHolder.h"
@@ -67,12 +68,12 @@ SceneStageSelect::SceneStageSelect()
   for (int top_count = 0; top_count < kNumTop; ++top_count) {
     D3DXVECTOR3 position = kTopStartPosition;
     position.x += kStride.x * top_count;
-    p_thumbnails_[top_count] = new Object2D(position, kSize, kTextureFilename);
+    p_thumbnails_[top_count] = new Thumbnail(position, kSize, kTextureFilename);
   }
   for (int bottom_count = 0; bottom_count < kNumBottom; ++bottom_count) {
     D3DXVECTOR3 position = kBottomStartPosition;
     position.x += kStride.x * bottom_count;
-    p_thumbnails_[kNumTop + bottom_count] = new Object2D(position, kSize, kTextureFilename);
+    p_thumbnails_[kNumTop + bottom_count] = new Thumbnail(position, kSize, kTextureFilename);
   }
 
   p_name_ = new Object2D(kNameCenterPosition, kNameSize, kNameTextureFilename);
@@ -84,6 +85,9 @@ SceneStageSelect::SceneStageSelect()
     position_list.push_back(p_thumbnails_[thumb_count]->GetPosition() + kCursorOffset);
   }
   p_cursor_ = new GameCursor(kCursorSize, DIK_RIGHT, DIK_LEFT, DIK_RETURN, position_list);
+
+  // TODO:
+  p_thumbnails_[0]->Activate();
 }
 
 //------------------------------------------------
@@ -113,6 +117,12 @@ void SceneStageSelect::Update(SceneManager* p_scene_manager, const float elapsed
   }
 
   p_cursor_->Update(elapsed_time);
+
+  if (p_cursor_->IsJustMoved()) {
+    const int cursor_index = p_cursor_->GetCursorIndex();
+    p_thumbnails_[p_cursor_->GetCursorIndexOld()]->Deactivate();
+    p_thumbnails_[p_cursor_->GetCursorIndex()]->Activate();
+  }
 }
 
 //------------------------------------------------

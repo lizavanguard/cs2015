@@ -18,6 +18,7 @@
 class BackGroundManager;
 class Object2D;
 class GameCursor;
+class Thumbnail;
 
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 // class definition
@@ -41,6 +42,6 @@ private:
 
   BackGroundManager* p_background_manager_;
   GameCursor* p_cursor_;
-  std::array<Object2D*, kStageMax> p_thumbnails_;
+  std::array<Thumbnail*, kStageMax> p_thumbnails_;
   Object2D* p_name_;
 };

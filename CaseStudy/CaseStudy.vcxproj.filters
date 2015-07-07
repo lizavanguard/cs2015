@@ -171,6 +171,9 @@
     <ClCompile Include="src\Application\Object\Object2D\Cursor.cpp">
       <Filter>Application\Object\Object2D</Filter>
     </ClCompile>
+    <ClCompile Include="src\Application\Thumbnail\Thumbnail.cpp">
+      <Filter>Application\Thumbnail</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Framework">
@@ -262,6 +265,9 @@
     </Filter>
     <Filter Include="Application\GameCursor">
       <UniqueIdentifier>{1e78c66f-4c9a-4e53-9141-0d8d9963cb88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Thumbnail">
+      <UniqueIdentifier>{77388755-8d4e-46b0-9dac-0407a730cd47}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -502,6 +508,9 @@
     </ClInclude>
     <ClInclude Include="src\Application\Object\Object2D\Cursor.h">
       <Filter>Application\Object\Object2D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\Thumbnail\Thumbnail.h">
+      <Filter>Application\Thumbnail</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

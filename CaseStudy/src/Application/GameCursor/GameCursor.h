@@ -35,22 +35,29 @@ public:
   ~GameCursor();
 
   // Update
-  bool Update(float elapsed_time);
+  void Update(float elapsed_time);
 
   // Draw
   void Draw(void);
 
   // get
   int GetCursorIndex(void) const;
+  int GetCursorIndexOld(void) const { return old_cursor_index_; }
+  bool IsJustEntered(void) const { return is_just_entered_; }
+  bool IsJustMoved(void) const { return is_just_moved_; }
 
 private:
-  bool _ReactInput(void) const;
+  void _ReactInput(void);
+
+  const int increment_key_;
+  const int decrement_key_;
+  const int enter_key_;
+  const PositionContainer position_list_;
 
   Cursor* p_cursor_;
   WrapValue* p_cursor_value_;
 
-  int increment_key_;
-  int decrement_key_;
-  int enter_key_;
-  PositionContainer position_list_;
+  int old_cursor_index_;
+  bool is_just_entered_;
+  bool is_just_moved_;
 };

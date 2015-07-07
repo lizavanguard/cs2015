@@ -36,12 +36,15 @@ GameCursor::GameCursor(const D3DXVECTOR2& size,
                        const int decrement_key,
                        const int enter_key,
                        const PositionContainer& position_list)
-    : p_cursor_(nullptr)
-    , p_cursor_value_(nullptr)
-    , increment_key_(increment_key)
+    : increment_key_(increment_key)
     , decrement_key_(decrement_key)
     , enter_key_(enter_key)
-    , position_list_(position_list) {
+    , position_list_(position_list)
+    , p_cursor_(nullptr)
+    , p_cursor_value_(nullptr)
+    , old_cursor_index_(0)
+    , is_just_entered_(false)
+    , is_just_moved_(false) {
   p_cursor_ = new Cursor(position_list_[0], size, kTextureFilename, kPushedTextureFilename);
   p_cursor_value_ = new WrapValue(position_list_.size());
 }
@@ -57,13 +60,13 @@ GameCursor::~GameCursor() {
 //------------------------------------------------
 // Update
 //------------------------------------------------
-bool GameCursor::Update(const float) {
-  const bool is_entered = _ReactInput();
+void GameCursor::Update(const float) {
+  old_cursor_index_ = p_cursor_value_->GetValue();
 
-  p_cursor_->SetPosition(position_list_[p_cursor_value_->GetCursor()]);
+  _ReactInput();
+
+  p_cursor_->SetPosition(position_list_[p_cursor_value_->GetValue()]);
   p_cursor_->Update();
-
-  return is_entered;
 }
 
 //------------------------------------------------
@@ -77,22 +80,25 @@ void GameCursor::Draw(void) {
 // get
 //------------------------------------------------
 int GameCursor::GetCursorIndex(void) const {
-  return p_cursor_value_->GetCursor();
+  return p_cursor_value_->GetValue();
 }
 
-bool GameCursor::_ReactInput(void) const {
+void GameCursor::_ReactInput(void) {
+  is_just_moved_ = false;
+  is_just_entered_ = false;
+
   const auto& keyboard = InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard();
   if (keyboard.IsTrigger(enter_key_)) {
     p_cursor_->Pushed();
-    return true;
+    is_just_entered_ = true;
   }
 
   if (keyboard.IsTrigger(increment_key_)) {
     p_cursor_value_->Increment();
+    is_just_moved_ = true;
   }
   if (keyboard.IsTrigger(decrement_key_)) {
     p_cursor_value_->Decrement();
+    is_just_moved_ = true;
   }
-
-  return false;
 }
