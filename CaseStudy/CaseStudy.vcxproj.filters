@@ -59,9 +59,6 @@
     <ClCompile Include="src\Application\Object\Tori.cpp">
       <Filter>Application\Object</Filter>
     </ClCompile>
-    <ClCompile Include="src\Application\Stage\Stage.cpp">
-      <Filter>Application\Stage</Filter>
-    </ClCompile>
     <ClCompile Include="src\Application\Object\player.cpp">
       <Filter>Application\Object</Filter>
     </ClCompile>
@@ -74,9 +71,6 @@
     </ClCompile>
     <ClCompile Include="src\Application\Object\ObjectBase.cpp">
       <Filter>Application\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Application\Tension\TensionGauge.cpp">
-      <Filter>Application\Tension</Filter>
     </ClCompile>
     <ClCompile Include="src\Application\Utility\ValueActiveUpdater.cpp">
       <Filter>Application\Utility</Filter>
@@ -111,9 +105,6 @@
     <ClCompile Include="src\Framework\Collision\CollisionHelper.cpp">
       <Filter>Framework\Collision</Filter>
     </ClCompile>
-    <ClCompile Include="src\Application\Tension\TensionTopLayer.cpp">
-      <Filter>Application\Tension</Filter>
-    </ClCompile>
     <ClCompile Include="src\Framework\Sound\sound.cpp">
       <Filter>Framework\Sound</Filter>
     </ClCompile>
@@ -134,6 +125,39 @@
     </ClCompile>
     <ClCompile Include="src\Framework\Fade\Fade.cpp">
       <Filter>Framework\Fade</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application\Result\SceneResult.cpp">
+      <Filter>Application\Result</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application\Result\SceneResultFactory.cpp">
+      <Filter>Application\Result</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application\Title\SceneTitle.cpp">
+      <Filter>Application\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application\Title\SceneTitleFactory.cpp">
+      <Filter>Application\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application\TitleBase\TitleCharBase.cpp">
+      <Filter>Application\TitleBase</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application\Object\Object2D\ResultTime.cpp">
+      <Filter>Application\Object\Object2D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application\Object\Object2D\TitleChar.cpp">
+      <Filter>Application\Object\Object2D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application\Object\Object2D\StartSymbol.cpp">
+      <Filter>Application\Object\Object2D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application\Stage\Stage.cpp">
+      <Filter>Application\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application\Tension\TensionTopLayer.cpp">
+      <Filter>Application\Tension</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application\Tension\TensionGauge.cpp">
+      <Filter>Application\Tension</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -211,6 +235,15 @@
     </Filter>
     <Filter Include="Framework\Fade">
       <UniqueIdentifier>{2dbea2c3-7b29-4d34-ab14-55e01ae717ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Title">
+      <UniqueIdentifier>{61c2591d-5ac7-4cd8-8bfb-008034975faf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\TitleBase">
+      <UniqueIdentifier>{9924af77-5677-44e8-8c3a-2da8237165ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Result">
+      <UniqueIdentifier>{deaf217b-6ced-479c-9067-c292c7d7e706}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -334,9 +367,6 @@
     <ClInclude Include="src\Application\Object\Tori.h">
       <Filter>Application\Object</Filter>
     </ClInclude>
-    <ClInclude Include="src\Application\Stage\Stage.h">
-      <Filter>Application\Stage</Filter>
-    </ClInclude>
     <ClInclude Include="src\Application\Object\player.h">
       <Filter>Application\Object</Filter>
     </ClInclude>
@@ -356,9 +386,6 @@
     <ClInclude Include="src\Application\Object\Object2D\Frame.h">
       <Filter>Application\Object\Object2D</Filter>
     </ClInclude>
-    <ClInclude Include="src\Application\Tension\TensionGauge.h">
-      <Filter>Application\Tension</Filter>
-    </ClInclude>
     <ClInclude Include="src\Application\Object\Object2D\Board.h">
       <Filter>Application\Object\Object2D</Filter>
     </ClInclude>
@@ -370,9 +397,6 @@
     </ClInclude>
     <ClInclude Include="src\Application\Utility\ValueActiveUpdater.h">
       <Filter>Application\Utility</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Application\Tension\TensionTopLayer.h">
-      <Filter>Application\Tension</Filter>
     </ClInclude>
     <ClInclude Include="src\Framework\Sound\sound.h">
       <Filter>Framework\Sound</Filter>
@@ -412,6 +436,39 @@
     </ClInclude>
     <ClInclude Include="src\Framework\Fade\Fade.h">
       <Filter>Framework\Fade</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\Result\SceneResult.h">
+      <Filter>Application\Result</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\Result\SceneResultFactory.h">
+      <Filter>Application\Result</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\Title\SceneTitleFactory.h">
+      <Filter>Application\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\Title\SceneTitle.h">
+      <Filter>Application\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\TitleBase\TitleCharBase.h">
+      <Filter>Application\TitleBase</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\Object\Object2D\TitleChar.h">
+      <Filter>Application\Object\Object2D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\Object\Object2D\ResultTime.h">
+      <Filter>Application\Object\Object2D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\Object\Object2D\StartSymbol.h">
+      <Filter>Application\Object\Object2D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\Stage\Stage.h">
+      <Filter>Application\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\Tension\TensionTopLayer.h">
+      <Filter>Application\Tension</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\Tension\TensionGauge.h">
+      <Filter>Application\Tension</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

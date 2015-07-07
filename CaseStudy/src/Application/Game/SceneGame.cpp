@@ -25,6 +25,9 @@
 #include "Application\Object\Object2D\Timer.h"
 #include "Application\Camera\camera.h"
 #include "Application/Stage/Stage.h"
+#include "Framework/Scene/SceneManager.h"
+#include "Application/Title/SceneTitleFactory.h"
+#include "Application/Result/SceneResultFactory.h"
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // class definition
@@ -129,6 +132,12 @@ void SceneGame::Update(SceneManager* p_scene_manager, const float elapsed_time) 
   }
   if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_2)) {
     p_tension_gauge_->CoolDown();
+  }
+  // Next TitleScene
+  if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_N)) {
+      //SceneTitleFactory* pTitleSceneFactory = new SceneTitleFactory();
+        SceneResultFactory* pResultSceneFactory = new SceneResultFactory();
+        p_scene_manager->PushNextSceneFactory(pResultSceneFactory);
   }
 }
 
