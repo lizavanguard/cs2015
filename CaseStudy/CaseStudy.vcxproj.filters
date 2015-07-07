@@ -159,6 +159,12 @@
     <ClCompile Include="src\Application\Tension\TensionGauge.cpp">
       <Filter>Application\Tension</Filter>
     </ClCompile>
+    <ClCompile Include="src\Application\StageSelect\SceneStageSelect.cpp">
+      <Filter>Application\StageSelect</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application\StageSelect\SceneStageSelectFactory.cpp">
+      <Filter>Application\StageSelect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Framework">
@@ -244,6 +250,9 @@
     </Filter>
     <Filter Include="Application\Result">
       <UniqueIdentifier>{deaf217b-6ced-479c-9067-c292c7d7e706}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\StageSelect">
+      <UniqueIdentifier>{17b4abe7-d42d-4c28-b924-55978ff82b2c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -469,6 +478,12 @@
     </ClInclude>
     <ClInclude Include="src\Application\Tension\TensionGauge.h">
       <Filter>Application\Tension</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\StageSelect\SceneStageSelect.h">
+      <Filter>Application\StageSelect</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\StageSelect\SceneStageSelectFactory.h">
+      <Filter>Application\StageSelect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

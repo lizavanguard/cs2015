@@ -31,9 +31,6 @@ public:
 
   // method
   Scene* Create(void) override;
-
-private:
-  // property
 };
 
 

@@ -37,6 +37,8 @@
     <ClCompile Include="src\Application\Object\Uriel.cpp" />
     <ClCompile Include="src\Application\Result\SceneResult.cpp" />
     <ClCompile Include="src\Application\Result\SceneResultFactory.cpp" />
+    <ClCompile Include="src\Application\StageSelect\SceneStageSelect.cpp" />
+    <ClCompile Include="src\Application\StageSelect\SceneStageSelectFactory.cpp" />
     <ClCompile Include="src\Application\Stage\Stage.cpp" />
     <ClCompile Include="src\Application\Tension\TensionGauge.cpp" />
     <ClCompile Include="src\Application\Tension\TensionTopLayer.cpp" />
@@ -97,6 +99,8 @@
     <ClInclude Include="src\Application\Object\Uriel.h" />
     <ClInclude Include="src\Application\Result\SceneResult.h" />
     <ClInclude Include="src\Application\Result\SceneResultFactory.h" />
+    <ClInclude Include="src\Application\StageSelect\SceneStageSelect.h" />
+    <ClInclude Include="src\Application\StageSelect\SceneStageSelectFactory.h" />
     <ClInclude Include="src\Application\Stage\Stage.h" />
     <ClInclude Include="src\Application\Tension\TensionGauge.h" />
     <ClInclude Include="src\Application\Tension\TensionTopLayer.h" />
