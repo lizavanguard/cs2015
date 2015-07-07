@@ -53,7 +53,7 @@ SceneGame::SceneGame()
 
   p_uriel_ = new Uriel(ANIMATION_URIEL_CRAWL, p_stage_, p_tension_gauge_);
 
-  p_tori_ = new Tori(ANIMATION_TORI_NONE, p_uriel_, p_stage_);
+  p_tori_ = new Tori(ANIMATION_TORI_DROP, p_uriel_, p_stage_);
 
   p_ready_ = new Ready();
 

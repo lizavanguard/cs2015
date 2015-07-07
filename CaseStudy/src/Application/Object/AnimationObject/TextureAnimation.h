@@ -39,6 +39,7 @@ typedef enum
   ANIMATION_PLAYER_RATTEL_GIMMICK,      // ギミック
   ANIMATION_PLAYER_RATTEL_SHAKE,        // ガラガラを振る
   ANIMATION_TORI_NONE,                  // 鳥アニメーション無し
+  ANIMATION_TORI_DROP,                  // 鳥落ち込む
   ANIMATION_TORI_HAPPY,                 // 鳥喜ぶ
   ANIMATION_TORI_FLY_TOP,               // 鳥が上へ飛ぶ
   ANIMATION_MAX                         // 
