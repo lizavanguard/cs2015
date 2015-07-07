@@ -10,6 +10,14 @@
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 #include "Framework/Scene/Scene.h"
 
+#include <array>
+
+//--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
+// class declaration
+//--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
+class Object2D;
+class BackGroundManager;
+
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 // class definition
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
@@ -28,4 +36,9 @@ public:
   void Draw(void);
 
 private:
+  static const int kStageMax = 5;
+
+  std::array<Object2D*, kStageMax> p_thumbnails_;
+  Object2D* p_name_;
+  BackGroundManager* p_background_manager_;
 };

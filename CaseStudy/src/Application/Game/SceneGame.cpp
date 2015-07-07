@@ -136,8 +136,8 @@ void SceneGame::Update(SceneManager* p_scene_manager, const float elapsed_time) 
   // Next TitleScene
   if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_N)) {
       //SceneTitleFactory* pTitleSceneFactory = new SceneTitleFactory();
-        SceneResultFactory* pResultSceneFactory = new SceneResultFactory();
-        p_scene_manager->PushNextSceneFactory(pResultSceneFactory);
+      SceneResultFactory* pResultSceneFactory = new SceneResultFactory();
+      p_scene_manager->PushNextSceneFactory(pResultSceneFactory);
   }
 }
 
