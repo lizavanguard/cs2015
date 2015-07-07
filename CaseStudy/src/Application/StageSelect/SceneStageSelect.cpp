@@ -10,8 +10,9 @@
 #include "SceneStageSelect.h"
 
 #include "Application/Game/SceneGameFactory.h"
-#include "Application/Object/Object2D/Object2D.h"
+#include "Application/GameCursor/GameCursor.h"
 #include "Application/Object/BackGround/BackGroundManager.h"
+#include "Application/Object/Object2D/Object2D.h"
 #include "Framework/FrameworkOption.h"
 #include "Framework/Input/InputKeyboard.h"
 #include "Framework/Input/InputManagerHolder.h"
@@ -24,6 +25,7 @@ namespace {
 
 const int kNumTop = 3;
 const int kNumBottom = 2;
+const int kNumThumb = 5;
 
 const D3DXVECTOR3 kCenterPosition = {kWindowWidth * 0.5f, 450.0f, 0.0f};
 const D3DXVECTOR2 kSize = {200.0f, 200.0f};
@@ -60,7 +62,6 @@ const char* kCursorTextureFilename = "data/Texture/bo-ro.png";
 SceneStageSelect::SceneStageSelect()
     : p_background_manager_(nullptr)
     , p_cursor_(nullptr)
-    , p_cursor_value_(nullptr)
     , p_name_(nullptr) {
   for (int top_count = 0; top_count < kNumTop; ++top_count) {
     D3DXVECTOR3 position = kTopStartPosition;
@@ -77,15 +78,17 @@ SceneStageSelect::SceneStageSelect()
 
   p_background_manager_ = new BackGroundManager();
 
-  p_cursor_ = new Object2D(p_thumbnails_[0]->GetPosition(), kCursorSize, kCursorTextureFilename);
-  p_cursor_value_ = new Cursor<kStageMax>();
+  GameCursor::PositionContainer position_list;
+  for (int thumb_count = 0; thumb_count < kNumThumb; ++thumb_count) {
+    position_list.push_back(p_thumbnails_[thumb_count]->GetPosition());
+  }
+  p_cursor_ = new GameCursor(kCursorSize, DIK_RIGHT, DIK_LEFT, position_list);
 }
 
 //------------------------------------------------
 // dtor
 //------------------------------------------------
 SceneStageSelect::~SceneStageSelect() {
-  SafeDelete(p_cursor_value_);
   SafeDelete(p_cursor_);
 
   SafeDelete(p_background_manager_);
@@ -108,14 +111,7 @@ void SceneStageSelect::Update(SceneManager* p_scene_manager, const float elapsed
     p_scene_manager->PushNextSceneFactory(new SceneGameFactory());
   }
 
-  if (keyboard.IsTrigger(DIK_LEFT)) {
-    p_cursor_value_->Decrement();
-  }
-  if (keyboard.IsTrigger(DIK_RIGHT)) {
-    p_cursor_value_->Increment();
-  }
-
-  p_cursor_->SetPosition(p_thumbnails_[p_cursor_value_->GetCursor()]->GetPosition());
+  p_cursor_->Update(elapsed_time);
 }
 
 //------------------------------------------------

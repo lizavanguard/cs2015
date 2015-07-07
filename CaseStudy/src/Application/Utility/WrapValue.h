@@ -1,39 +1,38 @@
 //==============================================================================
 //
-// Cursor
+// WrapValue
 // Author: Shimizu Shoji
 //
-// 2次元カーソルではない
-// カーソルクラス...というかただの値循環クラス
+// ただの値循環クラス
 //
 //==============================================================================
 #pragma once
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 // class definition
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
-template<int T_MAX>
-class Cursor {
+class WrapValue {
 public:
   // ctor
-  Cursor() : cursor_(0) {
+  WrapValue(unsigned int max) : max_(max), value_(0) {
   }
 
   // dtor
-  ~Cursor() {}
+  ~WrapValue() {}
 
   // Increment
   void Increment(void) {
-    cursor_ = (cursor_ == (T_MAX - 1)) ? 0 : (cursor_ + 1);
+    value_ = (value_ == (max_ - 1)) ? 0 : (value_ + 1);
   }
 
   // Decrement
   void Decrement(void) {
-    cursor_ = (cursor_ == 0) ? (T_MAX - 1) : (cursor_ - 1);
+    value_ = (value_ == 0) ? (max_ - 1) : (value_ - 1);
   }
 
   // get
-  int GetCursor(void) const { return cursor_; }
+  int GetCursor(void) const { return value_; }
 
 private:
-  int cursor_;
+  unsigned int max_;
+  int value_;
 };

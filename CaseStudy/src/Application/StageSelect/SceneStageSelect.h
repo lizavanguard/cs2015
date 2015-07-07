@@ -12,13 +12,12 @@
 
 #include <array>
 
-#include "Application/Utility/Cursor.h"
-
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 // class declaration
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 class BackGroundManager;
 class Object2D;
+class GameCursor;
 
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 // class definition
@@ -41,8 +40,7 @@ private:
   static const int kStageMax = 5;
 
   BackGroundManager* p_background_manager_;
-  Object2D* p_cursor_;
-  Cursor<kStageMax>* p_cursor_value_;
+  GameCursor* p_cursor_;
   std::array<Object2D*, kStageMax> p_thumbnails_;
   Object2D* p_name_;
 };

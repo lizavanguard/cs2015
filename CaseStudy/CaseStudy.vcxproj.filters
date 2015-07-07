@@ -165,6 +165,12 @@
     <ClCompile Include="src\Application\StageSelect\SceneStageSelectFactory.cpp">
       <Filter>Application\StageSelect</Filter>
     </ClCompile>
+    <ClCompile Include="src\Application\GameCursor\GameCursor.cpp">
+      <Filter>Application\GameCursor</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application\Object\Object2D\Cursor.cpp">
+      <Filter>Application\Object\Object2D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Framework">
@@ -253,6 +259,9 @@
     </Filter>
     <Filter Include="Application\StageSelect">
       <UniqueIdentifier>{17b4abe7-d42d-4c28-b924-55978ff82b2c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\GameCursor">
+      <UniqueIdentifier>{1e78c66f-4c9a-4e53-9141-0d8d9963cb88}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -485,8 +494,14 @@
     <ClInclude Include="src\Application\StageSelect\SceneStageSelectFactory.h">
       <Filter>Application\StageSelect</Filter>
     </ClInclude>
-    <ClInclude Include="src\Application\Utility\Cursor.h">
+    <ClInclude Include="src\Application\GameCursor\GameCursor.h">
+      <Filter>Application\GameCursor</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\Utility\WrapValue.h">
       <Filter>Application\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\Object\Object2D\Cursor.h">
+      <Filter>Application\Object\Object2D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
