@@ -132,6 +132,9 @@
     <ClCompile Include="src\Framework\DrawDebugPrimitive\DrawPrimitive.cpp">
       <Filter>Framework\DrawDebugPrimitive</Filter>
     </ClCompile>
+    <ClCompile Include="src\Framework\Fade\Fade.cpp">
+      <Filter>Framework\Fade</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Framework">
@@ -205,6 +208,9 @@
     </Filter>
     <Filter Include="Framework\DrawDebugPrimitive">
       <UniqueIdentifier>{449fa718-1519-4ef5-9dbb-725aa2df5ecd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Fade">
+      <UniqueIdentifier>{2dbea2c3-7b29-4d34-ab14-55e01ae717ea}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -403,6 +409,9 @@
     </ClInclude>
     <ClInclude Include="src\Framework\DrawDebugPrimitive\DrawPrimitive.h">
       <Filter>Framework\DrawDebugPrimitive</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Framework\Fade\Fade.h">
+      <Filter>Framework\Fade</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

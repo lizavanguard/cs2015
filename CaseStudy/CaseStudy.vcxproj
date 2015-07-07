@@ -40,6 +40,7 @@
     <ClCompile Include="src\Framework\Collision\CollisionHelper.cpp" />
     <ClCompile Include="src\Framework\DebugProc\DebugProc.cpp" />
     <ClCompile Include="src\Framework\DrawDebugPrimitive\DrawPrimitive.cpp" />
+    <ClCompile Include="src\Framework\Fade\Fade.cpp" />
     <ClCompile Include="src\Framework\GameManager\GameManager.cpp" />
     <ClCompile Include="src\Framework\GameWindow\GameDirectX.cpp" />
     <ClCompile Include="src\Framework\GameWindow\GameWindow.cpp" />
@@ -93,6 +94,7 @@
     <ClInclude Include="src\Framework\DirectX\DeviceHolder.h" />
     <ClInclude Include="src\Framework\DirectX\DirectXConst.h" />
     <ClInclude Include="src\Framework\DrawDebugPrimitive\DrawPrimitive.h" />
+    <ClInclude Include="src\Framework\Fade\Fade.h" />
     <ClInclude Include="src\Framework\FrameworkOption.h" />
     <ClInclude Include="src\Framework\GameManager\GameManager.h" />
     <ClInclude Include="src\Framework\GameWindow\GameBase.h" />

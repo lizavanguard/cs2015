@@ -11,6 +11,8 @@
 #include "Scene.h"
 #include "SceneFactory.h"
 
+#include "Framework/Fade/Fade.h"
+
 #include "Framework/Utility/Utility.h"
 
 //==============================================================================
@@ -40,6 +42,8 @@ void SceneManager::Update(const float elapsedTime) {
   // シーンの切り替えを行うことになる
   // if 次のシーンファクトリが存在していたら
   if (pNextSceneFactory_ != nullptr) {
+    UpdateFade();
+
     // 現在のシーンを削除
     SafeDelete(pCurScene_);
 
