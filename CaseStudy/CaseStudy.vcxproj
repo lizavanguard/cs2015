@@ -107,6 +107,7 @@
     <ClInclude Include="src\Application\TitleBase\TitleCharBase.h" />
     <ClInclude Include="src\Application\Title\SceneTitle.h" />
     <ClInclude Include="src\Application\Title\SceneTitleFactory.h" />
+    <ClInclude Include="src\Application\Utility\Cursor.h" />
     <ClInclude Include="src\Application\Utility\ValueActiveUpdater.h" />
     <ClInclude Include="src\Application\Utility\ValuePassiveUpdater.h" />
     <ClInclude Include="src\Framework\Collision\CollisionHelper.h" />

@@ -47,6 +47,8 @@ const D3DXVECTOR3 kNameCenterPosition = {kWindowWidth * 0.5f, 150.0f, 0.0f};
 const D3DXVECTOR2 kNameSize = {400.0f, 100.0f};
 const char* kNameTextureFilename = "data/Texture/tex_anim_04.png";
 
+const D3DXVECTOR2 kCursorSize = {100.0f, 100.0f};
+const char* kCursorTextureFilename = "data/Texture/bo-ro.png";
 }
 
 //==============================================================================
@@ -56,7 +58,10 @@ const char* kNameTextureFilename = "data/Texture/tex_anim_04.png";
 // ctor
 //------------------------------------------------
 SceneStageSelect::SceneStageSelect()
-    : p_name_(nullptr) {
+    : p_background_manager_(nullptr)
+    , p_cursor_(nullptr)
+    , p_cursor_value_(nullptr)
+    , p_name_(nullptr) {
   for (int top_count = 0; top_count < kNumTop; ++top_count) {
     D3DXVECTOR3 position = kTopStartPosition;
     position.x += kStride.x * top_count;
@@ -71,12 +76,18 @@ SceneStageSelect::SceneStageSelect()
   p_name_ = new Object2D(kNameCenterPosition, kNameSize, kNameTextureFilename);
 
   p_background_manager_ = new BackGroundManager();
+
+  p_cursor_ = new Object2D(p_thumbnails_[0]->GetPosition(), kCursorSize, kCursorTextureFilename);
+  p_cursor_value_ = new Cursor<kStageMax>();
 }
 
 //------------------------------------------------
 // dtor
 //------------------------------------------------
 SceneStageSelect::~SceneStageSelect() {
+  SafeDelete(p_cursor_value_);
+  SafeDelete(p_cursor_);
+
   SafeDelete(p_background_manager_);
 
   SafeDelete(p_name_);
@@ -96,6 +107,15 @@ void SceneStageSelect::Update(SceneManager* p_scene_manager, const float elapsed
   if(keyboard.IsTrigger(DIK_A)) {
     p_scene_manager->PushNextSceneFactory(new SceneGameFactory());
   }
+
+  if (keyboard.IsTrigger(DIK_LEFT)) {
+    p_cursor_value_->Decrement();
+  }
+  if (keyboard.IsTrigger(DIK_RIGHT)) {
+    p_cursor_value_->Increment();
+  }
+
+  p_cursor_->SetPosition(p_thumbnails_[p_cursor_value_->GetCursor()]->GetPosition());
 }
 
 //------------------------------------------------
@@ -107,6 +127,8 @@ void SceneStageSelect::Draw(void) {
   for (auto p_thumb : p_thumbnails_) {
     p_thumb->Draw();
   }
+
+  p_cursor_->Draw();
 
   p_name_->Draw();
 }

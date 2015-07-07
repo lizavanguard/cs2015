@@ -22,6 +22,12 @@ public:
 
   void SetTexture(const char* texture_name);
 
+  // get
+  const D3DXVECTOR3& GetPosition(void) const { return pos_; }
+
+  // set
+  void SetPosition(const D3DXVECTOR3& position) { pos_ = position; }
+
 protected:
   // Draw‚Ì“à•”ˆ—
   // ‚±‚Á‚¿‚ğŒp³‚·‚é‚Ì

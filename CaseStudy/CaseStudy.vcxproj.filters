@@ -485,6 +485,9 @@
     <ClInclude Include="src\Application\StageSelect\SceneStageSelectFactory.h">
       <Filter>Application\StageSelect</Filter>
     </ClInclude>
+    <ClInclude Include="src\Application\Utility\Cursor.h">
+      <Filter>Application\Utility</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\Framework\Utility\MathUtility.inl">
