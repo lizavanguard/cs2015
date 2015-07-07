@@ -30,6 +30,8 @@ public:
   void PushNextSceneFactory(SceneFactory* pNextSceneFactory);
 
 private:
+  void _ChangeScene(void);
+
   // property
   Scene* pCurScene_;
   SceneFactory* pNextSceneFactory_;

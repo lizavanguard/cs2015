@@ -21,10 +21,10 @@ static const int kVertexMax = kPolygonMax * 4;
 static const float kAlphaMax = 255.0f;
 static const float kFadeSpd = 4.0f;
 
-static const float kFadePosX = kWindowWidth / 2;
-static const float kFadePosY = kWindowHeight / 2;
 static const float kFadeWidth = kWindowWidth;
-static const float kFadeHeight = kWindowHeight;
+static const float kFadeHeight = kWindowHeight + 100;
+static const float kFadePosX = kFadeWidth / 2;
+static const float kFadePosY = kFadeHeight / 2;
 
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -251,13 +251,15 @@ void SetFade( Fades fade )
 //------------------------------------------------
 static bool UpdateFadeIn( void ) {
 	// アルファの減算
-	g_fade.alpha -= kFadeSpd;
+  bool done_fade_in = false;
+  g_fade.alpha -= kFadeSpd;
 	// if アルファの最小値を越えていたら
 	if( g_fade.alpha <= 0 ) {
 		// 最小値を設定して通常状態へ
 		g_fade.alpha = 0;
 		g_fade.fade_mode = FADE_NONE;
-	}
+    done_fade_in = true;
+  }
 
 	// 頂点情報の設定
 	Vertex2* pVtx;
@@ -273,7 +275,7 @@ static bool UpdateFadeIn( void ) {
 	// 占有終了
 	g_pD3DVtxBuff->Unlock();
 
-	return false;
+  return done_fade_in;
 }
 
 //------------------------------------------------

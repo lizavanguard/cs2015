@@ -111,6 +111,9 @@ void GameManager::Draw( void ) {
   // draw debug
   DrawAll();
 
+  // fade
+  DrawFade();
+
   // debug
 	pDebugProc_->Draw();
 }
