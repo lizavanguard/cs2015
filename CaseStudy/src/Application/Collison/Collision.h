@@ -10,6 +10,7 @@
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 class Player;
 class Uriel;
+class Stage;
 
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 // class definition
@@ -17,7 +18,7 @@ class Uriel;
 class Collision {
 public:
   // ctor
-  Collision(Player& player, Uriel& uriel);
+  Collision(Player& player, Uriel& uriel, Stage& stage);
 
   // dtor
   ~Collision();
@@ -25,7 +26,10 @@ public:
   // Uriel x Player (Boro)
   void CollideUrielToPlayersBoro(void);
 
+  // Stage x Player (Gimmick)
+  void CollideStageToPlayersGimmick(void);
 private:
   Player& player_;
   Uriel& uriel_;
+  Stage& stage_;
 };
