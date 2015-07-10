@@ -1,15 +1,15 @@
 //******************************************************************************
 //
-// TitleChar  [TitleChar.h]
+// WindowBack  [WindowBack.h]
 // Author  :  SHOHEI MATSUMOTO
-// 更新日  :  2015/06/30
+// 更新日  :  2015/07/07
 //
 //******************************************************************************
 //******************************************************************************
 // インクルードガード
 //******************************************************************************
-#ifndef _TITLECHAR_H_
-#define _TITLECHAR_H_
+#ifndef _WINDOWBACK_H_
+#define _WINDOWBACK_H_
 
 //******************************************************************************
 // インクルードファイル
@@ -33,16 +33,15 @@
 //******************************************************************************
 // クラス定義
 //******************************************************************************
-class TitleChar : public Object2D{
+class WindowBack : public Object2D{
   // enum ======================================
-  public:
+public:
 
   // funciton ==================================
 public:
   // ctor
-    TitleChar(const D3DXVECTOR3 &pos, const float &rot, const D3DXVECTOR2 &size, 
-                  const float &speed, const float &movemax, const char* texName);
-    void Update(const float &movemax);
+  WindowBack(const D3DXVECTOR3 &pos, const float &rot, const D3DXVECTOR2 &size);
+  void Update();
   // draw
   void _PreProcessOfDraw(void);
   void _PostProcessOfDraw(void);
@@ -59,10 +58,7 @@ public:
 protected:
 
 private:
-    D3DXCOLOR tex_color_;
-    float changeAlpha_;
-    D3DXVECTOR3 change_pos_;
-    D3DXVECTOR3 move_counter_;
+  D3DXCOLOR tex_color_;
 };
 
 //******************************************************************************

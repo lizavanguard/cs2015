@@ -26,7 +26,7 @@ class Tori;
 class TensionGauge;
 class Timer;
 class Camera;
-
+class GamePause;
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // class definition
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -58,7 +58,8 @@ private:
   Tori* p_tori_;
   Uriel* p_uriel_;
   Timer* p_timer_;
-  Camera* p_camera;
+  Camera* p_camera_;
+  GamePause* p_game_pause_;
 };
 
 

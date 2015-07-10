@@ -15,6 +15,8 @@
     <ClCompile Include="src\Application\Camera\camera.cpp" />
     <ClCompile Include="src\Application\Controller\InputController.cpp" />
     <ClCompile Include="src\Application\GameCursor\GameCursor.cpp" />
+    <ClCompile Include="src\Application\GamePause\GamePause.cpp" />
+    <ClCompile Include="src\Application\GamePause\GamePauseWindow.cpp" />
     <ClCompile Include="src\Application\Game\SceneGame.cpp" />
     <ClCompile Include="src\Application\Game\SceneGameFactory.cpp" />
     <ClCompile Include="src\Application\Object\AnimationObject\AnimationObject.cpp" />
@@ -24,6 +26,7 @@
     <ClCompile Include="src\Application\Object\Object.cpp" />
     <ClCompile Include="src\Application\Object\Object2D\Bar.cpp" />
     <ClCompile Include="src\Application\Object\Object2D\Board.cpp" />
+    <ClCompile Include="src\Application\Object\Object2D\Char.cpp" />
     <ClCompile Include="src\Application\Object\Object2D\Cursor.cpp" />
     <ClCompile Include="src\Application\Object\Object2D\Frame.cpp" />
     <ClCompile Include="src\Application\Object\Object2D\NumberObject.cpp" />
@@ -32,6 +35,7 @@
     <ClCompile Include="src\Application\Object\Object2D\Timer.cpp" />
     <ClCompile Include="src\Application\Object\Object2D\TitleChar.cpp" />
     <ClCompile Include="src\Application\Object\Object2D\StartSymbol.cpp" />
+    <ClCompile Include="src\Application\Object\Object2D\WindowBack.cpp" />
     <ClCompile Include="src\Application\Object\ObjectBase.cpp" />
     <ClCompile Include="src\Application\Object\player.cpp" />
     <ClCompile Include="src\Application\Object\Ready.cpp" />
@@ -79,6 +83,8 @@
     <ClInclude Include="src\Application\common.h" />
     <ClInclude Include="src\Application\Controller\InputController.h" />
     <ClInclude Include="src\Application\GameCursor\GameCursor.h" />
+    <ClInclude Include="src\Application\GamePause\GamePause.h" />
+    <ClInclude Include="src\Application\GamePause\GamePauseWindow.h" />
     <ClInclude Include="src\Application\Game\SceneGame.h" />
     <ClInclude Include="src\Application\Game\SceneGameFactory.h" />
     <ClInclude Include="src\Application\Object\AnimationObject\AnimationObject.h" />
@@ -88,6 +94,7 @@
     <ClInclude Include="src\Application\Object\Object.h" />
     <ClInclude Include="src\Application\Object\Object2D\Bar.h" />
     <ClInclude Include="src\Application\Object\Object2D\Board.h" />
+    <ClInclude Include="src\Application\Object\Object2D\Char.h" />
     <ClInclude Include="src\Application\Object\Object2D\Cursor.h" />
     <ClInclude Include="src\Application\Object\Object2D\Frame.h" />
     <ClInclude Include="src\Application\Object\Object2D\NumberObject.h" />
@@ -96,6 +103,7 @@
     <ClInclude Include="src\Application\Object\Object2D\Timer.h" />
     <ClInclude Include="src\Application\Object\Object2D\TitleChar.h" />
     <ClInclude Include="src\Application\Object\Object2D\StartSymbol.h" />
+    <ClInclude Include="src\Application\Object\Object2D\WindowBack.h" />
     <ClInclude Include="src\Application\Object\ObjectBase.h" />
     <ClInclude Include="src\Application\Object\player.h" />
     <ClInclude Include="src\Application\Object\Ready.h" />
