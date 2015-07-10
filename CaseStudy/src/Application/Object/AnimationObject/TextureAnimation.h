@@ -42,6 +42,8 @@ typedef enum
   ANIMATION_TORI_DROP,                  // ’¹—Ž‚¿ž‚Þ
   ANIMATION_TORI_HAPPY,                 // ’¹Šì‚Ô
   ANIMATION_TORI_FLY_TOP,               // ’¹‚ªã‚Ö”ò‚Ô
+  ANIMATION_BUTTERFLY_FLY,              // ’±‚ª”ò‚Ô
+  ANIMATION_FLOWER_SWAY,                // ‰Ô‚ª—h‚ê‚é
   ANIMATION_MAX                         // 
 }ANIMATION_EVENT;
 

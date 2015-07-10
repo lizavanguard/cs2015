@@ -129,7 +129,7 @@ void Camera::Set(void){
   p_device->SetTransform(D3DTS_VIEW, &mtxView_);
   // ビューマトリックスの初期化
   D3DXMatrixIdentity(&mtxProjection_);
-  D3DXMatrixOrthoLH(&mtxProjection_, kWindowWidth / zoomRate_, kWindowHeight / zoomRate_, 0.0f, 10.0f);
+  D3DXMatrixOrthoLH(&mtxProjection_, kWindowWidth / zoomRate_, kWindowHeight / zoomRate_, 1.0f, 10.0f);
   // プロジェクションマトリックスの設定
   p_device->SetTransform(D3DTS_PROJECTION, &mtxProjection_);
 }

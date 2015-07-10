@@ -11,6 +11,7 @@
 
 #include "Framework/DebugProc/DebugProc.h"
 #include "Framework/DrawDebugPrimitive/DrawPrimitive.h"
+#include "Framework/Fade/Fade.h"
 #include "Framework/Input/InputManager.h"
 #include "Framework/Input/InputManagerHolder.h"
 #include "Framework/Scene/SceneManager.h"
@@ -20,6 +21,7 @@
 #include "Framework/Utility/Utility.h"
 
 #include "Application/Game/SceneGame.h"  // HACK: –³—‚â‚è
+#include "Application/Title/SceneTitle.h"
 
 
 
@@ -56,8 +58,11 @@ GameManager::GameManager( HINSTANCE hInstance, HWND hWnd, LPDIRECT3DDEVICE9 pDev
 
   InitSound(hWnd);
 
+  InitFade();
+
   InitDrawPrimitive(pDevice);
- 
+
+  // ˆê”Ô‰º
   Scene* pFirstScene = new SceneGame();
   pSceneManager_ = new SceneManager(pFirstScene);
 }
@@ -70,6 +75,8 @@ GameManager::~GameManager() {
   SafeDelete(pSceneManager_);
 
   UninitDrawPrimitive();
+
+  UninitFade();
 
   UninitSound();
 
@@ -103,6 +110,9 @@ void GameManager::Draw( void ) {
 
   // draw debug
   DrawAll();
+
+  // fade
+  DrawFade();
 
   // debug
 	pDebugProc_->Draw();

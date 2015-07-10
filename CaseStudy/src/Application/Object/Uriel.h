@@ -61,6 +61,7 @@ public:
   // set
   void SetAnimaton(ANIMATION_EVENT animation_event);
   void SetDestPos(const D3DXVECTOR3& pos);
+  void SetDestPos(const D3DXVECTOR3& pos, ANIM_OBJ_TYPE anim_obj_type, DIRECTION direction, AnimationObject* anim_obj);
 
   // ボーロチャージ(ボーロチャージ出来ればtrueが返る)
   bool BoroChage(void);
@@ -88,6 +89,10 @@ private:
   static const int kUrielInducible = 400;                                    // ウリエルの誘導可能距離
   static const int kUrielSleepTime = 180;                                    // ウリエルの眠り時間
   static const int kUrielBorochageInterval = 60;                             // ボーロチャージできるまでのインターバル時間
+  static const int kUrielAttractibleFlower = 60;                             // ウリエルが花に引き付けられている時間
+  static const int kUrielLookFlowerLength = 25;                              // ウリエルが花で止まる距離
+  static const int kUrielLockButterflyLength = 10;                           // ウリエルが蝶に気づく範囲
+  static const int kUrielChaseTheButterflyOffset = 15;                       // 蝶を追いかけるX座標のオフセット
   void UpdateNeutral(void);
   void UpdateCrawl(void);
   void UpdateJump(void);
@@ -114,6 +119,15 @@ private:
   bool charge_flag_;
   int runaway_timer_;
   int sleep_timer_;
+  bool induction_flag_;
+  bool sang_induction_flag_;
+  D3DXVECTOR3 sang_position_;
+  ANIM_OBJ_TYPE sang_type_;
+  DIRECTION sang_direction_;
+  AnimationObject* sang_object_;
+  AnimationObject* prev_sang_object_;
+  int attractible_flower_timer_;
+  bool butterfly_direction_change_flag_;
 };
 
 
