@@ -8,6 +8,13 @@
 #ifndef __H_TEXTUREMANAGER_H__
 #define __H_TEXTUREMANAGER_H__
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// include
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#include <string>
+#include <map>
+#include <deque>
+
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // class definition
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 class TextureManager {
@@ -27,11 +34,16 @@ public:
   void SetTexture(int id);
 
 private:
+  // const
   static const int kTextureMax = 100;
 
-  int _SearchNotUsedID(void);
+  // alias
+  typedef std::map<std::string, int> TextureSearchMap;
+  typedef std::deque<LPDIRECT3DTEXTURE9> TextureContainer;
 
-  LPDIRECT3DTEXTURE9 textureList_[kTextureMax];
+  // property
+  TextureSearchMap textureSearchMap_;
+  TextureContainer textureList_;
   LPDIRECT3DDEVICE9 pDevice_;
 };
 

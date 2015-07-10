@@ -14,6 +14,7 @@
     <ClCompile Include="src\Application\Collison\Collision.cpp" />
     <ClCompile Include="src\Application\Camera\camera.cpp" />
     <ClCompile Include="src\Application\Controller\InputController.cpp" />
+    <ClCompile Include="src\Application\Effect\Effect.cpp" />
     <ClCompile Include="src\Application\Game\SceneGame.cpp" />
     <ClCompile Include="src\Application\Game\SceneGameFactory.cpp" />
     <ClCompile Include="src\Application\Object\AnimationObject\AnimationObject.cpp" />
@@ -74,6 +75,7 @@
     <ClInclude Include="src\Application\Camera\camera.h" />
     <ClInclude Include="src\Application\common.h" />
     <ClInclude Include="src\Application\Controller\InputController.h" />
+    <ClInclude Include="src\Application\Effect\Effect.h" />
     <ClInclude Include="src\Application\Game\SceneGame.h" />
     <ClInclude Include="src\Application\Game\SceneGameFactory.h" />
     <ClInclude Include="src\Application\Object\AnimationObject\AnimationObject.h" />

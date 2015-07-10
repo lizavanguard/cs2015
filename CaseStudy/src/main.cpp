@@ -21,7 +21,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int nCmdShow) {
   GameWindow gameWindow(
     hInstance,
     nCmdShow,
-    "WindowTest",
+    "‚È‚Ñ‚Á‚ÆƒEƒŠƒGƒ‹",
     static_cast<unsigned int>(kWindowWidth),
     static_cast<unsigned int>(kWindowHeight),
     new GameDirectX());

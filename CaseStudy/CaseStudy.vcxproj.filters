@@ -159,6 +159,9 @@
     <ClCompile Include="src\Application\Tension\TensionGauge.cpp">
       <Filter>Application\Tension</Filter>
     </ClCompile>
+    <ClCompile Include="src\Application\Effect\Effect.cpp">
+      <Filter>Application\Effect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Framework">
@@ -244,6 +247,9 @@
     </Filter>
     <Filter Include="Application\Result">
       <UniqueIdentifier>{deaf217b-6ced-479c-9067-c292c7d7e706}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Effect">
+      <UniqueIdentifier>{afb87c8c-f893-4b65-8a66-e855a9fa1413}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -469,6 +475,9 @@
     </ClInclude>
     <ClInclude Include="src\Application\Tension\TensionGauge.h">
       <Filter>Application\Tension</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\Effect\Effect.h">
+      <Filter>Application\Effect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
