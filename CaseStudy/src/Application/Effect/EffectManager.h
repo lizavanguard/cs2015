@@ -1,6 +1,6 @@
 //==============================================================================
 //
-// Effect
+// EffectManager
 // Author: Shimizu Shoji
 //
 //==============================================================================
@@ -8,29 +8,34 @@
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 // include
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
-#include "Application/Object/Object2D/Object2D.h"
+#include <deque>
+
+#include "Effect.h"
 
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 // class definition
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
-class Effect : public Object2D {
+class EffectManager {
 public:
   // ctor
-  Effect();
+  EffectManager();
 
   // dtor
-  ~Effect();
+  ~EffectManager();
 
   // Update
-  void Update(void) {
-    if (!is_alive_) return;
-    pos_.x += 5.0f;
-  }
+  void Update(void);
 
-  // set
-  void SetTextureID(int texture_id) { texture_id_ = texture_id; }
-  void Alive(void) { is_alive_ = true; }
-  void Dead(void) { is_alive_ = false; }
+  // Draw
+  void Draw(void);
+
+  // Create
+  void Create(void);
 
 private:
+  void _Foreach(void(*function)(Effect&));
+
+  typedef std::deque<Effect> EffectList;
+
+  EffectList effect_list_;
 };

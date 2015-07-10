@@ -162,6 +162,9 @@
     <ClCompile Include="src\Application\Effect\Effect.cpp">
       <Filter>Application\Effect</Filter>
     </ClCompile>
+    <ClCompile Include="src\Application\Effect\EffectManager.cpp">
+      <Filter>Application\Effect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Framework">
@@ -477,6 +480,9 @@
       <Filter>Application\Tension</Filter>
     </ClInclude>
     <ClInclude Include="src\Application\Effect\Effect.h">
+      <Filter>Application\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\Effect\EffectManager.h">
       <Filter>Application\Effect</Filter>
     </ClInclude>
   </ItemGroup>
