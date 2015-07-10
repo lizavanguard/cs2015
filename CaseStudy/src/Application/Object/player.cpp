@@ -28,6 +28,7 @@ namespace {
 
 const float kPlayerMoveSpeed = 10.0f;
 const int kBoroRecastTime = 30;
+const int kGuideTriggerTime = 15;
 
 const D3DXVECTOR3 kBoroPosOffset = {
   -20.0f, 93.0f, 0.0f
@@ -109,11 +110,8 @@ void Player::Update(Uriel *uriel_){
   // ガラガラモード切替
   // 誘導
   static bool is_press = false;
-  if (pJoypad.IsPress(InputDevice::Pads::PAD_A) || pKeyboard.IsPress(DIK_RETURN)) {
+  if (pJoypad.IsTrigger(InputDevice::Pads::PAD_A) || pKeyboard.IsTrigger(DIK_RETURN)) {
     ChangeAnimation(MODE_GUIDE);
-    if (!is_press) {
-      PlaySound(SOUND_LABEL_SE_CALL0);
-    }
     is_press = true;
   }
   else if (pJoypad.IsRelease(InputDevice::Pads::PAD_A) || pKeyboard.IsRelease(DIK_RETURN)) {
@@ -143,9 +141,10 @@ void Player::Update(Uriel *uriel_){
     case MODE_BORO: // ボーロ
       break;
     case MODE_GUIDE: // 誘導
-      // ウリエルちゃん移動
-      uriel_->SetDestPos(pos_);
       // 誘導モードが一定時間以上
+      if ((count_ % p_texture_animation_->GetAnimationTime()) == kGuideTriggerTime) {
+        uriel_->SetDestPos(pos_);
+      }
       break;
     case MODE_GIMMICK: // ギミック
       // if ギミックのアニメーションが終了したら 通常モードに戻す
