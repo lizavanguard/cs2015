@@ -17,6 +17,8 @@
 #include "Framework/Input/InputKeyboard.h"
 #include "Framework/Input/InputManagerHolder.h"
 #include "Framework/Input/InputXInput.h"
+
+#include "Framework/DrawDebugPrimitive/DrawPrimitive.h"
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // define
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -277,8 +279,8 @@ D3DXVECTOR3 Stage::CheckMapTip2(D3DXVECTOR3* pos, D3DXVECTOR3 size, HIT_CHECK* c
 void Stage::HitManage(int id, HIT_CHECK* check)
 {
   check->center = mapdata_[id + map_width_].id_;
-  //check->center = mapdata_[id + map_width_].id_ == MAP_TYPE_GIMMICK_ON ? MAP_TYPE_NORMAL : mapdata_[id + map_width_].id_;
-  //check->center = mapdata_[id + map_width_].id_ == MAP_TYPE_GIMMICK_OFF ? MAP_TYPE_NONE : mapdata_[id + map_width_].id_;
+  check->center = check->center == MAP_TYPE_GIMMICK_OFF ? MAP_TYPE_NONE : check->center;
+  check->center = check->center == MAP_TYPE_GIMMICK_ON ? MAP_TYPE_NORMAL : check->center;
   int data_id_ = map_width_ * map_height_;
   int map_uriel_h = id - map_width_ * 2;
   int map_uriel_w = id - map_width_;
@@ -290,50 +292,58 @@ void Stage::HitManage(int id, HIT_CHECK* check)
   // bottom
   if (bottom)
   {
-    check->bottom = mapdata_[id].id_ == MAP_TYPE_GIMMICK_ON ? MAP_TYPE_NORMAL :mapdata_[id].id_;
-    //check->bottom = mapdata_[id].id_ == MAP_TYPE_GIMMICK_OFF ? MAP_TYPE_NONE : mapdata_[id].id_;
+    check->bottom = mapdata_[id].id_;
+    check->bottom = check->bottom == MAP_TYPE_GIMMICK_OFF ? MAP_TYPE_NONE : check->bottom;
+    check->bottom = check->bottom == MAP_TYPE_GIMMICK_ON ? MAP_TYPE_NORMAL : check->bottom;
   }
   // up
   if (up)
   {
-    check->up = mapdata_[map_uriel_h].id_ == MAP_TYPE_GIMMICK_ON ? MAP_TYPE_NORMAL :mapdata_[map_uriel_h].id_;
-    check->up = mapdata_[map_uriel_h].id_ == MAP_TYPE_GIMMICK_OFF ? MAP_TYPE_NONE :mapdata_[map_uriel_h].id_;
+    check->up = mapdata_[map_uriel_h].id_;
+    check->up = check->up == MAP_TYPE_GIMMICK_OFF ? MAP_TYPE_NONE : check->up;
+    check->up = check->up == MAP_TYPE_GIMMICK_ON ? MAP_TYPE_NORMAL : check->up;
   }
   // right
   if (right)
   {
-    check->right = mapdata_[map_uriel_w + 1].id_== MAP_TYPE_GIMMICK_ON ? MAP_TYPE_NORMAL :mapdata_[map_uriel_w + 1].id_;
-    check->right = mapdata_[map_uriel_w + 1].id_ == MAP_TYPE_GIMMICK_OFF ? MAP_TYPE_NONE :mapdata_[map_uriel_w + 1].id_;
+    check->right = mapdata_[map_uriel_w + 1].id_;
+    check->right = check->right == MAP_TYPE_GIMMICK_OFF ? MAP_TYPE_NONE : check->right;
+    check->right = check->right == MAP_TYPE_GIMMICK_ON ? MAP_TYPE_NORMAL : check->right;
   }
   // left
   if (left)
   {
-    check->left = mapdata_[map_uriel_w - 1].id_== MAP_TYPE_GIMMICK_ON ? MAP_TYPE_NORMAL :mapdata_[map_uriel_w - 1].id_;
-    check->left = mapdata_[map_uriel_w - 1].id_ == MAP_TYPE_GIMMICK_OFF ? MAP_TYPE_NONE :mapdata_[map_uriel_w - 1].id_;
+    check->left = mapdata_[map_uriel_w - 1].id_;
+    check->left = check->left == MAP_TYPE_GIMMICK_OFF ? MAP_TYPE_NONE : check->left;
+    check->left = check->left == MAP_TYPE_GIMMICK_ON ? MAP_TYPE_NORMAL : check->left;
   }
   // bottom_right
   if (bottom && right)
   {
-    check->bottom_right = mapdata_[id + 1].id_== MAP_TYPE_GIMMICK_ON ? MAP_TYPE_NORMAL :mapdata_[id + 1].id_;
-    check->bottom_right = mapdata_[id + 1].id_ == MAP_TYPE_GIMMICK_OFF ? MAP_TYPE_NONE :mapdata_[id + 1].id_;
+    check->bottom_right = mapdata_[id + 1].id_;
+    check->bottom_right = check->bottom_right == MAP_TYPE_GIMMICK_OFF ? MAP_TYPE_NONE : check->bottom_right;
+    check->bottom_right = check->bottom_right == MAP_TYPE_GIMMICK_ON ? MAP_TYPE_NORMAL : check->bottom_right;
   }
   //
   if (bottom && left)
   {
-    check->bottom_left = mapdata_[id - 1].id_== MAP_TYPE_GIMMICK_ON ? MAP_TYPE_NORMAL :mapdata_[id - 1].id_;
-    check->bottom_left = mapdata_[id - 1].id_ == MAP_TYPE_GIMMICK_OFF ? MAP_TYPE_NONE :mapdata_[id - 1].id_;
+    check->bottom_left = mapdata_[id - 1].id_;
+    check->bottom_left = check->bottom_left == MAP_TYPE_GIMMICK_OFF ? MAP_TYPE_NONE : check->bottom_left;
+    check->bottom_left = check->bottom_left == MAP_TYPE_GIMMICK_ON ? MAP_TYPE_NORMAL : check->bottom_left;
   }
   //
   if (up && right)
   {
-    check->up_right = mapdata_[map_uriel_h + 1].id_== MAP_TYPE_GIMMICK_ON ? MAP_TYPE_NORMAL :mapdata_[map_uriel_h + 1].id_;
-    check->up_right = mapdata_[map_uriel_h + 1].id_ == MAP_TYPE_GIMMICK_OFF ? MAP_TYPE_NONE :mapdata_[map_uriel_h + 1].id_;
+    check->up_right = mapdata_[map_uriel_h + 1].id_;
+    check->up_right = check->up_right == MAP_TYPE_GIMMICK_OFF ? MAP_TYPE_NONE : check->up_right;
+    check->up_right = check->up_right == MAP_TYPE_GIMMICK_ON ? MAP_TYPE_NORMAL : check->up_right;
   }
   //
   if (up && left)
   {
-    check->up_left = mapdata_[map_uriel_h - 1].id_== MAP_TYPE_GIMMICK_ON ? MAP_TYPE_NORMAL :mapdata_[map_uriel_h - 1].id_;
-    check->up_left = mapdata_[map_uriel_h - 1].id_ == MAP_TYPE_GIMMICK_OFF ? MAP_TYPE_NONE :mapdata_[map_uriel_h - 1].id_;
+    check->up_left = mapdata_[map_uriel_h - 1].id_;
+    check->up_left = check->up_left == MAP_TYPE_GIMMICK_OFF ? MAP_TYPE_NONE : check->up_left;
+    check->up_left = check->up_left == MAP_TYPE_GIMMICK_ON ? MAP_TYPE_NORMAL :check->up_left;
   }
 }
 //
