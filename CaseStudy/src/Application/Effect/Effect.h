@@ -1,35 +1,36 @@
 //==============================================================================
 //
-// Collision
+// Effect
 // Author: Shimizu Shoji
 //
 //==============================================================================
 #pragma once
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
-// class declaration
+// include
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
-class Player;
-class Uriel;
-class Stage;
+#include "Application/Object/Object2D/Object2D.h"
 
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 // class definition
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
-class Collision {
+class Effect : public Object2D {
 public:
   // ctor
-  Collision(Player& player, Uriel& uriel, Stage& stage);
+  Effect();
 
   // dtor
-  ~Collision();
+  ~Effect();
 
-  // Uriel x Player (Boro)
-  void CollideUrielToPlayersBoro(void);
+  // Update
+  void Update(void) {
+    if (!is_alive_) return;
+    pos_.x += 5.0f;
+  }
 
-  // Stage x Player (Gimmick)
-  void CollideStageToPlayersGimmick(void);
+  // set
+  void SetTextureID(int texture_id) { texture_id_ = texture_id; }
+  void Alive(void) { is_alive_ = true; }
+  void Dead(void) { is_alive_ = false; }
+
 private:
-  Player& player_;
-  Uriel& uriel_;
-  Stage& stage_;
 };

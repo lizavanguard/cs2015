@@ -1,36 +1,33 @@
 //==============================================================================
 //
-// SceneGame [SceneGame.cpp]
-// Author : Shimizu Shoji
+// SceneTutorial [SceneTutorial.cpp]
+// Author : Yuji Momoi
 //
 //==============================================================================
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // include
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-#include "SceneGame.h"
+#include "SceneTutorial.h"
+#include "Application/Tutorial/TutorialEvent.h"
 #include "Framework/DrawDebugPrimitive/DrawPrimitive.h"
 #include "Framework/GameManager/GameManager.h"
 #include "Framework/Input/InputManagerHolder.h"
 #include "Framework/Input/InputKeyboard.h"
 #include "Framework/Sound/sound.h"
 
+#include "Framework/Scene/SceneManager.h"
+#include "Application/Title/SceneTitleFactory.h"
+#include "Application/Game/SceneGameFactory.h"
 #include "Application/Collison/Collision.h"
 #include "Application/Object/BackGround/BackGroundManager.h"
 #include "Application/Object/Object.h"
 #include "Application/Object/player.h"
-#include "Application/Object/Ready.h"
 #include "Application/Object/Tori.h"
 #include "Application/Object/Uriel.h"
 #include "Application/Tension/TensionGauge.h"
 #include "Application\Object\Object2D\Timer.h"
 #include "Application\Camera\camera.h"
 #include "Application/Stage/Stage.h"
-#include "Framework/Scene/SceneManager.h"
-#include "Application/Title/SceneTitleFactory.h"
-#include "Application/Result/SceneResultFactory.h"
-#include "Application/Object/Sang/SangManager.h"
-#include "Application/Object/Sang/Butterfly.h"
-#include "Application/Object/Sang/Flower.h"
 #include "Application/Tutorial/SceneTutorialFactory.h"
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -39,22 +36,19 @@
 //------------------------------------------------
 // ctor
 //------------------------------------------------
-SceneGame::SceneGame()
+SceneTutorial::SceneTutorial()
     : is_end_(false)
     , p_background_manager_(nullptr)
     , p_collision_(nullptr)
     , p_player_(nullptr)
-    , p_ready_(nullptr)
     , p_stage_(nullptr)
     , p_tension_gauge_(nullptr)
     , p_tori_(nullptr)
     , p_uriel_(nullptr)
     , p_timer_(nullptr)
     , p_camera(nullptr)
-    , p_sang_manager_(nullptr)
+    , p_tutorial_event_(nullptr)
 {
-  p_sang_manager_ = new SangManager();
-
   p_stage_ = new Stage();
 
   p_player_ = new Player(ANIMATION_PLAYER_RATTEL_NONE, p_stage_);
@@ -62,11 +56,9 @@ SceneGame::SceneGame()
   p_tension_gauge_ = new TensionGauge();
 
   p_uriel_ = new Uriel(ANIMATION_URIEL_CRAWL, p_stage_, p_tension_gauge_);
-  p_sang_manager_->SetUrielPointer(p_uriel_);
+  p_uriel_->SetDirection(AnimationObject::DIRECTION_LEFT);
 
   p_tori_ = new Tori(ANIMATION_TORI_DROP, p_uriel_, p_stage_);
-
-  p_ready_ = new Ready();
 
   p_background_manager_ = new BackGroundManager();
 
@@ -76,27 +68,16 @@ SceneGame::SceneGame()
 
   p_timer_ = new Timer(D3DXVECTOR3(600.0f, 50.0f, 0.0f), 0.0f, D3DXVECTOR2(50.0f, 50.0f), TIMER);
 
-  Butterfly* butterfly = nullptr;
-  butterfly = new Butterfly(ANIMATION_BUTTERFLY_FLY, p_stage_);
-  butterfly->SetPos(D3DXVECTOR3(-600, -100, 0));
-
-  Flower* flower = nullptr;
-  flower = new Flower(ANIMATION_FLOWER_SWAY, p_stage_);
-  flower->SetPos(D3DXVECTOR3(-100, -100, 0));
-
-  PlaySound(SOUND_LABEL_BGM_DEMO0);
+  p_tutorial_event_ = new TutorialEvent(p_uriel_, p_player_);
 }
 
 
 //------------------------------------------------
 // dtor
 //------------------------------------------------
-SceneGame::~SceneGame() {
-  StopSound(SOUND_LABEL_BGM_DEMO0);
-
+SceneTutorial::~SceneTutorial() {
   SafeDelete(p_collision_);
   SafeDelete(p_player_);
-  SafeDelete(p_ready_);
   SafeDelete(p_uriel_);
   SafeDelete(p_tori_);
   SafeDelete(p_tension_gauge_);
@@ -104,19 +85,16 @@ SceneGame::~SceneGame() {
   SafeDelete(p_background_manager_);
   SafeDelete(p_timer_);
   SafeDelete(p_camera);
-  SafeDelete(p_sang_manager_);
+  SafeDelete(p_tutorial_event_);
 }
 
 
 //------------------------------------------------
 // Update
 //------------------------------------------------
-void SceneGame::Update(SceneManager* p_scene_manager, const float elapsed_time) {
-  // READY GO
-  if (!p_ready_->IsEnd()) {
-    p_ready_->Update();
-    return;
-  }
+void SceneTutorial::Update(SceneManager* p_scene_manager, const float elapsed_time) {
+  // TutorialEvent
+  p_tutorial_event_->Update();
 
   // GAME
   // 鳥更新
@@ -128,15 +106,15 @@ void SceneGame::Update(SceneManager* p_scene_manager, const float elapsed_time) 
   // カメラ更新
   p_camera->Update();
 
-  // タイマー更新
-  p_timer_->Update();
-
-  p_background_manager_->Update();
-
-  p_sang_manager_->Update();
+  if (!p_tutorial_event_->ViewEvent()){
+    // タイマー更新
+    p_timer_->Update();
+  }
 
   // プレイヤー更新
   p_player_->Update(p_uriel_);
+
+  p_background_manager_->Update();
 
   // ウリエル更新
   p_uriel_->Update();
@@ -149,23 +127,10 @@ void SceneGame::Update(SceneManager* p_scene_manager, const float elapsed_time) 
   // Stage x Player's boro
   p_collision_->CollideStageToPlayersGimmick();
 
-  if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_1)) {
-    p_tension_gauge_->IncreaseTension();
-  }
-  if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_2)) {
-    p_tension_gauge_->CoolDown();
-  }
   // Next TitleScene
-  if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_N)) {
-      //SceneTitleFactory* pTitleSceneFactory = new SceneTitleFactory();
-        SceneResultFactory* pResultSceneFactory = new SceneResultFactory();
-        p_scene_manager->PushNextSceneFactory(pResultSceneFactory);
-  }
-
-  // TutorialScene
   if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_T)) {
-    SceneTutorialFactory* pTutorialSceneFactory = new SceneTutorialFactory();
-    p_scene_manager->PushNextSceneFactory(pTutorialSceneFactory);
+    SceneGameFactory* pGameSceneFactory = new SceneGameFactory();
+    p_scene_manager->PushNextSceneFactory(pGameSceneFactory);
   }
 }
 
@@ -173,15 +138,13 @@ void SceneGame::Update(SceneManager* p_scene_manager, const float elapsed_time) 
 //------------------------------------------------
 // Draw
 //------------------------------------------------
-void SceneGame::Draw(void) {
+void SceneTutorial::Draw(void) {
   p_camera->Set();
   SetMatrixViewProjectionViewport(p_camera->GetMatrixViewProjectionViewPort());
 
   p_background_manager_->Draw();
 
   p_stage_->Draw();
-
-  p_sang_manager_->Draw();
 
   p_tori_->Draw();
 
@@ -193,8 +156,8 @@ void SceneGame::Draw(void) {
 
   p_timer_->Draw();
 
-  if (!p_ready_->IsEnd()) {
-    p_ready_->Draw();
+  if (p_tutorial_event_->ViewEvent()){
+    p_tutorial_event_->Draw();
   }
 }
 
@@ -202,6 +165,6 @@ void SceneGame::Draw(void) {
 //------------------------------------------------
 // get
 //------------------------------------------------
-bool SceneGame::IsPause(void) const {
+bool SceneTutorial::IsPause(void) const {
   return false;
 }

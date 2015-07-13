@@ -14,6 +14,8 @@
     <ClCompile Include="src\Application\Collison\Collision.cpp" />
     <ClCompile Include="src\Application\Camera\camera.cpp" />
     <ClCompile Include="src\Application\Controller\InputController.cpp" />
+    <ClCompile Include="src\Application\Effect\Effect.cpp" />
+    <ClCompile Include="src\Application\Effect\EffectManager.cpp" />
     <ClCompile Include="src\Application\Game\SceneGame.cpp" />
     <ClCompile Include="src\Application\Game\SceneGameFactory.cpp" />
     <ClCompile Include="src\Application\Object\AnimationObject\AnimationObject.cpp" />
@@ -33,6 +35,9 @@
     <ClCompile Include="src\Application\Object\ObjectBase.cpp" />
     <ClCompile Include="src\Application\Object\player.cpp" />
     <ClCompile Include="src\Application\Object\Ready.cpp" />
+    <ClCompile Include="src\Application\Object\Sang\Butterfly.cpp" />
+    <ClCompile Include="src\Application\Object\Sang\Flower.cpp" />
+    <ClCompile Include="src\Application\Object\Sang\SangManager.cpp" />
     <ClCompile Include="src\Application\Object\Tori.cpp" />
     <ClCompile Include="src\Application\Object\Uriel.cpp" />
     <ClCompile Include="src\Application\Result\SceneResult.cpp" />
@@ -43,6 +48,9 @@
     <ClCompile Include="src\Application\TitleBase\TitleCharBase.cpp" />
     <ClCompile Include="src\Application\Title\SceneTitle.cpp" />
     <ClCompile Include="src\Application\Title\SceneTitleFactory.cpp" />
+    <ClCompile Include="src\Application\Tutorial\SceneTutorial.cpp" />
+    <ClCompile Include="src\Application\Tutorial\SceneTutorialFactory.cpp" />
+    <ClCompile Include="src\Application\Tutorial\TutorialEvent.cpp" />
     <ClCompile Include="src\Application\Utility\ValueActiveUpdater.cpp" />
     <ClCompile Include="src\Application\Utility\ValuePassiveUpdater.cpp" />
     <ClCompile Include="src\Framework\Collision\CollisionHelper.cpp" />
@@ -74,6 +82,8 @@
     <ClInclude Include="src\Application\Camera\camera.h" />
     <ClInclude Include="src\Application\common.h" />
     <ClInclude Include="src\Application\Controller\InputController.h" />
+    <ClInclude Include="src\Application\Effect\Effect.h" />
+    <ClInclude Include="src\Application\Effect\EffectManager.h" />
     <ClInclude Include="src\Application\Game\SceneGame.h" />
     <ClInclude Include="src\Application\Game\SceneGameFactory.h" />
     <ClInclude Include="src\Application\Object\AnimationObject\AnimationObject.h" />
@@ -93,6 +103,9 @@
     <ClInclude Include="src\Application\Object\ObjectBase.h" />
     <ClInclude Include="src\Application\Object\player.h" />
     <ClInclude Include="src\Application\Object\Ready.h" />
+    <ClInclude Include="src\Application\Object\Sang\Butterfly.h" />
+    <ClInclude Include="src\Application\Object\Sang\Flower.h" />
+    <ClInclude Include="src\Application\Object\Sang\SangManager.h" />
     <ClInclude Include="src\Application\Object\Tori.h" />
     <ClInclude Include="src\Application\Object\Uriel.h" />
     <ClInclude Include="src\Application\Result\SceneResult.h" />
@@ -103,6 +116,9 @@
     <ClInclude Include="src\Application\TitleBase\TitleCharBase.h" />
     <ClInclude Include="src\Application\Title\SceneTitle.h" />
     <ClInclude Include="src\Application\Title\SceneTitleFactory.h" />
+    <ClInclude Include="src\Application\Tutorial\SceneTutorial.h" />
+    <ClInclude Include="src\Application\Tutorial\SceneTutorialFactory.h" />
+    <ClInclude Include="src\Application\Tutorial\TutorialEvent.h" />
     <ClInclude Include="src\Application\Utility\ValueActiveUpdater.h" />
     <ClInclude Include="src\Application\Utility\ValuePassiveUpdater.h" />
     <ClInclude Include="src\Framework\Collision\CollisionHelper.h" />

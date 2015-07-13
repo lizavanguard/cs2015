@@ -13,6 +13,7 @@
 #include "Framework/Texture/TextureManagerHolder.h"
 #include "Application/Stage/Stage.h"
 #include "Application/Tension/TensionGauge.h"
+#include "Sang/Butterfly.h"
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // define
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -45,6 +46,16 @@ Uriel::Uriel(ANIMATION_EVENT animation_event, Stage* stage, TensionGauge* p_tens
   runaway_timer_ = 0;
   sleep_timer_ = 0;
   old_position_ = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+  induction_flag_ = false;
+  sang_position_ = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+  sang_type_ = ANIM_OBJ_TYPE_NONE;
+  sang_direction_ = DIRECTION_RIGHT;
+  attractible_flower_timer_ = 0;
+  sang_object_ = nullptr;
+  prev_sang_object_ = nullptr;
+  sang_induction_flag_ = false;
+  butterfly_direction_change_flag_ = false;
+  move_stop_flag_ = false;
 
   // ステージからスタート場所を貰う
   pos_ = stage->GetStartMaptip();
@@ -125,7 +136,8 @@ void Uriel::Update(void){
   old_position_ = pos_;
 
   // 寝ていなければ移動
-  if (status_ != URIEL_STATUS_SLEEP){
+  if (status_ != URIEL_STATUS_SLEEP &&
+      !move_stop_flag_){
     pos_ += move_;
   }
 
@@ -134,12 +146,16 @@ void Uriel::Update(void){
   D3DXVECTOR3 map(0.f, 0.f, 0.f);
   if (move_direction_ == DIRECTION_LEFT){
     map = p_stage_->CheckMapTip2(&D3DXVECTOR3(pos_.x + size_.x - size_.x / 4,pos_.y,pos_.z), D3DXVECTOR3(size_.x / 4, 1.0f, 0.0f), &check);
-    if (check.left == MAP_TYPE_WALL){
+    if (check.left == MAP_TYPE_WALL ||
+       (check.left == MAP_TYPE_NORMAL &&
+        check.up_left == MAP_TYPE_NORMAL)){
       move_.x *= -1;
     }
   } else {
     map = p_stage_->CheckMapTip2(&pos_, D3DXVECTOR3(size_.x / 4, 1.0f, 0.0f), &check);
-    if (check.right == MAP_TYPE_WALL){
+    if (check.right == MAP_TYPE_WALL ||
+       (check.right == MAP_TYPE_NORMAL &&
+        check.up_right == MAP_TYPE_NORMAL)){
       move_.x *= -1;
     }
   }
@@ -152,6 +168,9 @@ void Uriel::Update(void){
     // アニメーション更新
     p_texture_animation_->UpdateAnimation();
   }
+
+  induction_flag_ = false;
+  move_stop_flag_ = false;
 }
 
 // draw
@@ -190,8 +209,57 @@ void Uriel::SetDestPos(const D3DXVECTOR3& pos){
   if (check.center == MAP_TYPE_WALL){
     return;
   }
-  if (abs(pos.x - pos_.x) < kUrielInducible)
+  if (abs(pos.x - pos_.x) < kUrielInducible){
     dest_position_ = pos;
+    induction_flag_ = true;
+  }
+}
+
+//=============================================================================
+// ウリエルの目的地点設定(障害物用)
+//-----------------------------------------------------------------------------
+void Uriel::SetDestPos(const D3DXVECTOR3& pos, ANIM_OBJ_TYPE anim_obj_type, DIRECTION direction, AnimationObject* anim_obj){
+  if (status_ == URIEL_STATUS_JUMP ||
+    status_ == URIEL_STATUS_CHARGE_JUMP ||
+    status_ == URIEL_STATUS_RUNAWAY) {
+    return;
+  }
+  if (anim_obj_type == ANIM_OBJ_TYPE_FLOWER &&
+    anim_obj == sang_object_){
+    return;
+  }
+  HIT_CHECK check;
+  p_stage_->CheckMapTip2((D3DXVECTOR3*)&pos, D3DXVECTOR3(size_.x / 4, 1.0f, 0.0f), &check);
+  if (check.center == MAP_TYPE_WALL){
+    return;
+  }
+  if (abs(pos.x - pos_.x) < kUrielInducible){
+    if (anim_obj_type == ANIM_OBJ_TYPE_BUTTERFLY){
+      if ((move_direction_ == DIRECTION_RIGHT && (pos.x - pos_.x) > 0) ||
+          (move_direction_ == DIRECTION_RIGHT && (pos.x - pos_.x) < kUrielLockButterflyLength)){
+        if (direction == DIRECTION_RIGHT){
+          sang_position_ = D3DXVECTOR3(pos.x - kUrielChaseTheButterflyOffset, pos.y, pos.z);
+        }
+      }
+      if ((move_direction_ == DIRECTION_LEFT && (pos.x - pos_.x) < 0) ||
+          (move_direction_ == DIRECTION_LEFT && (pos.x - pos_.x) > kUrielLockButterflyLength))
+        if (direction == DIRECTION_LEFT){
+          sang_position_ = D3DXVECTOR3(pos.x + kUrielChaseTheButterflyOffset, pos.y, pos.z);
+        }
+      if (anim_obj == sang_object_ &&
+        direction != sang_direction_){
+        butterfly_direction_change_flag_ = true;
+      }
+    }
+    else if (anim_obj_type == ANIM_OBJ_TYPE_FLOWER){
+      sang_position_ = pos;
+    }
+    sang_type_ = anim_obj_type;
+    sang_direction_ = direction;
+    attractible_flower_timer_ = 0;
+    sang_object_ = anim_obj;
+    sang_induction_flag_ = true;
+  }
 }
 
 //=============================================================================
@@ -230,17 +298,6 @@ void Uriel::UpdateNeutral(void){
 // ハイハイ状態の更新
 //-----------------------------------------------------------------------------
 void Uriel::UpdateCrawl(void){
-  // 目的地へ向かう処理
-  if (dest_position_ != D3DXVECTOR3(0.0f, 0.0f, 0.0f)){
-    if (dest_position_.x - pos_.x > kUrielMoveSpped){
-      move_.x = kUrielMoveSpped;
-    } else if (dest_position_.x - pos_.x < -kUrielMoveSpped){
-      move_.x = -kUrielMoveSpped;
-    } else {
-      dest_position_ = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-    }
-  }
-
   // 地面との当たり判定
   HIT_CHECK check_center,check_right,check_left;
   D3DXVECTOR3 map(0.f, 0.f, 0.f);
@@ -260,6 +317,68 @@ void Uriel::UpdateCrawl(void){
     return;
   }
 
+  // 目的地へ向かう処理
+  if (dest_position_ != D3DXVECTOR3(0.0f, 0.0f, 0.0f)){
+    if (dest_position_.x - pos_.x > kUrielMoveSpped){
+      move_.x = kUrielMoveSpped;
+    } else if (dest_position_.x - pos_.x < -kUrielMoveSpped){
+      move_.x = -kUrielMoveSpped;
+    } else {
+      dest_position_ = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+    }
+  }
+
+  // 蝶が障害物の場合
+  if (sang_type_ == ANIM_OBJ_TYPE_BUTTERFLY && !induction_flag_){
+    // 障害物へ向かう処理
+    if (sang_position_ != D3DXVECTOR3(0.0f, 0.0f, 0.0f) &&
+        sang_induction_flag_ &&
+        abs(sang_position_.y - pos_.y) < 25.0f &&
+        abs(sang_position_.x - pos_.x) < kUrielLockButterflyLength){
+      if (sang_position_.x - pos_.x + move_.x> Butterfly::kButterFlyMoveSpeed){
+        move_.x = Butterfly::kButterFlyMoveSpeed;
+      } else if (sang_position_.x - pos_.x + move_.x< -Butterfly::kButterFlyMoveSpeed){
+        move_.x = -Butterfly::kButterFlyMoveSpeed;
+      }
+    }
+  } // sang_type_ == ANIM_OBJ_TYPE_BUTTERFLY
+
+  // 花が障害物の場合
+  else if (sang_type_ == ANIM_OBJ_TYPE_FLOWER && !induction_flag_){
+    // 障害物へ向かう処理
+    if (sang_position_ != D3DXVECTOR3(0.0f, 0.0f, 0.0f) &&
+        sang_induction_flag_ &&
+        abs(sang_position_.y - pos_.y) < 25.0f){
+        if (abs(sang_position_.x - pos_.x) < kUrielLookFlowerLength){
+        attractible_flower_timer_++;
+        move_.x = 0;
+      } else if (sang_position_.x - pos_.x > kUrielMoveSpped &&
+          move_direction_ == DIRECTION_RIGHT){
+        move_.x = kUrielMoveSpped;
+      } else if (sang_position_.x - pos_.x < -kUrielMoveSpped &&
+                 move_direction_ == DIRECTION_LEFT){
+        move_.x = -kUrielMoveSpped;
+      }
+    }
+
+    if ((attractible_flower_timer_ > kUrielAttractibleFlower) &&
+         sang_induction_flag_){
+      prev_sang_object_ = sang_object_;
+      sang_induction_flag_ = false;
+      if (move_direction_ == DIRECTION_RIGHT){
+        move_.x = kUrielMoveSpped;
+      } else {
+        move_.x = -kUrielMoveSpped;
+      }
+    } else if ((abs(sang_position_.x - pos_.x) > kUrielLookFlowerLength) &&
+               !sang_induction_flag_){
+      attractible_flower_timer_ = 0;
+      sang_object_ = nullptr;
+      sang_position_ = D3DXVECTOR3(0, 0, 0);
+    }
+
+  } // sang_type_ == ANIM_OBJ_TYPE_FLOWER
+
   // ジャンプするかチェックしてジャンプできるならジャンプ
   BLOCK_DATA data;
   data = LoadCheck();
@@ -277,6 +396,7 @@ void Uriel::UpdateCrawl(void){
     move_.x = vector.x;
     move_.y = vector.y;
   }
+
 }
 
 //=============================================================================
@@ -423,17 +543,6 @@ void Uriel::UpdateSleep(void){
 // ハイハイ(チャージ)状態の更新
 //-----------------------------------------------------------------------------
 void Uriel::UpdateChargeCrawl(void){
-  // 目的地へ向かう処理
-  if (dest_position_ != D3DXVECTOR3(0.0f, 0.0f, 0.0f)){
-    if (dest_position_.x - pos_.x > kUrielMoveChargeSpeed){
-      move_.x = kUrielMoveChargeSpeed;
-    } else if (dest_position_.x - pos_.x < -kUrielMoveChargeSpeed){
-      move_.x = -kUrielMoveChargeSpeed;
-    } else {
-      dest_position_ = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-    }
-  }
-
   // 地面との当たり判定
   HIT_CHECK check_center,check_right,check_left;
   D3DXVECTOR3 map(0.f, 0.f, 0.f);
@@ -451,6 +560,68 @@ void Uriel::UpdateChargeCrawl(void){
     SetAnimaton(ANIMATION_URIEL_CHARGE_JUMP);
     move_.x = 0;
  }
+
+  // 目的地へ向かう処理
+  if (dest_position_ != D3DXVECTOR3(0.0f, 0.0f, 0.0f)){
+    if (dest_position_.x - pos_.x > kUrielMoveChargeSpeed){
+      move_.x = kUrielMoveChargeSpeed;
+    } else if (dest_position_.x - pos_.x < -kUrielMoveChargeSpeed){
+      move_.x = -kUrielMoveChargeSpeed;
+    } else {
+      dest_position_ = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+    }
+  }
+
+  // 蝶が障害物の場合
+  if (sang_type_ == ANIM_OBJ_TYPE_BUTTERFLY && !induction_flag_){
+    // 障害物へ向かう処理
+    if (sang_position_ != D3DXVECTOR3(0.0f, 0.0f, 0.0f) &&
+        sang_induction_flag_ &&
+        abs(sang_position_.y - pos_.y) < 25.0f &&
+        abs(sang_position_.x - pos_.x) < kUrielLockButterflyLength){
+      if (sang_position_.x - pos_.x > Butterfly::kButterFlyMoveSpeed){
+        move_.x = Butterfly::kButterFlyMoveSpeed;
+      } else if (sang_position_.x - pos_.x < -Butterfly::kButterFlyMoveSpeed){
+        move_.x = -Butterfly::kButterFlyMoveSpeed;
+      }
+    }
+  } // sang_type_ == ANIM_OBJ_TYPE_BUTTERFLY
+
+  // 花が障害物の場合
+  else if (sang_type_ == ANIM_OBJ_TYPE_FLOWER && !induction_flag_){
+    // 障害物へ向かう処理
+    if (sang_position_ != D3DXVECTOR3(0.0f, 0.0f, 0.0f) &&
+        sang_induction_flag_ &&
+        abs(sang_position_.y - pos_.y) < 25.0f){
+        if (abs(sang_position_.x - pos_.x) < kUrielLookFlowerLength){
+        attractible_flower_timer_++;
+        move_.x = 0;
+      } else if (sang_position_.x - pos_.x > kUrielMoveSpped &&
+          move_direction_ == DIRECTION_RIGHT){
+        move_.x = kUrielMoveChargeSpeed;
+      } else if (sang_position_.x - pos_.x < -kUrielMoveSpped &&
+                 move_direction_ == DIRECTION_LEFT){
+        move_.x = -kUrielMoveChargeSpeed;
+      }
+    }
+
+    if ((attractible_flower_timer_ > kUrielAttractibleFlower) &&
+         sang_induction_flag_){
+      prev_sang_object_ = sang_object_;
+      sang_induction_flag_ = false;
+      if (move_direction_ == DIRECTION_RIGHT){
+        move_.x = kUrielMoveChargeSpeed;
+      } else {
+        move_.x = -kUrielMoveChargeSpeed;
+      }
+    } else if ((abs(sang_position_.x - pos_.x) > kUrielLookFlowerLength) &&
+               !sang_induction_flag_){
+      attractible_flower_timer_ = 0;
+      sang_object_ = nullptr;
+      sang_position_ = D3DXVECTOR3(0, 0, 0);
+    }
+
+  } // sang_type_ == ANIM_OBJ_TYPE_FLOWER
 
   // ジャンプするかチェックしてジャンプできるならジャンプ
   BLOCK_DATA data;
@@ -744,6 +915,16 @@ D3DXVECTOR2 Uriel::JumpAngleSeek(float top, float length, float difference_in_he
 }
 
 //=============================================================================
+// 移動方向の指定
+//-----------------------------------------------------------------------------
+void Uriel::SetDirection(DIRECTION direction){
+  if (move_direction_ != direction){
+    move_.x *= -1;
+  }
+  move_direction_ = direction;
+}
+
+//=============================================================================
 // 食べる位置を返す
 //-----------------------------------------------------------------------------
 const D3DXVECTOR3 Uriel::GetEatPos(void) const {
@@ -753,4 +934,5 @@ const D3DXVECTOR3 Uriel::GetEatPos(void) const {
   }
   return pos_ + pos_offset;
 }
+
 // EOF

@@ -1,13 +1,13 @@
 //==============================================================================
 //
-// SceneGame [SceneGame.h]
-// Author : Shimizu Shoji
+// SceneTutorial [SceneTutorial.h]
+// Author : Yuji Momoi
 //
 //==============================================================================
 #pragma once
 #pragma warning( disable : 4481 )
-#ifndef __H_SCENEGAME_H__
-#define __H_SCENEGAME_H__
+#ifndef __H_SCENETUTORIAL_H__
+#define __H_SCENETUTORIAL_H__
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // include
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -20,22 +20,21 @@ class BackGroundManager;
 class Collision;
 class Uriel;
 class Player;
-class Ready;
 class Stage;
 class Tori;
 class TensionGauge;
 class Timer;
 class Camera;
-class SangManager;
+class TutorialEvent;
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // class definition
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-class SceneGame : public Scene {
+class SceneTutorial : public Scene {
 public:
   // ctor/dtor
-  SceneGame();
-  virtual ~SceneGame();
+  SceneTutorial();
+  virtual ~SceneTutorial();
 
   // method
   void Update(SceneManager* pSceneManager, float elapsedTime) override;
@@ -53,14 +52,13 @@ private:
   BackGroundManager* p_background_manager_;
   Collision* p_collision_;
   Player* p_player_;
-  Ready* p_ready_;
   Stage* p_stage_;
   TensionGauge* p_tension_gauge_;
   Tori* p_tori_;
   Uriel* p_uriel_;
   Timer* p_timer_;
   Camera* p_camera;
-  SangManager* p_sang_manager_;
+  TutorialEvent* p_tutorial_event_;
 };
 
 

@@ -24,9 +24,13 @@ AnimationObject::AnimationObject(ANIMATION_EVENT animation_event) : Object() {
 
   pos_.x = 0;
   pos_.y = 0;
+  anim_obj_type_ = ANIM_OBJ_TYPE_NONE;
 
   p_texture_animation_ = new TextureAnimation();
   texture_id_ = p_texture_animation_->SetAnimation(animation_event);
+
+  animation_object_next_ = nullptr;
+  animation_object_prev_ = nullptr;
 }
 
 // dtor
@@ -40,6 +44,10 @@ AnimationObject *AnimationObject::Create(ANIMATION_EVENT animation_event, const 
   obj->pos_ = pos;
   obj->size_ = size;
   return obj;
+}
+
+// update
+void AnimationObject::Update(void){
 }
 
 // draw

@@ -1,35 +1,41 @@
 //==============================================================================
 //
-// Collision
+// EffectManager
 // Author: Shimizu Shoji
 //
 //==============================================================================
 #pragma once
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
-// class declaration
+// include
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
-class Player;
-class Uriel;
-class Stage;
+#include <deque>
+
+#include "Effect.h"
 
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 // class definition
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
-class Collision {
+class EffectManager {
 public:
   // ctor
-  Collision(Player& player, Uriel& uriel, Stage& stage);
+  EffectManager();
 
   // dtor
-  ~Collision();
+  ~EffectManager();
 
-  // Uriel x Player (Boro)
-  void CollideUrielToPlayersBoro(void);
+  // Update
+  void Update(void);
 
-  // Stage x Player (Gimmick)
-  void CollideStageToPlayersGimmick(void);
+  // Draw
+  void Draw(void);
+
+  // Create
+  void Create(void);
+
 private:
-  Player& player_;
-  Uriel& uriel_;
-  Stage& stage_;
+  void _Foreach(void(*function)(Effect&));
+
+  typedef std::deque<Effect> EffectList;
+
+  EffectList effect_list_;
 };
