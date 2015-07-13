@@ -18,6 +18,9 @@
 // ctor
 //------------------------------------------------
 TextureManager::TextureManager(LPDIRECT3DDEVICE9 pDevice) : pDevice_(pDevice) {
+  for (int textureID = 0; textureID < kTextureMax; ++textureID) {
+    textureList_[textureID] = nullptr;
+  }
 }
 
 
@@ -25,11 +28,9 @@ TextureManager::TextureManager(LPDIRECT3DDEVICE9 pDevice) : pDevice_(pDevice) {
 // dtor
 //------------------------------------------------
 TextureManager::~TextureManager() {
-  for (auto pTexture : textureList_) {
-    SafeRelease(pTexture);
+  for (int textureID = 0; textureID < kTextureMax; ++textureID) {
+    SafeRelease(textureList_[textureID]);
   }
-  textureList_.clear();
-  textureSearchMap_.clear();
 }
 
 
@@ -43,19 +44,20 @@ int TextureManager::LoadTexture(const char* const filename) {
     return -1;
   }
 
-  auto it = textureSearchMap_.find(filename);
-  if (it != textureSearchMap_.end()) {
-    return it->second;
+  // 空きID検索
+  // もし ID が検索できなかったら -1 を返す
+  const int id = _SearchNotUsedID();
+  assert(id != -1 && "IDが足りません");
+  if (id == -1) {
+    return -1;
   }
 
-  // テクスチャの登録
-  LPDIRECT3DTEXTURE9 pTexture = nullptr;
-  HRESULT hr = D3DXCreateTextureFromFile(pDevice_, filename, &pTexture);
-  textureList_.push_back(pTexture);
-
-  // IDの登録
-  const int id = textureList_.size() - 1;
-  textureSearchMap_.insert(std::make_pair(filename, id));
+  // テクスチャのロード
+  HRESULT hr = D3DXCreateTextureFromFile(pDevice_, filename, &textureList_[id]);
+  // TOOD: ASSERT
+  if (FAILED(hr)) {
+    MessageBox(nullptr, "テクスチャロードエラー", "Error", MB_OK);
+  }
 
   return id;
 }
@@ -64,14 +66,29 @@ int TextureManager::LoadTexture(const char* const filename) {
 //------------------------------------------------
 // テクスチャをセットする
 //------------------------------------------------
-void TextureManager::SetTexture(const int _id) {
-  const unsigned int id = static_cast<unsigned int>(_id);
-  assert(0 <= id && id < textureList_.size());
-
-  if (id < 0 || textureList_.size() <= id){
+void TextureManager::SetTexture(const int id) {
+  // TODO : ASSERT
+  // set texture
+  if (id < 0 || id >= kTextureMax){
     pDevice_->SetTexture(0, nullptr);
-  }
-  else {
+  } else {
     pDevice_->SetTexture(0, textureList_[id]);
   }
+}
+
+
+//------------------------------------------------
+// 空きIDを検索する
+// 空きが無かった場合は-1を返す
+//------------------------------------------------
+int TextureManager::_SearchNotUsedID(void) {
+  for (int textureID = 0; textureID < kTextureMax; ++textureID) {
+    // if テクスチャがロードされていなかったら そのIDを返す
+    if (!textureList_[textureID]) {
+      return textureID;
+    }
+  }
+
+  // エラー
+  return -1;
 }

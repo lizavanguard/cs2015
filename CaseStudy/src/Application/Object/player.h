@@ -63,7 +63,6 @@ private:
   PLAYER_MODE player_mode_;
   int count_;
   bool is_eat_;
-  bool is_gimmick_;
   Stage* stage_;
   D3DXVECTOR2 stageSize_;
   bool move_stop_flag_;    // チュートリアル用に追加(by Momoi) 2015/07/13

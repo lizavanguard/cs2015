@@ -40,10 +40,6 @@ ObjectBase::~ObjectBase() {
 // Draw
 //------------------------------------------------
 void ObjectBase::Draw(void) {
-  if (!is_alive_) {
-    return;
-  }
-
   _PreProcessOfDraw();
   _Draw();
   _PostProcessOfDraw();
