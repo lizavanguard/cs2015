@@ -168,6 +168,15 @@
     <ClCompile Include="src\Application\Object\Sang\SangManager.cpp">
       <Filter>Application\Object\Sang</Filter>
     </ClCompile>
+    <ClCompile Include="src\Application\Tutorial\SceneTutorial.cpp">
+      <Filter>Application\Tutorial</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application\Tutorial\SceneTutorialFactory.cpp">
+      <Filter>Application\Tutorial</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application\Tutorial\TutorialEvent.cpp">
+      <Filter>Application\Tutorial</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Framework">
@@ -256,6 +265,9 @@
     </Filter>
     <Filter Include="Application\Object\Sang">
       <UniqueIdentifier>{42fc5374-fdb8-42f4-80dd-653b40e13a3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Tutorial">
+      <UniqueIdentifier>{da410208-3a9b-4080-b0f7-b896ab12af4b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -490,6 +502,15 @@
     </ClInclude>
     <ClInclude Include="src\Application\Object\Sang\SangManager.h">
       <Filter>Application\Object\Sang</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\Tutorial\SceneTutorial.h">
+      <Filter>Application\Tutorial</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\Tutorial\SceneTutorialFactory.h">
+      <Filter>Application\Tutorial</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\Tutorial\TutorialEvent.h">
+      <Filter>Application\Tutorial</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

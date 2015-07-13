@@ -62,6 +62,7 @@ public:
   void SetAnimaton(ANIMATION_EVENT animation_event);
   void SetDestPos(const D3DXVECTOR3& pos);
   void SetDestPos(const D3DXVECTOR3& pos, ANIM_OBJ_TYPE anim_obj_type, DIRECTION direction, AnimationObject* anim_obj);
+  void SetDirection(DIRECTION direction);
 
   // ボーロチャージ(ボーロチャージ出来ればtrueが返る)
   bool BoroChage(void);
@@ -74,6 +75,9 @@ public:
 
   // オブジェクトとのHit判定
   bool CheckHit(const D3DXVECTOR3& pos, const D3DXVECTOR2& size);
+
+  // 移動を中止させる(1フレームだけ)
+  void SetMoveStop(bool stop_flag){ move_stop_flag_ = stop_flag; }
 
   // get
   const D3DXVECTOR3& GetPos(void) const {return pos_;}
@@ -128,6 +132,7 @@ private:
   AnimationObject* prev_sang_object_;
   int attractible_flower_timer_;
   bool butterfly_direction_change_flag_;
+  bool move_stop_flag_;
 };
 
 

@@ -55,6 +55,7 @@ Uriel::Uriel(ANIMATION_EVENT animation_event, Stage* stage, TensionGauge* p_tens
   prev_sang_object_ = nullptr;
   sang_induction_flag_ = false;
   butterfly_direction_change_flag_ = false;
+  move_stop_flag_ = false;
 
   // ステージからスタート場所を貰う
   pos_ = stage->GetStartMaptip();
@@ -135,7 +136,8 @@ void Uriel::Update(void){
   old_position_ = pos_;
 
   // 寝ていなければ移動
-  if (status_ != URIEL_STATUS_SLEEP){
+  if (status_ != URIEL_STATUS_SLEEP &&
+      !move_stop_flag_){
     pos_ += move_;
   }
 
@@ -144,12 +146,16 @@ void Uriel::Update(void){
   D3DXVECTOR3 map(0.f, 0.f, 0.f);
   if (move_direction_ == DIRECTION_LEFT){
     map = p_stage_->CheckMapTip2(&D3DXVECTOR3(pos_.x + size_.x - size_.x / 4,pos_.y,pos_.z), D3DXVECTOR3(size_.x / 4, 1.0f, 0.0f), &check);
-    if (check.left == MAP_TYPE_WALL){
+    if (check.left == MAP_TYPE_WALL ||
+       (check.left == MAP_TYPE_NORMAL &&
+        check.up_left == MAP_TYPE_NORMAL)){
       move_.x *= -1;
     }
   } else {
     map = p_stage_->CheckMapTip2(&pos_, D3DXVECTOR3(size_.x / 4, 1.0f, 0.0f), &check);
-    if (check.right == MAP_TYPE_WALL){
+    if (check.right == MAP_TYPE_WALL ||
+       (check.right == MAP_TYPE_NORMAL &&
+        check.up_right == MAP_TYPE_NORMAL)){
       move_.x *= -1;
     }
   }
@@ -164,6 +170,7 @@ void Uriel::Update(void){
   }
 
   induction_flag_ = false;
+  move_stop_flag_ = false;
 }
 
 // draw
@@ -908,6 +915,16 @@ D3DXVECTOR2 Uriel::JumpAngleSeek(float top, float length, float difference_in_he
 }
 
 //=============================================================================
+// 移動方向の指定
+//-----------------------------------------------------------------------------
+void Uriel::SetDirection(DIRECTION direction){
+  if (move_direction_ != direction){
+    move_.x *= -1;
+  }
+  move_direction_ = direction;
+}
+
+//=============================================================================
 // 食べる位置を返す
 //-----------------------------------------------------------------------------
 const D3DXVECTOR3 Uriel::GetEatPos(void) const {
@@ -917,4 +934,5 @@ const D3DXVECTOR3 Uriel::GetEatPos(void) const {
   }
   return pos_ + pos_offset;
 }
+
 // EOF

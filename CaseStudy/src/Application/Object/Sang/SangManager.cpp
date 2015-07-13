@@ -19,6 +19,8 @@ AnimationObject* SangManager::sang_object_cur_ = nullptr;
 //==============================================================================
 // ctor
 SangManager::SangManager(){
+  sang_object_top_ = nullptr;
+  sang_object_cur_ = nullptr;
 }
 
 // dtor

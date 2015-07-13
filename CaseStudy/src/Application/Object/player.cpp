@@ -49,7 +49,8 @@ Player::Player(ANIMATION_EVENT animation_event , Stage* stage)
   : AnimationObject(animation_event)
   , player_mode_(MODE_NORMAL)
   , count_(0)
-  , is_eat_(false) {
+  , is_eat_(false)
+  , move_stop_flag_(false) {
     stage_ = stage;
     stageSize_ = stage_->GetStageSize();
     pos_ = stage_->GetStartMaptip();
@@ -73,97 +74,101 @@ Player::~Player(void){
 // 更新日  :  2015/05/22
 //==============================================================================
 void Player::Update(Uriel *uriel_){
-  auto& pKeyboard = InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard();
-  auto& pJoypad = InputManagerHolder::Instance().GetInputManager().GetPrimaryDevice();
-  // 移動
-  if (pJoypad.IsPress(InputDevice::Pads::PAD_LTHUMB_UP) || pKeyboard.IsPress(DIK_W)) {
-      pos_.y += kPlayerMoveSpeed;
-      if (pos_.y + size_.y * 0.5f > stageSize_.y / 2.0f){
-          pos_.y = stageSize_.y / 2.0f - size_.y * 0.5f;
-      }
-  }
-  if (pJoypad.IsPress(InputDevice::Pads::PAD_LTHUMB_RIGHT) || pKeyboard.IsPress(DIK_D)) {
-      pos_.x += kPlayerMoveSpeed;
-      if (pos_.x + size_.x * 0.5f > stageSize_.x / 2.0f){
-          pos_.x = stageSize_.x / 2.0f - size_.x * 0.5f;
-      }
-  }
-  if (pJoypad.IsPress(InputDevice::Pads::PAD_LTHUMB_DOWN) || pKeyboard.IsPress(DIK_S)) {
-      pos_.y -= kPlayerMoveSpeed;
-      if (pos_.y - size_.y * 0.5f < -stageSize_.y / 2.0f){
-          pos_.y = -stageSize_.y / 2.0f + size_.y * 0.5f;
-      }
-  }
-  if (pJoypad.IsPress(InputDevice::Pads::PAD_LTHUMB_LEFT) || pKeyboard.IsPress(DIK_A)) {
-      pos_.x -= kPlayerMoveSpeed;
-      if (pos_.x - size_.x * 0.5f < -stageSize_.x / 2.0f){
-          pos_.x = -stageSize_.x / 2.0f + size_.x * 0.5f;
-      }
-  }
-
-  if (pKeyboard.IsPress(DIK_9)) {
-	  //uriel_->SetAnimaton(ANIMATION_URIEL_RUNAWAY);
-	  uriel_->BoroChage();
-  }
-
-  // ガラガラモード切替
-  // 誘導
-  static bool is_press = false;
-  if (pJoypad.IsPress(InputDevice::Pads::PAD_A) || pKeyboard.IsPress(DIK_RETURN)) {
-    ChangeAnimation(MODE_GUIDE);
-    if (!is_press) {
-      PlaySound(SOUND_LABEL_SE_CALL0);
+  if (!move_stop_flag_){
+    auto& pKeyboard = InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard();
+    auto& pJoypad = InputManagerHolder::Instance().GetInputManager().GetPrimaryDevice();
+    // 移動
+    if (pJoypad.IsPress(InputDevice::Pads::PAD_LTHUMB_UP) || pKeyboard.IsPress(DIK_W)) {
+        pos_.y += kPlayerMoveSpeed;
+        if (pos_.y + size_.y * 0.5f > stageSize_.y / 2.0f){
+            pos_.y = stageSize_.y / 2.0f - size_.y * 0.5f;
+        }
     }
-    is_press = true;
-  }
-  else if (pJoypad.IsRelease(InputDevice::Pads::PAD_A) || pKeyboard.IsRelease(DIK_RETURN)) {
-    is_press = false;
-    ChangeAnimation(MODE_NORMAL);
-  }
-  // ギミックON/OFF
-  if (pJoypad.IsTrigger(InputDevice::Pads::PAD_Y) || pKeyboard.IsTrigger(DIK_G)) {
-    ChangeAnimation(MODE_GIMMICK);
-    PlaySound(SOUND_LABEL_SE_CALL1);
-  }
-
-  // ボーロ
-  if (!is_eat_) {
-    if (pJoypad.IsTrigger(InputDevice::Pads::PAD_X) || pKeyboard.IsTrigger(DIK_B)) {
-      ChangeAnimation(MODE_BORO);
+    if (pJoypad.IsPress(InputDevice::Pads::PAD_LTHUMB_RIGHT) || pKeyboard.IsPress(DIK_D)) {
+        pos_.x += kPlayerMoveSpeed;
+        if (pos_.x + size_.x * 0.5f > stageSize_.x / 2.0f){
+            pos_.x = stageSize_.x / 2.0f - size_.x * 0.5f;
+        }
     }
-    else if (pJoypad.IsRelease(InputDevice::Pads::PAD_X) || pKeyboard.IsRelease(DIK_B)){
+    if (pJoypad.IsPress(InputDevice::Pads::PAD_LTHUMB_DOWN) || pKeyboard.IsPress(DIK_S)) {
+        pos_.y -= kPlayerMoveSpeed;
+        if (pos_.y - size_.y * 0.5f < -stageSize_.y / 2.0f){
+            pos_.y = -stageSize_.y / 2.0f + size_.y * 0.5f;
+        }
+    }
+    if (pJoypad.IsPress(InputDevice::Pads::PAD_LTHUMB_LEFT) || pKeyboard.IsPress(DIK_A)) {
+        pos_.x -= kPlayerMoveSpeed;
+        if (pos_.x - size_.x * 0.5f < -stageSize_.x / 2.0f){
+            pos_.x = -stageSize_.x / 2.0f + size_.x * 0.5f;
+        }
+    }
+
+    if (pKeyboard.IsPress(DIK_9)) {
+      //uriel_->SetAnimaton(ANIMATION_URIEL_RUNAWAY);
+      uriel_->BoroChage();
+    }
+
+    // ガラガラモード切替
+    // 誘導
+    static bool is_press = false;
+    if (pJoypad.IsPress(InputDevice::Pads::PAD_A) || pKeyboard.IsPress(DIK_RETURN)) {
+      ChangeAnimation(MODE_GUIDE);
+      if (!is_press) {
+        PlaySound(SOUND_LABEL_SE_CALL0);
+      }
+      is_press = true;
+    }
+    else if (pJoypad.IsRelease(InputDevice::Pads::PAD_A) || pKeyboard.IsRelease(DIK_RETURN)) {
+      is_press = false;
       ChangeAnimation(MODE_NORMAL);
     }
-  }
+    // ギミックON/OFF
+    if (pJoypad.IsTrigger(InputDevice::Pads::PAD_Y) || pKeyboard.IsTrigger(DIK_G)) {
+      ChangeAnimation(MODE_GIMMICK);
+      PlaySound(SOUND_LABEL_SE_CALL1);
+    }
 
-  // モード
-  switch (player_mode_) {
-    case MODE_NORMAL: // 通常時
-      break;
-    case MODE_BORO: // ボーロ
-      break;
-    case MODE_GUIDE: // 誘導
-      // ウリエルちゃん移動
-      uriel_->SetDestPos(pos_);
-      // 誘導モードが一定時間以上
-      break;
-    case MODE_GIMMICK: // ギミック
-      // if ギミックのアニメーションが終了したら 通常モードに戻す
-      if (count_ >= /*p_texture_animation_->GetAnimationTime()*/ 60) {
+    // ボーロ
+    if (!is_eat_) {
+      if (pJoypad.IsTrigger(InputDevice::Pads::PAD_X) || pKeyboard.IsTrigger(DIK_B)) {
+        ChangeAnimation(MODE_BORO);
+      }
+      else if (pJoypad.IsRelease(InputDevice::Pads::PAD_X) || pKeyboard.IsRelease(DIK_B)){
         ChangeAnimation(MODE_NORMAL);
       }
-      break;
+    }
+
+    // モード
+    switch (player_mode_) {
+      case MODE_NORMAL: // 通常時
+        break;
+      case MODE_BORO: // ボーロ
+        break;
+      case MODE_GUIDE: // 誘導
+        // ウリエルちゃん移動
+        uriel_->SetDestPos(pos_);
+        // 誘導モードが一定時間以上
+        break;
+      case MODE_GIMMICK: // ギミック
+        // if ギミックのアニメーションが終了したら 通常モードに戻す
+        if (count_ >= /*p_texture_animation_->GetAnimationTime()*/ 60) {
+          ChangeAnimation(MODE_NORMAL);
+        }
+        break;
+    }
+
+    // アニメーション更新
+    p_texture_animation_->UpdateAnimation();
+
+    // ボーロが食べられていたら 一定時間経過で元に戻す
+    if (is_eat_ && count_ > kBoroRecastTime) {
+      is_eat_ = false;
+    }
+
+    ++count_;
   }
 
-  // アニメーション更新
-  p_texture_animation_->UpdateAnimation();
-
-  // ボーロが食べられていたら 一定時間経過で元に戻す
-  if (is_eat_ && count_ > kBoroRecastTime) {
-    is_eat_ = false;
-  }
-
-  ++count_;
+  move_stop_flag_ = false;
 }
 
 //==============================================================================
