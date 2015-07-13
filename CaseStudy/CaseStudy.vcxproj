@@ -14,6 +14,8 @@
     <ClCompile Include="src\Application\Collison\Collision.cpp" />
     <ClCompile Include="src\Application\Camera\camera.cpp" />
     <ClCompile Include="src\Application\Controller\InputController.cpp" />
+    <ClCompile Include="src\Application\Effect\Effect.cpp" />
+    <ClCompile Include="src\Application\Effect\EffectManager.cpp" />
     <ClCompile Include="src\Application\Game\SceneGame.cpp" />
     <ClCompile Include="src\Application\Game\SceneGameFactory.cpp" />
     <ClCompile Include="src\Application\Object\AnimationObject\AnimationObject.cpp" />
@@ -46,9 +48,12 @@
     <ClCompile Include="src\Application\TitleBase\TitleCharBase.cpp" />
     <ClCompile Include="src\Application\Title\SceneTitle.cpp" />
     <ClCompile Include="src\Application\Title\SceneTitleFactory.cpp" />
+<<<<<<< HEAD
     <ClCompile Include="src\Application\Tutorial\SceneTutorial.cpp" />
     <ClCompile Include="src\Application\Tutorial\SceneTutorialFactory.cpp" />
     <ClCompile Include="src\Application\Tutorial\TutorialEvent.cpp" />
+=======
+>>>>>>> map_oha
     <ClCompile Include="src\Application\Utility\ValueActiveUpdater.cpp" />
     <ClCompile Include="src\Application\Utility\ValuePassiveUpdater.cpp" />
     <ClCompile Include="src\Framework\Collision\CollisionHelper.cpp" />
@@ -80,6 +85,8 @@
     <ClInclude Include="src\Application\Camera\camera.h" />
     <ClInclude Include="src\Application\common.h" />
     <ClInclude Include="src\Application\Controller\InputController.h" />
+    <ClInclude Include="src\Application\Effect\Effect.h" />
+    <ClInclude Include="src\Application\Effect\EffectManager.h" />
     <ClInclude Include="src\Application\Game\SceneGame.h" />
     <ClInclude Include="src\Application\Game\SceneGameFactory.h" />
     <ClInclude Include="src\Application\Object\AnimationObject\AnimationObject.h" />
@@ -112,9 +119,12 @@
     <ClInclude Include="src\Application\TitleBase\TitleCharBase.h" />
     <ClInclude Include="src\Application\Title\SceneTitle.h" />
     <ClInclude Include="src\Application\Title\SceneTitleFactory.h" />
+<<<<<<< HEAD
     <ClInclude Include="src\Application\Tutorial\SceneTutorial.h" />
     <ClInclude Include="src\Application\Tutorial\SceneTutorialFactory.h" />
     <ClInclude Include="src\Application\Tutorial\TutorialEvent.h" />
+=======
+>>>>>>> map_oha
     <ClInclude Include="src\Application\Utility\ValueActiveUpdater.h" />
     <ClInclude Include="src\Application\Utility\ValuePassiveUpdater.h" />
     <ClInclude Include="src\Framework\Collision\CollisionHelper.h" />

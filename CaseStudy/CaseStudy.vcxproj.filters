@@ -159,6 +159,7 @@
     <ClCompile Include="src\Application\Tension\TensionGauge.cpp">
       <Filter>Application\Tension</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="src\Application\Object\Sang\Butterfly.cpp">
       <Filter>Application\Object\Sang</Filter>
     </ClCompile>
@@ -176,6 +177,13 @@
     </ClCompile>
     <ClCompile Include="src\Application\Tutorial\TutorialEvent.cpp">
       <Filter>Application\Tutorial</Filter>
+=======
+    <ClCompile Include="src\Application\Effect\Effect.cpp">
+      <Filter>Application\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application\Effect\EffectManager.cpp">
+      <Filter>Application\Effect</Filter>
+>>>>>>> map_oha
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -263,11 +271,16 @@
     <Filter Include="Application\Result">
       <UniqueIdentifier>{deaf217b-6ced-479c-9067-c292c7d7e706}</UniqueIdentifier>
     </Filter>
+<<<<<<< HEAD
     <Filter Include="Application\Object\Sang">
       <UniqueIdentifier>{42fc5374-fdb8-42f4-80dd-653b40e13a3c}</UniqueIdentifier>
     </Filter>
     <Filter Include="Application\Tutorial">
       <UniqueIdentifier>{da410208-3a9b-4080-b0f7-b896ab12af4b}</UniqueIdentifier>
+=======
+    <Filter Include="Application\Effect">
+      <UniqueIdentifier>{afb87c8c-f893-4b65-8a66-e855a9fa1413}</UniqueIdentifier>
+>>>>>>> map_oha
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -494,6 +507,7 @@
     <ClInclude Include="src\Application\Tension\TensionGauge.h">
       <Filter>Application\Tension</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="src\Application\Object\Sang\Butterfly.h">
       <Filter>Application\Object\Sang</Filter>
     </ClInclude>
@@ -511,6 +525,13 @@
     </ClInclude>
     <ClInclude Include="src\Application\Tutorial\TutorialEvent.h">
       <Filter>Application\Tutorial</Filter>
+=======
+    <ClInclude Include="src\Application\Effect\Effect.h">
+      <Filter>Application\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\Effect\EffectManager.h">
+      <Filter>Application\Effect</Filter>
+>>>>>>> map_oha
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
