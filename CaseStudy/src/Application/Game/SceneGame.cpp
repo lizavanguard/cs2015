@@ -62,7 +62,7 @@ SceneGame::SceneGame()
 
   p_background_manager_ = new BackGroundManager();
 
-  p_collision_ = new Collision(*p_player_, *p_uriel_);
+  p_collision_ = new Collision(*p_player_, *p_uriel_, *p_stage_);
 
   p_camera = new Camera(p_player_, p_stage_);
 
@@ -126,6 +126,9 @@ void SceneGame::Update(SceneManager* p_scene_manager, const float elapsed_time) 
 
   // Uriel x Player's boro
   p_collision_->CollideUrielToPlayersBoro();
+
+  // Stage x Player's boro
+  p_collision_->CollideStageToPlayersGimmick();
 
   if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_1)) {
     p_tension_gauge_->IncreaseTension();

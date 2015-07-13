@@ -50,7 +50,8 @@ Player::Player(ANIMATION_EVENT animation_event , Stage* stage)
   : AnimationObject(animation_event)
   , player_mode_(MODE_NORMAL)
   , count_(0)
-  , is_eat_(false) {
+  , is_eat_(false)
+  , is_gimmick_(false){
     stage_ = stage;
     stageSize_ = stage_->GetStageSize();
     pos_ = stage_->GetStartMaptip();
@@ -77,29 +78,32 @@ void Player::Update(Uriel *uriel_){
   auto& pKeyboard = InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard();
   auto& pJoypad = InputManagerHolder::Instance().GetInputManager().GetPrimaryDevice();
   // ˆÚ“®
-  if (pJoypad.IsPress(InputDevice::Pads::PAD_LTHUMB_UP) || pKeyboard.IsPress(DIK_W)) {
-      pos_.y += kPlayerMoveSpeed;
-      if (pos_.y + size_.y * 0.5f > stageSize_.y / 2.0f){
-          pos_.y = stageSize_.y / 2.0f - size_.y * 0.5f;
-      }
-  }
-  if (pJoypad.IsPress(InputDevice::Pads::PAD_LTHUMB_RIGHT) || pKeyboard.IsPress(DIK_D)) {
-      pos_.x += kPlayerMoveSpeed;
-      if (pos_.x + size_.x * 0.5f > stageSize_.x / 2.0f){
-          pos_.x = stageSize_.x / 2.0f - size_.x * 0.5f;
-      }
-  }
-  if (pJoypad.IsPress(InputDevice::Pads::PAD_LTHUMB_DOWN) || pKeyboard.IsPress(DIK_S)) {
-      pos_.y -= kPlayerMoveSpeed;
-      if (pos_.y - size_.y * 0.5f < -stageSize_.y / 2.0f){
-          pos_.y = -stageSize_.y / 2.0f + size_.y * 0.5f;
-      }
-  }
-  if (pJoypad.IsPress(InputDevice::Pads::PAD_LTHUMB_LEFT) || pKeyboard.IsPress(DIK_A)) {
-      pos_.x -= kPlayerMoveSpeed;
-      if (pos_.x - size_.x * 0.5f < -stageSize_.x / 2.0f){
-          pos_.x = -stageSize_.x / 2.0f + size_.x * 0.5f;
-      }
+  if (!is_gimmick_)
+  {
+    if (pJoypad.IsPress(InputDevice::Pads::PAD_LTHUMB_UP) || pKeyboard.IsPress(DIK_W)) {
+        pos_.y += kPlayerMoveSpeed;
+        if (pos_.y + size_.y * 0.5f > stageSize_.y / 2.0f){
+            pos_.y = stageSize_.y / 2.0f - size_.y * 0.5f;
+        }
+    }
+    if (pJoypad.IsPress(InputDevice::Pads::PAD_LTHUMB_RIGHT) || pKeyboard.IsPress(DIK_D)) {
+        pos_.x += kPlayerMoveSpeed;
+        if (pos_.x + size_.x * 0.5f > stageSize_.x / 2.0f){
+            pos_.x = stageSize_.x / 2.0f - size_.x * 0.5f;
+        }
+    }
+    if (pJoypad.IsPress(InputDevice::Pads::PAD_LTHUMB_DOWN) || pKeyboard.IsPress(DIK_S)) {
+        pos_.y -= kPlayerMoveSpeed;
+        if (pos_.y - size_.y * 0.5f < -stageSize_.y / 2.0f){
+            pos_.y = -stageSize_.y / 2.0f + size_.y * 0.5f;
+        }
+    }
+    if (pJoypad.IsPress(InputDevice::Pads::PAD_LTHUMB_LEFT) || pKeyboard.IsPress(DIK_A)) {
+        pos_.x -= kPlayerMoveSpeed;
+        if (pos_.x - size_.x * 0.5f < -stageSize_.x / 2.0f){
+            pos_.x = -stageSize_.x / 2.0f + size_.x * 0.5f;
+        }
+    }
   }
 
   if (pKeyboard.IsPress(DIK_9)) {
@@ -122,6 +126,10 @@ void Player::Update(Uriel *uriel_){
   if (pJoypad.IsTrigger(InputDevice::Pads::PAD_Y) || pKeyboard.IsTrigger(DIK_G)) {
     ChangeAnimation(MODE_GIMMICK);
     PlaySound(SOUND_LABEL_SE_CALL1);
+   is_gimmick_ = true;
+  }
+  else if (pJoypad.IsRelease(InputDevice::Pads::PAD_Y) || pKeyboard.IsRelease(DIK_G)) {
+    is_gimmick_ = false;
   }
 
   // ƒ{[ƒ

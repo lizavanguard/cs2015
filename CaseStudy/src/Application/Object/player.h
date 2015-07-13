@@ -62,6 +62,7 @@ private:
   PLAYER_MODE player_mode_;
   int count_;
   bool is_eat_;
+  bool is_gimmick_;
   Stage* stage_;
   D3DXVECTOR2 stageSize_;
 };
