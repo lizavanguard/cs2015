@@ -8,14 +8,12 @@
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 // include
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
-#include "Application/Object/Object2D/Object2D.h"
-//#include "Application/Object/AnimationObject/AnimationObject.h"
+#include "Application/Object/AnimationObject/AnimationObject.h"
 
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 // class definition
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
-class Effect : public Object2D {
-//class Effect : public AnimationObject {
+class Effect : public AnimationObject {
 public:
   // ctor
   Effect();
@@ -27,13 +25,10 @@ public:
   void Update(void);
 
   // Set parameter
-  void SetParameter(const D3DXVECTOR3& position, const D3DXVECTOR3& velocity, float size, unsigned int lifetime, int texture_id);
+  void SetParameter(const D3DXVECTOR3& position, const D3DXVECTOR3& velocity, ANIMATION_EVENT animation_event, float scale);
 
   // get
   bool IsAlive(void) const { return is_alive_; }
-
-  // set
-  void SetTextureID(int texture_id) { texture_id_ = texture_id; }
 
 private:
   unsigned int count_;

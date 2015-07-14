@@ -46,7 +46,6 @@ private:
 
   typedef std::deque<Effect*> EffectList;
   EffectList effect_list_;
-  int texture_data_[kEffectTypeMax];
 };
 
 typedef liza::generic::SingletonHolder<EffectManager> EffecManagerSingleton;

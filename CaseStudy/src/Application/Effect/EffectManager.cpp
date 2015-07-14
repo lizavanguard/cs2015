@@ -19,9 +19,7 @@
 namespace {
 
 struct _EffectData {
-  const char* p_texture_filename;
-  unsigned int lifetime;
-  float size;
+  ANIMATION_EVENT animation_event;
 };
 
 }
@@ -34,7 +32,7 @@ namespace {
 const int kEffectDefaultMax = 2000;
 
 const _EffectData kEffectData[EffectManager::kEffectTypeMax] = {
-  {"data/texture/tex_anim_sample.png", 60, 128.0f},
+  ANIMATION_PLAYER_RATTEL_SHAKE,
 };
 
 }
@@ -48,10 +46,6 @@ const _EffectData kEffectData[EffectManager::kEffectTypeMax] = {
 EffectManager::EffectManager() {
   for (int i = 0; i < kEffectDefaultMax; ++i) {
     effect_list_.push_back(new Effect());
-  }
-
-  for (int i = 0; i < kEffectTypeMax; ++i) {
-    texture_data_[i] = TextureManagerHolder::Instance().GetTextureManager().LoadTexture(kEffectData[i].p_texture_filename);
   }
 }
 
@@ -90,11 +84,9 @@ void EffectManager::Create(const EffectType effect_type, const D3DXVECTOR2& posi
 
   Effect* p_effect = _SearchDeadEffect();
   p_effect->SetParameter(D3DXVECTOR3(position.x, position.y, 0.0f),
-    D3DXVECTOR3(velocity.x, velocity.y, 0.0f),
-    128,//kEffectData[effect_type].size * scale,
-    1000,//kEffectData[effect_type].lifetime,
-    0);
-       //                 texture_data_[effect_type]);
+                         D3DXVECTOR3(velocity.x, velocity.y, 0.0f),
+                         kEffectData[effect_type].animation_event,
+                         scale);
 }
 
 //------------------------------------------------

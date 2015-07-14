@@ -1,4 +1,4 @@
-//==============================================================================
+///==============================================================================
 //
 // Effect
 // Author: Shimizu Shoji
@@ -26,13 +26,12 @@ const D3DXVECTOR2 kDefaultSize = {128.0f, 128.0f};
 // ctor
 //------------------------------------------------
 Effect::Effect()
-//    : AnimationObject(ANIMATION_PLAYER_RATTEL_NONE)
-    : Object2D(D3DXVECTOR3(0.0f, 0.0f, 0.0f), kDefaultSize, nullptr)
+    : AnimationObject(ANIMATION_NONE)
     , count_(0)
     , lifetime_(0)
     , velocity_(0.0f, 0.0f, 0.0f) {
-  //pos_ = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-  //size_ = kDefaultSize;
+  pos_ = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+  size_ = kDefaultSize;
 
   is_alive_ = false;
 }
@@ -53,8 +52,6 @@ void Effect::Update(void) {
 
   pos_ += velocity_;
 
-  //p_texture_animation_->UpdateAnimation();
-
   if (count_ == lifetime_) {
     is_alive_ = false;
   }
@@ -67,18 +64,15 @@ void Effect::Update(void) {
 void Effect::SetParameter(
     const D3DXVECTOR3& position,
     const D3DXVECTOR3& velocity,
-    const float size,
-    const unsigned int lifetime,
-    const int texture_id) {
-  assert(lifetime != 0);
-  assert(size >= 0.0f);
-  assert(texture_id >= 0);
+    const ANIMATION_EVENT animation_event,
+    const float scale) {
+  assert(scale > 0.0f);
 
   pos_ = position;
   velocity_ = velocity;
-  size_ = D3DXVECTOR2(size, size);
-  lifetime_ = lifetime;
+  size_ = kDefaultSize * scale;
+  texture_id_ = p_texture_animation_->SetAnimation(animation_event);
+  lifetime_ = p_texture_animation_->GetAnimationTime();
   count_ = 0;
-  texture_id_ = texture_id;
   is_alive_ = true;
 }
