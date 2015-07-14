@@ -1,7 +1,7 @@
 //==============================================================================
 //
 // オブジェクト [Stage.h]
-// Author : Shimizu Shoji
+// Author : Ohashi Tomoki
 //
 //==============================================================================
 #pragma once
@@ -49,6 +49,8 @@ enum
   MAP_TYPE_START,
   MAP_TYPE_WALL,
   MAP_TYPE_GIMMICK_OFF,
+  MAP_TYPE_SANG_BUTTEFRY,
+  MAP_TYPE_SANG_FLOWER,
   MAP_TYPE_GIMMICK_ON = 99,
 };
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
