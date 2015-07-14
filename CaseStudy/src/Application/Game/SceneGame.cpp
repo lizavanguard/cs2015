@@ -13,6 +13,7 @@
 #include "Framework/Input/InputManagerHolder.h"
 #include "Framework/Input/InputKeyboard.h"
 #include "Framework/Sound/sound.h"
+#include "Framework/Utility/PersistentValue.h"
 
 #include "Application/Collison/Collision.h"
 #include "Application/Effect/EffectManager.h"
@@ -131,7 +132,7 @@ void SceneGame::Update(SceneManager* p_scene_manager, const float elapsed_time) 
     // 鳥更新
     p_tori_->Update();
     if (p_tori_->GetHitCheck()){
-        return;
+      return;
     }
 
     // カメラ更新
@@ -174,7 +175,8 @@ void SceneGame::Update(SceneManager* p_scene_manager, const float elapsed_time) 
   // Next TitleScene
   if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_N)) {
       //SceneTitleFactory* pTitleSceneFactory = new SceneTitleFactory();
-      SceneResultFactory* pResultSceneFactory = new SceneResultFactory();
+    PersistentValue::Instance().SetData("Score", 10);
+    SceneResultFactory* pResultSceneFactory = new SceneResultFactory();
       p_scene_manager->PushNextSceneFactory(pResultSceneFactory);
   }
 

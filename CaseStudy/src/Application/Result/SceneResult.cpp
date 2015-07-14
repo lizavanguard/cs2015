@@ -15,6 +15,7 @@
 #include "Framework/Input/InputManagerHolder.h"
 #include "Framework/Input/InputKeyboard.h"
 #include "Framework/Scene/SceneManager.h"
+#include "Framework/Utility/PersistentValue.h"
 
 #include "Application/Object/Object2D/Timer.h"
 #include "Application/Object/Object2D/ResultTime.h"
@@ -45,6 +46,8 @@ SceneResult::SceneResult()
     p_object2D = new Object2D(D3DXVECTOR3(300.0f, 100.0f, 0.0f), D3DXVECTOR2(256.0f, 100.0f), "data/Texture/title.jpg");
 
     p_result_time = new ResultTime(D3DXVECTOR3(300.0f, 250.0f, 0.0f), 0.0f, D3DXVECTOR2(150.0f, 100.0f) , TIMER);
+
+    int a = PersistentValue::Instance().GetData("Score");
 
     p_start_symbol_ = new StartSymbol(D3DXVECTOR3(300.0f, 600.0f, 0.0f), 0.0f, D3DXVECTOR2(256.0f, 100.0f));
 }
