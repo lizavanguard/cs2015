@@ -41,10 +41,10 @@ public:
   void Create(EffectType effect_type, const D3DXVECTOR2& position, const D3DXVECTOR2& velocity, float scale);
 
 private:
-  void _Foreach(void(*function)(Effect&));
-  Effect& _SearchDeadEffect(void);
+  void _Foreach(void(*function)(Effect*));
+  Effect* _SearchDeadEffect(void);
 
-  typedef std::deque<Effect> EffectList;
+  typedef std::deque<Effect*> EffectList;
   EffectList effect_list_;
   int texture_data_[kEffectTypeMax];
 };

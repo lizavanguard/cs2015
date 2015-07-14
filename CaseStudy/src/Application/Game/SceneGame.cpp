@@ -147,7 +147,7 @@ void SceneGame::Update(SceneManager* p_scene_manager, const float elapsed_time) 
   }
 
   if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_3)) {
-    EffecManagerSingleton::Instance().Create(EffectManager::EFFECTTYPE_KIRAKIRA, D3DXVECTOR2(0, 0), D3DXVECTOR2(5, 5), 128);
+    EffecManagerSingleton::Instance().Create(EffectManager::EFFECTTYPE_KIRAKIRA, D3DXVECTOR2(100, 100), D3DXVECTOR2(5, 5), 1.0f);
   }
 }
 

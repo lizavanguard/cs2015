@@ -47,7 +47,7 @@ const _EffectData kEffectData[EffectManager::kEffectTypeMax] = {
 //------------------------------------------------
 EffectManager::EffectManager() {
   for (int i = 0; i < kEffectDefaultMax; ++i) {
-    effect_list_.push_back(Effect());
+    effect_list_.push_back(new Effect());
   }
 
   for (int i = 0; i < kEffectTypeMax; ++i) {
@@ -59,14 +59,17 @@ EffectManager::EffectManager() {
 // dtor
 //------------------------------------------------
 EffectManager::~EffectManager() {
+  _Foreach([](Effect* p_effect) {
+    SafeDelete(p_effect);
+  });
 }
 
 //------------------------------------------------
 // Update
 //------------------------------------------------
 void EffectManager::Update(void) {
-  _Foreach([](Effect& effect) {
-    effect.Update();
+  _Foreach([](Effect* p_effect) {
+    p_effect->Update();
   });
 }
 
@@ -74,8 +77,8 @@ void EffectManager::Update(void) {
 // Draw
 //------------------------------------------------
 void EffectManager::Draw(void) {
-  _Foreach([](Effect& effect) {
-    effect.Draw();
+  _Foreach([](Effect* p_effect) {
+    p_effect->Draw();
   });
 }
 
@@ -85,18 +88,19 @@ void EffectManager::Draw(void) {
 void EffectManager::Create(const EffectType effect_type, const D3DXVECTOR2& position, const D3DXVECTOR2& velocity, const float scale) {
   assert(0 <= effect_type && effect_type < kEffectTypeMax);
 
-  Effect& effect = _SearchDeadEffect();
-  effect.SetParameter(D3DXVECTOR3(position.x, position.y, 0.0f),
-                      D3DXVECTOR3(velocity.x, velocity.y, 0.0f),
-                      kEffectData[effect_type].size * scale,
-                      kEffectData[effect_type].lifetime,
-                      texture_data_[effect_type]);
+  Effect* p_effect = _SearchDeadEffect();
+  p_effect->SetParameter(D3DXVECTOR3(position.x, position.y, 0.0f),
+    D3DXVECTOR3(velocity.x, velocity.y, 0.0f),
+    128,//kEffectData[effect_type].size * scale,
+    1000,//kEffectData[effect_type].lifetime,
+    0);
+       //                 texture_data_[effect_type]);
 }
 
 //------------------------------------------------
 // Internal Foreach
 //------------------------------------------------
-void EffectManager::_Foreach(void(*function)(Effect&)) {
+void EffectManager::_Foreach(void(*function)(Effect*)) {
   std::for_each(effect_list_.begin(), effect_list_.end(), function);
 }
 
@@ -104,13 +108,13 @@ void EffectManager::_Foreach(void(*function)(Effect&)) {
 // Search a dead effect.
 // return not used effect id.
 //------------------------------------------------
-Effect& EffectManager::_SearchDeadEffect(void) {
-  for (auto& effect : effect_list_) {
-    if (!effect.IsAlive()) {
-      return effect;
+Effect* EffectManager::_SearchDeadEffect(void) {
+  for (auto p_effect : effect_list_) {
+    if (!p_effect->IsAlive()) {
+      return p_effect;
     }
   }
 
-  effect_list_.push_back(Effect());
+  effect_list_.push_back(new Effect());
   return effect_list_.back();
 }

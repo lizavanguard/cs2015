@@ -9,11 +9,13 @@
 // include
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 #include "Application/Object/Object2D/Object2D.h"
+//#include "Application/Object/AnimationObject/AnimationObject.h"
 
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 // class definition
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 class Effect : public Object2D {
+//class Effect : public AnimationObject {
 public:
   // ctor
   Effect();

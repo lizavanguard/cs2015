@@ -26,10 +26,14 @@ const D3DXVECTOR2 kDefaultSize = {128.0f, 128.0f};
 // ctor
 //------------------------------------------------
 Effect::Effect()
+//    : AnimationObject(ANIMATION_PLAYER_RATTEL_NONE)
     : Object2D(D3DXVECTOR3(0.0f, 0.0f, 0.0f), kDefaultSize, nullptr)
     , count_(0)
     , lifetime_(0)
     , velocity_(0.0f, 0.0f, 0.0f) {
+  //pos_ = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+  //size_ = kDefaultSize;
+
   is_alive_ = false;
 }
 
@@ -49,6 +53,7 @@ void Effect::Update(void) {
 
   pos_ += velocity_;
 
+  //p_texture_animation_->UpdateAnimation();
 
   if (count_ == lifetime_) {
     is_alive_ = false;
@@ -77,4 +82,3 @@ void Effect::SetParameter(
   texture_id_ = texture_id;
   is_alive_ = true;
 }
-
