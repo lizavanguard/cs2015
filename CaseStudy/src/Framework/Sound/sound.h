@@ -23,6 +23,7 @@ typedef enum {
   SOUND_LABEL_SE_CALL0,
   SOUND_LABEL_SE_CALL1,
   SOUND_LABEL_SE_EAT,
+  SOUND_LABEL_SE_INDUCE,
   kSoundMax
 } SoundLabels;
 

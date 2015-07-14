@@ -10,6 +10,8 @@
 #include "Uriel.h"
 #include "Framework/DirectXHelper/DeviceHolder.h"
 #include "Framework/DirectXHelper/DirectXConst.h"
+#include "Framework/DrawDebugPrimitive/DrawPrimitive.h"
+#include "Framework/Sound/sound.h"
 #include "Framework/Texture/TextureManagerHolder.h"
 #include "Application/Stage/Stage.h"
 #include "Application/Tension/TensionGauge.h"
@@ -185,6 +187,8 @@ void Uriel::_PreProcessOfDraw(void) {
 
   start_uv_ = texture_uv_;
   end_uv_ = texture_uv_ + texture_uv_offset_;
+
+  DrawCircle3D(pos_, static_cast<float>(kUrielInducible) * 2, 0xff00ff00);
 }
 
 //=============================================================================
@@ -212,6 +216,7 @@ void Uriel::SetDestPos(const D3DXVECTOR3& pos){
   if (abs(pos.x - pos_.x) < kUrielInducible){
     dest_position_ = pos;
     induction_flag_ = true;
+    PlaySound(SOUND_LABEL_SE_CALL0);
   }
 }
 

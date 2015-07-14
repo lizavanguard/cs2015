@@ -15,6 +15,7 @@
 #include "Framework/Sound/sound.h"
 
 #include "Application/Collison/Collision.h"
+#include "Application/Effect/EffectManager.h"
 #include "Application/Object/BackGround/BackGroundManager.h"
 #include "Application/Object/Object.h"
 #include "Application/Object/player.h"
@@ -84,6 +85,8 @@ SceneGame::SceneGame()
   flower = new Flower(ANIMATION_FLOWER_SWAY, p_stage_);
   flower->SetPos(D3DXVECTOR3(-100, -100, 0));
 
+  EffecManagerSingleton::Instance();
+
   PlaySound(SOUND_LABEL_BGM_DEMO0);
 }
 
@@ -141,6 +144,9 @@ void SceneGame::Update(SceneManager* p_scene_manager, const float elapsed_time) 
   // ウリエル更新
   p_uriel_->Update();
 
+  // Effect
+  EffecManagerSingleton::Instance().Update();
+
   p_tension_gauge_->Update();
 
   // Uriel x Player's boro
@@ -167,6 +173,10 @@ void SceneGame::Update(SceneManager* p_scene_manager, const float elapsed_time) 
     SceneTutorialFactory* pTutorialSceneFactory = new SceneTutorialFactory();
     p_scene_manager->PushNextSceneFactory(pTutorialSceneFactory);
   }
+
+  if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_3)) {
+    EffecManagerSingleton::Instance().Create(EffectManager::EFFECTTYPE_KIRAKIRA, D3DXVECTOR2(100, -100), D3DXVECTOR2(5, 5), 1.0f);
+  }
 }
 
 
@@ -192,6 +202,8 @@ void SceneGame::Draw(void) {
   p_tension_gauge_->Draw();
 
   p_timer_->Draw();
+
+  EffecManagerSingleton::Instance().Draw();
 
   if (!p_ready_->IsEnd()) {
     p_ready_->Draw();
