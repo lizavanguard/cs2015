@@ -1,51 +1,43 @@
 //==============================================================================
 //
-// EffectManager
+// Cursor
 // Author: Shimizu Shoji
+//
+// テクスチャを指定する
+// 押された時のテクスチャも指定する
 //
 //==============================================================================
 #pragma once
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 // include
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
-#include <deque>
-
-#include "Framework/Utility/SingletonHolder.hpp"
-
-#include "Effect.h"
+#include "Application/Object/Object2D/Object2D.h"
 
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 // class definition
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
-class EffectManager {
+class Cursor : public Object2D {
 public:
-  // enum
-  enum EffectType {
-    EFFECTTYPE_KIRAKIRA,
-    kEffectTypeMax
-  };
-
   // ctor
-  EffectManager();
+  Cursor(const D3DXVECTOR3& position,
+         const D3DXVECTOR2& size,
+         const char* p_standard_texture_filename,
+         const char* p_pushed_texture_filename);
 
   // dtor
-  ~EffectManager();
+  ~Cursor();
 
   // Update
   void Update(void);
 
-  // Draw
-  void Draw(void);
+  // Pushed
+  void Pushed(void) { is_pushed_ = true; }
 
-  // Create
-  void Create(EffectType effect_type, const D3DXVECTOR2& position, const D3DXVECTOR2& velocity, float scale);
+  // set
+  void SetPosition(const D3DXVECTOR3& position) { pos_ = position; }
 
 private:
-  void _Foreach(void(*function)(Effect*));
-  Effect* _SearchDeadEffect(void);
-
-  typedef std::deque<Effect*> EffectList;
-  EffectList effect_list_;
+  int standard_texture_id_;
+  int pushed_texture_id_;
+  bool is_pushed_;
 };
-
-typedef liza::generic::SingletonHolder<EffectManager> EffecManagerSingleton;

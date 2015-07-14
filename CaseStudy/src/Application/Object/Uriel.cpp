@@ -10,6 +10,7 @@
 #include "Uriel.h"
 #include "Framework/DirectXHelper/DeviceHolder.h"
 #include "Framework/DirectXHelper/DirectXConst.h"
+#include "Framework/Sound/sound.h"
 #include "Framework/Texture/TextureManagerHolder.h"
 #include "Application/Stage/Stage.h"
 #include "Application/Tension/TensionGauge.h"
@@ -147,15 +148,19 @@ void Uriel::Update(void){
   if (move_direction_ == DIRECTION_LEFT){
     map = p_stage_->CheckMapTip2(&D3DXVECTOR3(pos_.x + size_.x - size_.x / 4,pos_.y,pos_.z), D3DXVECTOR3(size_.x / 4, 1.0f, 0.0f), &check);
     if (check.left == MAP_TYPE_WALL ||
-       (check.left == MAP_TYPE_NORMAL &&
-        check.up_left == MAP_TYPE_NORMAL)){
+       ((check.left == MAP_TYPE_NORMAL &&
+        check.up_left == MAP_TYPE_NORMAL)) ||
+        (check.left == MAP_TYPE_NORMAL &&
+        check.up == MAP_TYPE_NORMAL)){
       move_.x *= -1;
     }
   } else {
-    map = p_stage_->CheckMapTip2(&pos_, D3DXVECTOR3(size_.x / 4, 1.0f, 0.0f), &check);
+    map = p_stage_->CheckMapTip2(&D3DXVECTOR3(pos_.x - size_.x / 4 * 3,pos_.y,pos_.z), D3DXVECTOR3(size_.x / 4, 1.0f, 0.0f), &check);
     if (check.right == MAP_TYPE_WALL ||
+       ((check.right == MAP_TYPE_NORMAL &&
+        check.up_right == MAP_TYPE_NORMAL)) ||
        (check.right == MAP_TYPE_NORMAL &&
-        check.up_right == MAP_TYPE_NORMAL)){
+        check.up == MAP_TYPE_NORMAL)){
       move_.x *= -1;
     }
   }
@@ -212,6 +217,7 @@ void Uriel::SetDestPos(const D3DXVECTOR3& pos){
   if (abs(pos.x - pos_.x) < kUrielInducible){
     dest_position_ = pos;
     induction_flag_ = true;
+    PlaySound(SOUND_LABEL_SE_CALL0);
   }
 }
 
@@ -759,7 +765,8 @@ BLOCK_DATA Uriel::CrawlLoadCheck(void){
       if (check.bottom_right == MAP_TYPE_NONE){
         p_stage_->CheckMapTip2(&D3DXVECTOR3(pos_.x + move_.x, pos_.y, pos_.z),
                                 D3DXVECTOR3(size_.x / 4, 1.0f, 0.0f), &check);
-        if (check.bottom_right == MAP_TYPE_NORMAL){
+        if (check.bottom_right == MAP_TYPE_NORMAL &&
+            check.right == MAP_TYPE_NONE){
           return BLOCK_DATA_JUMP;
         }
       }
@@ -769,7 +776,8 @@ BLOCK_DATA Uriel::CrawlLoadCheck(void){
       if (check.bottom_left == MAP_TYPE_NONE){
         p_stage_->CheckMapTip2(&D3DXVECTOR3(pos_.x + move_.x, pos_.y, pos_.z),
                                 D3DXVECTOR3(size_.x / 4, 1.0f, 0.0f), &check);
-        if (check.bottom_left == MAP_TYPE_NORMAL){
+        if (check.bottom_left == MAP_TYPE_NORMAL &&
+            check.left == MAP_TYPE_NONE){
           return BLOCK_DATA_JUMP;
         }
       }
@@ -782,7 +790,8 @@ BLOCK_DATA Uriel::CrawlLoadCheck(void){
   if (check.bottom == MAP_TYPE_NORMAL){
     // ‰E‚Éi‚ñ‚Å‚éê‡
     if (move_direction_ == DIRECTION_RIGHT){
-      if(check.right == MAP_TYPE_NORMAL){
+      if(check.right == MAP_TYPE_NORMAL &&
+		  check.up == MAP_TYPE_NONE){
         map_ = p_stage_->CheckMapTip2(&D3DXVECTOR3(pos_.x + size_.x / 4, pos_.y, pos_.z),
                                        D3DXVECTOR3(size_.x / 4, size_.y / 4, 0.0f), &check);
         if (check.up_right == MAP_TYPE_NONE ||
@@ -796,7 +805,8 @@ BLOCK_DATA Uriel::CrawlLoadCheck(void){
 
     // ¶‚Éi‚ñ‚Å‚éê‡
     else{
-      if(check.left == MAP_TYPE_NORMAL){
+      if(check.left == MAP_TYPE_NORMAL &&
+		  check.up == MAP_TYPE_NONE){
         p_stage_->CheckMapTip2(&D3DXVECTOR3(pos_.x - size_.x / 4, pos_.y, pos_.z),
                                 D3DXVECTOR3(size_.x / 4, 1.0f, 0.0f), &check);
         if (check.up_left == MAP_TYPE_NONE ||
@@ -826,12 +836,14 @@ BLOCK_DATA Uriel::ChargeCrawlLoadCheck(void){
         p_stage_->CheckMapTip2(&D3DXVECTOR3(pos_.x + move_.x, pos_.y, pos_.z),
                                 D3DXVECTOR3(size_.x / 4, 1.0f, 0.0f), &check);
         if (check.bottom == MAP_TYPE_NONE){
-          if (check.bottom_right == MAP_TYPE_NORMAL){
+          if (check.bottom_right == MAP_TYPE_NORMAL &&
+              check.right == MAP_TYPE_NONE){
             return BLOCK_DATA_JUMP;
           }
           p_stage_->CheckMapTip2(&D3DXVECTOR3(pos_.x + size_.x + move_.x, pos_.y, pos_.z),
                                   D3DXVECTOR3(size_.x / 4, 1.0f, 0.0f), &check);
-          if (check.bottom_right == MAP_TYPE_NORMAL){
+          if (check.bottom_right == MAP_TYPE_NORMAL &&
+              check.right == MAP_TYPE_NONE){
             return BLOCK_DATA_JUMP;
           }
         }
@@ -843,12 +855,14 @@ BLOCK_DATA Uriel::ChargeCrawlLoadCheck(void){
         p_stage_->CheckMapTip2(&D3DXVECTOR3(pos_.x + move_.x, pos_.y, pos_.z),
                                 D3DXVECTOR3(size_.x / 4, 1.0f, 0.0f), &check);
         if (check.bottom == MAP_TYPE_NONE){
-          if (check.bottom_left == MAP_TYPE_NORMAL){
+          if (check.bottom_left == MAP_TYPE_NORMAL &&
+              check.left == MAP_TYPE_NONE){
             return BLOCK_DATA_JUMP;
           }
           p_stage_->CheckMapTip2(&D3DXVECTOR3(pos_.x - size_.x + move_.x, pos_.y, pos_.z),
                                   D3DXVECTOR3(size_.x / 4, 1.0f, 0.0f), &check);
-          if (check.bottom_left == MAP_TYPE_NORMAL){
+          if (check.bottom_left == MAP_TYPE_NORMAL &&
+              check.left == MAP_TYPE_NONE){
             return BLOCK_DATA_JUMP;
           }
         }

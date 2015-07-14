@@ -15,6 +15,7 @@
 #include "Framework/Sound/sound.h"
 
 #include "Application/Collison/Collision.h"
+#include "Application/Effect/EffectManager.h"
 #include "Application/Object/BackGround/BackGroundManager.h"
 #include "Application/Object/Object.h"
 #include "Application/Object/player.h"
@@ -32,6 +33,7 @@
 #include "Application/Object/Sang/Butterfly.h"
 #include "Application/Object/Sang/Flower.h"
 #include "Application/Tutorial/SceneTutorialFactory.h"
+#include "Application\GamePause\GamePause.h"
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // class definition
@@ -52,6 +54,8 @@ SceneGame::SceneGame()
     , p_timer_(nullptr)
     , p_camera(nullptr)
     , p_sang_manager_(nullptr)
+    , p_camera_(nullptr)
+    , p_game_pause_(nullptr)
 {
   p_sang_manager_ = new SangManager();
 
@@ -72,7 +76,7 @@ SceneGame::SceneGame()
 
   p_collision_ = new Collision(*p_player_, *p_uriel_, *p_stage_);
 
-  p_camera = new Camera(p_player_, p_stage_);
+  p_camera_ = new Camera(p_player_, p_stage_);
 
   p_timer_ = new Timer(D3DXVECTOR3(600.0f, 50.0f, 0.0f), 0.0f, D3DXVECTOR2(50.0f, 50.0f), TIMER);
 
@@ -83,6 +87,10 @@ SceneGame::SceneGame()
   Flower* flower = nullptr;
   flower = new Flower(ANIMATION_FLOWER_SWAY, p_stage_);
   flower->SetPos(D3DXVECTOR3(-100, -100, 0));
+
+  EffecManagerSingleton::Instance();
+
+  p_game_pause_ = new GamePause;
 
   PlaySound(SOUND_LABEL_BGM_DEMO0);
 }
@@ -103,8 +111,9 @@ SceneGame::~SceneGame() {
   SafeDelete(p_stage_);
   SafeDelete(p_background_manager_);
   SafeDelete(p_timer_);
-  SafeDelete(p_camera);
   SafeDelete(p_sang_manager_);
+  SafeDelete(p_camera_);
+  SafeDelete(p_game_pause_);
 }
 
 
@@ -117,55 +126,66 @@ void SceneGame::Update(SceneManager* p_scene_manager, const float elapsed_time) 
     p_ready_->Update();
     return;
   }
+  if (!p_game_pause_->GetPause()){
+    // GAME
+    // 鳥更新
+    p_tori_->Update();
+    if (p_tori_->GetHitCheck()){
+        return;
+    }
 
-  // GAME
-  // 鳥更新
-  p_tori_->Update();
-  if (p_tori_->GetHitCheck()){
-    return;
+    // カメラ更新
+    p_camera_->Update();
+
+    // タイマー更新
+    p_timer_->Update();
+
+    p_background_manager_->Update();
+
+    p_sang_manager_->Update();
+
+    // プレイヤー更新
+    p_player_->Update(p_uriel_);
+
+    // ウリエル更新
+    p_uriel_->Update();
+
+    // Effect
+    EffecManagerSingleton::Instance().Update();
+
+    p_tension_gauge_->Update();
+
+    // Uriel x Player's boro
+    p_collision_->CollideUrielToPlayersBoro();
+
+    // Stage x Player's boro
+    p_collision_->CollideStageToPlayersGimmick();
+
+    if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_1)) {
+      p_tension_gauge_->IncreaseTension();
+    }
+    if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_2)) {
+      p_tension_gauge_->CoolDown();
+    }
   }
 
-  // カメラ更新
-  p_camera->Update();
+  p_game_pause_->Update(p_scene_manager, elapsed_time, p_game_pause_);
 
-  // タイマー更新
-  p_timer_->Update();
-
-  p_background_manager_->Update();
-
-  p_sang_manager_->Update();
-
-  // プレイヤー更新
-  p_player_->Update(p_uriel_);
-
-  // ウリエル更新
-  p_uriel_->Update();
-
-  p_tension_gauge_->Update();
-
-  // Uriel x Player's boro
-  p_collision_->CollideUrielToPlayersBoro();
-
-  // Stage x Player's boro
-  p_collision_->CollideStageToPlayersGimmick();
-
-  if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_1)) {
-    p_tension_gauge_->IncreaseTension();
-  }
-  if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_2)) {
-    p_tension_gauge_->CoolDown();
-  }
   // Next TitleScene
   if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_N)) {
       //SceneTitleFactory* pTitleSceneFactory = new SceneTitleFactory();
-        SceneResultFactory* pResultSceneFactory = new SceneResultFactory();
-        p_scene_manager->PushNextSceneFactory(pResultSceneFactory);
+      SceneResultFactory* pResultSceneFactory = new SceneResultFactory();
+      p_scene_manager->PushNextSceneFactory(pResultSceneFactory);
   }
 
   // TutorialScene
   if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_T)) {
     SceneTutorialFactory* pTutorialSceneFactory = new SceneTutorialFactory();
     p_scene_manager->PushNextSceneFactory(pTutorialSceneFactory);
+  }
+
+  if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_3)) {
+    EffecManagerSingleton::Instance().Create(EffectManager::EFFECTTYPE_KIRAKIRA, D3DXVECTOR2(100, -100), D3DXVECTOR2(5, 5), 1.0f);
   }
 }
 
@@ -174,8 +194,8 @@ void SceneGame::Update(SceneManager* p_scene_manager, const float elapsed_time) 
 // Draw
 //------------------------------------------------
 void SceneGame::Draw(void) {
-  p_camera->Set();
-  SetMatrixViewProjectionViewport(p_camera->GetMatrixViewProjectionViewPort());
+  p_camera_->Set();
+  SetMatrixViewProjectionViewport(p_camera_->GetMatrixViewProjectionViewPort());
 
   p_background_manager_->Draw();
 
@@ -192,6 +212,10 @@ void SceneGame::Draw(void) {
   p_tension_gauge_->Draw();
 
   p_timer_->Draw();
+
+  EffecManagerSingleton::Instance().Draw();
+
+  p_game_pause_->Draw();
 
   if (!p_ready_->IsEnd()) {
     p_ready_->Draw();

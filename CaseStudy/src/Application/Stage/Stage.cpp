@@ -1,4 +1,4 @@
-//==============================================================================
+//==================l============================================================
 //
 // オブジェクト [Stage.cpp]
 // Author : Ohashi Tomoki
@@ -84,7 +84,9 @@ Stage::Stage()
     texture_id_[i] = TextureManagerHolder::Instance().GetTextureManager().LoadTexture(filename);
   }
   tumiki_id_ = TextureManagerHolder::Instance().GetTextureManager().LoadTexture("data/Texture/tumiki000.png");
-  SelectStage("data/map/tutorial.mf");
+  SelectStage("data/map/stage01_take_check.mf");
+
+  free(filename);
 }
 
 // dtor

@@ -49,6 +49,7 @@ SoundParam g_aParam[ kSoundMax ] = {
   {"data/se/SE_uriel_call_0.wav", false},
   {"data/se/SE_uriel_call_1.wav", false},
   {"data/se/SE_uriel_eat.wav", false},
+  {"data/se/SE_player_induce.wav", true},
 };
 
 

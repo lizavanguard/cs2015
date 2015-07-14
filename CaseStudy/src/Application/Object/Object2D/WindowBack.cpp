@@ -1,18 +1,19 @@
 //******************************************************************************
 //
-// TitleChar  [TitleChar.h]
+// WindowBack  [WindowBack.cpp]
 // Author  :  SHOHEI MATSUMOTO
-// 更新日  :  2015/06/30
+// 更新日  :  2015/07/07
 //
 //******************************************************************************
 //******************************************************************************
 // インクルードファイル
 //******************************************************************************
+#include "WindowBack.h"
+#include "Framework/FrameworkOption.h"
 #include "Framework/GameWindow/GameDirectX.h"
 #include "Framework/Texture/TextureManagerHolder.h"
-#include "TitleChar.h"
-#include "Framework\GameManager\GameManager.h"
-#include "Framework\DebugProc\DebugProc.h"
+#include "Framework/GameManager/GameManager.h"
+#include "Framework/DebugProc/DebugProc.h"
 
 //******************************************************************************
 // マクロ定義
@@ -33,9 +34,12 @@
 // グローバル変数:
 //******************************************************************************
 namespace {
-    const float kPosSpeed = 2.5f;
 
-    const float kPosMoveMax = 100.0f;
+    const char* kTextureFilename = "data/Texture/pauseWindow.jpg";
+
+    const DWORD kWindowBackColor = 0xffffffff;
+
+
 }
 
 //******************************************************************************
@@ -46,30 +50,16 @@ namespace {
 // 引数    :  無し
 // 戻り値  :  無し
 // Author  :  SHOHEI MATSUMOTO
-// 更新日  :  2015/06/30
+// 更新日  :  2015/07/07
 //==============================================================================
-TitleChar::TitleChar(const D3DXVECTOR3 &pos, const float &rot, const D3DXVECTOR2 &size ,
-                    const float &speed , const float &movemax, const char* texName)
-    : Object2D(pos, size, texName) {
+WindowBack::WindowBack(const D3DXVECTOR3 &pos, const float &rot, const D3DXVECTOR2 &size)
+    : Object2D(pos, size, kTextureFilename) {
   rot_ = rot;
-  move_counter_ = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-  change_pos_ = D3DXVECTOR3(0.0f, speed, 0.0f);
+  color_ = kWindowBackColor;
 }
 
-//==============================================================================
-// 更新処理
-// 引数    :  無し
-// 戻り値  :  無し
-// Author  :  SHOHEI MATSUMOTO
-// 更新日  :  2015/06/30
-//==============================================================================
-void TitleChar::Update(const float &movemax){
-    pos_ += change_pos_;
-    move_counter_ += change_pos_;
-    if (abs(move_counter_.y) > movemax){
-        change_pos_ *= -1;
-        move_counter_.y = 0.0f;
-    }
+void WindowBack::Update(){
+
 }
 
 //==============================================================================
@@ -77,12 +67,12 @@ void TitleChar::Update(const float &movemax){
 // 引数    :  無し
 // 戻り値  :  無し
 // Author  :  SHOHEI MATSUMOTO
-// 更新日  :  2015/06/30
+// 更新日  :  2015/07/07
 //==============================================================================
-void TitleChar::_PreProcessOfDraw(void){
+void WindowBack::_PreProcessOfDraw(void){
 }
 
-void TitleChar::_PostProcessOfDraw(void){
+void WindowBack::_PostProcessOfDraw(void){
 }
 
 

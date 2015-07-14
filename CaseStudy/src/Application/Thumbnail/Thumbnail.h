@@ -1,6 +1,6 @@
 //==============================================================================
 //
-// Effect
+// Thumbnail
 // Author: Shimizu Shoji
 //
 //==============================================================================
@@ -8,31 +8,31 @@
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 // include
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
-#include "Application/Object/AnimationObject/AnimationObject.h"
+#include "Application/Object/Object2D/Object2D.h"
 
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 // class definition
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
-class Effect : public AnimationObject {
+class Thumbnail : public Object2D {
 public:
   // ctor
-  Effect();
+  Thumbnail(const D3DXVECTOR3& position, const D3DXVECTOR2& size, const char* p_texture_filename);
 
   // dtor
-  ~Effect();
+  ~Thumbnail();
 
   // Update
-  void Update(void);
+  void Update(float elpased_time);
 
-  // Set parameter
-  void SetParameter(const D3DXVECTOR3& position, const D3DXVECTOR3& velocity, ANIMATION_EVENT animation_event, float scale);
+  // Activate
+  void Activate(void);
+
+  // Deactivate
+  void Deactivate(void);
 
   // get
-  bool IsAlive(void) const { return is_alive_; }
+  bool IsActive(void) const { return is_active_; }
 
 private:
-  unsigned int count_;
-  unsigned int lifetime_;
-
-  D3DXVECTOR3 velocity_;
+  bool is_active_;
 };

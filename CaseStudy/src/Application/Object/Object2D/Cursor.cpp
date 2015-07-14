@@ -1,23 +1,20 @@
 //==============================================================================
 //
-// Effect
+// Cursor
 // Author: Shimizu Shoji
 //
 //==============================================================================
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 // include
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
-#include "Effect.h"
+#include "Cursor.h"
 
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 // const
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 namespace {
 
-const D3DXVECTOR2 kDefaultSize = {128.0f, 128.0f};
-
 }
-
 
 //==============================================================================
 // class implementation
@@ -25,54 +22,33 @@ const D3DXVECTOR2 kDefaultSize = {128.0f, 128.0f};
 //------------------------------------------------
 // ctor
 //------------------------------------------------
-Effect::Effect()
-    : AnimationObject(ANIMATION_NONE)
-    , count_(0)
-    , lifetime_(0)
-    , velocity_(0.0f, 0.0f, 0.0f) {
-  pos_ = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-  size_ = kDefaultSize;
-
-  is_alive_ = false;
+Cursor::Cursor(const D3DXVECTOR3& position,
+               const D3DXVECTOR2& size,
+               const char* p_standard_texture_filename,
+               const char* p_pushed_texture_filename)
+    : Object2D(position, size, p_pushed_texture_filename)
+    , standard_texture_id_(-1)
+    , pushed_texture_id_(texture_id_)
+    , is_pushed_(false) {
+  SetTexture(p_standard_texture_filename);
+  standard_texture_id_ = texture_id_;
 }
 
 //------------------------------------------------
 // dtor
 //------------------------------------------------
-Effect::~Effect() {
+Cursor::~Cursor() {
 }
 
 //------------------------------------------------
 // Update
 //------------------------------------------------
-void Effect::Update(void) {
-  if (!is_alive_) {
-    return;
+void Cursor::Update(void) {
+  if (is_pushed_) {
+    texture_id_ = pushed_texture_id_;
   }
-
-  pos_ += velocity_;
-
-  if (count_ == lifetime_) {
-    is_alive_ = false;
+  else {
+    texture_id_ = standard_texture_id_;
   }
-  ++count_;
-}
-
-//------------------------------------------------
-// Set parameter
-//------------------------------------------------
-void Effect::SetParameter(
-    const D3DXVECTOR3& position,
-    const D3DXVECTOR3& velocity,
-    const ANIMATION_EVENT animation_event,
-    const float scale) {
-  assert(scale > 0.0f);
-
-  pos_ = position;
-  velocity_ = velocity;
-  size_ = kDefaultSize * scale;
-  texture_id_ = p_texture_animation_->SetAnimation(animation_event);
-  lifetime_ = p_texture_animation_->GetAnimationTime();
-  count_ = 0;
-  is_alive_ = true;
+  is_pushed_ = false;
 }

@@ -19,7 +19,7 @@ static const int kPolygonMax = 1;	// lŠpŒ`‚Ìƒ|ƒŠƒSƒ“‚Ì”
 static const int kVertexMax = kPolygonMax * 4;
 
 static const float kAlphaMax = 255.0f;
-static const float kFadeSpd = 4.0f;
+static const float kFadeSpd = 8.0f;
 
 static const float kFadeWidth = kWindowWidth;
 static const float kFadeHeight = kWindowHeight + 100;

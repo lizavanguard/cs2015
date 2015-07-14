@@ -1,23 +1,21 @@
 //******************************************************************************
 //
-// SceneTitle  [SceneTitle.h]
+// GamePause  [GamePause.cpp]
 // Author  :  SHOHEI MATSUMOTO
-// 更新日  :  2015/06/26
+// 更新日  :  2015/07/07
 //
 //******************************************************************************
 //******************************************************************************
 // インクルードファイル
 //******************************************************************************
-#include "SceneTitle.h"
-#include "Framework\FrameworkOption.h"
-//#include "Framework/GameManager/GameManager.h"
+#include "GamePause.h"
+#include "Framework/FrameworkOption.h"
+#include "Application/Title/SceneTitleFactory.h"
+#include "Application/Game/SceneGameFactory.h"
 #include "Framework/Input/InputManagerHolder.h"
 #include "Framework/Input/InputKeyboard.h"
 
-#include "Framework\Scene\SceneManager.h"
-#include "Application/StageSelect/SceneStageSelectFactory.h"
-#include "Application\TitleBase\TitleCharBase.h"
-#include "Application/Object/Object2D/StartSymbol.h"
+#include "Application/GamePause/GamePauseWindow.h"
 
 //******************************************************************************
 // マクロ定義
@@ -36,19 +34,14 @@
 // 引数    :  無し
 // 戻り値  :  無し
 // Author  :  SHOHEI MATSUMOTO
-// 更新日  :  2015/06/26
+// 更新日  :  2015/07/07
 //==============================================================================
-SceneTitle::SceneTitle()
+GamePause::GamePause()
   : is_end_(false)
-  , p_start_symbol_(nullptr)
-  , p_object2D(nullptr)
-  , p_title_char_base(nullptr){
+  , is_pause_(false)
+  , p_game_pause_window_(nullptr){
 
-    p_start_symbol_ = new StartSymbol(D3DXVECTOR3(640.0f, 550.0f, 0.0f), 0.0f, D3DXVECTOR2(256.0f, 100.0f));
-
-    p_object2D = new Object2D(D3DXVECTOR3(kWindowWidth * 0.5f, 380.0f, 0.0f), D3DXVECTOR2(kWindowWidth, 760.0f), "data/Texture/タイトル(仮).png");
-
-    p_title_char_base = new TitleCharBase();
+    p_game_pause_window_ = new GamePauseWindow;
 }
 
 //==============================================================================
@@ -56,31 +49,38 @@ SceneTitle::SceneTitle()
 // 引数    :  無し
 // 戻り値  :  無し
 // Author  :  SHOHEI MATSUMOTO
-// 更新日  :  2015/06/26
+// 更新日  :  2015/07/07
 //==============================================================================
-SceneTitle::~SceneTitle() {
-  SafeDelete(p_start_symbol_);
-  SafeDelete(p_object2D);
-  SafeDelete(p_title_char_base);
+GamePause::~GamePause() {
+    SafeDelete(p_game_pause_window_);
 }
 
 
 //==============================================================================
 // 更新処理
-// 引数    :  SceneManager* p_scene_manager, const float elapsed_time
+// 引数    :  無し
 // 戻り値  :  無し
 // Author  :  SHOHEI MATSUMOTO
-// 更新日  :  2015/06/26
+// 更新日  :  2015/07/07
 //==============================================================================
-void SceneTitle::Update(SceneManager* p_scene_manager, const float elapsed_time) {
-  p_start_symbol_->Update();
-
-  p_title_char_base->Update();
-
-  // Next TitleScene
-  if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_N)) {
-      p_scene_manager->PushNextSceneFactory(new SceneStageSelectFactory());
+void GamePause::Update(SceneManager* p_scene_manager, const float elapsed_time, GamePause* p_game_pause_) {
+  // タイトル・ステージセレクト・リトライ・戻る
+  if (is_pause_){
+      p_game_pause_window_->Update(p_scene_manager, elapsed_time, p_game_pause_);
+    //// Next TitleScene
+    //if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_N)) {
+    //  SceneGameFactory* pGameSceneFactory = new SceneGameFactory();
+    //  p_scene_manager->PushNextSceneFactory(pGameSceneFactory);
+    //}
   }
+  if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_P)) {
+      if (is_pause_)
+        SetPause(false);
+      else
+        SetPause(true);
+  }
+
+//  GameCursor* gameCursor = 
 }
 
 
@@ -89,14 +89,12 @@ void SceneTitle::Update(SceneManager* p_scene_manager, const float elapsed_time)
 // 引数    :  無し
 // 戻り値  :  無し
 // Author  :  SHOHEI MATSUMOTO
-// 更新日  :  2015/06/26
+// 更新日  :  2015/07/07
 //==============================================================================
-void SceneTitle::Draw(void) {
-    p_object2D->Draw();
-
-    p_title_char_base->Draw();
-
-    p_start_symbol_->Draw();
+void GamePause::Draw(void) {
+  if (is_pause_){
+      p_game_pause_window_->Draw();
+  }
 }
 
 

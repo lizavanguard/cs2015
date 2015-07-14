@@ -47,7 +47,7 @@ static const ANIM_DATA s_AnimaitionData[] = {
   { 0, 1, 0, "data/Texture/tex_anim_01.png" },                    // ’¹Šì‚Ô
   { 15, 2, 2, "data/Texture/tex_anim_01.png" },                   // ’¹‚ªã‚Ö”ò‚Ô
   { 7, 8, 4, "data/Texture/tex_anim_01.png" },                    // ’±‚ª”ò‚Ô
-  { 2, 4, 8, "data/Texture/tex_anim_02.png" },                    // ‰Ô‚ª—h‚ê‚é
+  { 20, 12, 4, "data/Texture/tex_anim_01.png" },                  // ‰Ô‚ª—h‚ê‚é
 };
 
 bool TextureAnimation::texture_load_ = false;
