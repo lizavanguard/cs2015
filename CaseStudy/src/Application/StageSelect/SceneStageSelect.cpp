@@ -9,15 +9,17 @@
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 #include "SceneStageSelect.h"
 
+#include "Framework/FrameworkOption.h"
+#include "Framework/Input/InputKeyboard.h"
+#include "Framework/Input/InputManagerHolder.h"
+#include "Framework/Scene/SceneManager.h"
+#include "Framework/Sound/sound.h"
+
 #include "Application/Game/SceneGameFactory.h"
 #include "Application/GameCursor/GameCursor.h"
 #include "Application/Object/BackGround/BackGroundManager.h"
 #include "Application/Object/Object2D/Object2D.h"
 #include "Application/Thumbnail/Thumbnail.h"
-#include "Framework/FrameworkOption.h"
-#include "Framework/Input/InputKeyboard.h"
-#include "Framework/Input/InputManagerHolder.h"
-#include "Framework/Scene/SceneManager.h"
 
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 // const
@@ -88,12 +90,16 @@ SceneStageSelect::SceneStageSelect()
 
   // TODO:
   p_thumbnails_[0]->Activate();
+
+  PlaySound(SOUND_LABEL_BGM_STAGESELECT);
 }
 
 //------------------------------------------------
 // dtor
 //------------------------------------------------
 SceneStageSelect::~SceneStageSelect() {
+  StopSound(SOUND_LABEL_BGM_STAGESELECT);
+
   SafeDelete(p_cursor_);
 
   SafeDelete(p_background_manager_);

@@ -15,6 +15,8 @@
 #include "Framework/Input/InputKeyboard.h"
 
 #include "Framework\Scene\SceneManager.h"
+#include "Framework/Sound/sound.h"
+
 #include "Application/StageSelect/SceneStageSelectFactory.h"
 #include "Application\TitleBase\TitleCharBase.h"
 #include "Application/Object/Object2D/StartSymbol.h"
@@ -49,6 +51,8 @@ SceneTitle::SceneTitle()
     p_object2D = new Object2D(D3DXVECTOR3(kWindowWidth * 0.5f, 380.0f, 0.0f), D3DXVECTOR2(kWindowWidth, 760.0f), "data/Texture/タイトル(仮).png");
 
     p_title_char_base = new TitleCharBase();
+
+    PlaySound(SOUND_LABEL_BGM_TITLE);
 }
 
 //==============================================================================
@@ -59,6 +63,8 @@ SceneTitle::SceneTitle()
 // 更新日  :  2015/06/26
 //==============================================================================
 SceneTitle::~SceneTitle() {
+  StopSound(SOUND_LABEL_BGM_TITLE);
+
   SafeDelete(p_start_symbol_);
   SafeDelete(p_object2D);
   SafeDelete(p_title_char_base);

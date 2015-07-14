@@ -130,16 +130,18 @@ void Player::Update(Uriel *uriel_){
     // ギミックON/OFF
     if (pJoypad.IsTrigger(InputDevice::Pads::PAD_Y) || pKeyboard.IsTrigger(DIK_G)) {
       ChangeAnimation(MODE_GIMMICK);
-      PlaySound(SOUND_LABEL_SE_CALL1);
+      PlaySound(SOUND_LABEL_SE_PLAYER_GIMMICK);
       is_gimmick_ = true;
     }
     else if (pJoypad.IsRelease(InputDevice::Pads::PAD_Y) || pKeyboard.IsRelease(DIK_G)) {
+      ChangeAnimation(MODE_NORMAL);
       is_gimmick_ = false;
     }
 
     // ボーロ
     if (!is_eat_) {
       if (pJoypad.IsTrigger(InputDevice::Pads::PAD_X) || pKeyboard.IsTrigger(DIK_B)) {
+        PlaySound(SOUND_LABEL_SE_PLAYER_BORO);
         ChangeAnimation(MODE_BORO);
       }
       else if (pJoypad.IsRelease(InputDevice::Pads::PAD_X) || pKeyboard.IsRelease(DIK_B)){
