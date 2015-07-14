@@ -10,6 +10,7 @@
 #include "Uriel.h"
 #include "Framework/DirectXHelper/DeviceHolder.h"
 #include "Framework/DirectXHelper/DirectXConst.h"
+#include "Framework/Sound/sound.h"
 #include "Framework/Texture/TextureManagerHolder.h"
 #include "Application/Stage/Stage.h"
 #include "Application/Tension/TensionGauge.h"
