@@ -29,6 +29,7 @@ public:
              int increment_key,
              int decrement_key,
              int enter_key,
+             int cancel_key,
              const PositionContainer& position_list);
 
   // dtor
@@ -43,7 +44,8 @@ public:
   // get
   int GetCursorIndex(void) const;
   int GetCursorIndexOld(void) const { return old_cursor_index_; }
-  bool IsJustEntered(void) const { return is_just_entered_; }
+  bool IsJustEntered(void) const { return is_just_entered_; }  // 本当はリスナーを登録したいよね
+  bool IsJustCanceled(void) const { return is_just_canceled_; }
   bool IsJustMoved(void) const { return is_just_moved_; }
 
 private:
@@ -52,6 +54,7 @@ private:
   const int increment_key_;
   const int decrement_key_;
   const int enter_key_;
+  const int cancel_key_;
   const PositionContainer position_list_;
 
   Cursor* p_cursor_;
@@ -59,5 +62,6 @@ private:
 
   int old_cursor_index_;
   bool is_just_entered_;
+  bool is_just_canceled_;
   bool is_just_moved_;
 };

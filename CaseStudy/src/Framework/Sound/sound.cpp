@@ -46,11 +46,13 @@ DWORD g_aSizeAudio[ kSoundMax ] = {};					// オーディオデータサイズ
 // 各音素材のパラメータ
 SoundParam g_aParam[ kSoundMax ] = {
   {"data/bgm/BGM_demo00.wav", true},
-  {"data/bgm/BGM_title.wav", true},
-  {"data/bgm/BGM_stageSelect.wav", true},
   {"data/bgm/BGM_result.wav", true},
+  {"data/bgm/BGM_stageSelect.wav", true},
+  {"data/bgm/BGM_title.wav", true},
   {"data/se/SE_uriel_call_0.wav", false},
   {"data/se/SE_uriel_call_1.wav", false},
+  {"data/se/SE_cancel.wav", false},
+  {"data/se/SE_decision.wav", false},
   {"data/se/SE_uriel_eat.wav", false},
   {"data/se/SE_player_induce.wav", true},
   {"data/se/SE_player_gimmick.wav", false},
