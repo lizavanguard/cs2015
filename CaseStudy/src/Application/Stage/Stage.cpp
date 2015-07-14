@@ -85,6 +85,8 @@ Stage::Stage()
   }
   tumiki_id_ = TextureManagerHolder::Instance().GetTextureManager().LoadTexture("data/Texture/tumiki000.png");
   SelectStage("data/map/tutorial.mf");
+
+  free(filename);
 }
 
 // dtor
