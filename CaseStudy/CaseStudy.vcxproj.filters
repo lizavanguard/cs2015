@@ -165,6 +165,7 @@
     <ClCompile Include="src\Application\Effect\EffectManager.cpp">
       <Filter>Application\Effect</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="src\Application\Object\Sang\Butterfly.cpp">
       <Filter>Application\Object\Sang</Filter>
     </ClCompile>
@@ -183,6 +184,8 @@
     <ClCompile Include="src\Application\Tutorial\TutorialEvent.cpp">
       <Filter>Application\Tutorial</Filter>
     </ClCompile>
+=======
+>>>>>>> f43beb0fb6de50a84a67056bae845a6725c781ac
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Framework">
@@ -272,12 +275,15 @@
     <Filter Include="Application\Effect">
       <UniqueIdentifier>{afb87c8c-f893-4b65-8a66-e855a9fa1413}</UniqueIdentifier>
     </Filter>
+<<<<<<< HEAD
     <Filter Include="Application\Object\Sang">
       <UniqueIdentifier>{d2236299-a497-4b49-a696-d13fc7e500dc}</UniqueIdentifier>
     </Filter>
     <Filter Include="Application\Tutorial">
       <UniqueIdentifier>{e113e8b4-99b4-4daf-95aa-9234b839b02f}</UniqueIdentifier>
     </Filter>
+=======
+>>>>>>> f43beb0fb6de50a84a67056bae845a6725c781ac
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Framework\Input\Input.h">
@@ -509,6 +515,7 @@
     <ClInclude Include="src\Application\Effect\EffectManager.h">
       <Filter>Application\Effect</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="src\Application\Object\Sang\Butterfly.h">
       <Filter>Application\Object\Sang</Filter>
     </ClInclude>
@@ -527,6 +534,8 @@
     <ClInclude Include="src\Application\Tutorial\TutorialEvent.h">
       <Filter>Application\Tutorial</Filter>
     </ClInclude>
+=======
+>>>>>>> f43beb0fb6de50a84a67056bae845a6725c781ac
   </ItemGroup>
   <ItemGroup>
     <None Include="src\Framework\Utility\MathUtility.inl">
