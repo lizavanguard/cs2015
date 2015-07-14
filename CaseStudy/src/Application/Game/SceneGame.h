@@ -28,6 +28,7 @@ class Timer;
 class Camera;
 class SangManager;
 
+class GamePause;
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // class definition
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -61,6 +62,8 @@ private:
   Timer* p_timer_;
   Camera* p_camera;
   SangManager* p_sang_manager_;
+  Camera* p_camera_;
+  GamePause* p_game_pause_;
 };
 
 

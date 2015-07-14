@@ -198,6 +198,18 @@
     <ClCompile Include="src\Application\Thumbnail\Thumbnail.cpp">
       <Filter>Application\Thumbnail</Filter>
     </ClCompile>
+    <ClCompile Include="src\Application\GamePause\GamePause.cpp">
+      <Filter>Application\GamePause</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application\GamePause\GamePauseWindow.cpp">
+      <Filter>Application\GamePause</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application\Object\Object2D\Char.cpp">
+      <Filter>Application\Object\Object2D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Application\Object\Object2D\WindowBack.cpp">
+      <Filter>Application\Object\Object2D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Framework">
@@ -301,6 +313,9 @@
     </Filter>
     <Filter Include="Application\Thumbnail">
       <UniqueIdentifier>{77388755-8d4e-46b0-9dac-0407a730cd47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\GamePause">
+      <UniqueIdentifier>{caa884c8-0192-43ad-98c0-14fe6ba0d922}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -568,6 +583,18 @@
     </ClInclude>
     <ClInclude Include="src\Application\Thumbnail\Thumbnail.h">
       <Filter>Application\Thumbnail</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\GamePause\GamePauseWindow.h">
+      <Filter>Application\GamePause</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\GamePause\GamePause.h">
+      <Filter>Application\GamePause</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\Object\Object2D\Char.h">
+      <Filter>Application\Object\Object2D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\Object\Object2D\WindowBack.h">
+      <Filter>Application\Object\Object2D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

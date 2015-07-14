@@ -57,6 +57,16 @@ namespace {
                                     , { 650.0f, 300.0f, 0.0f }
                                     , { 800.0f, 300.0f, 0.0f } };
 
+    const float kPosMoveMax[] = { 100.0f, 100.0f, 100.0f
+                                , 100.0f, 100.0f, 100.0f
+                                , 100.0f, 100.0f
+                                };
+
+    const float kChangeSpeed[] = { 3.5f, 2.5f, 2.5f 
+                                 , 3.5f, 2.5f, 2.5f 
+                                 , 3.5f, 2.5f
+                                 };
+
     const int kTitleCharNum = 8;
 
 
@@ -79,7 +89,8 @@ TitleCharBase::TitleCharBase()
 
     for (int i = 0; i < kTitleCharNum; i++)
     {
-        p_title_char[i] = new TitleChar(kStartPos[i], 0.0f, D3DXVECTOR2(100.0f, 100.0f), kTextureFilename[i]);
+        p_title_char[i] = new TitleChar(kStartPos[i], 0.0f, D3DXVECTOR2(100.0f, 100.0f), 
+                                         kChangeSpeed[i] , kPosMoveMax[i], kTextureFilename[i]);
     }
 
 }
@@ -109,7 +120,7 @@ TitleCharBase::~TitleCharBase(void){
 //==============================================================================
 void TitleCharBase::Update(){
   for (int i = 0; i < kTitleCharNum; i++){
-      p_title_char[i]->Update();
+      p_title_char[i]->Update(kPosMoveMax[i]);
   }
 }
 
