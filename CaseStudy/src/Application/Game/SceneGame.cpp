@@ -15,6 +15,7 @@
 #include "Framework/Sound/sound.h"
 
 #include "Application/Collison/Collision.h"
+#include "Application/Effect/EffectManager.h"
 #include "Application/Object/BackGround/BackGroundManager.h"
 #include "Application/Object/Object.h"
 #include "Application/Object/player.h"
@@ -67,6 +68,8 @@ SceneGame::SceneGame()
   p_camera = new Camera(p_player_, p_stage_);
 
   p_timer_ = new Timer(D3DXVECTOR3(600.0f, 50.0f, 0.0f), 0.0f, D3DXVECTOR2(50.0f, 50.0f), TIMER);
+
+  EffecManagerSingleton::Instance();
 
   PlaySound(SOUND_LABEL_BGM_DEMO0);
 }
@@ -122,6 +125,9 @@ void SceneGame::Update(SceneManager* p_scene_manager, const float elapsed_time) 
   // ウリエル更新
   p_uriel_->Update();
 
+  // Effect
+  EffecManagerSingleton::Instance().Update();
+
   p_tension_gauge_->Update();
 
   // Uriel x Player's boro
@@ -138,6 +144,10 @@ void SceneGame::Update(SceneManager* p_scene_manager, const float elapsed_time) 
       //SceneTitleFactory* pTitleSceneFactory = new SceneTitleFactory();
         SceneResultFactory* pResultSceneFactory = new SceneResultFactory();
         p_scene_manager->PushNextSceneFactory(pResultSceneFactory);
+  }
+
+  if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_3)) {
+    EffecManagerSingleton::Instance().Create(EffectManager::EFFECTTYPE_KIRAKIRA, D3DXVECTOR2(0, 0), D3DXVECTOR2(5, 5), 128);
   }
 }
 
@@ -162,6 +172,8 @@ void SceneGame::Draw(void) {
   p_tension_gauge_->Draw();
 
   p_timer_->Draw();
+
+  EffecManagerSingleton::Instance().Draw();
 
   if (!p_ready_->IsEnd()) {
     p_ready_->Draw();

@@ -112,10 +112,12 @@ void Player::Update(Uriel *uriel_){
   static bool is_press = false;
   if (pJoypad.IsTrigger(InputDevice::Pads::PAD_A) || pKeyboard.IsTrigger(DIK_RETURN)) {
     ChangeAnimation(MODE_GUIDE);
+    PlaySound(SoundLabels::SOUND_LABEL_SE_INDUCE);
     is_press = true;
   }
   else if (pJoypad.IsRelease(InputDevice::Pads::PAD_A) || pKeyboard.IsRelease(DIK_RETURN)) {
     is_press = false;
+    StopSound(SoundLabels::SOUND_LABEL_SE_INDUCE);
     ChangeAnimation(MODE_NORMAL);
   }
   // ÉMÉ~ÉbÉNON/OFF

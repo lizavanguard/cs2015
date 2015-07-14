@@ -22,15 +22,20 @@ public:
   ~Effect();
 
   // Update
-  void Update(void) {
-    if (!is_alive_) return;
-    pos_.x += 5.0f;
-  }
+  void Update(void);
+
+  // Set parameter
+  void SetParameter(const D3DXVECTOR3& position, const D3DXVECTOR3& velocity, float size, unsigned int lifetime, int texture_id);
+
+  // get
+  bool IsAlive(void) const { return is_alive_; }
 
   // set
   void SetTextureID(int texture_id) { texture_id_ = texture_id; }
-  void Alive(void) { is_alive_ = true; }
-  void Dead(void) { is_alive_ = false; }
 
 private:
+  unsigned int count_;
+  unsigned int lifetime_;
+
+  D3DXVECTOR3 velocity_;
 };
