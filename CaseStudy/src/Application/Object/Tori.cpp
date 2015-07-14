@@ -53,7 +53,7 @@ void Tori::Update(void){
       pos_.y += move_speed_;
     }
 
-    move_speed_ -= (kFlyToTopSpeed / (animation_time_ * 2));
+    move_speed_ -= ((float)kFlyToTopSpeed / (float)(animation_time_ * 2));
 
     if (motion_timer_ >= animation_time_){
       motion_timer_ = -animation_time_;

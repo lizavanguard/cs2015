@@ -44,6 +44,7 @@ const D3DXVECTOR2 kGimmickover = {
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 int Max_id_(int width, int height);
 bool AABBCheck(D3DXVECTOR3 a_point[4], D3DXVECTOR3 b_point[4]);
+bool Stage::gimmick_create_;
 //==============================================================================
 // class implementation
 //==============================================================================
@@ -74,6 +75,7 @@ Stage::Stage()
       fclose(fp);
     }
   }
+  gimmick_create_ = false;
   texture_id_ = new int[no];
   for (int i = 1; i < no;i++)
   {
@@ -457,6 +459,7 @@ void Stage::GimmickControll(int id)
         stage_[id].stage_id_ = MAP_TYPE_GIMMICK_ON;
         mapdata_[stage_[id].stage_data_id_].id_ = MAP_TYPE_GIMMICK_ON;
         stage_[id].size_  = kGimmickdefault;
+        gimmick_create_ = true;
       }else{
         stage_[id].texture_id_ = texture_id_[MAP_TYPE_GIMMICK_OFF];
         stage_[id].stage_id_ = MAP_TYPE_GIMMICK_OFF;

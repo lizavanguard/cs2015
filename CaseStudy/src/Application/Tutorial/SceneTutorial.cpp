@@ -45,7 +45,6 @@ SceneTutorial::SceneTutorial()
     , p_tension_gauge_(nullptr)
     , p_tori_(nullptr)
     , p_uriel_(nullptr)
-    , p_timer_(nullptr)
     , p_camera(nullptr)
     , p_tutorial_event_(nullptr)
 {
@@ -66,9 +65,7 @@ SceneTutorial::SceneTutorial()
 
   p_camera = new Camera(p_player_, p_stage_);
 
-  p_timer_ = new Timer(D3DXVECTOR3(600.0f, 50.0f, 0.0f), 0.0f, D3DXVECTOR2(50.0f, 50.0f), TIMER);
-
-  p_tutorial_event_ = new TutorialEvent(p_uriel_, p_player_);
+  p_tutorial_event_ = new TutorialEvent(p_uriel_, p_player_, p_stage_);
 }
 
 
@@ -83,7 +80,6 @@ SceneTutorial::~SceneTutorial() {
   SafeDelete(p_tension_gauge_);
   SafeDelete(p_stage_);
   SafeDelete(p_background_manager_);
-  SafeDelete(p_timer_);
   SafeDelete(p_camera);
   SafeDelete(p_tutorial_event_);
 }
@@ -105,11 +101,6 @@ void SceneTutorial::Update(SceneManager* p_scene_manager, const float elapsed_ti
 
   // カメラ更新
   p_camera->Update();
-
-  if (!p_tutorial_event_->ViewEvent()){
-    // タイマー更新
-    p_timer_->Update();
-  }
 
   // プレイヤー更新
   p_player_->Update(p_uriel_);
@@ -153,8 +144,6 @@ void SceneTutorial::Draw(void) {
   p_player_->Draw();
 
   p_tension_gauge_->Draw();
-
-  p_timer_->Draw();
 
   if (p_tutorial_event_->ViewEvent()){
     p_tutorial_event_->Draw();

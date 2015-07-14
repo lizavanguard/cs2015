@@ -92,6 +92,8 @@ public:
 
   int GimmickSelect(D3DXVECTOR3 pos, D3DXVECTOR3 size);
 
+  static bool GetGimmickCreate(){ return gimmick_create_; }
+  static void SetGimmickCreate(bool tf){ gimmick_create_ = tf; }
 private:
   void HitManage(int id,HIT_CHECK* check);
   void CheckInit(HIT_CHECK* check);
@@ -107,6 +109,7 @@ private:
   STG_STR* stage_;
   STG_DATA* mapdata_;
   LPDIRECT3DVERTEXBUFFER9 p_vertex_buffer_;
+  static bool gimmick_create_;
 };
 
 

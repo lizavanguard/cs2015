@@ -56,6 +56,7 @@ Player::Player(ANIMATION_EVENT animation_event , Stage* stage)
     stage_ = stage;
     stageSize_ = stage_->GetStageSize();
     pos_ = stage_->GetStartMaptip();
+    pos_.y += 50.0f;
 }
 
 //==============================================================================

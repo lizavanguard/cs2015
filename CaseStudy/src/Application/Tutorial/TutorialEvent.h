@@ -15,6 +15,7 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 class Uriel;
 class Player;
+class Stage;
 
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 // class definition
@@ -22,7 +23,7 @@ class Player;
 class TutorialEvent : public Object2D {
 public:
   // ctor
-  TutorialEvent(Uriel* p_uriel,Player* p_player);
+	TutorialEvent(Uriel* p_uriel, Player* p_player, Stage* p_stage);
 
   // dtor
   ~TutorialEvent();
@@ -45,6 +46,9 @@ private:
     EVENT_NAME_CALL,
     EVENT_NAME_JUNP,
     EVENT_NAME_CHARGE_JUNP,
+    EVENT_NAME_RUNAWAY,
+    EVENT_NAME_BUILDING_BLOCK,
+    EVENE_NAME_LEAD_URIEL,
     EVENT_NAME_MAX,
   }EVENT_NAME;
   static const int kTutorialEventMax = EVENT_NAME_MAX;
@@ -61,4 +65,5 @@ private:
   bool TutorialEventCheck(void);
   void EventUpdate(void);
   Player* p_player_;
+  Stage* p_stage_;
 };
