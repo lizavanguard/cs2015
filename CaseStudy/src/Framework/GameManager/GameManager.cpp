@@ -22,7 +22,7 @@
 
 #include "Application/Game/SceneGame.h"  // HACK: ñ≥óùÇ‚ÇË
 #include "Application/Title/SceneTitle.h"
-
+#include "Application/StageSelect/SceneStageSelect.h"
 
 
 //==============================================================================
@@ -63,7 +63,8 @@ GameManager::GameManager( HINSTANCE hInstance, HWND hWnd, LPDIRECT3DDEVICE9 pDev
   InitDrawPrimitive(pDevice);
 
   // àÍî‘â∫
-  Scene* pFirstScene = new SceneGame();
+  Scene* pFirstScene = new SceneTitle();
+  //Scene* pFirstScene = new SceneStageSelect();
   pSceneManager_ = new SceneManager(pFirstScene);
 }
 

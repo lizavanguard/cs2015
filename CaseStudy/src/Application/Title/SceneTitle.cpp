@@ -10,12 +10,12 @@
 //******************************************************************************
 #include "SceneTitle.h"
 #include "Framework\FrameworkOption.h"
-#include "Application\Game\SceneGameFactory.h"
 //#include "Framework/GameManager/GameManager.h"
 #include "Framework/Input/InputManagerHolder.h"
 #include "Framework/Input/InputKeyboard.h"
 
 #include "Framework\Scene\SceneManager.h"
+#include "Application/StageSelect/SceneStageSelectFactory.h"
 #include "Application\TitleBase\TitleCharBase.h"
 #include "Application/Object/Object2D/StartSymbol.h"
 
@@ -79,8 +79,7 @@ void SceneTitle::Update(SceneManager* p_scene_manager, const float elapsed_time)
 
   // Next TitleScene
   if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_N)) {
-      SceneGameFactory* pGameSceneFactory = new SceneGameFactory();
-      p_scene_manager->PushNextSceneFactory(pGameSceneFactory);
+      p_scene_manager->PushNextSceneFactory(new SceneStageSelectFactory());
   }
 }
 
