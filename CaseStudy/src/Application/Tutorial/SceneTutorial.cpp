@@ -121,7 +121,7 @@ void SceneTutorial::Update(SceneManager* p_scene_manager, const float elapsed_ti
 
   D3DXVECTOR3 pos = p_uriel_->GetPos();
   pos.y += 100.0f;
-  p_camera->CallPos(pos);
+  p_camera->CallAlways(pos);
 
   // ƒJƒƒ‰XV
   p_camera->Update();
