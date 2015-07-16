@@ -80,19 +80,11 @@ SceneGame::SceneGame()
 
   p_timer_ = new Timer(D3DXVECTOR3(600.0f, 50.0f, 0.0f), 0.0f, D3DXVECTOR2(50.0f, 50.0f), TIMER);
 
-  Butterfly* butterfly = nullptr;
-  butterfly = new Butterfly(ANIMATION_BUTTERFLY_FLY, p_stage_);
-  butterfly->SetPos(D3DXVECTOR3(-600, -100, 0));
-
-  Flower* flower = nullptr;
-  flower = new Flower(ANIMATION_FLOWER_SWAY, p_stage_);
-  flower->SetPos(D3DXVECTOR3(-100, -100, 0));
-
   EffecManagerSingleton::Instance();
 
   p_game_pause_ = new GamePause;
 
-  PlaySound(SOUND_LABEL_BGM_DEMO0);
+//  PlaySound(SOUND_LABEL_BGM_DEMO0);
 }
 
 

@@ -19,7 +19,7 @@
 #include "Application/Title/SceneTitleFactory.h"
 #include "Application/Game/SceneGameFactory.h"
 #include "Application/Collison/Collision.h"
-#include "Application/Object/BackGround/BackGroundManager.h"
+#include "Application/Object/Object2D/Object2D.h"
 #include "Application/Object/Object.h"
 #include "Application/Object/player.h"
 #include "Application/Object/Tori.h"
@@ -29,6 +29,14 @@
 #include "Application\Camera\camera.h"
 #include "Application/Stage/Stage.h"
 #include "Application/Tutorial/SceneTutorialFactory.h"
+#include "Application/Tutorial/TutorialBackGround.h"
+
+namespace {
+
+const D3DXVECTOR3 kPos = {640.0f, 380.0f, 10.0f};
+const D3DXVECTOR2 kSize = {1280.0f, 760.0f};
+
+}
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // class definition
@@ -38,7 +46,7 @@
 //------------------------------------------------
 SceneTutorial::SceneTutorial()
     : is_end_(false)
-    , p_background_manager_(nullptr)
+    , p_background_(nullptr)
     , p_collision_(nullptr)
     , p_player_(nullptr)
     , p_stage_(nullptr)
@@ -47,6 +55,7 @@ SceneTutorial::SceneTutorial()
     , p_uriel_(nullptr)
     , p_camera(nullptr)
     , p_tutorial_event_(nullptr)
+	, p_tutorial_backGround_(nullptr)
 {
   p_stage_ = new Stage();
 
@@ -59,13 +68,20 @@ SceneTutorial::SceneTutorial()
 
   p_tori_ = new Tori(ANIMATION_TORI_DROP, p_uriel_, p_stage_);
 
-  p_background_manager_ = new BackGroundManager();
+  D3DXVECTOR2 size = p_stage_->GetStageSize();
+  D3DXVECTOR3 pos;
+  pos.x = 0.0f;
+  pos.y = -(size.y / 2) + 50.0f;
+  pos.z = 0.0f;
+  p_background_ = new Object2D(pos, size, "data/Texture/kids_room.jpg");
 
   p_collision_ = new Collision(*p_player_, *p_uriel_, *p_stage_);
 
   p_camera = new Camera(p_player_, p_stage_);
 
   p_tutorial_event_ = new TutorialEvent(p_uriel_, p_player_, p_stage_);
+
+  p_tutorial_backGround_ = new TutorialBackGround(pos, size, "data/Texture/kids_room.jpg");
 }
 
 
@@ -79,9 +95,10 @@ SceneTutorial::~SceneTutorial() {
   SafeDelete(p_tori_);
   SafeDelete(p_tension_gauge_);
   SafeDelete(p_stage_);
-  SafeDelete(p_background_manager_);
+  SafeDelete(p_background_);
   SafeDelete(p_camera);
   SafeDelete(p_tutorial_event_);
+  SafeDelete(p_tutorial_backGround_);
 }
 
 
@@ -90,7 +107,7 @@ SceneTutorial::~SceneTutorial() {
 //------------------------------------------------
 void SceneTutorial::Update(SceneManager* p_scene_manager, const float elapsed_time) {
   // TutorialEvent
-  p_tutorial_event_->Update();
+//  p_tutorial_event_->Update();
 
   // GAME
   // 鳥更新
@@ -104,8 +121,6 @@ void SceneTutorial::Update(SceneManager* p_scene_manager, const float elapsed_ti
 
   // プレイヤー更新
   p_player_->Update(p_uriel_);
-
-  p_background_manager_->Update();
 
   // ウリエル更新
   p_uriel_->Update();
@@ -133,7 +148,8 @@ void SceneTutorial::Draw(void) {
   p_camera->Set();
   SetMatrixViewProjectionViewport(p_camera->GetMatrixViewProjectionViewPort());
 
-  p_background_manager_->Draw();
+  //p_background_->Draw();
+  p_tutorial_backGround_->Draw();
 
   p_stage_->Draw();
 

@@ -84,7 +84,7 @@ Stage::Stage()
     texture_id_[i] = TextureManagerHolder::Instance().GetTextureManager().LoadTexture(filename);
   }
   tumiki_id_ = TextureManagerHolder::Instance().GetTextureManager().LoadTexture("data/Texture/tumiki000.png");
-  SelectStage("data/map/stage01_take_check.mf");
+  SelectStage("data/map/tutorial.mf");
 
   free(filename);
 }
@@ -280,7 +280,7 @@ D3DXVECTOR3 Stage::CheckMapTip2(D3DXVECTOR3* pos, D3DXVECTOR3 size, HIT_CHECK* c
 //
 void Stage::HitManage(int id, HIT_CHECK* check)
 {
-  check->center = mapdata_[id + map_width_].id_;
+  check->center = mapdata_[id - map_width_].id_;
   check->center = check->center == MAP_TYPE_GIMMICK_OFF ? MAP_TYPE_NONE : check->center;
   check->center = check->center == MAP_TYPE_GIMMICK_ON ? MAP_TYPE_NORMAL : check->center;
   int data_id_ = map_width_ * map_height_;
