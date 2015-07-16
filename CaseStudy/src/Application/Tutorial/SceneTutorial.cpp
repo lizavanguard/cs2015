@@ -31,13 +31,6 @@
 #include "Application/Tutorial/SceneTutorialFactory.h"
 #include "Application/Tutorial/TutorialBackGround.h"
 
-namespace {
-
-const D3DXVECTOR3 kPos = {640.0f, 380.0f, 10.0f};
-const D3DXVECTOR2 kSize = {1280.0f, 760.0f};
-
-}
-
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // class definition
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -69,10 +62,8 @@ SceneTutorial::SceneTutorial()
   p_tori_ = new Tori(ANIMATION_TORI_DROP, p_uriel_, p_stage_);
 
   D3DXVECTOR2 size = p_stage_->GetStageSize();
-  D3DXVECTOR3 pos;
-  pos.x = 0.0f;
+  D3DXVECTOR3 pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
   pos.y = -(size.y / 2) + 50.0f;
-  pos.z = 0.0f;
   p_background_ = new Object2D(pos, size, "data/Texture/kids_room.jpg");
 
   p_collision_ = new Collision(*p_player_, *p_uriel_, *p_stage_);
@@ -140,11 +131,13 @@ void SceneTutorial::Update(SceneManager* p_scene_manager, const float elapsed_ti
   // Stage x Player's boro
   p_collision_->CollideStageToPlayersGimmick();
 
+#if _DEBUG
   // Next TitleScene
   if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_T)) {
     SceneGameFactory* pGameSceneFactory = new SceneGameFactory();
     p_scene_manager->PushNextSceneFactory(pGameSceneFactory);
   }
+#endif
 }
 
 

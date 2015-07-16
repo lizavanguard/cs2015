@@ -40,7 +40,7 @@ static const ANIM_DATA s_AnimaitionData[] = {
   { 30, 8, 16, "data/Texture/tex_anim_uriel01.png" },                  // ウリエル回転(ゴール時の演出)
   { 0, 0, 0, "data/Texture/tex_anim_gimmick00.png" },                  // ガラガラアニメーション無し
   { 0, 4, 0, "data/Texture/tex_anim_gimmick00.png" },                  // ボーロアニメーション
-  { 0, 0, 0, "data/Texture/tex_anim_04.png" },                    // ギミック
+  { 2, 0, 4, "data/Texture/tex_anim_gimmick00.png" },                  // ギミック
   { 4, 0, 4, "data/Texture/tex_anim_gimmick00.png" },                  // ガラガラを振る
   { 0, 8, 0, "data/Texture/tex_anim_gimmick00.png" },                  // 鳥アニメーション無し
   { 20, 8, 4, "data/Texture/tex_anim_gimmick00.png" },                 // 鳥落ち込む
