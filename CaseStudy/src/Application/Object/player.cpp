@@ -108,12 +108,11 @@ void Player::Update(Uriel *uriel_){
         }
       }
     }
-
+#if _DEBUG
     if (pKeyboard.IsPress(DIK_9)) {
-      //uriel_->SetAnimaton(ANIMATION_URIEL_RUNAWAY);
       uriel_->BoroChage();
     }
-
+#endif
     // ƒKƒ‰ƒKƒ‰ƒ‚[ƒhØ‘Ö
     // —U“±
     static bool is_press = false;
@@ -179,6 +178,13 @@ void Player::Update(Uriel *uriel_){
   }
 
   move_stop_flag_ = false;
+
+  // í‚ÉƒEƒŠƒGƒ‹‚Ì•û‚ðŒü‚­‚æ‚¤‚É‚·‚é
+  if (pos_.x > uriel_->GetPos().x){
+    move_direction_ = DIRECTION_RIGHT;
+  } else {
+    move_direction_ = DIRECTION_LEFT;
+  }
 }
 
 //==============================================================================

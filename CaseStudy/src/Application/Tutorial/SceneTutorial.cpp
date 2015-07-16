@@ -78,6 +78,9 @@ SceneTutorial::SceneTutorial()
   p_collision_ = new Collision(*p_player_, *p_uriel_, *p_stage_);
 
   p_camera = new Camera(p_player_, p_stage_);
+  pos = p_uriel_->GetPos();
+  pos.y += 100.0f;
+  p_camera->SetPosR(pos);
 
   p_tutorial_event_ = new TutorialEvent(p_uriel_, p_player_, p_stage_);
 
@@ -107,7 +110,7 @@ SceneTutorial::~SceneTutorial() {
 //------------------------------------------------
 void SceneTutorial::Update(SceneManager* p_scene_manager, const float elapsed_time) {
   // TutorialEvent
-//  p_tutorial_event_->Update();
+  p_tutorial_event_->Update();
 
   // GAME
   // 鳥更新
@@ -115,6 +118,10 @@ void SceneTutorial::Update(SceneManager* p_scene_manager, const float elapsed_ti
   if (p_tori_->GetHitCheck()){
     return;
   }
+
+  D3DXVECTOR3 pos = p_uriel_->GetPos();
+  pos.y += 100.0f;
+  p_camera->CallPos(pos);
 
   // カメラ更新
   p_camera->Update();
