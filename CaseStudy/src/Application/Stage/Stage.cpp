@@ -49,6 +49,12 @@ const D3DXVECTOR2 kGimmickover = {
 int Max_id_(int width, int height);
 bool AABBCheck(D3DXVECTOR3 a_point[4], D3DXVECTOR3 b_point[4]);
 bool Stage::gimmick_create_;
+const char* Stage_Name[] =
+{
+	"data/map/stage01_take.mf",
+	"data/map/stage01_take.mf",
+	"data/map/stage01_take.mf",
+};
 //==============================================================================
 // class implementation
 //==============================================================================
@@ -88,7 +94,7 @@ Stage::Stage()
     texture_id_[i] = TextureManagerHolder::Instance().GetTextureManager().LoadTexture(filename);
   }
   tumiki_id_ = TextureManagerHolder::Instance().GetTextureManager().LoadTexture("data/Texture/tumiki000.png");
-  SelectStage("data/map/stage01_take.mf");
+  SelectStage(0);
 
   free(filename);
 }
@@ -102,7 +108,7 @@ Stage::~Stage() {
 //
 // ステージ読み込み
 //
-void Stage::SelectStage(char* mapfile) {
+void Stage::SelectStage(int stage_no) {
 
   FILE* fp = nullptr;
   int id = 0;
@@ -112,7 +118,7 @@ void Stage::SelectStage(char* mapfile) {
     delete[] mapdata_;
   }
   // ファイル読み込み
-  fopen_s(&fp,mapfile, "r");
+  fopen_s(&fp, (char*)Stage_Name[stage_no], "r");
   if (fp == nullptr)
   {
 #ifdef _DEBUG
@@ -165,20 +171,24 @@ void Stage::SelectStage(char* mapfile) {
         bool typegoal = mapdata_[map_work].id_ == MAP_TYPE_GOAL;
         bool typebuttefry = mapdata_[map_work].id_ == MAP_TYPE_SANG_BUTTEFRY;
         bool typeflower = mapdata_[map_work].id_ == MAP_TYPE_SANG_FLOWER;
+        bool typetumiki = mapdata_[map_work].id_ == MAP_TYPE_GIMMICK_ON;
         if (typestart || typegoal){
         stage_[id].texture_id_ = NULL;
         }
         else if (typebuttefry){
-        stage_[id].texture_id_ = NULL;
+          stage_[id].texture_id_ = NULL;
           Butterfly* butterfly = nullptr;
           butterfly = new Butterfly(ANIMATION_BUTTERFLY_FLY, this);
           butterfly->SetPos(stage_[id].pos_);
         }
         else if(typeflower){
-        stage_[id].texture_id_ = NULL;
+          stage_[id].texture_id_ = NULL;
           Flower* flower = nullptr;
           flower = new Flower(ANIMATION_FLOWER_SWAY, this);
           flower->SetPos(stage_[id].pos_);
+        }else if(typetumiki)
+        {
+          stage_[id].texture_id_ = tumiki_id_;
         }else{
           stage_[id].texture_id_ = texture_id_[mapdata_[map_work].id_];
         }
@@ -308,7 +318,7 @@ D3DXVECTOR3 Stage::CheckMapTip2(D3DXVECTOR3* pos, D3DXVECTOR3 size, HIT_CHECK* c
 //
 void Stage::HitManage(int id, HIT_CHECK* check)
 {
-  check->center = mapdata_[id + map_width_].id_;
+  check->center = mapdata_[id - map_width_].id_;
   check->center = check->center == MAP_TYPE_GIMMICK_OFF ? MAP_TYPE_NONE : check->center;
   check->center = check->center == MAP_TYPE_GIMMICK_ON ? MAP_TYPE_NORMAL : check->center;
   int data_id_ = map_width_ * map_height_;

@@ -51,7 +51,7 @@ enum
   MAP_TYPE_GIMMICK_OFF,
   MAP_TYPE_SANG_BUTTEFRY,
   MAP_TYPE_SANG_FLOWER,
-  MAP_TYPE_GIMMICK_ON = 99,
+  MAP_TYPE_GIMMICK_ON,
 };
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // class declaration
@@ -70,7 +70,7 @@ public:
   // 引数:char* マップデータを入れてください
   // 存在しない場合勝手に終了()
   //----------------------------------------------------------------------------
-  void SelectStage(char*);
+  void SelectStage(int);
 
   // dtor
   virtual ~Stage();
