@@ -85,6 +85,7 @@ public:
     void SetDestPos(const D3DXVECTOR3& pos);
 
     void CallPos(const D3DXVECTOR3& pos){ pos_dest_ = pos; call_flg_ = true; move_mode_change_ = false; }
+    void CallAlways(const D3DXVECTOR3& pos){ pos_dest_ = pos; call_flg_ = true; move_accele_ = 0.0f; }
     void CancelCall(void){ call_flg_ = false; move_accele_ = 0.0f; }
 
 private:

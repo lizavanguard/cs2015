@@ -81,13 +81,9 @@ SceneGame::SceneGame()
 
   p_timer_ = new Timer(D3DXVECTOR3(600.0f, 50.0f, 0.0f), 0.0f, D3DXVECTOR2(50.0f, 50.0f), TIMER);
 
-  Butterfly* butterfly = nullptr;
-  butterfly = new Butterfly(ANIMATION_BUTTERFLY_FLY, p_stage_);
-  butterfly->SetPos(D3DXVECTOR3(-600, -100, 0));
+  EffecManagerSingleton::Instance();
 
-  Flower* flower = nullptr;
-  flower = new Flower(ANIMATION_FLOWER_SWAY, p_stage_);
-  flower->SetPos(D3DXVECTOR3(-100, -100, 0));
+  p_game_pause_ = new GamePause;
 
   EffecManagerSingleton::Instance();
 
@@ -177,15 +173,15 @@ void SceneGame::Update(SceneManager* p_scene_manager, const float elapsed_time) 
       //SceneTitleFactory* pTitleSceneFactory = new SceneTitleFactory();
     PersistentValue::Instance().SetData("Score", 10);
     SceneResultFactory* pResultSceneFactory = new SceneResultFactory();
-      p_scene_manager->PushNextSceneFactory(pResultSceneFactory);
+    p_scene_manager->PushNextSceneFactory(pResultSceneFactory);
   }
-
+#if _DEBUG
   // TutorialScene
   if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_T)) {
     SceneTutorialFactory* pTutorialSceneFactory = new SceneTutorialFactory();
     p_scene_manager->PushNextSceneFactory(pTutorialSceneFactory);
   }
-
+#endif
   if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_3)) {
     EffecManagerSingleton::Instance().Create(EffectManager::EFFECTTYPE_KIRAKIRA, D3DXVECTOR2(100, -100), D3DXVECTOR2(5, 5), 1.0f);
   }

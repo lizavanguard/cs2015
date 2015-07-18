@@ -47,7 +47,7 @@ public:
   static const int kButterFlyMoveSpeed = 2;          // ’±‚ÌˆÚ“®‘¬“x
 
 private:
-  static const int kMoveAmount = 200;                // ˆÚ“®—Ê‚ªİ’è‚³‚ê‚È‚©‚Á‚½‚Ì’±‚ÌˆÚ“®—Ê
+  static const int kMoveAmount = 100;                // ˆÚ“®—Ê‚ªİ’è‚³‚ê‚È‚©‚Á‚½‚Ì’±‚ÌˆÚ“®—Ê
   Stage *p_stage_;
   int animation_time_;
   D3DXVECTOR3 base_pos_;

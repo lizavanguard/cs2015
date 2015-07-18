@@ -210,6 +210,9 @@
     <ClCompile Include="src\Application\Object\Object2D\WindowBack.cpp">
       <Filter>Application\Object\Object2D</Filter>
     </ClCompile>
+    <ClCompile Include="src\Application\Tutorial\TutorialBackGround.cpp">
+      <Filter>Application\Tutorial</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Framework">
@@ -595,6 +598,9 @@
     </ClInclude>
     <ClInclude Include="src\Application\Object\Object2D\WindowBack.h">
       <Filter>Application\Object\Object2D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\Tutorial\TutorialBackGround.h">
+      <Filter>Application\Tutorial</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -28,26 +28,26 @@ typedef struct
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 static const ANIM_DATA s_AnimaitionData[] = {
   // アニメーションの切り替わる時間  // アニメーションの開始番号  // アニメーションの個数  // テクスチャの名前
-  { 0, 0, 0, "data/Texture/tex_anim_00.png" },                    // ウリエルアニメーション無し
-  { 5, 4, 4, "data/Texture/tex_anim_00.png" },                    // ウリエルニュートラル
-  { 5, 8, 16, "data/Texture/tex_anim_00.png" },                   // ウリエルハイハイ
-  { 5, 8, 16, "data/Texture/tex_anim_00.png" },                   // ウリエルジャンプ
-  { 2, 4, 8, "data/Texture/tex_anim_02.png" },                    // ウリエル暴走
-  { 2, 4, 8, "data/Texture/tex_anim_02.png" },                    // ウリエル暴走ジャンプ
-  { 10, 12, 4, "data/Texture/tex_anim_02.png" },                  // ウリエル眠り
-  { 3, 0, 4, "data/Texture/tex_anim_02.png" },                    // ウリエルハイハイ(チャージ)
-  { 5, 0, 4, "data/Texture/tex_anim_02.png" },                    // ウリエルジャンプ(チャージ)
-  { 30, 8, 16, "data/Texture/tex_anim_00.png" },                  // ウリエル回転(ゴール時の演出)
-  { 0, 0, 0, "data/Texture/tex_anim_00.png" },                    // ガラガラアニメーション無し
-  { 0, 0, 0, "data/Texture/tex_anim_03.png" },                    // ボーロアニメーション
-  { 0, 0, 0, "data/Texture/tex_anim_04.png" },                    // ギミック
-  { 4, 0, 4, "data/Texture/tex_anim_00.png" },                    // ガラガラを振る
-  { 0, 0, 0, "data/Texture/tex_anim_01.png" },                    // 鳥アニメーション無し
-  { 20, 4, 4, "data/Texture/tex_anim_01.png" },                   // 鳥落ち込む
-  { 0, 1, 0, "data/Texture/tex_anim_01.png" },                    // 鳥喜ぶ
-  { 15, 2, 2, "data/Texture/tex_anim_01.png" },                   // 鳥が上へ飛ぶ
-  { 7, 8, 4, "data/Texture/tex_anim_01.png" },                    // 蝶が飛ぶ
-  { 2, 4, 8, "data/Texture/tex_anim_02.png" },                    // 花が揺れる
+  { 0, 0, 0, "data/Texture/tex_anim_uriel00.png" },                    // ウリエルアニメーション無し
+  { 5, 0, 4, "data/Texture/tex_anim_uriel00.png" },                    // ウリエルニュートラル
+  { 5, 4, 8, "data/Texture/tex_anim_uriel00.png" },                    // ウリエルハイハイ
+  { 5, 4, 8, "data/Texture/tex_anim_uriel00.png" },                    // ウリエルジャンプ
+  { 2, 4, 8, "data/Texture/tex_anim_uriel01.png" },                    // ウリエル暴走
+  { 2, 4, 8, "data/Texture/tex_anim_uriel01.png" },                    // ウリエル暴走ジャンプ
+  { 10, 12, 4, "data/Texture/tex_anim_uriel01.png" },                  // ウリエル眠り
+  { 3, 0, 4, "data/Texture/tex_anim_uriel01.png" },                    // ウリエルハイハイ(チャージ)
+  { 5, 0, 4, "data/Texture/tex_anim_uriel01.png" },                    // ウリエルジャンプ(チャージ)
+  { 30, 8, 16, "data/Texture/tex_anim_uriel01.png" },                  // ウリエル回転(ゴール時の演出)
+  { 0, 0, 0, "data/Texture/tex_anim_gimmick00.png" },                  // ガラガラアニメーション無し
+  { 0, 4, 0, "data/Texture/tex_anim_gimmick00.png" },                  // ボーロアニメーション
+  { 2, 0, 4, "data/Texture/tex_anim_gimmick00.png" },                  // ギミック
+  { 4, 0, 4, "data/Texture/tex_anim_gimmick00.png" },                  // ガラガラを振る
+  { 0, 8, 0, "data/Texture/tex_anim_gimmick00.png" },                  // 鳥アニメーション無し
+  { 20, 8, 4, "data/Texture/tex_anim_gimmick00.png" },                 // 鳥落ち込む
+  { 0, 5, 0, "data/Texture/tex_anim_gimmick00.png" },                  // 鳥喜ぶ
+  { 15, 6, 2, "data/Texture/tex_anim_gimmick00.png" },                 // 鳥が上へ飛ぶ
+  { 7, 0, 4, "data/Texture/tex_anim_gimmick01.png" },                  // 蝶が飛ぶ
+  { 20, 4, 6, "data/Texture/tex_anim_gimmick01.png" },                 // 花が揺れる
 };
 
 bool TextureAnimation::texture_load_ = false;

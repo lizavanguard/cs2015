@@ -22,13 +22,13 @@
 namespace {
 
 const char* kTexturenames[] = {
-  "data/Texture/block00.png",
-  "data/Texture/block00.png",
-  "data/Texture/block00.png",
-  "data/Texture/block00.png",
-  "data/Texture/block00.png",
-  "data/Texture/block00.png",
-  "data/Texture/block00.png",
+  "data/Texture/tyu-toriaru_messe-ziwaku.png",
+  "data/Texture/tyu-toriaru_messe-ziwaku.png",
+  "data/Texture/tyu-toriaru_messe-ziwaku.png",
+  "data/Texture/tyu-toriaru_messe-ziwaku.png",
+  "data/Texture/tyu-toriaru_messe-ziwaku.png",
+  "data/Texture/tyu-toriaru_messe-ziwaku.png",
+  "data/Texture/tyu-toriaru_messe-ziwaku.png",
 };
 
 const D3DXVECTOR3 event_point[] = {
@@ -41,7 +41,7 @@ const D3DXVECTOR3 event_point[] = {
   D3DXVECTOR3(+550, +100, 0),
 };
 
-const D3DXVECTOR3 kInitialPos = {800.0f, 100.0f, 0.0f};
+const D3DXVECTOR3 kInitialPos = {795.0f, 100.0f, 0.0f};
 const D3DXVECTOR2 kSize = {1000.0f, 200.0f};
 
 }
@@ -127,6 +127,11 @@ bool TutorialEvent::TutorialEventCheck(void){
           event_number_ = i;
         }
         texture_id_ = texture_ids_[i];
+        if (i == EVENT_NAME_CHARGE_JUNP){
+          p_player_->SetPos(D3DXVECTOR3(event_point[i].x, event_point[i].y + 100.0f, event_point[i].z));
+        } else if (i == EVENT_NAME_BUILDING_BLOCK){
+          p_player_->SetPos(D3DXVECTOR3(event_point[i].x, event_point[i].y + 100.0f, event_point[i].z));
+        }
         return true;
       }
     }

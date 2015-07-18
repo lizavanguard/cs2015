@@ -51,13 +51,6 @@ void Butterfly::Update(void){
     }
   }
 
-  // Œü‚«‚Ì’²®
-  if (move_.x > 0){
-    move_direction_ = DIRECTION_RIGHT;
-  } else if(move_.x < 0){
-    move_direction_ = DIRECTION_LEFT;
-  }
-
   pos_ += move_;
 
   p_texture_animation_->UpdateAnimation();
