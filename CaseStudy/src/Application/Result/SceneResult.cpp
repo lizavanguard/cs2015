@@ -15,6 +15,7 @@
 #include "Framework/Input/InputManagerHolder.h"
 #include "Framework/Input/InputKeyboard.h"
 #include "Framework/Scene/SceneManager.h"
+#include "Framework/Sound/sound.h"
 #include "Framework/Utility/PersistentValue.h"
 
 #include "Application/Object/Object2D/Timer.h"
@@ -50,6 +51,8 @@ SceneResult::SceneResult()
     int a = PersistentValue::Instance().GetData("Score");
 
     p_start_symbol_ = new StartSymbol(D3DXVECTOR3(300.0f, 600.0f, 0.0f), 0.0f, D3DXVECTOR2(256.0f, 100.0f));
+
+    PlaySound(SOUND_LABEL_BGM_RESULT);
 }
 
 //==============================================================================
@@ -60,9 +63,11 @@ SceneResult::SceneResult()
 // çXêVì˙  :  2015/06/26
 //==============================================================================
 SceneResult::~SceneResult() {
-    SafeDelete(p_result_time);
-    SafeDelete(p_start_symbol_);
-    SafeDelete(p_object2D);
+  StopSound(SOUND_LABEL_BGM_RESULT);
+
+  SafeDelete(p_result_time);
+  SafeDelete(p_start_symbol_);
+  SafeDelete(p_object2D);
 }
 
 

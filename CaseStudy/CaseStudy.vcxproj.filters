@@ -602,9 +602,15 @@
     <ClInclude Include="src\Application\Tutorial\TutorialBackGround.h">
       <Filter>Application\Tutorial</Filter>
     </ClInclude>
+    <ClInclude Include="src\Framework\Utility\PersistentValue.h">
+      <Filter>Framework\Utilty</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\Framework\Utility\MathUtility.inl">
+      <Filter>Framework\Utilty</Filter>
+    </None>
+    <None Include="src\Framework\Utility\PersistentValue.inl">
       <Filter>Framework\Utilty</Filter>
     </None>
   </ItemGroup>

@@ -175,6 +175,7 @@
     <ClInclude Include="src\Framework\Utility\MathUtility.hpp" />
     <ClInclude Include="src\Framework\Utility\Mutex.h" />
     <ClInclude Include="src\Framework\Utility\MutexCreator.h" />
+    <ClInclude Include="src\Framework\Utility\PersistentValue.h" />
     <ClInclude Include="src\Framework\Utility\SafeDelete.h" />
     <ClInclude Include="src\Framework\Utility\SafeRelease.h" />
     <ClInclude Include="src\Framework\Utility\SingletonHolder.hpp" />
@@ -184,6 +185,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="src\Framework\Utility\MathUtility.inl" />
+    <None Include="src\Framework\Utility\PersistentValue.inl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{DE985E9B-605D-4A7D-898B-464847CB3B9D}</ProjectGuid>
