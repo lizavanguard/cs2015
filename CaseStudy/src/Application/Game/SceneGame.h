@@ -29,6 +29,7 @@ class Camera;
 class SangManager;
 
 class GamePause;
+class NaviManager;
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // class definition
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -64,6 +65,7 @@ private:
   SangManager* p_sang_manager_;
   Camera* p_camera_;
   GamePause* p_game_pause_;
+  NaviManager* p_navimanager_;
 };
 
 
