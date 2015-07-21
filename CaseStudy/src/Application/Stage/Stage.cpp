@@ -17,6 +17,10 @@
 #include "Framework/Input/InputKeyboard.h"
 #include "Framework/Input/InputManagerHolder.h"
 #include "Framework/Input/InputXInput.h"
+
+#include "Application/Object/Sang/SangManager.h"
+#include "Application/Object/Sang/Butterfly.h"
+#include "Application/Object/Sang/Flower.h"
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // define
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -45,6 +49,12 @@ const D3DXVECTOR2 kGimmickover = {
 int Max_id_(int width, int height);
 bool AABBCheck(D3DXVECTOR3 a_point[4], D3DXVECTOR3 b_point[4]);
 bool Stage::gimmick_create_;
+const char* Stage_Name[] =
+{
+	"data/map/tutorial.mf",
+	"data/map/stage01_take.mf",
+	"data/map/stage01_take.mf",
+};
 //==============================================================================
 // class implementation
 //==============================================================================
@@ -84,7 +94,7 @@ Stage::Stage()
     texture_id_[i] = TextureManagerHolder::Instance().GetTextureManager().LoadTexture(filename);
   }
   tumiki_id_ = TextureManagerHolder::Instance().GetTextureManager().LoadTexture("data/Texture/tumiki000.png");
-  SelectStage("data/map/tutorial.mf");
+  SelectStage(0);
 
   free(filename);
 }
@@ -98,7 +108,7 @@ Stage::~Stage() {
 //
 // ステージ読み込み
 //
-void Stage::SelectStage(char* mapfile) {
+void Stage::SelectStage(int stage_no) {
 
   FILE* fp = nullptr;
   int id = 0;
@@ -108,7 +118,7 @@ void Stage::SelectStage(char* mapfile) {
     delete[] mapdata_;
   }
   // ファイル読み込み
-  fopen_s(&fp,mapfile, "r");
+  fopen_s(&fp, (char*)Stage_Name[stage_no], "r");
   if (fp == nullptr)
   {
 #ifdef _DEBUG
@@ -157,7 +167,32 @@ void Stage::SelectStage(char* mapfile) {
         D3DXVECTOR2(WIDTH_LENGTH,
                     HEIGHT_LENGTH);
         stage_[id].alive_ = true;
-        stage_[id].texture_id_ = texture_id_[mapdata_[map_work].id_];
+        bool typestart = mapdata_[map_work].id_ == MAP_TYPE_START;
+        bool typegoal = mapdata_[map_work].id_ == MAP_TYPE_GOAL;
+        bool typebuttefry = mapdata_[map_work].id_ == MAP_TYPE_SANG_BUTTEFRY;
+        bool typeflower = mapdata_[map_work].id_ == MAP_TYPE_SANG_FLOWER;
+        bool typetumiki = mapdata_[map_work].id_ == MAP_TYPE_GIMMICK_ON;
+        if (typestart || typegoal){
+        stage_[id].texture_id_ = NULL;
+        }
+        else if (typebuttefry){
+          stage_[id].texture_id_ = NULL;
+          Butterfly* butterfly = nullptr;
+          butterfly = new Butterfly(ANIMATION_BUTTERFLY_FLY, this);
+          butterfly->SetPos(stage_[id].pos_);
+        }
+        else if(typeflower){
+          stage_[id].texture_id_ = NULL;
+          Flower* flower = nullptr;
+          flower = new Flower(ANIMATION_FLOWER_SWAY, this);
+          flower->SetPos(stage_[id].pos_);
+        }else if(typetumiki)
+        {
+          stage_[id].texture_id_ = tumiki_id_;
+        }else{
+          stage_[id].texture_id_ = texture_id_[mapdata_[map_work].id_];
+        }
+
         stage_[id].stage_id_ = mapdata_[map_work].id_;
 
         stage_[id].color_ = D3DXCOLOR(1.f, 1.f, 1.f, 1.f);
@@ -169,7 +204,6 @@ void Stage::SelectStage(char* mapfile) {
       map_id++;
     }
   }
-
 }
 //
 // draw
@@ -181,9 +215,13 @@ void Stage::Draw(void) {
   GimmickControll(select_id_);
   for (int id = 0; id < map_id_max; id++)
   {
-    if (!stage_[id].alive_ || stage_[id].stage_id_ == MAP_TYPE_GOAL || stage_[id].stage_id_ == MAP_TYPE_START) continue;
+    bool typestart = stage_[id].stage_id_ == MAP_TYPE_START;
+    bool typegoal = stage_[id].stage_id_ == MAP_TYPE_GOAL;
+    bool typebuttefry = stage_[id].stage_id_ == MAP_TYPE_SANG_BUTTEFRY;
+    bool typeflower = stage_[id].stage_id_ == MAP_TYPE_SANG_FLOWER;
+    if (!stage_[id].alive_ || typestart || typegoal || typebuttefry || typeflower) continue;
     D3DXCOLOR color = 0xffffffff;
-	if (id == select_id_) color = 0xffff0000;
+    if (id == select_id_) color = 0xffff0000;
     Vertex3D data[] ={
       {D3DXVECTOR3( -stage_[id].size_.x, +stage_[id].size_.y, 0.0f), color, D3DXVECTOR2(0.0f, 0.0f)},
       {D3DXVECTOR3( +stage_[id].size_.x, +stage_[id].size_.y, 0.0f), color, D3DXVECTOR2(1.0f, 0.0f)},

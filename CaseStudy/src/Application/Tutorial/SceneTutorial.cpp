@@ -19,7 +19,6 @@
 #include "Application/Title/SceneTitleFactory.h"
 #include "Application/Game/SceneGameFactory.h"
 #include "Application/Collison/Collision.h"
-#include "Application/Object/Object2D/Object2D.h"
 #include "Application/Object/Object.h"
 #include "Application/Object/player.h"
 #include "Application/Object/Tori.h"
@@ -39,7 +38,6 @@
 //------------------------------------------------
 SceneTutorial::SceneTutorial()
     : is_end_(false)
-    , p_background_(nullptr)
     , p_collision_(nullptr)
     , p_player_(nullptr)
     , p_stage_(nullptr)
@@ -48,7 +46,7 @@ SceneTutorial::SceneTutorial()
     , p_uriel_(nullptr)
     , p_camera(nullptr)
     , p_tutorial_event_(nullptr)
-	, p_tutorial_backGround_(nullptr)
+    , p_tutorial_backGround_(nullptr)
 {
   p_stage_ = new Stage();
 
@@ -64,7 +62,7 @@ SceneTutorial::SceneTutorial()
   D3DXVECTOR2 size = p_stage_->GetStageSize();
   D3DXVECTOR3 pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
   pos.y = -(size.y / 2) + 50.0f;
-  p_background_ = new Object2D(pos, size, "data/Texture/kids_room.jpg");
+  p_tutorial_backGround_ = new TutorialBackGround(pos, size, "data/Texture/kids_room.jpg");
 
   p_collision_ = new Collision(*p_player_, *p_uriel_, *p_stage_);
 
@@ -74,8 +72,6 @@ SceneTutorial::SceneTutorial()
   p_camera->SetPosR(pos);
 
   p_tutorial_event_ = new TutorialEvent(p_uriel_, p_player_, p_stage_);
-
-  p_tutorial_backGround_ = new TutorialBackGround(pos, size, "data/Texture/kids_room.jpg");
 }
 
 
@@ -89,7 +85,6 @@ SceneTutorial::~SceneTutorial() {
   SafeDelete(p_tori_);
   SafeDelete(p_tension_gauge_);
   SafeDelete(p_stage_);
-  SafeDelete(p_background_);
   SafeDelete(p_camera);
   SafeDelete(p_tutorial_event_);
   SafeDelete(p_tutorial_backGround_);
