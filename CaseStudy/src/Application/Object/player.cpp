@@ -158,34 +158,35 @@ void Player::Update(Uriel *uriel_){
     // 誘導モードが一定時間以上
     if ((count_ % p_texture_animation_->GetAnimationTime()) == kGuideTriggerTime) {
       uriel_->SetDestPos(pos_);
-    // ギミックON/OFF
-    if (pJoypad.IsTrigger(InputDevice::Pads::PAD_Y) || pKeyboard.IsTrigger(DIK_G)) {
-      ChangeAnimation(MODE_GIMMICK);
-      PlaySound(SOUND_LABEL_SE_PLAYER_GIMMICK);
-      is_gimmick_ = true;
-    }
-    else if (pJoypad.IsRelease(InputDevice::Pads::PAD_Y) || pKeyboard.IsRelease(DIK_G)) {
-      ChangeAnimation(MODE_NORMAL);
-      is_gimmick_ = false;
-    }
-
-    // ボーロ
-    if (!is_eat_) {
-      if (pJoypad.IsTrigger(InputDevice::Pads::PAD_X) || pKeyboard.IsTrigger(DIK_B)) {
-        PlaySound(SOUND_LABEL_SE_PLAYER_BORO);
-        ChangeAnimation(MODE_BORO);
+      // ギミックON/OFF
+      if (pJoypad.IsTrigger(InputDevice::Pads::PAD_Y) || pKeyboard.IsTrigger(DIK_G)) {
+        ChangeAnimation(MODE_GIMMICK);
+        PlaySound(SOUND_LABEL_SE_PLAYER_GIMMICK);
+        is_gimmick_ = true;
       }
-      else if (pJoypad.IsRelease(InputDevice::Pads::PAD_X) || pKeyboard.IsRelease(DIK_B)){
+      else if (pJoypad.IsRelease(InputDevice::Pads::PAD_Y) || pKeyboard.IsRelease(DIK_G)) {
         ChangeAnimation(MODE_NORMAL);
+        is_gimmick_ = false;
       }
-    }
-    break;
+
+      // ボーロ
+      if (!is_eat_) {
+        if (pJoypad.IsTrigger(InputDevice::Pads::PAD_X) || pKeyboard.IsTrigger(DIK_B)) {
+          PlaySound(SOUND_LABEL_SE_PLAYER_BORO);
+          ChangeAnimation(MODE_BORO);
+        }
+        else if (pJoypad.IsRelease(InputDevice::Pads::PAD_X) || pKeyboard.IsRelease(DIK_B)){
+          ChangeAnimation(MODE_NORMAL);
+        }
+      }
+      break;
   case MODE_GIMMICK: // ギミック
     // if ギミックのアニメーションが終了したら 通常モードに戻す
     if (count_ >= /*p_texture_animation_->GetAnimationTime()*/ 60) {
       ChangeAnimation(MODE_NORMAL);
     }
     break;
+    }
   }
 
   // アニメーション更新
