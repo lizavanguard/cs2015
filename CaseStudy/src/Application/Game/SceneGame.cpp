@@ -36,6 +36,8 @@
 #include "Application/Tutorial/SceneTutorialFactory.h"
 #include "Application\GamePause\GamePause.h"
 
+#include "Application/Navi/NaviManager.h"
+
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // class definition
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -57,6 +59,7 @@ SceneGame::SceneGame()
     , p_sang_manager_(nullptr)
     , p_camera_(nullptr)
     , p_game_pause_(nullptr)
+    , p_navimanager_(nullptr)
 {
   p_sang_manager_ = new SangManager();
 
@@ -81,9 +84,7 @@ SceneGame::SceneGame()
 
   p_timer_ = new Timer(D3DXVECTOR3(600.0f, 50.0f, 0.0f), 0.0f, D3DXVECTOR2(50.0f, 50.0f), TIMER);
 
-  EffecManagerSingleton::Instance();
-
-  p_game_pause_ = new GamePause;
+  p_navimanager_ = new NaviManager(*p_camera_, *p_uriel_);
 
   EffecManagerSingleton::Instance();
 
@@ -111,6 +112,7 @@ SceneGame::~SceneGame() {
   SafeDelete(p_sang_manager_);
   SafeDelete(p_camera_);
   SafeDelete(p_game_pause_);
+  SafeDelete(p_navimanager_);
 }
 
 
@@ -164,6 +166,7 @@ void SceneGame::Update(SceneManager* p_scene_manager, const float elapsed_time) 
     if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_2)) {
       p_tension_gauge_->CoolDown();
     }
+    p_navimanager_->Update();
   }
 
   p_game_pause_->Update(p_scene_manager, elapsed_time, p_game_pause_);
@@ -208,6 +211,8 @@ void SceneGame::Draw(void) {
   p_player_->Draw();
 
   p_tension_gauge_->Draw();
+
+  p_navimanager_->Draw();
 
   p_timer_->Draw();
 
