@@ -43,7 +43,7 @@ class ResultTime{
   // funciton ==================================
 public:
   // ctor
-  ResultTime(const D3DXVECTOR3 &pos, const float &rot, const D3DXVECTOR2 &size, NUMBER_TYPE type);
+    ResultTime(const D3DXVECTOR3 &pos, const float &rot, const D3DXVECTOR2 &size, const int &value, NUMBER_TYPE type);
   // dtor
   virtual ~ResultTime();
   // update
@@ -67,7 +67,7 @@ protected:
 private:
   int count_;
   int value_;
-  int timer_value;
+  int timer_value_;
   NumberObject **p_number_object_;
 };
 

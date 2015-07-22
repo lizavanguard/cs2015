@@ -47,22 +47,35 @@
 // 更新日  :  2015/06/16
 //==============================================================================
 Timer::Timer(const D3DXVECTOR3 &pos, const float &rot, const D3DXVECTOR2 &size, NUMBER_TYPE type){
-  value_ = TIMER_COUNT;
+  value_ = kTimerCount;
   count_ = 0;
 
-  p_numberObject_ = new NumberObject * [2];
+  p_number_object_ = new NumberObject *[kMaxFigure];
+  // 時間変数
+  int minuteTime = value_ / kOneMinute;
+  int secondTime = value_ - minuteTime * kOneMinute;
 
-  // 桁の設定変数
-  unsigned int figure = (unsigned int)pow((float)FIGURE_DEFINE, MAX_FIGURE);
-  for (int num = 0; num < MAX_FIGURE; num++)
+  unsigned int figure = (unsigned int)pow((float)kFigureDefine, kMaxFigure*0.5f);
+  for (int num = 0; num < 2; num++)
   {
-    // 特定の桁の値を入れる
-    int value = (value_ % figure) / (figure / FIGURE_DEFINE);
-    // 値をセット
-    p_numberObject_[num] = new NumberObject(D3DXVECTOR3(pos.x + 40.0f*num, pos.y, pos.z), rot, size, type);
-    p_numberObject_[num]->SetValue(value);
-    // 桁ずらし
-    figure /= FIGURE_DEFINE;
+      // 特定の桁の値を入れる
+      int value = (minuteTime % figure) / (figure / kFigureDefine);
+      // 値をセット
+      p_number_object_[num] = new NumberObject(D3DXVECTOR3(pos.x + 40.0f*num, pos.y, pos.z), rot, size, type);
+      p_number_object_[num]->SetValue(value);
+      // 桁ずらし
+      figure /= kFigureDefine;
+  }
+  figure = (unsigned int)pow((float)kFigureDefine, kMaxFigure*0.5f);
+  for (int num = 2; num < 4; num++)
+  {
+      // 特定の桁の値を入れる
+      int value = (secondTime % figure) / (figure / kFigureDefine);
+      // 値をセット
+      p_number_object_[num] = new NumberObject(D3DXVECTOR3(pos.x + 40.0f*num + 20.0f, pos.y, pos.z), rot, size, type);
+      p_number_object_[num]->SetValue(value);
+      // 桁ずらし
+      figure /= kFigureDefine;
   }
 }
 
@@ -74,12 +87,12 @@ Timer::Timer(const D3DXVECTOR3 &pos, const float &rot, const D3DXVECTOR2 &size, 
 // 更新日  :  2015/06/16
 //==============================================================================
 Timer::~Timer(void){
-  for (int num = 0; num < MAX_FIGURE; num++){
-    delete p_numberObject_[num];
-    p_numberObject_[num] = nullptr;
+  for (int num = 0; num < kMaxFigure; num++){
+    delete p_number_object_[num];
+    p_number_object_[num] = nullptr;
   }
-  delete[] p_numberObject_;
-  p_numberObject_ = nullptr;
+  delete[] p_number_object_;
+  p_number_object_ = nullptr;
 }
 
 //==============================================================================
@@ -96,19 +109,31 @@ void Timer::Update(){
     --value_;
     // タイムリセット
     if (value_ < 0)
-        value_ = TIMER_COUNT;
+        value_ = kTimerCount;
     count_ = 0;
   }
+  int minuteTime = value_ / kOneMinute;
+  int secondTime = value_ - minuteTime * kOneMinute;
   // 桁の設定変数
-  unsigned int figure = (unsigned int)pow((float)FIGURE_DEFINE, MAX_FIGURE);
-  for (int num = 0; num < MAX_FIGURE; num++)
+  unsigned int figure = (unsigned int)pow((float)kFigureDefine, kMaxFigure*0.5f);
+  for (int num = 0; num < 2; num++)
   {
-    // 特定の桁の値を入れる
-    int value = (value_ % figure) / (figure / FIGURE_DEFINE);
-    // 値をセット
-    p_numberObject_[num]->SetValue(value);
-    // 桁ずらし
-    figure /= FIGURE_DEFINE;
+      // 特定の桁の値を入れる
+      int value = (minuteTime % figure) / (figure / kFigureDefine);
+      // 値をセット
+      p_number_object_[num]->SetValue(value);
+      // 桁ずらし
+      figure /= kFigureDefine;
+  }
+  figure = (unsigned int)pow((float)kFigureDefine, kMaxFigure*0.5f);
+  for (int num = 2; num < 4; num++)
+  {
+      // 特定の桁の値を入れる
+      int value = (secondTime % figure) / (figure / kFigureDefine);
+      // 値をセット
+      p_number_object_[num]->SetValue(value);
+      // 桁ずらし
+      figure /= kFigureDefine;
   }
 }
 
@@ -120,9 +145,9 @@ void Timer::Update(){
 // 更新日  :  2015/06/16
 //==============================================================================
 void Timer::Draw(void){
-  for (int num = 0; num < MAX_FIGURE; num++)
+    for (int num = 0; num < kMaxFigure; num++)
   {
-      p_numberObject_[num]->Draw();
+      p_number_object_[num]->Draw();
   }
 }
 

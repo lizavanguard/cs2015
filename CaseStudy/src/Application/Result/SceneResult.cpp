@@ -46,9 +46,9 @@ SceneResult::SceneResult()
 
     p_object2D = new Object2D(D3DXVECTOR3(300.0f, 100.0f, 0.0f), D3DXVECTOR2(256.0f, 100.0f), "data/Texture/title.jpg");
 
-    p_result_time = new ResultTime(D3DXVECTOR3(300.0f, 250.0f, 0.0f), 0.0f, D3DXVECTOR2(150.0f, 100.0f) , TIMER);
+    int resultTime = PersistentValue::Instance().GetData("Score");
 
-    int a = PersistentValue::Instance().GetData("Score");
+    p_result_time = new ResultTime(D3DXVECTOR3(300.0f, 250.0f, 0.0f), 0.0f, D3DXVECTOR2(150.0f, 100.0f), resultTime,TIMER);
 
     p_start_symbol_ = new StartSymbol(D3DXVECTOR3(300.0f, 600.0f, 0.0f), 0.0f, D3DXVECTOR2(256.0f, 100.0f));
 
@@ -63,11 +63,11 @@ SceneResult::SceneResult()
 // çXêVì˙  :  2015/06/26
 //==============================================================================
 SceneResult::~SceneResult() {
-  StopSound(SOUND_LABEL_BGM_RESULT);
+    StopSound(SOUND_LABEL_BGM_RESULT);
 
-  SafeDelete(p_result_time);
-  SafeDelete(p_start_symbol_);
-  SafeDelete(p_object2D);
+    SafeDelete(p_result_time);
+    SafeDelete(p_start_symbol_);
+    SafeDelete(p_object2D);
 }
 
 

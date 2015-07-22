@@ -64,7 +64,7 @@ SceneGame::SceneGame()
 
   p_player_ = new Player(ANIMATION_PLAYER_RATTEL_NONE, p_stage_);
 
-  p_tension_gauge_ = new TensionGauge();
+//  p_tension_gauge_ = new TensionGauge();
 
   p_uriel_ = new Uriel(ANIMATION_URIEL_CRAWL, p_stage_, p_tension_gauge_);
   p_sang_manager_->SetUrielPointer(p_uriel_);
@@ -79,7 +79,7 @@ SceneGame::SceneGame()
 
   p_camera_ = new Camera(p_player_, p_stage_);
 
-  p_timer_ = new Timer(D3DXVECTOR3(600.0f, 50.0f, 0.0f), 0.0f, D3DXVECTOR2(50.0f, 50.0f), TIMER);
+//  p_timer_ = new Timer(D3DXVECTOR3(600.0f, 50.0f, 0.0f), 0.0f, D3DXVECTOR2(50.0f, 50.0f), TIMER);
 
   EffecManagerSingleton::Instance();
 
@@ -104,10 +104,10 @@ SceneGame::~SceneGame() {
   SafeDelete(p_ready_);
   SafeDelete(p_uriel_);
   SafeDelete(p_tori_);
-  SafeDelete(p_tension_gauge_);
+//  SafeDelete(p_tension_gauge_);
   SafeDelete(p_stage_);
   SafeDelete(p_background_manager_);
-  SafeDelete(p_timer_);
+//  SafeDelete(p_timer_);
   SafeDelete(p_sang_manager_);
   SafeDelete(p_camera_);
   SafeDelete(p_game_pause_);
@@ -135,7 +135,7 @@ void SceneGame::Update(SceneManager* p_scene_manager, const float elapsed_time) 
     p_camera_->Update();
 
     // タイマー更新
-    p_timer_->Update();
+//    p_timer_->Update();
 
     p_background_manager_->Update();
 
@@ -150,7 +150,7 @@ void SceneGame::Update(SceneManager* p_scene_manager, const float elapsed_time) 
     // Effect
     EffecManagerSingleton::Instance().Update();
 
-    p_tension_gauge_->Update();
+//    p_tension_gauge_->Update();
 
     // Uriel x Player's boro
     p_collision_->CollideUrielToPlayersBoro();
@@ -207,9 +207,9 @@ void SceneGame::Draw(void) {
 
   p_player_->Draw();
 
-  p_tension_gauge_->Draw();
+//  p_tension_gauge_->Draw();
 
-  p_timer_->Draw();
+//  p_timer_->Draw();
 
   EffecManagerSingleton::Instance().Draw();
 
