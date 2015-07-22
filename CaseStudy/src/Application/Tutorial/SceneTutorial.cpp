@@ -31,6 +31,7 @@
 #include "Application/Stage/Stage.h"
 #include "Application/Tutorial/SceneTutorialFactory.h"
 #include "Application/Tutorial/TutorialBackGround.h"
+#include "Application/Object/Object2D/Object2D.h"
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // class definition
@@ -49,6 +50,7 @@ SceneTutorial::SceneTutorial()
     , p_camera(nullptr)
     , p_tutorial_event_(nullptr)
     , p_tutorial_backGround_(nullptr)
+    , message_window_(nullptr)
 {
   p_stage_ = new Stage();
 
@@ -75,6 +77,8 @@ SceneTutorial::SceneTutorial()
 
   p_tutorial_event_ = new TutorialEvent(p_uriel_, p_player_, p_stage_);
 
+  message_window_ = new Object2D(D3DXVECTOR3(795.0f, 100.0f, 0.0f), D3DXVECTOR2(1000.0f, 200.0f), "data/Texture/tyu-toriaru_messe-ziwaku.png");
+
   PlaySound(SOUND_LABEL_BGM_DEMO0);
 }
 
@@ -94,6 +98,7 @@ SceneTutorial::~SceneTutorial() {
   SafeDelete(p_camera);
   SafeDelete(p_tutorial_event_);
   SafeDelete(p_tutorial_backGround_);
+  SafeDelete(message_window_);
 }
 
 
@@ -166,6 +171,7 @@ void SceneTutorial::Draw(void) {
   p_tension_gauge_->Draw();
 
   if (p_tutorial_event_->ViewEvent()){
+    message_window_->Draw();
     p_tutorial_event_->Draw();
   }
 }

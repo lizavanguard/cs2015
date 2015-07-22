@@ -25,6 +25,7 @@ class TensionGauge;
 class Camera;
 class TutorialEvent;
 class TutorialBackGround;
+class Object2D;
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // class definition
@@ -55,6 +56,7 @@ private:
   Tori* p_tori_;
   Uriel* p_uriel_;
   Camera* p_camera;
+  Object2D* message_window_;
   TutorialEvent* p_tutorial_event_;
   TutorialBackGround* p_tutorial_backGround_;
 };
