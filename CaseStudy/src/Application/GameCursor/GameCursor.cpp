@@ -99,22 +99,22 @@ void GameCursor::_ReactInput(void) {
 
   const auto& keyboard = InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard();
   auto& pJoypad = InputManagerHolder::Instance().GetInputManager().GetPrimaryDevice();
-  if (keyboard.IsTrigger(enter_key_)) {
+  if (pJoypad.IsTrigger(InputDevice::Pads::PAD_A)) {
     p_cursor_->Pushed();
     PlaySound(SOUND_LABEL_SE_DECISION);
     is_just_entered_ = true;
   }
 
-  if (keyboard.IsTrigger(cancel_key_)) {
+  if (pJoypad.IsTrigger(InputDevice::Pads::PAD_BACK)) {
     PlaySound(SOUND_LABEL_SE_CANCEL);
     is_just_canceled_ = true;
   }
 
-  if (keyboard.IsTrigger(increment_key_)) {
+  if (pJoypad.IsTrigger(InputDevice::Pads::PAD_RIGHT)) {
     p_cursor_value_->Increment();
     is_just_moved_ = true;
   }
-  if (keyboard.IsTrigger(decrement_key_)) {
+  if (pJoypad.IsTrigger(InputDevice::Pads::PAD_LEFT)) {
     p_cursor_value_->Decrement();
     is_just_moved_ = true;
   }
