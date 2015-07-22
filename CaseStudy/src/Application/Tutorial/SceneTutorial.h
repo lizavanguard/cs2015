@@ -16,7 +16,6 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // class declaration
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-class Object2D;
 class Collision;
 class Uriel;
 class Player;
@@ -26,6 +25,7 @@ class TensionGauge;
 class Camera;
 class TutorialEvent;
 class TutorialBackGround;
+class Object2D;
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // class definition
@@ -49,7 +49,6 @@ public:
 private:
   // property
   bool is_end_;
-  Object2D* p_background_;
   Collision* p_collision_;
   Player* p_player_;
   Stage* p_stage_;
@@ -57,6 +56,7 @@ private:
   Tori* p_tori_;
   Uriel* p_uriel_;
   Camera* p_camera;
+  Object2D* message_window_;
   TutorialEvent* p_tutorial_event_;
   TutorialBackGround* p_tutorial_backGround_;
 };

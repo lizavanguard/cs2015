@@ -12,6 +12,7 @@
 #include "Framework/Input/InputManagerHolder.h"
 #include "Framework/Input/InputKeyboard.h"
 #include "Framework/Sound/sound.h"
+#include "Framework/Input/InputXInput.h"
 
 #include "Application/Object/Object2D/Cursor.h"
 #include "Application/Utility/WrapValue.h"
@@ -97,22 +98,43 @@ void GameCursor::_ReactInput(void) {
   is_just_canceled_ = false;
 
   const auto& keyboard = InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard();
-  if (keyboard.IsTrigger(enter_key_)) {
+  auto& pJoypad = InputManagerHolder::Instance().GetInputManager().GetPrimaryDevice();
+  if (pJoypad.IsTrigger(InputDevice::Pads::PAD_A)) {
     p_cursor_->Pushed();
     PlaySound(SOUND_LABEL_SE_DECISION);
     is_just_entered_ = true;
   }
 
-  if (keyboard.IsTrigger(cancel_key_)) {
+  if (pJoypad.IsTrigger(InputDevice::Pads::PAD_BACK)) {
     PlaySound(SOUND_LABEL_SE_CANCEL);
     is_just_canceled_ = true;
   }
 
-  if (keyboard.IsTrigger(increment_key_)) {
+  if (pJoypad.IsTrigger(InputDevice::Pads::PAD_RIGHT)) {
     p_cursor_value_->Increment();
     is_just_moved_ = true;
   }
-  if (keyboard.IsTrigger(decrement_key_)) {
+  if (pJoypad.IsTrigger(InputDevice::Pads::PAD_LEFT)) {
+    p_cursor_value_->Decrement();
+    is_just_moved_ = true;
+  }
+
+  if (keyboard.IsTrigger(DIK_RETURN)) {
+    p_cursor_->Pushed();
+    PlaySound(SOUND_LABEL_SE_DECISION);
+    is_just_entered_ = true;
+  }
+
+  if (keyboard.IsTrigger(DIK_BACKSPACE)) {
+    PlaySound(SOUND_LABEL_SE_CANCEL);
+    is_just_canceled_ = true;
+  }
+
+  if (keyboard.IsTrigger(DIK_RIGHT)) {
+    p_cursor_value_->Increment();
+    is_just_moved_ = true;
+  }
+  if (keyboard.IsTrigger(DIK_LEFT)) {
     p_cursor_value_->Decrement();
     is_just_moved_ = true;
   }

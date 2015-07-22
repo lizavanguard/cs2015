@@ -36,7 +36,10 @@
 #include "Application/Object/Sang/Butterfly.h"
 #include "Application/Object/Sang/Flower.h"
 #include "Application/Tutorial/SceneTutorialFactory.h"
-#include "Application\GamePause\GamePause.h"
+#include "Application/GamePause/GamePause.h"
+#include "Application/Navi/NaviManager.h"
+
+int SceneGame::select_stage_num_ = 0;
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // class definition
@@ -59,10 +62,12 @@ SceneGame::SceneGame()
     , p_sang_manager_(nullptr)
     , p_camera_(nullptr)
     , p_game_pause_(nullptr)
+    , p_navimanager_(nullptr)
 {
   p_sang_manager_ = new SangManager();
 
   p_stage_ = new Stage();
+  p_stage_->SelectStage(select_stage_num_);
 
   p_player_ = new Player(ANIMATION_PLAYER_RATTEL_NONE, p_stage_);
 
@@ -82,6 +87,8 @@ SceneGame::SceneGame()
   p_camera_ = new Camera(p_player_, p_stage_);
 
   p_timer_ = new Timer(D3DXVECTOR3(600.0f, 50.0f, 0.0f), 0.0f, D3DXVECTOR2(50.0f, 50.0f), TIMER);
+
+  p_navimanager_ = new NaviManager(*p_camera_, *p_uriel_);
 
   EffecManagerSingleton::Instance();
 
@@ -109,6 +116,8 @@ SceneGame::~SceneGame() {
   SafeDelete(p_sang_manager_);
   SafeDelete(p_camera_);
   SafeDelete(p_game_pause_);
+  SafeDelete(p_navimanager_);
+  select_stage_num_ = 0;
 }
 
 
@@ -126,6 +135,9 @@ void SceneGame::Update(SceneManager* p_scene_manager, const float elapsed_time) 
     // ’¹XV
     p_tori_->Update();
     if (p_tori_->GetHitCheck()){
+      PersistentValue::Instance().SetData("Score", 10);
+      SceneResultFactory* pResultSceneFactory = new SceneResultFactory();
+      p_scene_manager->PushNextSceneFactory(pResultSceneFactory);
       return;
     }
 
@@ -162,24 +174,11 @@ void SceneGame::Update(SceneManager* p_scene_manager, const float elapsed_time) 
     if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_2)) {
       p_tension_gauge_->CoolDown();
     }
+    p_navimanager_->Update();
   }
 
   p_game_pause_->Update(p_scene_manager, elapsed_time, p_game_pause_);
 
-  // Next TitleScene
-  if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_N)) {
-      //SceneTitleFactory* pTitleSceneFactory = new SceneTitleFactory();
-    PersistentValue::Instance().SetData("Score", p_timer_->GetValue());
-    SceneResultFactory* pResultSceneFactory = new SceneResultFactory();
-    p_scene_manager->PushNextSceneFactory(pResultSceneFactory);
-  }
-#if _DEBUG
-  // TutorialScene
-  if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_T)) {
-    SceneTutorialFactory* pTutorialSceneFactory = new SceneTutorialFactory();
-    p_scene_manager->PushNextSceneFactory(pTutorialSceneFactory);
-  }
-#endif
   if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_3)) {
     EffecManagerSingleton::Instance().Create(EffectManager::EFFECTTYPE_KIRAKIRA, D3DXVECTOR2(100, -100), D3DXVECTOR2(5, 5), 1.0f);
   }
@@ -206,6 +205,8 @@ void SceneGame::Draw(void) {
   p_player_->Draw();
 
   p_tension_gauge_->Draw();
+
+  p_navimanager_->Draw();
 
   p_timer_->Draw();
 

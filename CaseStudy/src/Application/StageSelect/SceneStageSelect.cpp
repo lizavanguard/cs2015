@@ -11,12 +11,14 @@
 
 #include "Framework/FrameworkOption.h"
 #include "Framework/Input/InputKeyboard.h"
-#include "Framework/Input/InputDevice.h"
 #include "Framework/Input/InputManagerHolder.h"
+#include "Framework/Input/InputXInput.h"
 #include "Framework/Scene/SceneManager.h"
 #include "Framework/Sound/sound.h"
 
 #include "Application/Game/SceneGameFactory.h"
+#include "Application/Game/SceneGame.h"
+#include "Application/Tutorial/SceneTutorialFactory.h"
 #include "Application/GameCursor/GameCursor.h"
 #include "Application/Object/BackGround/BackGroundManager.h"
 #include "Application/Object/Object2D/Object2D.h"
@@ -47,11 +49,20 @@ const D3DXVECTOR3 kBottomStartPosition = {
   kCenterPosition.y + (kStride.y * 0.5f),
   kCenterPosition.z
 };
-const char* kTextureFilename = "data/Texture/tex_anim_04.png";
+const char* kTextureFilenameTop[] = {
+  "data/Texture/stage_1.png",
+  "data/Texture/stage_2.png",
+  "data/Texture/stage_3.png",
+};
+
+const char* kTextureFilenameBottom[] = {
+  "data/Texture/stage_4.png",
+  "data/Texture/stage_5.png",
+};
 
 const D3DXVECTOR3 kNameCenterPosition = {kWindowWidth * 0.5f, 150.0f, 0.0f};
 const D3DXVECTOR2 kNameSize = {400.0f, 100.0f};
-const char* kNameTextureFilename = "data/Texture/tex_anim_04.png";
+const char* kNameTextureFilename = "data/Texture/stageSelect_logo.png";
 
 const D3DXVECTOR2 kCursorSize = {100.0f, 100.0f};
 const D3DXVECTOR3 kCursorOffset = {90.0f, 90.0f, 0.0f};
@@ -71,12 +82,12 @@ SceneStageSelect::SceneStageSelect()
   for (int top_count = 0; top_count < kNumTop; ++top_count) {
     D3DXVECTOR3 position = kTopStartPosition;
     position.x += kStride.x * top_count;
-    p_thumbnails_[top_count] = new Thumbnail(position, kSize, kTextureFilename);
+    p_thumbnails_[top_count] = new Thumbnail(position, kSize, kTextureFilenameTop[top_count]);
   }
   for (int bottom_count = 0; bottom_count < kNumBottom; ++bottom_count) {
     D3DXVECTOR3 position = kBottomStartPosition;
     position.x += kStride.x * bottom_count;
-    p_thumbnails_[kNumTop + bottom_count] = new Thumbnail(position, kSize, kTextureFilename);
+    p_thumbnails_[kNumTop + bottom_count] = new Thumbnail(position, kSize, kTextureFilenameBottom[bottom_count]);
   }
 
   p_name_ = new Object2D(kNameCenterPosition, kNameSize, kNameTextureFilename);
@@ -87,7 +98,7 @@ SceneStageSelect::SceneStageSelect()
   for (int thumb_count = 0; thumb_count < kNumThumb; ++thumb_count) {
     position_list.push_back(p_thumbnails_[thumb_count]->GetPosition() + kCursorOffset);
   }
-  p_cursor_ = new GameCursor(kCursorSize, DIK_RIGHT, DIK_LEFT, DIK_RETURN, DIK_BACKSPACE, position_list);
+  p_cursor_ = new GameCursor(kCursorSize, InputDevice::Pads::PAD_RIGHT, InputDevice::Pads::PAD_LEFT, InputDevice::Pads::PAD_A, InputDevice::Pads::PAD_BACK, position_list);
 
   // TODO:
   p_thumbnails_[0]->Activate();
@@ -118,10 +129,11 @@ SceneStageSelect::~SceneStageSelect() {
 void SceneStageSelect::Update(SceneManager* p_scene_manager, const float elapsed_time) {
   p_background_manager_->Update();
 
-  auto& keyboard = InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard();
-  if (keyboard.IsTrigger(DIK_A) ||
-      InputManagerHolder::Instance().GetInputManager().GetPrimaryDevice().IsTrigger(InputDevice::Pads::PAD_START) ||
-      InputManagerHolder::Instance().GetInputManager().GetPrimaryDevice().IsTrigger(InputDevice::Pads::PAD_X)) {
+  auto& pKeyboard = InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard();
+  auto& pJoypad = InputManagerHolder::Instance().GetInputManager().GetPrimaryDevice();
+  if (pJoypad.IsTrigger(InputDevice::Pads::PAD_A) || pKeyboard.IsTrigger(DIK_RETURN)) {
+    int select_num = p_cursor_->GetCursorIndexOld() + 1;
+    SceneGame::SetSelectStageNum(select_num);
     p_scene_manager->PushNextSceneFactory(new SceneGameFactory());
   }
 

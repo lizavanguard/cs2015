@@ -29,6 +29,7 @@ class Camera;
 class SangManager;
 
 class GamePause;
+class NaviManager;
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // class definition
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -44,6 +45,7 @@ public:
 
   // set
   void End(void) { is_end_ = true; }
+  static void SetSelectStageNum(int select_stage_num){ select_stage_num_ = select_stage_num; }
 
   // get
   bool IsPause(void) const;
@@ -64,6 +66,8 @@ private:
   SangManager* p_sang_manager_;
   Camera* p_camera_;
   GamePause* p_game_pause_;
+  NaviManager* p_navimanager_;
+  static int select_stage_num_;
 };
 
 

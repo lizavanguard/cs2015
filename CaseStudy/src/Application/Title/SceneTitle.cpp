@@ -93,16 +93,15 @@ void SceneTitle::Update(SceneManager* p_scene_manager, const float elapsed_time)
     p_start_symbol_->Update();
   }
   else{
-      p_title_window->Update(p_scene_manager, elapsed_time);
+    p_title_window->Update(p_scene_manager, elapsed_time);
   }
   // Next TitleScene
-  if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_N) ||
+  if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_RETURN) ||
       InputManagerHolder::Instance().GetInputManager().GetPrimaryDevice().IsTrigger(InputDevice::Pads::PAD_START) ||
-      InputManagerHolder::Instance().GetInputManager().GetPrimaryDevice().IsTrigger(InputDevice::Pads::PAD_X)) {
-//      p_scene_manager->PushNextSceneFactory(new SceneStageSelectFactory());
+      InputManagerHolder::Instance().GetInputManager().GetPrimaryDevice().IsTrigger(InputDevice::Pads::PAD_A)) {
       is_push_title_ = true;
   }
-  if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_BACK) ||
+  if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_BACKSPACE) ||
       InputManagerHolder::Instance().GetInputManager().GetPrimaryDevice().IsTrigger(InputDevice::Pads::PAD_B)){
       is_push_title_ = false;
   }
