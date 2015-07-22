@@ -37,8 +37,6 @@
 #include "Application/GamePause/GamePause.h"
 #include "Application/Navi/NaviManager.h"
 
-int SceneGame::select_stage_num_ = 0;
-
 #include "Application/Navi/NaviManager.h"
 
 int SceneGame::select_stage_num_ = 0;
