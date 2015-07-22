@@ -89,7 +89,7 @@ SceneStageSelect::SceneStageSelect()
   for (int thumb_count = 0; thumb_count < kNumThumb; ++thumb_count) {
     position_list.push_back(p_thumbnails_[thumb_count]->GetPosition() + kCursorOffset);
   }
-  p_cursor_ = new GameCursor(kCursorSize, DIK_RIGHT, DIK_LEFT, DIK_RETURN, DIK_BACKSPACE, position_list);
+  p_cursor_ = new GameCursor(kCursorSize, InputDevice::Pads::PAD_RIGHT, InputDevice::Pads::PAD_LEFT, InputDevice::Pads::PAD_A, InputDevice::Pads::PAD_BACK, position_list);
 
   // TODO:
   p_thumbnails_[0]->Activate();
