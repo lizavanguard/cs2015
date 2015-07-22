@@ -41,6 +41,7 @@
 //------------------------------------------------
 SceneTutorial::SceneTutorial()
     : is_end_(false)
+    , p_background_(nullptr)
     , p_collision_(nullptr)
     , p_player_(nullptr)
     , p_stage_(nullptr)
@@ -66,7 +67,7 @@ SceneTutorial::SceneTutorial()
   D3DXVECTOR2 size = p_stage_->GetStageSize();
   D3DXVECTOR3 pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
   pos.y = -(size.y / 2) + 50.0f;
-  p_tutorial_backGround_ = new TutorialBackGround(pos, size, "data/Texture/kids_room.jpg");
+  p_background_ = new Object2D(pos, size, "data/Texture/kids_room.jpg");
 
   p_collision_ = new Collision(*p_player_, *p_uriel_, *p_stage_);
 
@@ -87,14 +88,13 @@ SceneTutorial::SceneTutorial()
 // dtor
 //------------------------------------------------
 SceneTutorial::~SceneTutorial() {
-  StopSound(SOUND_LABEL_BGM_DEMO0);
-
   SafeDelete(p_collision_);
   SafeDelete(p_player_);
   SafeDelete(p_uriel_);
   SafeDelete(p_tori_);
   SafeDelete(p_tension_gauge_);
   SafeDelete(p_stage_);
+  SafeDelete(p_background_);
   SafeDelete(p_camera);
   SafeDelete(p_tutorial_event_);
   SafeDelete(p_tutorial_backGround_);
@@ -140,13 +140,13 @@ void SceneTutorial::Update(SceneManager* p_scene_manager, const float elapsed_ti
   // Stage x Player's boro
   p_collision_->CollideStageToPlayersGimmick();
 
-
+#if _DEBUG
   // Next TitleScene
   if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_T)) {
     SceneGameFactory* pGameSceneFactory = new SceneGameFactory();
     p_scene_manager->PushNextSceneFactory(pGameSceneFactory);
   }
-
+#endif
 }
 
 

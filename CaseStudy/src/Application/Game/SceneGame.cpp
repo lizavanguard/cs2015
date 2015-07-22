@@ -12,6 +12,7 @@
 #include "Framework/GameManager/GameManager.h"
 #include "Framework/Input/InputManagerHolder.h"
 #include "Framework/Input/InputKeyboard.h"
+#include "Framework\Input\InputDevice.h"
 #include "Framework/Sound/sound.h"
 #include "Framework/Utility/PersistentValue.h"
 
@@ -30,6 +31,7 @@
 #include "Framework/Scene/SceneManager.h"
 #include "Application/Title/SceneTitleFactory.h"
 #include "Application/Result/SceneResultFactory.h"
+#include "Application\Tutorial\SceneTutorialFactory.h"
 #include "Application/Object/Sang/SangManager.h"
 #include "Application/Object/Sang/Butterfly.h"
 #include "Application/Object/Sang/Flower.h"
@@ -61,7 +63,6 @@ SceneGame::SceneGame()
     , p_sang_manager_(nullptr)
     , p_camera_(nullptr)
     , p_game_pause_(nullptr)
-    , p_navimanager_(nullptr)
 {
   p_sang_manager_ = new SangManager();
 
@@ -86,8 +87,6 @@ SceneGame::SceneGame()
   p_camera_ = new Camera(p_player_, p_stage_);
 
   p_timer_ = new Timer(D3DXVECTOR3(600.0f, 50.0f, 0.0f), 0.0f, D3DXVECTOR2(50.0f, 50.0f), TIMER);
-
-  p_navimanager_ = new NaviManager(*p_camera_, *p_uriel_);
 
   EffecManagerSingleton::Instance();
 
@@ -173,17 +172,24 @@ void SceneGame::Update(SceneManager* p_scene_manager, const float elapsed_time) 
     if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_2)) {
       p_tension_gauge_->CoolDown();
     }
-    p_navimanager_->Update();
   }
 
   p_game_pause_->Update(p_scene_manager, elapsed_time, p_game_pause_);
 
+  // Next TitleScene
+  if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_N)) {
+      //SceneTitleFactory* pTitleSceneFactory = new SceneTitleFactory();
+    PersistentValue::Instance().SetData("Score", p_timer_->GetValue());
+    SceneResultFactory* pResultSceneFactory = new SceneResultFactory();
+    p_scene_manager->PushNextSceneFactory(pResultSceneFactory);
+  }
+#if _DEBUG
   // TutorialScene
   if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_T)) {
     SceneTutorialFactory* pTutorialSceneFactory = new SceneTutorialFactory();
     p_scene_manager->PushNextSceneFactory(pTutorialSceneFactory);
   }
-
+#endif
   if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_3)) {
     EffecManagerSingleton::Instance().Create(EffectManager::EFFECTTYPE_KIRAKIRA, D3DXVECTOR2(100, -100), D3DXVECTOR2(5, 5), 1.0f);
   }
@@ -210,8 +216,6 @@ void SceneGame::Draw(void) {
   p_player_->Draw();
 
   p_tension_gauge_->Draw();
-
-  p_navimanager_->Draw();
 
   p_timer_->Draw();
 

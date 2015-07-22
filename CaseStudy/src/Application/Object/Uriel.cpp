@@ -735,9 +735,10 @@ BLOCK_DATA Uriel::LoadCheck(void){
 //-----------------------------------------------------------------------------
 bool Uriel::CheckHit(const D3DXVECTOR3& pos, const D3DXVECTOR2& size) {
   // if 矩形？？同士の判定っぽい TODO: 関数化
+  
 
   const bool is_hit_x = (pos.x + size.x / 2) > (pos_.x - size_.x / 2) &&
-                        (pos.x - size.x / 2) < (pos_.x + size_.x / 2);
+                        (pos.x - size.x / 2) < (pos_.x - size_.x / 2);
   const bool is_hit_y = (pos.y + size.y / 2) >= (pos_.y - size_.y / 2) &&
                         (pos.y - size.y / 2) <= (pos_.y - size_.y / 2);
 
@@ -749,6 +750,7 @@ bool Uriel::CheckHit(const D3DXVECTOR3& pos, const D3DXVECTOR2& size) {
 //-----------------------------------------------------------------------------
 bool Uriel::CheckImageHit(const D3DXVECTOR3& pos, const D3DXVECTOR2& size) {
   D3DXVECTOR3 boro_pos = pos;
+  //boro_pos.y += size_.y * 0.5f;
 
   return CheckHit(boro_pos, size);
 }
@@ -777,7 +779,7 @@ BLOCK_DATA Uriel::CrawlLoadCheck(void){
     // 左に進んでる場合
     else if (move_direction_ == DIRECTION_LEFT){
       if (check.bottom_left == MAP_TYPE_NONE){
-        p_stage_->CheckMapTip2(&D3DXVECTOR3(pos_.x - size_.x + move_.x, pos_.y, pos_.z),
+        p_stage_->CheckMapTip2(&D3DXVECTOR3(pos_.x + move_.x, pos_.y, pos_.z),
                                 D3DXVECTOR3(size_.x / 4, 1.0f, 0.0f), &check);
         if (check.bottom_left == MAP_TYPE_NORMAL &&
             check.left == MAP_TYPE_NONE){

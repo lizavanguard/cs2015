@@ -37,34 +37,38 @@
 //******************************************************************************
 namespace {
 
-    const char* kTextureFilename[] = { "data/Texture/titleChar.jpg" 
-                                        , "data/Texture/titleChar.jpg" 
-                                        , "data/Texture/titleChar.jpg" 
-                                        , "data/Texture/titleChar.jpg" 
-                                        , "data/Texture/titleChar.jpg" 
-                                        , "data/Texture/titleChar.jpg" 
-                                        , "data/Texture/titleChar.jpg" 
-                                        , "data/Texture/titleChar.jpg" };
+    const char* kTextureFilename[] = { "data/Texture/‚È.png" 
+                                        , "data/Texture/‚Ñ.png" 
+                                        , "data/Texture/‚Â.png" 
+                                        , "data/Texture/‚Æ.png" 
+                                        , "data/Texture/‚¤.png" 
+                                        , "data/Texture/‚è.png" 
+                                        , "data/Texture/‚¦.png" 
+                                        , "data/Texture/‚é.png" };
 
-    const float kCharSpace = 50.0f;
+    const float kCharSpace = 150.0f;
 
-    const D3DXVECTOR3 kStartPos[] = { { 350.0f, 150.0f, 0.0f }
-                                    , { 500.0f, 150.0f, 0.0f }
-                                    , { 650.0f, 150.0f, 0.0f }
-                                    , { 800.0f, 150.0f, 0.0f }
-                                    , { 350.0f, 300.0f, 0.0f }
-                                    , { 500.0f, 300.0f, 0.0f }
-                                    , { 650.0f, 300.0f, 0.0f }
-                                    , { 800.0f, 300.0f, 0.0f } };
+    const float kCharSpace2 = 25.0f;
 
-    const float kPosMoveMax[] = { 100.0f, 100.0f, 100.0f
-                                , 100.0f, 100.0f, 100.0f
-                                , 100.0f, 100.0f
+    const float kHalfWindowWidth = kWindowWidth * 0.5f;
+
+    const D3DXVECTOR3 kStartPos[] = { { -75.0f - kCharSpace2 - kCharSpace + kHalfWindowWidth, 150.0f, 0.0f }
+                                    , { -75.0f - kCharSpace2 + kHalfWindowWidth, 150.0f, 0.0f }
+                                    , { 75.0f - kCharSpace2 + kHalfWindowWidth, 150.0f, 0.0f }
+                                    , { 75.0f - kCharSpace2 + kCharSpace + kHalfWindowWidth, 150.0f, 0.0f }
+                                    , { -75.0f + kCharSpace2 - kCharSpace + kHalfWindowWidth, 300.0f, 0.0f }
+                                    , { -75.0f + kCharSpace2 + kHalfWindowWidth, 300.0f, 0.0f }
+                                    , { 75.0f + kCharSpace2 + kHalfWindowWidth, 300.0f, 0.0f }
+                                    , { 75.0f + kCharSpace2 + kCharSpace + kHalfWindowWidth, 300.0f, 0.0f } };
+
+    const float kPosMoveMax[] = { 50.0f, 50.0f, 50.0f
+                                , 50.0f, 50.0f, 50.0f
+                                , 50.0f, 50.0f
                                 };
 
-    const float kChangeSpeed[] = { 3.5f, 2.5f, 2.5f 
-                                 , 3.5f, 2.5f, 2.5f 
-                                 , 3.5f, 2.5f
+    const float kChangeSpeed[] = { 2.0f, 1.8f, 1.6f 
+                                 , 1.4f, 1.4f, 1.6f 
+                                 , 1.8f, 2.0f
                                  };
 
     const int kTitleCharNum = 8;
