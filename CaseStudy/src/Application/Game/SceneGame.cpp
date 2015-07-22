@@ -12,7 +12,6 @@
 #include "Framework/GameManager/GameManager.h"
 #include "Framework/Input/InputManagerHolder.h"
 #include "Framework/Input/InputKeyboard.h"
-#include "Framework\Input\InputDevice.h"
 #include "Framework/Sound/sound.h"
 #include "Framework/Utility/PersistentValue.h"
 
@@ -31,12 +30,15 @@
 #include "Framework/Scene/SceneManager.h"
 #include "Application/Title/SceneTitleFactory.h"
 #include "Application/Result/SceneResultFactory.h"
-#include "Application\Tutorial\SceneTutorialFactory.h"
 #include "Application/Object/Sang/SangManager.h"
 #include "Application/Object/Sang/Butterfly.h"
 #include "Application/Object/Sang/Flower.h"
 #include "Application/Tutorial/SceneTutorialFactory.h"
 #include "Application/GamePause/GamePause.h"
+#include "Application/Navi/NaviManager.h"
+
+int SceneGame::select_stage_num_ = 0;
+
 #include "Application/Navi/NaviManager.h"
 
 int SceneGame::select_stage_num_ = 0;
@@ -168,12 +170,6 @@ void SceneGame::Update(SceneManager* p_scene_manager, const float elapsed_time) 
     // Stage x Player's boro
     p_collision_->CollideStageToPlayersGimmick();
 
-    if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_1)) {
-      p_tension_gauge_->IncreaseTension();
-    }
-    if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_2)) {
-      p_tension_gauge_->CoolDown();
-    }
     p_navimanager_->Update();
   }
 

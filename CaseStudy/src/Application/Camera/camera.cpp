@@ -94,23 +94,6 @@ void Camera::Update(){
     auto& pKeyboard = InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard();
     //  auto& pJoypad = InputManagerHolder::Instance().GetInputManager().GetPrimaryDevice();
 
-    if (pKeyboard.IsPress(DIK_UP)) {
-        posP_.y += kCameraSpeed;
-        posR_.y += kCameraSpeed;
-    }
-    if (pKeyboard.IsPress(DIK_DOWN)) {
-        posP_.y += -kCameraSpeed;
-        posR_.y += -kCameraSpeed;
-    }
-    if (pKeyboard.IsPress(DIK_LEFT)) {
-        posP_.x += -kCameraSpeed;
-        posR_.x += -kCameraSpeed;
-    }
-    if (pKeyboard.IsPress(DIK_RIGHT)) {
-        posP_.x += kCameraSpeed;
-        posR_.x += kCameraSpeed;
-    }
-
     // ƒJƒƒ‰‚ªŒÄ‚Î‚ê‚Ä‚¢‚È‚¢
     if (call_flg_ == false){
         // ƒJƒƒ‰‚Ì”ÍˆÍŠO

@@ -67,7 +67,11 @@ void GamePause::Update(SceneManager* p_scene_manager, const float elapsed_time, 
   // タイトル・ステージセレクト・リトライ・戻る
   if (is_pause_){
       p_game_pause_window_->Update(p_scene_manager, elapsed_time, p_game_pause_);
-    // Next TitleScene
+    //// Next TitleScene
+    //if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_N)) {
+    //  SceneGameFactory* pGameSceneFactory = new SceneGameFactory();
+    //  p_scene_manager->PushNextSceneFactory(pGameSceneFactory);
+    //}
   }
   if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_P)) {
       if (is_pause_)
@@ -75,6 +79,8 @@ void GamePause::Update(SceneManager* p_scene_manager, const float elapsed_time, 
       else
         SetPause(true);
   }
+
+//  GameCursor* gameCursor = 
 }
 
 

@@ -59,7 +59,6 @@
     <ClCompile Include="src\Application\TitleBase\TitleCharBase.cpp" />
     <ClCompile Include="src\Application\Title\SceneTitle.cpp" />
     <ClCompile Include="src\Application\Title\SceneTitleFactory.cpp" />
-    <ClCompile Include="src\Application\Title\TitleWindow.cpp" />
     <ClCompile Include="src\Application\Tutorial\SceneTutorial.cpp" />
     <ClCompile Include="src\Application\Tutorial\SceneTutorialFactory.cpp" />
     <ClCompile Include="src\Application\Tutorial\TutorialBackGround.cpp" />
@@ -140,7 +139,6 @@
     <ClInclude Include="src\Application\TitleBase\TitleCharBase.h" />
     <ClInclude Include="src\Application\Title\SceneTitle.h" />
     <ClInclude Include="src\Application\Title\SceneTitleFactory.h" />
-    <ClInclude Include="src\Application\Title\TitleWindow.h" />
     <ClInclude Include="src\Application\Tutorial\SceneTutorial.h" />
     <ClInclude Include="src\Application\Tutorial\SceneTutorialFactory.h" />
     <ClInclude Include="src\Application\Tutorial\TutorialBackGround.h" />

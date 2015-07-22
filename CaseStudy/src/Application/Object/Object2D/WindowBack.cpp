@@ -35,7 +35,7 @@
 //******************************************************************************
 namespace {
 
-    const char* kTextureFilename = "data/Texture/pause_bamba.png";
+    const char* kTextureFilename = "data/Texture/pauseWindow.jpg";
 
     const DWORD kWindowBackColor = 0xffffffff;
 

@@ -35,7 +35,7 @@
 //******************************************************************************
 namespace {
 
-    const char* kTextureFilename = "data/Texture/push_start.png";
+    const char* kTextureFilename = "data/Texture/title.jpg";
 
     const DWORD kStartSymbolColor = 0xffffffff;
 
