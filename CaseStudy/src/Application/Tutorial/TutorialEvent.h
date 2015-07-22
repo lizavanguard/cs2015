@@ -23,7 +23,7 @@ class Stage;
 class TutorialEvent : public Object2D {
 public:
   // ctor
-  TutorialEvent(Uriel* p_uriel, Player* p_player, Stage* p_stage);
+	TutorialEvent(Uriel* p_uriel, Player* p_player, Stage* p_stage);
 
   // dtor
   ~TutorialEvent();
@@ -43,7 +43,6 @@ private:
   typedef enum{
     EVENT_NAME_NONE = -1,
     EVENT_NAME_START,
-    EVENT_NAME_START2,
     EVENT_NAME_CALL,
     EVENT_NAME_JUNP,
     EVENT_NAME_CHARGE_JUNP,

@@ -213,11 +213,8 @@
     <ClCompile Include="src\Application\Tutorial\TutorialBackGround.cpp">
       <Filter>Application\Tutorial</Filter>
     </ClCompile>
-    <ClCompile Include="src\Application\Navi\NaviManager.cpp">
-      <Filter>Application\Navi</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Application\Object\Object2D\Navigation.cpp">
-      <Filter>Application\Object\Object2D</Filter>
+    <ClCompile Include="src\Application\Title\TitleWindow.cpp">
+      <Filter>Application\Title</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -325,9 +322,6 @@
     </Filter>
     <Filter Include="Application\GamePause">
       <UniqueIdentifier>{caa884c8-0192-43ad-98c0-14fe6ba0d922}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\Navi">
-      <UniqueIdentifier>{4b607d25-545d-4b82-8494-fe7e01259cc6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -614,11 +608,8 @@
     <ClInclude Include="src\Framework\Utility\PersistentValue.h">
       <Filter>Framework\Utilty</Filter>
     </ClInclude>
-    <ClInclude Include="src\Application\Navi\NaviManager.h">
-      <Filter>Application\Navi</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Application\Object\Object2D\Navigation.h">
-      <Filter>Application\Object\Object2D</Filter>
+    <ClInclude Include="src\Application\Title\TitleWindow.h">
+      <Filter>Application\Title</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

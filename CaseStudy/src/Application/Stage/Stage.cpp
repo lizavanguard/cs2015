@@ -51,7 +51,7 @@ bool AABBCheck(D3DXVECTOR3 a_point[4], D3DXVECTOR3 b_point[4]);
 bool Stage::gimmick_create_;
 const char* Stage_Name[] =
 {
-	"data/map/tutorial.mf",
+	"data/map/movie_01.mf",
 	"data/map/stage01_take.mf",
 	"data/map/stage01_take.mf",
 };

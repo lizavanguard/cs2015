@@ -56,7 +56,6 @@ public:
   bool IsBoroState(void) const { return player_mode_ == MODE_BORO; }
   PLAYER_MODE GetPlayerMode(void) const { return player_mode_; }
   void SetMoveStop(bool move_stop_flag){ move_stop_flag_ = move_stop_flag; }  // チュートリアル用に追加(by Momoi) 2015/07/13
-  void SetCallStop(bool call_stop_flag){ call_stop_flag_ = call_stop_flag; }  // チュートリアル用に追加(by Momoi) 2015/07/21
 
   // parameter =================================
 private:
@@ -68,7 +67,6 @@ private:
   Stage* stage_;
   D3DXVECTOR2 stageSize_;
   bool move_stop_flag_;    // チュートリアル用に追加(by Momoi) 2015/07/13
-  bool call_stop_flag_;    // チュートリアル用に追加(by Momoi) 2015/07/21
 };
 
 #endif
