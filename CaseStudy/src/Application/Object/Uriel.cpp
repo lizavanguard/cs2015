@@ -169,6 +169,15 @@ void Uriel::Update(void){
       pos_ += move_;
     }
   }
+  else if (check.center == MAP_TYPE_NORMAL && (status_ == URIEL_STATUS_JUMP || status_ == URIEL_STATUS_CHARGE_JUMP))
+  {
+    // 前回の座標保存
+    old_position_ = pos_;
+
+    if (!move_stop_flag_){
+      pos_ += move_;
+    }
+  }
 
   // ボーロチャージインターバル時間の減少
   if (boro_interval_ > 0)
@@ -777,7 +786,7 @@ BLOCK_DATA Uriel::CrawlLoadCheck(void){
     // 左に進んでる場合
     else if (move_direction_ == DIRECTION_LEFT){
       if (check.bottom_left == MAP_TYPE_NONE){
-        p_stage_->CheckMapTip2(&D3DXVECTOR3(pos_.x - size_.x + move_.x, pos_.y, pos_.z),
+        p_stage_->CheckMapTip2(&D3DXVECTOR3(pos_.x + move_.x, pos_.y, pos_.z),
                                 D3DXVECTOR3(size_.x / 4, 1.0f, 0.0f), &check);
         if (check.bottom_left == MAP_TYPE_NORMAL &&
             check.left == MAP_TYPE_NONE){
@@ -799,7 +808,9 @@ BLOCK_DATA Uriel::CrawlLoadCheck(void){
                                        D3DXVECTOR3(size_.x / 4, size_.y / 4, 0.0f), &check);
         if (check.up_right == MAP_TYPE_NONE ||
             check.up_right == MAP_TYPE_START ||
-            check.up_right == MAP_TYPE_GOAL){
+            check.up_right == MAP_TYPE_GOAL ||
+            check.up_right == MAP_TYPE_SANG_BUTTEFRY ||
+            check.up_right == MAP_TYPE_SANG_FLOWER){
           if (abs(pos_.x - map_.x) < size_.x / 4)
             return BLOCK_DATA_UP_STAIRS;
         }
@@ -814,7 +825,9 @@ BLOCK_DATA Uriel::CrawlLoadCheck(void){
                                 D3DXVECTOR3(size_.x / 4, 1.0f, 0.0f), &check);
         if (check.up_left == MAP_TYPE_NONE ||
             check.up_left == MAP_TYPE_START ||
-            check.up_left == MAP_TYPE_GOAL){
+            check.up_left == MAP_TYPE_GOAL ||
+            check.up_left == MAP_TYPE_SANG_BUTTEFRY ||
+            check.up_left == MAP_TYPE_SANG_FLOWER){
           if (abs(pos_.x - map_.x) < size_.x / 4)
             return BLOCK_DATA_UP_STAIRS;
         }
@@ -885,7 +898,9 @@ BLOCK_DATA Uriel::ChargeCrawlLoadCheck(void){
                                        D3DXVECTOR3(size_.x / 4, size_.y / 4, 0.0f), &check);
         if (check.up_right == MAP_TYPE_NONE ||
             check.up_right == MAP_TYPE_START ||
-            check.up_right == MAP_TYPE_GOAL){
+            check.up_right == MAP_TYPE_GOAL ||
+            check.up_right == MAP_TYPE_SANG_BUTTEFRY ||
+            check.up_right == MAP_TYPE_SANG_FLOWER){
           if (abs(pos_.x - map_.x) < size_.x / 4)
             return BLOCK_DATA_UP_STAIRS;
         }
@@ -900,7 +915,9 @@ BLOCK_DATA Uriel::ChargeCrawlLoadCheck(void){
                                 D3DXVECTOR3(size_.x / 4, 1.0f, 0.0f), &check);
         if (check.up_left == MAP_TYPE_NONE ||
             check.up_left == MAP_TYPE_START ||
-            check.up_left == MAP_TYPE_GOAL){
+            check.up_left == MAP_TYPE_GOAL ||
+            check.up_left == MAP_TYPE_SANG_BUTTEFRY ||
+            check.up_left == MAP_TYPE_SANG_FLOWER){
           if (abs(pos_.x - map_.x) < size_.x / 4)
             return BLOCK_DATA_UP_STAIRS;
         }
