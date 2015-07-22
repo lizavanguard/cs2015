@@ -52,6 +52,11 @@ bool Stage::gimmick_create_;
 const char* Stage_Name[] =
 {
 	"data/map/tutorial.mf",
+	"data/map/stage_00.mf",
+	"data/map/stage_01.mf",
+	"data/map/stage_02.mf",
+	"data/map/stage_03.mf",
+	"data/map/stage_04.mf",
 	"data/map/stage01_take.mf",
 	"data/map/stage01_take.mf",
 };

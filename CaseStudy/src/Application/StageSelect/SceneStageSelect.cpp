@@ -17,6 +17,7 @@
 #include "Framework/Sound/sound.h"
 
 #include "Application/Game/SceneGameFactory.h"
+#include "Application/Game/SceneGame.h"
 #include "Application/Tutorial/SceneTutorialFactory.h"
 #include "Application/GameCursor/GameCursor.h"
 #include "Application/Object/BackGround/BackGroundManager.h"
@@ -126,6 +127,7 @@ void SceneStageSelect::Update(SceneManager* p_scene_manager, const float elapsed
     if (select_num == 0){
       p_scene_manager->PushNextSceneFactory(new SceneTutorialFactory());
     } else {
+      SceneGame::SetSelectStageNum(select_num);
       p_scene_manager->PushNextSceneFactory(new SceneGameFactory());
     }
   }

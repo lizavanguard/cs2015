@@ -38,6 +38,8 @@
 
 #include "Application/Navi/NaviManager.h"
 
+int SceneGame::select_stage_num_ = 0;
+
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // class definition
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -64,6 +66,7 @@ SceneGame::SceneGame()
   p_sang_manager_ = new SangManager();
 
   p_stage_ = new Stage();
+  p_stage_->SelectStage(select_stage_num_);
 
   p_player_ = new Player(ANIMATION_PLAYER_RATTEL_NONE, p_stage_);
 
@@ -113,6 +116,7 @@ SceneGame::~SceneGame() {
   SafeDelete(p_camera_);
   SafeDelete(p_game_pause_);
   SafeDelete(p_navimanager_);
+  select_stage_num_ = 0;
 }
 
 
