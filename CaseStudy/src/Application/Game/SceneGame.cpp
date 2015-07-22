@@ -178,13 +178,13 @@ void SceneGame::Update(SceneManager* p_scene_manager, const float elapsed_time) 
     SceneResultFactory* pResultSceneFactory = new SceneResultFactory();
     p_scene_manager->PushNextSceneFactory(pResultSceneFactory);
   }
-#if _DEBUG
+
   // TutorialScene
   if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_T)) {
     SceneTutorialFactory* pTutorialSceneFactory = new SceneTutorialFactory();
     p_scene_manager->PushNextSceneFactory(pTutorialSceneFactory);
   }
-#endif
+
   if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_3)) {
     EffecManagerSingleton::Instance().Create(EffectManager::EFFECTTYPE_KIRAKIRA, D3DXVECTOR2(100, -100), D3DXVECTOR2(5, 5), 1.0f);
   }

@@ -72,6 +72,8 @@ SceneTutorial::SceneTutorial()
   p_camera->SetPosR(pos);
 
   p_tutorial_event_ = new TutorialEvent(p_uriel_, p_player_, p_stage_);
+
+  PlaySound(SOUND_LABEL_BGM_DEMO0);
 }
 
 
@@ -79,6 +81,8 @@ SceneTutorial::SceneTutorial()
 // dtor
 //------------------------------------------------
 SceneTutorial::~SceneTutorial() {
+  StopSound(SOUND_LABEL_BGM_DEMO0);
+
   SafeDelete(p_collision_);
   SafeDelete(p_player_);
   SafeDelete(p_uriel_);
@@ -126,13 +130,13 @@ void SceneTutorial::Update(SceneManager* p_scene_manager, const float elapsed_ti
   // Stage x Player's boro
   p_collision_->CollideStageToPlayersGimmick();
 
-#if _DEBUG
+
   // Next TitleScene
   if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_T)) {
     SceneGameFactory* pGameSceneFactory = new SceneGameFactory();
     p_scene_manager->PushNextSceneFactory(pGameSceneFactory);
   }
-#endif
+
 }
 
 

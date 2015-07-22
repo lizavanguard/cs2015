@@ -328,7 +328,6 @@
     </Filter>
     <Filter Include="Application\Navi">
       <UniqueIdentifier>{4b607d25-545d-4b82-8494-fe7e01259cc6}</UniqueIdentifier>
-      <UniqueIdentifier>{b930d0a1-ce8a-4dd1-8367-882e157ec742}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
