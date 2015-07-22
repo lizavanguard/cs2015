@@ -94,64 +94,47 @@ void Camera::Update(){
     auto& pKeyboard = InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard();
     //  auto& pJoypad = InputManagerHolder::Instance().GetInputManager().GetPrimaryDevice();
 
-    if (pKeyboard.IsPress(DIK_UP)) {
-        posP_.y += kCameraSpeed;
-        posR_.y += kCameraSpeed;
-    }
-    if (pKeyboard.IsPress(DIK_DOWN)) {
-        posP_.y += -kCameraSpeed;
-        posR_.y += -kCameraSpeed;
-    }
-    if (pKeyboard.IsPress(DIK_LEFT)) {
-        posP_.x += -kCameraSpeed;
-        posR_.x += -kCameraSpeed;
-    }
-    if (pKeyboard.IsPress(DIK_RIGHT)) {
-        posP_.x += kCameraSpeed;
-        posR_.x += kCameraSpeed;
-    }
-
     // カメラが呼ばれていない
-    //if (call_flg_ == false){
-    //    // カメラの範囲外
-    //    if (player_->GetPos().x > (localView_.x / 5.0f * 2.0f) + posP_.x){
-    //        posP_.x += kCameraSpeed;
-    //        posR_.x += kCameraSpeed;
-    //        //          localScreenFrame_.x += kCameraSpeed;
-    //    }
-    //    if (player_->GetPos().x < (-localView_.x / 5.0f * 2.0f) + posP_.x){
-    //        posP_.x -= kCameraSpeed;
-    //        posR_.x -= kCameraSpeed;
-    //        //          localScreenFrame_.x -= kCameraSpeed;
-    //    }
-    //    if (player_->GetPos().y >(localView_.y / 5.0f * 1.3f) + posP_.y){
-    //        posP_.y += kCameraSpeed;
-    //        posR_.y += kCameraSpeed;
-    //        //          localScreenFrame_.y += kCameraSpeed;
-    //    }
-    //    if (player_->GetPos().y < (-localView_.y / 5.0f * 2.4f) + posP_.y){
-    //        posP_.y -= kCameraSpeed;
-    //        posR_.y -= kCameraSpeed;
-    //        //          localScreenFrame_.y -= kCameraSpeed;
-    //    }
-    //}
-    //// 呼ばれてる
-    //else{
-    //    D3DXVECTOR3 vecPos = pos_dest_ - posR_;
-    //    move_accele_ += kAcceleValue;
-    //    if (D3DXVec2LengthSq(&D3DXVECTOR2(vecPos.x, vecPos.y)) <= 0.0f){
-    //        posR_ = pos_dest_;
-    //        posP_.x = posR_.x;
-    //        posP_.y = posR_.y;
-    //    }
-    //    // 加速度入れる
-    //    else{
-    //        posR_.x = posR_.x + sinf(move_accele_) * vecPos.x;
-    //        posR_.y = posR_.y + sinf(move_accele_) * vecPos.y;
-    //        posP_.x = posR_.x;
-    //        posP_.y = posR_.y;
-    //    }
-    //}
+    if (call_flg_ == false){
+        // カメラの範囲外
+        if (player_->GetPos().x > (localView_.x / 5.0f * 2.0f) + posP_.x){
+            posP_.x += kCameraSpeed;
+            posR_.x += kCameraSpeed;
+            //          localScreenFrame_.x += kCameraSpeed;
+        }
+        if (player_->GetPos().x < (-localView_.x / 5.0f * 2.0f) + posP_.x){
+            posP_.x -= kCameraSpeed;
+            posR_.x -= kCameraSpeed;
+            //          localScreenFrame_.x -= kCameraSpeed;
+        }
+        if (player_->GetPos().y >(localView_.y / 5.0f * 1.3f) + posP_.y){
+            posP_.y += kCameraSpeed;
+            posR_.y += kCameraSpeed;
+            //          localScreenFrame_.y += kCameraSpeed;
+        }
+        if (player_->GetPos().y < (-localView_.y / 5.0f * 2.4f) + posP_.y){
+            posP_.y -= kCameraSpeed;
+            posR_.y -= kCameraSpeed;
+            //          localScreenFrame_.y -= kCameraSpeed;
+        }
+    }
+    // 呼ばれてる
+    else{
+        D3DXVECTOR3 vecPos = pos_dest_ - posR_;
+        move_accele_ += kAcceleValue;
+        if (D3DXVec2LengthSq(&D3DXVECTOR2(vecPos.x, vecPos.y)) <= 0.0f){
+            posR_ = pos_dest_;
+            posP_.x = posR_.x;
+            posP_.y = posR_.y;
+        }
+        // 加速度入れる
+        else{
+            posR_.x = posR_.x + sinf(move_accele_) * vecPos.x;
+            posR_.y = posR_.y + sinf(move_accele_) * vecPos.y;
+            posP_.x = posR_.x;
+            posP_.y = posR_.y;
+        }
+    }
 
     if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_C)) {
         CallPos(D3DXVECTOR3(500.0f, 200.0f, 0.0f));

@@ -2,7 +2,7 @@
 //
 // クリアタイム処理  [ResultTime.h]
 // Author  :  SHOHEI MATSUMOTO
-// 更新日  :  2015/07/14
+// 更新日  :  2015/06/29
 //
 //******************************************************************************
 //******************************************************************************
@@ -40,7 +40,9 @@
 namespace{
     const int kCountMax = kFPS * 5;
 
-    const int kCountLimit = kOneMinute * 60;
+    const int kCountLimit = 99;
+
+    const int kResultTime = 60;
 }
 
 //******************************************************************************
@@ -51,25 +53,17 @@ namespace{
 // 引数    :  
 // 戻り値  :  無し
 // Author  :  SHOHEI MATSUMOTO
-// 更新日  :  2015/07/14
+// 更新日  :  2015/06/29
 //==============================================================================
-ResultTime::ResultTime(const D3DXVECTOR3 &pos, const float &rot, const D3DXVECTOR2 &size, const int &value, NUMBER_TYPE type){
+ResultTime::ResultTime(const D3DXVECTOR3 &pos, const float &rot, const D3DXVECTOR2 &size, NUMBER_TYPE type){
   value_ = 0;
   count_ = 0;
-  timer_value_ = value;
+//  timer_value = timer->GetTimeValue();
+  p_number_object_ = new NumberObject *[MAX_FIGURE];
 
-  p_number_object_ = new NumberObject *[kMaxFigure];
-
-  p_object2D_ = new Object2D(D3DXVECTOR3(pos.x + 100.0f*2-25.0f, pos.y, pos.z), size, "data/Texture/figure_coron.png");
-
-  for (int num = 0; num < 2; num++)
+  for (int num = 0; num < MAX_FIGURE; num++)
   {
       p_number_object_[num] = new NumberObject(D3DXVECTOR3(pos.x + 100.0f*num, pos.y, pos.z), rot, size, type);
-      p_number_object_[num]->SetValue(0);
-  }
-  for (int num = 2; num < 4; num++)
-  {
-      p_number_object_[num] = new NumberObject(D3DXVECTOR3(pos.x + 100.0f*num+50.0f, pos.y, pos.z), rot, size, type);
       p_number_object_[num]->SetValue(0);
   }
 }
@@ -82,14 +76,12 @@ ResultTime::ResultTime(const D3DXVECTOR3 &pos, const float &rot, const D3DXVECTO
 // 更新日  :  2015/06/29
 //==============================================================================
 ResultTime::~ResultTime(void){
-    for (int num = 0; num < kMaxFigure; num++){
+  for (int num = 0; num < MAX_FIGURE; num++){
       delete p_number_object_[num];
       p_number_object_[num] = nullptr;
   }
   delete[] p_number_object_;
   p_number_object_ = nullptr;
-  delete p_object2D_;
-  p_object2D_ = nullptr;
 }
 
 //==============================================================================
@@ -97,45 +89,29 @@ ResultTime::~ResultTime(void){
 // 引数    :  無し
 // 戻り値  :  無し
 // Author  :  SHOHEI MATSUMOTO
-// 更新日  :  2015/07/14
+// 更新日  :  2015/06/29
 //==============================================================================
 void ResultTime::Update(){
-  // 一定時間が立ったらタイムを表示する
+  // カウントが
   if (count_ > kCountMax){
-      value_ = timer_value_;
+      value_ = kResultTime;
   }
-  // 適当に値を動かす
   else{
-      value_ += 2121;
+      value_ += 21;
       ++count_;
   }
   if (value_ > kCountLimit)
       value_ -= kCountLimit;
-  // 時間変数
-  int minuteTime = value_ / kOneMinute;
-  int secondTime = value_ - minuteTime * kOneMinute;
   // 桁の設定変数
-  unsigned int figure = (unsigned int)pow((float)kFigureDefine, kMaxFigure*0.5f);
-  // 分
-  for (int num = 0; num < 2; num++)
+  unsigned int figure = (unsigned int)pow((float)FIGURE_DEFINE, MAX_FIGURE);
+  for (int num = 0; num < MAX_FIGURE; num++)
   {
-      // 特定の桁の値を入れる
-      int value = (minuteTime % figure) / (figure / kFigureDefine);
-      // 値をセット
-      p_number_object_[num]->SetValue(value);
-      // 桁ずらし
-      figure /= kFigureDefine;
-  }
-  // 秒
-  figure = (unsigned int)pow((float)kFigureDefine, kMaxFigure*0.5f);
-  for (int num = 2; num < 4; num++)
-  {
-      // 特定の桁の値を入れる
-      int value = (secondTime % figure) / (figure / kFigureDefine);
-      // 値をセット
-      p_number_object_[num]->SetValue(value);
-      // 桁ずらし
-      figure /= kFigureDefine;
+    // 特定の桁の値を入れる
+    int value = (value_ % figure) / (figure / FIGURE_DEFINE);
+    // 値をセット
+    p_number_object_[num]->SetValue(value);
+    // 桁ずらし
+    figure /= FIGURE_DEFINE;
   }
 }
 
@@ -147,11 +123,10 @@ void ResultTime::Update(){
 // 更新日  :  2015/06/29
 //==============================================================================
 void ResultTime::Draw(void){
-  for (int num = 0; num < kMaxFigure; num++)
+  for (int num = 0; num < MAX_FIGURE; num++)
   {
       p_number_object_[num]->Draw();
   }
-  p_object2D_->Draw();
 }
 
 

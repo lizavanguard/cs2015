@@ -16,7 +16,6 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // class declaration
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-class Object2D;
 class Collision;
 class Uriel;
 class Player;
@@ -50,7 +49,6 @@ public:
 private:
   // property
   bool is_end_;
-  Object2D* p_background_;
   Collision* p_collision_;
   Player* p_player_;
   Stage* p_stage_;

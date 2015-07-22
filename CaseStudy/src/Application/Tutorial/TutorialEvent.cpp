@@ -22,16 +22,18 @@
 namespace {
 
 const char* kTexturenames[] = {
-  "data/Texture/tyu-toriaru_messe-ziwaku.png",
-  "data/Texture/tyu-toriaru_messe-ziwaku.png",
-  "data/Texture/tyu-toriaru_messe-ziwaku.png",
-  "data/Texture/tyu-toriaru_messe-ziwaku.png",
-  "data/Texture/tyu-toriaru_messe-ziwaku.png",
-  "data/Texture/tyu-toriaru_messe-ziwaku.png",
-  "data/Texture/tyu-toriaru_messe-ziwaku.png",
+  "data/Texture/tutorial_message1_1.png",
+  "data/Texture/tutorial_message1_2.png",
+  "data/Texture/tutorial_message2_1.png",
+  "data/Texture/tutorial_message3_1.png",
+  "data/Texture/tutorial_message4_1.png",
+  "data/Texture/tutorial_message5_1.png",
+  "data/Texture/tutorial_message6_1.png",
+  "data/Texture/tutorial_message7_1.png",
 };
 
 const D3DXVECTOR3 event_point[] = {
+  D3DXVECTOR3(-550, -100, 0),
   D3DXVECTOR3(-550, -100, 0),
   D3DXVECTOR3(-750, -100, 0),
   D3DXVECTOR3(-550, -100, 0),
@@ -82,6 +84,8 @@ TutorialEvent::~TutorialEvent() {
 //------------------------------------------------
 void TutorialEvent::Update(void) {
   view_event_flag_ = true;
+
+  p_player_->SetCallStop(true);
 
   // チュートリアルイベントを表示するか調べる
   if (!TutorialEventCheck()){
@@ -149,16 +153,26 @@ void TutorialEvent::EventUpdate(void){
   {
   case EVENT_NAME_START:
     {
-      if (pJoypad.IsTrigger(InputDevice::Pads::PAD_A) || pKeyboard.IsPress(DIK_RETURN)){
+      if (pJoypad.IsTrigger(InputDevice::Pads::PAD_A) || pKeyboard.IsTrigger(DIK_RETURN)){
         use_flag_[EVENT_NAME_START] = false;
         already_used_flag_[EVENT_NAME_START] = true;
       }
       p_player_->SetMoveStop(true);
     }
     break;
+  case EVENT_NAME_START2:
+  {
+      if (pJoypad.IsTrigger(InputDevice::Pads::PAD_A) || pKeyboard.IsTrigger(DIK_RETURN)){
+        use_flag_[EVENT_NAME_START2] = false;
+        already_used_flag_[EVENT_NAME_START2] = true;
+      }
+      p_player_->SetMoveStop(true);
+  }
+  break;
   case EVENT_NAME_CALL:
     {
-      if (pJoypad.IsPress(InputDevice::Pads::PAD_A) || pKeyboard.IsPress(DIK_RETURN)){
+      p_player_->SetCallStop(false);
+      if (pJoypad.IsTrigger(InputDevice::Pads::PAD_A) || pKeyboard.IsTrigger(DIK_RETURN)){
         use_flag_[EVENT_NAME_CALL] = false;
         already_used_flag_[EVENT_NAME_CALL] = true;
         p_uriel_->SetDirection(AnimationObject::DIRECTION_RIGHT);
@@ -168,7 +182,7 @@ void TutorialEvent::EventUpdate(void){
     break;
   case EVENT_NAME_JUNP:
     {
-      if (pJoypad.IsTrigger(InputDevice::Pads::PAD_A) || pKeyboard.IsPress(DIK_RETURN)){
+      if (pJoypad.IsTrigger(InputDevice::Pads::PAD_A) || pKeyboard.IsTrigger(DIK_RETURN)){
         use_flag_[EVENT_NAME_JUNP] = false;
         already_used_flag_[EVENT_NAME_JUNP] = true;
       }
@@ -185,7 +199,7 @@ void TutorialEvent::EventUpdate(void){
     break;
   case EVENT_NAME_RUNAWAY:
   {
-    if (pJoypad.IsTrigger(InputDevice::Pads::PAD_A) || pKeyboard.IsPress(DIK_RETURN)){
+    if (pJoypad.IsTrigger(InputDevice::Pads::PAD_A) || pKeyboard.IsTrigger(DIK_RETURN)){
       use_flag_[EVENT_NAME_RUNAWAY] = false;
       already_used_flag_[EVENT_NAME_RUNAWAY] = true;
     }
@@ -202,7 +216,7 @@ void TutorialEvent::EventUpdate(void){
     break;
   case EVENE_NAME_LEAD_URIEL:
   {
-    if (pJoypad.IsTrigger(InputDevice::Pads::PAD_A) || pKeyboard.IsPress(DIK_RETURN)){
+    if (pJoypad.IsTrigger(InputDevice::Pads::PAD_A) || pKeyboard.IsTrigger(DIK_RETURN)){
       use_flag_[EVENE_NAME_LEAD_URIEL] = false;
       already_used_flag_[EVENE_NAME_LEAD_URIEL] = true;
     }

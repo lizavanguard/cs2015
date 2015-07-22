@@ -30,22 +30,27 @@
 //******************************************************************************
 namespace{
 
-    const D3DXVECTOR3 kWinPos = { kWindowWidth * 0.5f, kWindowHeight * 0.5f + 20.0f, 0.0f };
-    const D3DXVECTOR2 kWinSize = { 500.0f, 765.0f };
+    const D3DXVECTOR3 kWinPos = { kWindowWidth * 0.5f, kWindowHeight * 0.5f, 0.0f };
+    const D3DXVECTOR2 kWinSize = { 500.0f, 750.0f };
 
     const D3DXVECTOR3 kPauseCharPos = { kWindowWidth * 0.5f, kWindowHeight * 0.5f - 275.0f , 0.0f};
     const D3DXVECTOR2 kPauseCharSize = { 250.0f , 120.0f};
 
-    const D3DXVECTOR3 kCharPos[] = { { kWindowWidth * 0.5f + 175.0f, kWindowHeight * 0.5f - 75.0f, 0.0f }, 
-        { kWindowWidth * 0.5f + 175.0f, kWindowHeight * 0.5f + 60.0f, 0.0f },
-        { kWindowWidth * 0.5f + 175.0f, kWindowHeight * 0.5f + 200.0f, 0.0f },
-        { kWindowWidth * 0.5f + 175.0f, kWindowHeight * 0.5f + 340.0f, 0.0f },
+    const D3DXVECTOR3 kCharPos[] = { { kWindowWidth * 0.5f, kWindowHeight * 0.5f - 150.0f, 0.0f }, 
+                                     { kWindowWidth * 0.5f, kWindowHeight * 0.5f - 30.0f, 0.0f },
+                                     { kWindowWidth * 0.5f, kWindowHeight * 0.5f + 90.0f, 0.0f },
+                                     { kWindowWidth * 0.5f, kWindowHeight * 0.5f + 210.0f, 0.0f },
                                };
     const D3DXVECTOR2 kCharSize[] = { { 300.0f, 100.0f },
                                     { 300.0f, 100.0f },
                                     { 300.0f, 100.0f },
                                     { 300.0f, 100.0f },
                                 };
+    const char* kPauseCharTextureFileName[] = { { "data/Texture/pauseWindow.jpg"} ,
+                                                { "data/Texture/pauseWindow.jpg" },
+                                                { "data/Texture/pauseWindow.jpg" },
+                                                { "data/Texture/pauseWindow.jpg" },
+                                    };
 
     const D3DXVECTOR2 kCursorSize = { 100.0f, 100.0f };
     const char* kCursorTextureFilename = "data/Texture/bo-ro.png";
@@ -72,6 +77,14 @@ GamePauseWindow::GamePauseWindow()
 
     p_window_back_ = new WindowBack(kWinPos, kRot, kWinSize);
 
+    p_object2D_ = new Object2D(kPauseCharPos, kPauseCharSize, "data/Texture/pauseWindow.jpg");
+
+    p_char_ = new Char *[MAX];
+
+    for (int i = 0; i < MAX; i++){
+        p_char_[i] = new Char(kCharPos[i], kRot, kCharSize[i], kPauseCharTextureFileName[i]);
+    }
+
     GameCursor::PositionContainer position_list;
     for (int thumb_count = 0; thumb_count < MAX; ++thumb_count) {
         position_list.push_back(kCharPos[thumb_count]);
@@ -88,6 +101,11 @@ GamePauseWindow::GamePauseWindow()
 //==============================================================================
 GamePauseWindow::~GamePauseWindow() {
     SafeDelete(p_window_back_);
+    SafeDelete(p_object2D_);
+    for (int i = 0; i < MAX; i++){
+        SafeDelete(p_char_[i]);
+    }
+    SafeDeleteArray(p_char_);
     SafeDelete(p_game_cursor_);
 }
 
@@ -100,6 +118,12 @@ GamePauseWindow::~GamePauseWindow() {
 // XV“ú  :  2015/07/07
 //==============================================================================
 void GamePauseWindow::Update(SceneManager* p_scene_manager, const float elapsed_time, GamePause* p_game_pause_) {
+
+    p_window_back_->Update();
+
+    for (int i = 0; i < MAX; i++){
+        p_char_[i]->Update();
+    }
 
     p_game_cursor_->Update(elapsed_time);
 
@@ -129,6 +153,12 @@ void GamePauseWindow::Update(SceneManager* p_scene_manager, const float elapsed_
 //==============================================================================
 void GamePauseWindow::Draw(void) {
     p_window_back_->Draw();
+
+    p_object2D_->Draw();
+
+    for (int i = 0; i < MAX; i++){
+        p_char_[i]->Draw();
+    }
 
     p_game_cursor_->Draw();
 }
