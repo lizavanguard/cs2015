@@ -8,14 +8,16 @@
 // include
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 #include "SceneTutorial.h"
-#include "Application/Tutorial/TutorialEvent.h"
 #include "Framework/DrawDebugPrimitive/DrawPrimitive.h"
 #include "Framework/GameManager/GameManager.h"
 #include "Framework/Input/InputManagerHolder.h"
 #include "Framework/Input/InputKeyboard.h"
 #include "Framework/Sound/sound.h"
-
+#include "Framework/Utility/PersistentValue.h"
 #include "Framework/Scene/SceneManager.h"
+
+#include "Application/Tutorial/TutorialEvent.h"
+#include "Application/Result/SceneResultFactory.h"
 #include "Application/Title/SceneTitleFactory.h"
 #include "Application/Game/SceneGameFactory.h"
 #include "Application/Collison/Collision.h"
@@ -106,6 +108,9 @@ void SceneTutorial::Update(SceneManager* p_scene_manager, const float elapsed_ti
   // ’¹XV
   p_tori_->Update();
   if (p_tori_->GetHitCheck()){
+    PersistentValue::Instance().SetData("Score", 10);
+    SceneResultFactory* pResultSceneFactory = new SceneResultFactory();
+    p_scene_manager->PushNextSceneFactory(pResultSceneFactory);
     return;
   }
 

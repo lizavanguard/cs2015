@@ -63,8 +63,8 @@ GameManager::GameManager( HINSTANCE hInstance, HWND hWnd, LPDIRECT3DDEVICE9 pDev
   InitDrawPrimitive(pDevice);
 
   // ˆê”Ô‰º
-//  Scene* pFirstScene = new SceneTitle();
-  Scene* pFirstScene = new SceneGame();
+  Scene* pFirstScene = new SceneTitle();
+  //Scene* pFirstScene = new SceneGame();
   //Scene* pFirstScene = new SceneStageSelect();
   pSceneManager_ = new SceneManager(pFirstScene);
 }

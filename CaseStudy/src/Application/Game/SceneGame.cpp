@@ -130,6 +130,9 @@ void SceneGame::Update(SceneManager* p_scene_manager, const float elapsed_time) 
     // ’¹XV
     p_tori_->Update();
     if (p_tori_->GetHitCheck()){
+      PersistentValue::Instance().SetData("Score", 10);
+      SceneResultFactory* pResultSceneFactory = new SceneResultFactory();
+      p_scene_manager->PushNextSceneFactory(pResultSceneFactory);
       return;
     }
 
@@ -170,14 +173,6 @@ void SceneGame::Update(SceneManager* p_scene_manager, const float elapsed_time) 
   }
 
   p_game_pause_->Update(p_scene_manager, elapsed_time, p_game_pause_);
-
-  // Next TitleScene
-  if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_N)) {
-      //SceneTitleFactory* pTitleSceneFactory = new SceneTitleFactory();
-    PersistentValue::Instance().SetData("Score", 10);
-    SceneResultFactory* pResultSceneFactory = new SceneResultFactory();
-    p_scene_manager->PushNextSceneFactory(pResultSceneFactory);
-  }
 
   // TutorialScene
   if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_T)) {

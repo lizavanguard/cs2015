@@ -12,10 +12,12 @@
 #include "Framework/FrameworkOption.h"
 #include "Framework/Input/InputKeyboard.h"
 #include "Framework/Input/InputManagerHolder.h"
+#include "Framework/Input/InputXInput.h"
 #include "Framework/Scene/SceneManager.h"
 #include "Framework/Sound/sound.h"
 
 #include "Application/Game/SceneGameFactory.h"
+#include "Application/Tutorial/SceneTutorialFactory.h"
 #include "Application/GameCursor/GameCursor.h"
 #include "Application/Object/BackGround/BackGroundManager.h"
 #include "Application/Object/Object2D/Object2D.h"
@@ -117,9 +119,15 @@ SceneStageSelect::~SceneStageSelect() {
 void SceneStageSelect::Update(SceneManager* p_scene_manager, const float elapsed_time) {
   p_background_manager_->Update();
 
-  auto& keyboard = InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard();
-  if(keyboard.IsTrigger(DIK_A)) {
-    p_scene_manager->PushNextSceneFactory(new SceneGameFactory());
+  auto& pKeyboard = InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard();
+  auto& pJoypad = InputManagerHolder::Instance().GetInputManager().GetPrimaryDevice();
+  if (pJoypad.IsTrigger(InputDevice::Pads::PAD_A) || pKeyboard.IsTrigger(DIK_RETURN)) {
+    int select_num = p_cursor_->GetCursorIndexOld();
+    if (select_num == 0){
+      p_scene_manager->PushNextSceneFactory(new SceneTutorialFactory());
+    } else {
+      p_scene_manager->PushNextSceneFactory(new SceneGameFactory());
+    }
   }
 
   p_cursor_->Update(elapsed_time);

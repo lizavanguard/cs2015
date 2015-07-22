@@ -10,9 +10,9 @@
 //******************************************************************************
 #include "SceneTitle.h"
 #include "Framework\FrameworkOption.h"
-//#include "Framework/GameManager/GameManager.h"
 #include "Framework/Input/InputManagerHolder.h"
 #include "Framework/Input/InputKeyboard.h"
+#include "Framework/Input/InputXInput.h"
 
 #include "Framework\Scene\SceneManager.h"
 #include "Framework/Sound/sound.h"
@@ -79,12 +79,14 @@ SceneTitle::~SceneTitle() {
 // XV“ú  :  2015/06/26
 //==============================================================================
 void SceneTitle::Update(SceneManager* p_scene_manager, const float elapsed_time) {
+  auto& pKeyboard = InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard();
+  auto& pJoypad = InputManagerHolder::Instance().GetInputManager().GetPrimaryDevice();
   p_start_symbol_->Update();
 
   p_title_char_base->Update();
 
   // Next TitleScene
-  if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_N)) {
+  if (pJoypad.IsTrigger(InputDevice::Pads::PAD_A) || pKeyboard.IsTrigger(DIK_RETURN)) {
       p_scene_manager->PushNextSceneFactory(new SceneStageSelectFactory());
   }
 }

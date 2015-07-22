@@ -14,6 +14,7 @@
 #include "Application/Game/SceneGameFactory.h"
 #include "Framework/Input/InputManagerHolder.h"
 #include "Framework/Input/InputKeyboard.h"
+#include "Framework/Input/InputXInput.h"
 #include "Framework/Scene/SceneManager.h"
 #include "Framework/Sound/sound.h"
 #include "Framework/Utility/PersistentValue.h"
@@ -84,7 +85,9 @@ void SceneResult::Update(SceneManager* p_scene_manager, const float elapsed_time
     p_start_symbol_->Update();
 
   // Next TitleScene
-  if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_N)) {
+  auto& pKeyboard = InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard();
+  auto& pJoypad = InputManagerHolder::Instance().GetInputManager().GetPrimaryDevice();
+  if (pJoypad.IsTrigger(InputDevice::Pads::PAD_A) || pKeyboard.IsTrigger(DIK_RETURN)) {
       SceneTitleFactory* pTitleSceneFactory = new SceneTitleFactory();
       p_scene_manager->PushNextSceneFactory(pTitleSceneFactory);
   }
