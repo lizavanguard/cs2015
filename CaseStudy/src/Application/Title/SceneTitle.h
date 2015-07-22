@@ -19,10 +19,9 @@
 //******************************************************************************
 // ƒNƒ‰ƒX’è‹`
 //******************************************************************************
-class BackGroundManager;
 class StartSymbol;
 class TitleCharBase;
-class TitleWindow;
+class Object2D;
 class SceneTitle : public Scene {
 public:
     // ctor/dtor
@@ -40,11 +39,9 @@ private:
     // property
     bool is_end_;
 
+    Object2D* p_object2D;
     TitleCharBase* p_title_char_base;
     StartSymbol* p_start_symbol_;
-    BackGroundManager* p_background_manager_;
-    TitleWindow *p_title_window;
-    bool is_push_title_;
 };
 
 #endif

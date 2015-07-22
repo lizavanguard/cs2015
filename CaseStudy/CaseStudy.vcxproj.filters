@@ -219,15 +219,6 @@
     <ClCompile Include="src\Application\Object\Object2D\Navigation.cpp">
       <Filter>Application\Object\Object2D</Filter>
     </ClCompile>
-    <ClCompile Include="src\Application\Navi\NaviManager.cpp">
-      <Filter>Application\Navi</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Application\Object\Object2D\Navigation.cpp">
-      <Filter>Application\Object\Object2D</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Application\Title\TitleWindow.cpp">
-      <Filter>Application\Title</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Framework">
@@ -336,7 +327,7 @@
       <UniqueIdentifier>{caa884c8-0192-43ad-98c0-14fe6ba0d922}</UniqueIdentifier>
     </Filter>
     <Filter Include="Application\Navi">
-      <UniqueIdentifier>{99530997-064a-4f20-b286-d6c8211f61d2}</UniqueIdentifier>
+      <UniqueIdentifier>{4b607d25-545d-4b82-8494-fe7e01259cc6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -628,15 +619,6 @@
     </ClInclude>
     <ClInclude Include="src\Application\Object\Object2D\Navigation.h">
       <Filter>Application\Object\Object2D</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Application\Navi\NaviManager.h">
-      <Filter>Application\Navi</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Application\Object\Object2D\Navigation.h">
-      <Filter>Application\Object\Object2D</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Application\Title\TitleWindow.h">
-      <Filter>Application\Title</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

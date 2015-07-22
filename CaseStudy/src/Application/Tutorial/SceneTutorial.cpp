@@ -73,7 +73,7 @@ SceneTutorial::SceneTutorial()
   p_camera = new Camera(p_player_, p_stage_);
   pos = p_uriel_->GetPos();
   pos.y += 100.0f;
-  //p_camera->SetPosR(pos);
+  p_camera->SetPosR(pos);
 
   p_tutorial_event_ = new TutorialEvent(p_uriel_, p_player_, p_stage_);
 
@@ -121,7 +121,7 @@ void SceneTutorial::Update(SceneManager* p_scene_manager, const float elapsed_ti
 
   D3DXVECTOR3 pos = p_uriel_->GetPos();
   pos.y += 100.0f;
-  //p_camera->CallAlways(pos);
+  p_camera->CallAlways(pos);
 
   // ƒJƒƒ‰XV
   p_camera->Update();

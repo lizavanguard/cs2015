@@ -132,9 +132,13 @@ void SceneStageSelect::Update(SceneManager* p_scene_manager, const float elapsed
   auto& pKeyboard = InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard();
   auto& pJoypad = InputManagerHolder::Instance().GetInputManager().GetPrimaryDevice();
   if (pJoypad.IsTrigger(InputDevice::Pads::PAD_A) || pKeyboard.IsTrigger(DIK_RETURN)) {
-    int select_num = p_cursor_->GetCursorIndexOld() + 1;
-    SceneGame::SetSelectStageNum(select_num);
-    p_scene_manager->PushNextSceneFactory(new SceneGameFactory());
+    int select_num = p_cursor_->GetCursorIndexOld();
+    if (select_num == 0){
+      p_scene_manager->PushNextSceneFactory(new SceneTutorialFactory());
+    } else {
+      SceneGame::SetSelectStageNum(select_num);
+      p_scene_manager->PushNextSceneFactory(new SceneGameFactory());
+    }
   }
 
   p_cursor_->Update(elapsed_time);
