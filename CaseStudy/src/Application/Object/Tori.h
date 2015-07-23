@@ -42,6 +42,7 @@ public:
 
   // “–‚½‚Á‚Ä‚¢‚½‚çtrue‚ª•Ô‚é
   bool GetHitCheck(void){ return hit_flag_; }
+  bool GetEndFlag(void){ return end_flag_; }
 
 private:
   static const int kFlyToTopSpeed = 9;                 // ã‚Ö”ò‚Ô‘¬“x
@@ -53,6 +54,8 @@ private:
   bool hit_flag_;
   bool happy_flag_;
   int animation_time_;
+  int anim_cnt_;
+  bool end_flag_;
 };
 
 

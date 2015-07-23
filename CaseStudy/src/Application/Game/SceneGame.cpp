@@ -132,10 +132,12 @@ void SceneGame::Update(SceneManager* p_scene_manager, const float elapsed_time) 
     // GAME
     // ’¹XV
     p_tori_->Update();
-    if (p_tori_->GetHitCheck()){
-      PersistentValue::Instance().SetData("Score", p_timer_->GetValue());
-      SceneResultFactory* pResultSceneFactory = new SceneResultFactory();
-      p_scene_manager->PushNextSceneFactory(pResultSceneFactory);
+    if (p_tori_->GetEndFlag()){
+      if (p_tori_->GetEndFlag()){
+        PersistentValue::Instance().SetData("Score", p_timer_->GetValue());
+        SceneResultFactory* pResultSceneFactory = new SceneResultFactory();
+        p_scene_manager->PushNextSceneFactory(pResultSceneFactory);
+      }
       return;
     }
 

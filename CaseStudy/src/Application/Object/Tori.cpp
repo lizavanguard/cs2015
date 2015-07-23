@@ -25,7 +25,9 @@ Tori::Tori(ANIMATION_EVENT animation_event, Uriel *uriel, Stage *stage) : Animat
   p_uriel_ = uriel;
   hit_flag_ = false;
   happy_flag_ = false;
+  end_flag_ = false;
   animation_time_ = 0;
+  anim_cnt_ = 0;
   p_stage_ = stage;
   pos_ = stage->GetGoalMaptip();
   HIT_CHECK check;
@@ -57,6 +59,7 @@ void Tori::Update(void){
 
     if (motion_timer_ >= animation_time_){
       motion_timer_ = -animation_time_;
+      ++anim_cnt_;
     }
     else if (motion_timer_ == 0){
       move_speed_ = kFlyToTopSpeed;
@@ -77,6 +80,10 @@ void Tori::Update(void){
       hit_flag_ = true;
       p_texture_animation_->SetAnimation(ANIMATION_TORI_HAPPY);
     }
+  }
+
+  if (anim_cnt_ > 2){
+    end_flag_ = true;
   }
 }
 
