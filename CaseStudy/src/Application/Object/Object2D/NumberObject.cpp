@@ -35,8 +35,8 @@
 // ƒOƒ[ƒoƒ‹•Ï”:
 //******************************************************************************
 static const char *s_NumberData[] = {
-    "data/Texture/number_simple.png" ,
-    "data/Texture/number_simple.png",
+	"data/Texture/figure_all.png",
+	"data/Texture/figure_all.png",
 };
 
 //******************************************************************************

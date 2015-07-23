@@ -1,50 +1,53 @@
 //******************************************************************************
 //
-// SceneTitle  [SceneTitle.h]
+// GamePauseWindow  [GamePauseWindow.h]
 // Author  :  SHOHEI MATSUMOTO
-// 更新日  :  2015/06/26
+// 更新日  :  2015/07/07
 //
 //******************************************************************************
 //******************************************************************************
 // インクルードガード
 //******************************************************************************
-#ifndef _SCENETITLE_H_
-#define _SCENETITLE_H_
+#ifndef _GAMEPAUSEWINDOW_H_
+#define _GAMEPAUSEWINDOW_H_
 
 //******************************************************************************
 // インクルードファイル
 //******************************************************************************
-#include "Framework/Scene/Scene.h"
+#include "Framework/Scene/SceneManager.h"
 
 //******************************************************************************
 // クラス定義
 //******************************************************************************
-class BackGroundManager;
-class StartSymbol;
-class TitleCharBase;
-class TitleWindow;
-class SceneTitle : public Scene {
+class Char;
+class GameCursor;
+class TitleWindow{
+    // enum ======================================
+public:
+    // modemanaged
+    typedef enum{
+        STAGE_SELECT = 0,
+        TUTORIAL ,
+        MAX
+    }Title_Char;
+
 public:
     // ctor/dtor
-    SceneTitle();
-    virtual ~SceneTitle();
+    TitleWindow();
+    virtual ~TitleWindow();
 
     // method
-    void Update(SceneManager* pSceneManager, float elapsedTime) override;
-    void Draw(void) override;
+    void Update(SceneManager* p_scene_manager, const float elapsed_time);
+    void Draw(void);
+
+    // get
+    GameCursor* GetGameCursor(void){ return p_game_cursor_; }
 
     // set
-    void End(void) { is_end_ = true; }
 
 private:
-    // property
-    bool is_end_;
-
-    TitleCharBase* p_title_char_base;
-    StartSymbol* p_start_symbol_;
-    BackGroundManager* p_background_manager_;
-    TitleWindow *p_title_window;
-    bool is_push_title_;
+    Char** p_char_;
+    GameCursor* p_game_cursor_;
 };
 
 #endif

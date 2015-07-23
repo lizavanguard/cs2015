@@ -34,7 +34,8 @@
 #include "Application/Object/Sang/Butterfly.h"
 #include "Application/Object/Sang/Flower.h"
 #include "Application/Tutorial/SceneTutorialFactory.h"
-#include "Application\GamePause\GamePause.h"
+#include "Application/GamePause/GamePause.h"
+#include "Application/Navi/NaviManager.h"
 
 #include "Application/Navi/NaviManager.h"
 
@@ -134,7 +135,7 @@ void SceneGame::Update(SceneManager* p_scene_manager, const float elapsed_time) 
     // ’¹XV
     p_tori_->Update();
     if (p_tori_->GetHitCheck()){
-      PersistentValue::Instance().SetData("Score", 10);
+      PersistentValue::Instance().SetData("Score", p_timer_->GetValue());
       SceneResultFactory* pResultSceneFactory = new SceneResultFactory();
       p_scene_manager->PushNextSceneFactory(pResultSceneFactory);
       return;
@@ -167,22 +168,10 @@ void SceneGame::Update(SceneManager* p_scene_manager, const float elapsed_time) 
     // Stage x Player's boro
     p_collision_->CollideStageToPlayersGimmick();
 
-    if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_1)) {
-      p_tension_gauge_->IncreaseTension();
-    }
-    if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_2)) {
-      p_tension_gauge_->CoolDown();
-    }
     p_navimanager_->Update();
   }
 
   p_game_pause_->Update(p_scene_manager, elapsed_time, p_game_pause_);
-
-  // TutorialScene
-  if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_T)) {
-    SceneTutorialFactory* pTutorialSceneFactory = new SceneTutorialFactory();
-    p_scene_manager->PushNextSceneFactory(pTutorialSceneFactory);
-  }
 
   if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_3)) {
     EffecManagerSingleton::Instance().Create(EffectManager::EFFECTTYPE_KIRAKIRA, D3DXVECTOR2(100, -100), D3DXVECTOR2(5, 5), 1.0f);
