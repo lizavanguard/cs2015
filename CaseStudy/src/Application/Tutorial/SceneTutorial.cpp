@@ -109,11 +109,20 @@ void SceneTutorial::Update(SceneManager* p_scene_manager, const float elapsed_ti
   // TutorialEvent
   p_tutorial_event_->Update();
 
+#if _DEBUG
+  // Next TitleScene
+  if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_T)) {
+    PersistentValue::Instance().SetData("Score", 600);
+    SceneResultFactory* pResultSceneFactory = new SceneResultFactory();
+    p_scene_manager->PushNextSceneFactory(pResultSceneFactory);
+  }
+#endif
+
   // GAME
   // ’¹XV
   p_tori_->Update();
   if (p_tori_->GetHitCheck()){
-    PersistentValue::Instance().SetData("Score", 10);
+    PersistentValue::Instance().SetData("Score", 600);
     SceneResultFactory* pResultSceneFactory = new SceneResultFactory();
     p_scene_manager->PushNextSceneFactory(pResultSceneFactory);
     return;
@@ -139,14 +148,6 @@ void SceneTutorial::Update(SceneManager* p_scene_manager, const float elapsed_ti
 
   // Stage x Player's boro
   p_collision_->CollideStageToPlayersGimmick();
-
-
-  // Next TitleScene
-  if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_T)) {
-    SceneGameFactory* pGameSceneFactory = new SceneGameFactory();
-    p_scene_manager->PushNextSceneFactory(pGameSceneFactory);
-  }
-
 }
 
 
@@ -157,7 +158,6 @@ void SceneTutorial::Draw(void) {
   p_camera->Set();
   SetMatrixViewProjectionViewport(p_camera->GetMatrixViewProjectionViewPort());
 
-  //p_background_->Draw();
   p_tutorial_backGround_->Draw();
 
   p_stage_->Draw();

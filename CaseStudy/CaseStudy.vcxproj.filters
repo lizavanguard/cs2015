@@ -213,6 +213,9 @@
     <ClCompile Include="src\Application\Tutorial\TutorialBackGround.cpp">
       <Filter>Application\Tutorial</Filter>
     </ClCompile>
+    <ClCompile Include="src\Application\Title\TitleWindow.cpp">
+      <Filter>Application\Title</Filter>
+    </ClCompile>
     <ClCompile Include="src\Application\Navi\NaviManager.cpp">
       <Filter>Application\Navi</Filter>
     </ClCompile>
@@ -327,7 +330,7 @@
       <UniqueIdentifier>{caa884c8-0192-43ad-98c0-14fe6ba0d922}</UniqueIdentifier>
     </Filter>
     <Filter Include="Application\Navi">
-      <UniqueIdentifier>{4b607d25-545d-4b82-8494-fe7e01259cc6}</UniqueIdentifier>
+      <UniqueIdentifier>{99530997-064a-4f20-b286-d6c8211f61d2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -613,6 +616,9 @@
     </ClInclude>
     <ClInclude Include="src\Framework\Utility\PersistentValue.h">
       <Filter>Framework\Utilty</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application\Title\TitleWindow.h">
+      <Filter>Application\Title</Filter>
     </ClInclude>
     <ClInclude Include="src\Application\Navi\NaviManager.h">
       <Filter>Application\Navi</Filter>

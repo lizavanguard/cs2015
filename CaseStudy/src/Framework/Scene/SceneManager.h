@@ -35,6 +35,7 @@ private:
   // property
   Scene* pCurScene_;
   SceneFactory* pNextSceneFactory_;
+  bool scene_change_flag_;
 };
 
 

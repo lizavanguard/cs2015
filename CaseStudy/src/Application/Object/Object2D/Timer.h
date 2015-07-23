@@ -24,9 +24,20 @@
 //******************************************************************************
 // マクロ定義
 //******************************************************************************
-#define TIMER_COUNT (99)
-#define MAX_FIGURE (2)
-#define FIGURE_DEFINE (10)
+namespace{
+    // 1分
+    static const int kOneMinute = 60;
+    // 何分か
+    static const int kMinuteNum = 10;
+    // 何秒か
+    static const int kSecondNum = 0;
+    // 何進数か
+    static const int kFigureDefine = 10;
+    // 何桁か
+    static const int kMaxFigure = 4;
+    // ゲームタイム
+    static const int kTimerCount = kMinuteNum * kOneMinute + kSecondNum;
+}
 
 //******************************************************************************
 // 構造体定義
@@ -37,6 +48,7 @@
 // クラス定義
 //******************************************************************************
 class NumberObject;
+class Object2D;
 class Timer{
   public:
   // modemanaged
@@ -54,7 +66,8 @@ public:
   void Draw(void);
   // reset
   void Reset(void);
-
+  // get
+  int GetValue(void){ return value_; }
 
 protected:
 
@@ -69,7 +82,8 @@ protected:
 private:
   int count_;
   int value_;
-  NumberObject **p_numberObject_;
+  NumberObject **p_number_object_;
+  Object2D *p_object2D_;
 };
 
 //******************************************************************************

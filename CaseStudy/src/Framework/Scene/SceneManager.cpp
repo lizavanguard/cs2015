@@ -21,7 +21,10 @@
 //------------------------------------------------
 // ctor
 //------------------------------------------------
-SceneManager::SceneManager(Scene* pFirstScene) : pCurScene_(pFirstScene), pNextSceneFactory_(nullptr) {
+SceneManager::SceneManager(Scene* pFirstScene) : pCurScene_(pFirstScene)
+    , pNextSceneFactory_(nullptr)
+    ,scene_change_flag_(false)
+{
 }
 
 
@@ -42,7 +45,9 @@ void SceneManager::Update(const float elapsedTime) {
   // ƒV[ƒ“‚ÌØ‚è‘Ö‚¦‚ðs‚¤‚±‚Æ‚É‚È‚é
   _ChangeScene();
 
-  pCurScene_->Update(this, elapsedTime);
+  if (!scene_change_flag_){
+    pCurScene_->Update(this, elapsedTime);
+  }
 }
 
 
@@ -60,6 +65,7 @@ void SceneManager::Draw(void) {
 void SceneManager::PushNextSceneFactory(SceneFactory* pNextSceneFactory) {
   pNextSceneFactory_ = pNextSceneFactory;
   SetFade(FADE_OUT);
+  scene_change_flag_ = true;
 }
 
 //------------------------------------------------
@@ -103,6 +109,7 @@ void SceneManager::_ChangeScene(void) {
     SafeDelete(pNextSceneFactory_);
 
     isFadeOut = false;
+    scene_change_flag_ = false;
     return;
   }
 }

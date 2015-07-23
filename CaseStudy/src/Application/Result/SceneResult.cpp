@@ -14,7 +14,7 @@
 #include "Application/Game/SceneGameFactory.h"
 #include "Framework/Input/InputManagerHolder.h"
 #include "Framework/Input/InputKeyboard.h"
-#include "Framework/Input/InputXInput.h"
+#include "Framework\Input\InputDevice.h"
 #include "Framework/Scene/SceneManager.h"
 #include "Framework/Sound/sound.h"
 #include "Framework/Utility/PersistentValue.h"
@@ -45,11 +45,11 @@ SceneResult::SceneResult()
     , p_object2D(nullptr)
     , p_start_symbol_(nullptr){
 
-    p_object2D = new Object2D(D3DXVECTOR3(300.0f, 100.0f, 0.0f), D3DXVECTOR2(256.0f, 100.0f), "data/Texture/title.jpg");
+    p_object2D = new Object2D(D3DXVECTOR3(300.0f, 100.0f, 0.0f), D3DXVECTOR2(256.0f, 100.0f), "data/Texture/result_message.png");
 
-    p_result_time = new ResultTime(D3DXVECTOR3(300.0f, 250.0f, 0.0f), 0.0f, D3DXVECTOR2(150.0f, 100.0f) , TIMER);
+    int resultTime = PersistentValue::Instance().GetData("Score");
 
-    int a = PersistentValue::Instance().GetData("Score");
+    p_result_time = new ResultTime(D3DXVECTOR3(300.0f, 250.0f, 0.0f), 0.0f, D3DXVECTOR2(150.0f, 100.0f), resultTime,TIMER);
 
     p_start_symbol_ = new StartSymbol(D3DXVECTOR3(300.0f, 600.0f, 0.0f), 0.0f, D3DXVECTOR2(256.0f, 100.0f));
 
@@ -64,11 +64,11 @@ SceneResult::SceneResult()
 // XV“ú  :  2015/06/26
 //==============================================================================
 SceneResult::~SceneResult() {
-  StopSound(SOUND_LABEL_BGM_RESULT);
+    StopSound(SOUND_LABEL_BGM_RESULT);
 
-  SafeDelete(p_result_time);
-  SafeDelete(p_start_symbol_);
-  SafeDelete(p_object2D);
+    SafeDelete(p_result_time);
+    SafeDelete(p_start_symbol_);
+    SafeDelete(p_object2D);
 }
 
 
@@ -85,9 +85,9 @@ void SceneResult::Update(SceneManager* p_scene_manager, const float elapsed_time
     p_start_symbol_->Update();
 
   // Next TitleScene
-  auto& pKeyboard = InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard();
-  auto& pJoypad = InputManagerHolder::Instance().GetInputManager().GetPrimaryDevice();
-  if (pJoypad.IsTrigger(InputDevice::Pads::PAD_A) || pKeyboard.IsTrigger(DIK_RETURN)) {
+  if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_RETURN)||
+      InputManagerHolder::Instance().GetInputManager().GetPrimaryDevice().IsTrigger(InputDevice::Pads::PAD_START) ||
+      InputManagerHolder::Instance().GetInputManager().GetPrimaryDevice().IsTrigger(InputDevice::Pads::PAD_A)) {
       SceneTitleFactory* pTitleSceneFactory = new SceneTitleFactory();
       p_scene_manager->PushNextSceneFactory(pTitleSceneFactory);
   }
