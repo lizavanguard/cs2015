@@ -36,8 +36,8 @@ const unsigned int kBGMax = sizeof(kBackGroundData) / sizeof(*kBackGroundData);
 // ctor
 //------------------------------------------------
 BackGroundManager::BackGroundManager() {
-  back_ground_top_ = new BackGround("data/Texture/bg_sky1.png", 0.00025f);
-  back_ground_bottom_ = new BackGround("data/Texture/bg_sky2.png", 0.001f);
+  back_ground_top_ = new BackGround("data/Texture/bg_sky1.jpg", 0.00025f);
+  back_ground_bottom_ = new BackGround("data/Texture/bg_sky2.jpg", 0.001f);
 }
 
 //------------------------------------------------
