@@ -18,7 +18,7 @@
 class TutorialBackGround : public Object {
 public:
   // ctor
-	TutorialBackGround(const D3DXVECTOR3& pos, const D3DXVECTOR2& size, const char* p_texture_filename);
+  TutorialBackGround(const D3DXVECTOR3& pos, const D3DXVECTOR2& size, const char* p_texture_filename);
 
   // dtor
   virtual ~TutorialBackGround();

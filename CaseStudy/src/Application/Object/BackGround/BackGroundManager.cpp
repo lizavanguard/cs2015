@@ -22,8 +22,8 @@ const struct {
   char* p_texturename;
   float scroll_speed;
 } kBackGroundData[] = {
-  {"data/Texture/bg_sky1.png", 0.00025f},
-  {"data/Texture/bg_sky2.png", 0.001f},
+  {"data/Texture/bg_sky1.jpg", 0.00025f},
+  {"data/Texture/bg_sky2.jpg", 0.001f},
 };
 const unsigned int kBGMax = sizeof(kBackGroundData) / sizeof(*kBackGroundData);
 
