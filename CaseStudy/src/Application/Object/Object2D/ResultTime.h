@@ -53,7 +53,8 @@ public:
   void Draw(void);
   // reset
   void Reset(void);
-
+  // get
+  bool GetEnd(void){ return end_flag_; }
 
 protected:
 
@@ -71,6 +72,7 @@ private:
   int timer_value_;
   NumberObject **p_number_object_;
   Object2D *p_object2D_;
+  bool end_flag_;
 };
 
 //******************************************************************************

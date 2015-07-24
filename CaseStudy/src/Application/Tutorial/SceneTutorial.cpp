@@ -11,6 +11,7 @@
 #include "Framework/DrawDebugPrimitive/DrawPrimitive.h"
 #include "Framework/GameManager/GameManager.h"
 #include "Framework/Input/InputManagerHolder.h"
+#include "Framework\Input\InputDevice.h"
 #include "Framework/Input/InputKeyboard.h"
 #include "Framework/Sound/sound.h"
 #include "Framework/Utility/PersistentValue.h"
@@ -109,20 +110,19 @@ void SceneTutorial::Update(SceneManager* p_scene_manager, const float elapsed_ti
   // TutorialEvent
   p_tutorial_event_->Update();
 
-#if _DEBUG
   // Next TitleScene
-  if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_T)) {
+  if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_T) ||
+      InputManagerHolder::Instance().GetInputManager().GetPrimaryDevice().IsTrigger(InputDevice::Pads::PAD_START)) {
     PersistentValue::Instance().SetData("Score", 600);
     SceneResultFactory* pResultSceneFactory = new SceneResultFactory();
     p_scene_manager->PushNextSceneFactory(pResultSceneFactory);
   }
-#endif
 
   // GAME
   // ’¹XV
   p_tori_->Update();
   if (p_tori_->GetHitCheck()){
-    if (p_tori_->GetEndFlag()){
+    if (p_tori_->GetHitCheck()){
       PersistentValue::Instance().SetData("Score", 600);
       SceneResultFactory* pResultSceneFactory = new SceneResultFactory();
       p_scene_manager->PushNextSceneFactory(pResultSceneFactory);

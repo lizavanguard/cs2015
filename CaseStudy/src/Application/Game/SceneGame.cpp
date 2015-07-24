@@ -137,7 +137,7 @@ void SceneGame::Update(SceneManager* p_scene_manager, const float elapsed_time) 
     // GAME
     // ’¹XV
     p_tori_->Update();
-    if (p_tori_->GetEndFlag()){
+    if (p_tori_->GetHitCheck()){
       p_camera_->CallAlways(p_uriel_->GetPos());
       if (p_tori_->GetEndFlag()){
         PersistentValue::Instance().SetData("Score", p_timer_->GetValue());

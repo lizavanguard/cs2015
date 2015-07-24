@@ -110,11 +110,11 @@ void GameCursor::_ReactInput(void) {
     is_just_canceled_ = true;
   }
 
-  if (pJoypad.IsTrigger(InputDevice::Pads::PAD_RIGHT) || pJoypad.IsTrigger(InputDevice::Pads::PAD_LTHUMB_RIGHT)) {
+  if (pJoypad.IsTrigger(InputDevice::Pads::PAD_RIGHT) || pJoypad.IsTrigger(InputDevice::Pads::PAD_LTHUMB_RIGHT) || pJoypad.IsTrigger(InputDevice::Pads::PAD_UP)) {
     p_cursor_value_->Increment();
     is_just_moved_ = true;
   }
-  if (pJoypad.IsTrigger(InputDevice::Pads::PAD_LEFT) || pJoypad.IsTrigger(InputDevice::Pads::PAD_LTHUMB_LEFT)) {
+  if (pJoypad.IsTrigger(InputDevice::Pads::PAD_LEFT) || pJoypad.IsTrigger(InputDevice::Pads::PAD_LTHUMB_LEFT) || pJoypad.IsTrigger(InputDevice::Pads::PAD_DOWN)) {
     p_cursor_value_->Decrement();
     is_just_moved_ = true;
   }
@@ -130,11 +130,11 @@ void GameCursor::_ReactInput(void) {
     is_just_canceled_ = true;
   }
 
-  if (keyboard.IsTrigger(DIK_RIGHT)) {
+  if (keyboard.IsTrigger(DIK_RIGHT) || (keyboard.IsTrigger(DIK_UP))) {
     p_cursor_value_->Increment();
     is_just_moved_ = true;
   }
-  if (keyboard.IsTrigger(DIK_LEFT)) {
+  if (keyboard.IsTrigger(DIK_LEFT) || (keyboard.IsTrigger(DIK_DOWN))) {
     p_cursor_value_->Decrement();
     is_just_moved_ = true;
   }

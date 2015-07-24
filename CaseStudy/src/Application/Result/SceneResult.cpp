@@ -85,16 +85,21 @@ SceneResult::~SceneResult() {
 //==============================================================================
 void SceneResult::Update(SceneManager* p_scene_manager, const float elapsed_time) {
   p_background_manager_->Update();
-  p_result_time->Update();
- 
-  p_start_symbol_->Update();
 
-  // Next TitleScene
-  if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_RETURN)||
-    InputManagerHolder::Instance().GetInputManager().GetPrimaryDevice().IsTrigger(InputDevice::Pads::PAD_START) ||
-    InputManagerHolder::Instance().GetInputManager().GetPrimaryDevice().IsTrigger(InputDevice::Pads::PAD_A)) {
-    SceneTitleFactory* pTitleSceneFactory = new SceneTitleFactory();
-    p_scene_manager->PushNextSceneFactory(pTitleSceneFactory);
+  if (p_result_time->GetEnd()){
+    // Next TitleScene
+    if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_RETURN)||
+      InputManagerHolder::Instance().GetInputManager().GetPrimaryDevice().IsTrigger(InputDevice::Pads::PAD_START) ||
+      InputManagerHolder::Instance().GetInputManager().GetPrimaryDevice().IsTrigger(InputDevice::Pads::PAD_A)) {
+      SceneTitleFactory* pTitleSceneFactory = new SceneTitleFactory();
+      p_scene_manager->PushNextSceneFactory(pTitleSceneFactory);
+    }
+  }
+
+  p_result_time->Update();
+
+  if (p_result_time->GetEnd()){
+    p_start_symbol_->Update();
   }
 }
 
@@ -111,7 +116,9 @@ void SceneResult::Draw(void) {
 
   p_result_time->Draw();
 
-  p_start_symbol_->Draw();
+  if (p_result_time->GetEnd()){
+    p_start_symbol_->Draw();
+  }
 
   p_object2D->Draw();
 }

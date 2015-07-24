@@ -12,6 +12,9 @@
 #include "Framework/DirectXHelper/DeviceHolder.h"
 #include "Framework/DirectXHelper/DirectXConst.h"
 #include "Framework/Texture/TextureManagerHolder.h"
+#include "Framework/Input/InputManagerHolder.h"
+#include "Framework\Input\InputDevice.h"
+#include "Framework/Input/InputKeyboard.h"
 
 #include "Object2D.h"
 #include "ResultTime.h"
@@ -57,6 +60,7 @@ ResultTime::ResultTime(const D3DXVECTOR3 &pos, const float &rot, const D3DXVECTO
   value_ = 0;
   count_ = 0;
   timer_value_ = value;
+  end_flag_ = false;
 
   p_number_object_ = new NumberObject *[kMaxFigure];
 
@@ -100,15 +104,24 @@ ResultTime::~ResultTime(void){
 // 更新日  :  2015/07/14
 //==============================================================================
 void ResultTime::Update(){
-  // 一定時間が立ったらタイムを表示する
-  if (count_ > kCountMax){
+  if (!end_flag_){
+    // 一定時間が立ったらタイムを表示する
+    if (count_ > kCountMax){
+        value_ = timer_value_;
+        end_flag_ = true;
+    }
+    // 適当に値を動かす
+    else{
+        value_ += 2121;
+        ++count_;
+    }
+    if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_RETURN) || 
+      InputManagerHolder::Instance().GetInputManager().GetPrimaryDevice().IsTrigger(InputDevice::Pads::PAD_A)){
       value_ = timer_value_;
+      end_flag_ = true;
+    }
   }
-  // 適当に値を動かす
-  else{
-      value_ += 2121;
-      ++count_;
-  }
+
   if (value_ > kCountLimit)
       value_ -= kCountLimit;
   // 時間変数

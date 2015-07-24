@@ -113,7 +113,7 @@ void TitleWindow::Update(SceneManager* p_scene_manager, const float elapsed_time
 
     auto& keyboard = InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard();
     auto& pJoypad = InputManagerHolder::Instance().GetInputManager().GetPrimaryDevice();
-    if (keyboard.IsTrigger(DIK_RETURN) || pJoypad.IsRelease(InputDevice::Pads::PAD_A)) {
+    if (keyboard.IsTrigger(DIK_RETURN) || pJoypad.IsTrigger(InputDevice::Pads::PAD_A)) {
         if (index == STAGE_SELECT)
             p_scene_manager->PushNextSceneFactory(new SceneStageSelectFactory());
         else if (index == TUTORIAL)
