@@ -21,6 +21,13 @@ class WrapValue;
 //--=----=----=----=----=----=----=----=----=----=----=----=----=----=----=----=
 class GameCursor {
 public:
+  typedef enum{
+    CONTROL_MODE_TITLE = 0,
+    CONTROL_MODE_STAGE_SELECT,
+    CONTROL_MODE_GAME_PAUSE,
+    CONTROL_MODE_DEFAULT,
+    CONTROL_MODE_MAX
+  }CONTROL_MODE;
   // alias
   typedef std::vector<D3DXVECTOR3> PositionContainer;
 
@@ -30,7 +37,8 @@ public:
              int decrement_key,
              int enter_key,
              int cancel_key,
-             const PositionContainer& position_list);
+             const PositionContainer& position_list,
+             CONTROL_MODE control_mode);
 
   // dtor
   ~GameCursor();
@@ -64,4 +72,5 @@ private:
   bool is_just_entered_;
   bool is_just_canceled_;
   bool is_just_moved_;
+  CONTROL_MODE control_mode_;
 };

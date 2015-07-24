@@ -39,7 +39,8 @@ GameCursor::GameCursor(const D3DXVECTOR2& size,
                        const int decrement_key,
                        const int enter_key,
                        const int cancel_key,
-                       const PositionContainer& position_list)
+                       const PositionContainer& position_list,
+                       CONTROL_MODE control_mode)
     : increment_key_(increment_key)
     , decrement_key_(decrement_key)
     , enter_key_(enter_key)
@@ -50,7 +51,8 @@ GameCursor::GameCursor(const D3DXVECTOR2& size,
     , old_cursor_index_(0)
     , is_just_entered_(false)
     , is_just_canceled_(false)
-    , is_just_moved_(false) {
+    , is_just_moved_(false)
+    , control_mode_(control_mode){
   p_cursor_ = new Cursor(position_list_[0], size, kTextureFilename, kPushedTextureFilename);
   p_cursor_value_ = new WrapValue(position_list_.size());
 }
@@ -99,6 +101,7 @@ void GameCursor::_ReactInput(void) {
 
   const auto& keyboard = InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard();
   auto& pJoypad = InputManagerHolder::Instance().GetInputManager().GetPrimaryDevice();
+
   if (pJoypad.IsTrigger(InputDevice::Pads::PAD_A)) {
     p_cursor_->Pushed();
     PlaySound(SOUND_LABEL_SE_DECISION);
@@ -110,13 +113,33 @@ void GameCursor::_ReactInput(void) {
     is_just_canceled_ = true;
   }
 
-  if (pJoypad.IsTrigger(InputDevice::Pads::PAD_LTHUMB_RIGHT) || pJoypad.IsTrigger(InputDevice::Pads::PAD_LTHUMB_DOWN)) {
-    p_cursor_value_->Increment();
-    is_just_moved_ = true;
-  }
-  if (pJoypad.IsTrigger(InputDevice::Pads::PAD_LTHUMB_LEFT) || pJoypad.IsTrigger(InputDevice::Pads::PAD_LTHUMB_UP)) {
-    p_cursor_value_->Decrement();
-    is_just_moved_ = true;
+  if (control_mode_ == CONTROL_MODE_TITLE || control_mode_ == CONTROL_MODE_GAME_PAUSE){
+    if (pJoypad.IsTrigger(InputDevice::Pads::PAD_LTHUMB_DOWN)) {
+      p_cursor_value_->Increment();
+      is_just_moved_ = true;
+    }
+    if (pJoypad.IsTrigger(InputDevice::Pads::PAD_LTHUMB_UP)) {
+      p_cursor_value_->Decrement();
+      is_just_moved_ = true;
+    }
+  } else if (control_mode_ == CONTROL_MODE_STAGE_SELECT){
+    if (pJoypad.IsTrigger(InputDevice::Pads::PAD_LTHUMB_RIGHT)) {
+      p_cursor_value_->Increment();
+      is_just_moved_ = true;
+    }
+    if (pJoypad.IsTrigger(InputDevice::Pads::PAD_LTHUMB_LEFT)) {
+      p_cursor_value_->Decrement();
+      is_just_moved_ = true;
+    }
+  } else {
+    if (pJoypad.IsTrigger(InputDevice::Pads::PAD_LTHUMB_RIGHT)) {
+      p_cursor_value_->Increment();
+      is_just_moved_ = true;
+    }
+    if (pJoypad.IsTrigger(InputDevice::Pads::PAD_LTHUMB_LEFT)) {
+      p_cursor_value_->Decrement();
+      is_just_moved_ = true;
+    }
   }
 
   if (keyboard.IsTrigger(DIK_RETURN)) {

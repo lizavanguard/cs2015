@@ -77,7 +77,7 @@ GamePauseWindow::GamePauseWindow()
   for (int thumb_count = 0; thumb_count < MAX; ++thumb_count) {
       position_list.push_back(kCharPos[thumb_count]);
   }
-  p_game_cursor_ = new GameCursor(kCursorSize, DIK_RIGHT, DIK_LEFT, DIK_RETURN, DIK_BACKSPACE, position_list);
+  p_game_cursor_ = new GameCursor(kCursorSize, DIK_RIGHT, DIK_LEFT, DIK_RETURN, DIK_BACKSPACE, position_list,GameCursor::CONTROL_MODE_GAME_PAUSE);
 }
 
 //==============================================================================
