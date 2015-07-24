@@ -14,6 +14,7 @@
 #include "Application/Game/SceneGameFactory.h"
 #include "Framework/Input/InputManagerHolder.h"
 #include "Framework/Input/InputKeyboard.h"
+#include "Framework/Input/InputXInput.h"
 
 #include "Application/GamePause/GamePauseWindow.h"
 
@@ -64,12 +65,13 @@ GamePause::~GamePause() {
 // 更新日  :  2015/07/07
 //==============================================================================
 void GamePause::Update(SceneManager* p_scene_manager, const float elapsed_time, GamePause* p_game_pause_) {
+  auto& pJoypad = InputManagerHolder::Instance().GetInputManager().GetPrimaryDevice();
   // タイトル・ステージセレクト・リトライ・戻る
   if (is_pause_){
       p_game_pause_window_->Update(p_scene_manager, elapsed_time, p_game_pause_);
     // Next TitleScene
   }
-  if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_P)) {
+  if (pJoypad.IsTrigger(InputDevice::Pads::PAD_START) || InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_P)) {
       if (is_pause_)
         SetPause(false);
       else

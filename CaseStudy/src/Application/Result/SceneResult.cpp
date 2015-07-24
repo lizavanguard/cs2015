@@ -22,7 +22,7 @@
 #include "Application/Object/Object2D/Timer.h"
 #include "Application/Object/Object2D/ResultTime.h"
 #include "Application\Object\Object2D\StartSymbol.h"
-
+#include "Application\Object\BackGround\BackGroundManager.h"
 
 //******************************************************************************
 // 定数定義
@@ -43,17 +43,20 @@ SceneResult::SceneResult()
     : is_end_(false)
     , p_result_time(nullptr)
     , p_object2D(nullptr)
-    , p_start_symbol_(nullptr){
+    , p_start_symbol_(nullptr)
+    , p_background_manager_(nullptr){
 
-    p_object2D = new Object2D(D3DXVECTOR3(300.0f, 100.0f, 0.0f), D3DXVECTOR2(256.0f, 100.0f), "data/Texture/result_message.png");
+  p_background_manager_ = new BackGroundManager();
 
-    int resultTime = PersistentValue::Instance().GetData("Score");
+  p_object2D = new Object2D(D3DXVECTOR3(300.0f, 100.0f, 0.0f), D3DXVECTOR2(256.0f, 100.0f), "data/Texture/result_message.png");
 
-    p_result_time = new ResultTime(D3DXVECTOR3(300.0f, 250.0f, 0.0f), 0.0f, D3DXVECTOR2(150.0f, 100.0f), resultTime,TIMER);
+  int resultTime = PersistentValue::Instance().GetData("Score");
 
-    p_start_symbol_ = new StartSymbol(D3DXVECTOR3(300.0f, 600.0f, 0.0f), 0.0f, D3DXVECTOR2(256.0f, 100.0f));
+  p_result_time = new ResultTime(D3DXVECTOR3(300.0f, 250.0f, 0.0f), 0.0f, D3DXVECTOR2(150.0f, 100.0f), resultTime,TIMER);
 
-    PlaySound(SOUND_LABEL_BGM_RESULT);
+  p_start_symbol_ = new StartSymbol(D3DXVECTOR3(300.0f, 600.0f, 0.0f), 0.0f, D3DXVECTOR2(256.0f, 100.0f));
+
+  PlaySound(SOUND_LABEL_BGM_RESULT);
 }
 
 //==============================================================================
@@ -64,11 +67,12 @@ SceneResult::SceneResult()
 // 更新日  :  2015/06/26
 //==============================================================================
 SceneResult::~SceneResult() {
-    StopSound(SOUND_LABEL_BGM_RESULT);
+  StopSound(SOUND_LABEL_BGM_RESULT);
 
-    SafeDelete(p_result_time);
-    SafeDelete(p_start_symbol_);
-    SafeDelete(p_object2D);
+  SafeDelete(p_result_time);
+  SafeDelete(p_start_symbol_);
+  SafeDelete(p_background_manager_);
+  SafeDelete(p_object2D);
 }
 
 
@@ -80,16 +84,17 @@ SceneResult::~SceneResult() {
 // 更新日  :  2015/06/26
 //==============================================================================
 void SceneResult::Update(SceneManager* p_scene_manager, const float elapsed_time) {
-    p_result_time->Update();
-  
-    p_start_symbol_->Update();
+  p_background_manager_->Update();
+  p_result_time->Update();
+ 
+  p_start_symbol_->Update();
 
   // Next TitleScene
   if (InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard().IsTrigger(DIK_RETURN)||
-      InputManagerHolder::Instance().GetInputManager().GetPrimaryDevice().IsTrigger(InputDevice::Pads::PAD_START) ||
-      InputManagerHolder::Instance().GetInputManager().GetPrimaryDevice().IsTrigger(InputDevice::Pads::PAD_A)) {
-      SceneTitleFactory* pTitleSceneFactory = new SceneTitleFactory();
-      p_scene_manager->PushNextSceneFactory(pTitleSceneFactory);
+    InputManagerHolder::Instance().GetInputManager().GetPrimaryDevice().IsTrigger(InputDevice::Pads::PAD_START) ||
+    InputManagerHolder::Instance().GetInputManager().GetPrimaryDevice().IsTrigger(InputDevice::Pads::PAD_A)) {
+    SceneTitleFactory* pTitleSceneFactory = new SceneTitleFactory();
+    p_scene_manager->PushNextSceneFactory(pTitleSceneFactory);
   }
 }
 
@@ -102,11 +107,13 @@ void SceneResult::Update(SceneManager* p_scene_manager, const float elapsed_time
 // 更新日  :  2015/06/26
 //==============================================================================
 void SceneResult::Draw(void) {
-    p_result_time->Draw();
+  p_background_manager_->Draw();
 
-    p_start_symbol_->Draw();
+  p_result_time->Draw();
 
-    p_object2D->Draw();
+  p_start_symbol_->Draw();
+
+  p_object2D->Draw();
 }
 
 

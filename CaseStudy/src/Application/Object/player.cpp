@@ -83,25 +83,25 @@ void Player::Update(Uriel *uriel_){
   // ˆÚ“®
   if (!is_gimmick_ && !move_stop_flag_)
   {
-    if (pJoypad.IsPress(InputDevice::Pads::PAD_LTHUMB_UP) || pKeyboard.IsPress(DIK_W)) {
+    if (pJoypad.IsPress(InputDevice::Pads::PAD_LTHUMB_UP) || pJoypad.IsPress(InputDevice::Pads::PAD_UP) || pKeyboard.IsPress(DIK_W)) {
       pos_.y += kPlayerMoveSpeed;
       if (pos_.y + size_.y * 0.5f > stageSize_.y / 2.0f){
         pos_.y = stageSize_.y / 2.0f - size_.y * 0.5f;
       }
     }
-    if (pJoypad.IsPress(InputDevice::Pads::PAD_LTHUMB_RIGHT) || pKeyboard.IsPress(DIK_D)) {
+    if (pJoypad.IsPress(InputDevice::Pads::PAD_LTHUMB_RIGHT) || pJoypad.IsPress(InputDevice::Pads::PAD_RIGHT) || pKeyboard.IsPress(DIK_D)) {
       pos_.x += kPlayerMoveSpeed;
       if (pos_.x + size_.x * 0.5f > stageSize_.x / 2.0f){
         pos_.x = stageSize_.x / 2.0f - size_.x * 0.5f;
       }
     }
-    if (pJoypad.IsPress(InputDevice::Pads::PAD_LTHUMB_DOWN) || pKeyboard.IsPress(DIK_S)) {
+    if (pJoypad.IsPress(InputDevice::Pads::PAD_LTHUMB_DOWN) || pJoypad.IsPress(InputDevice::Pads::PAD_DOWN) || pKeyboard.IsPress(DIK_S)) {
       pos_.y -= kPlayerMoveSpeed;
       if (pos_.y - size_.y * 0.5f < -stageSize_.y / 2.0f){
         pos_.y = -stageSize_.y / 2.0f + size_.y * 0.5f;
       }
     }
-    if (pJoypad.IsPress(InputDevice::Pads::PAD_LTHUMB_LEFT) || pKeyboard.IsPress(DIK_A)) {
+    if (pJoypad.IsPress(InputDevice::Pads::PAD_LTHUMB_LEFT) || pJoypad.IsPress(InputDevice::Pads::PAD_LEFT) || pKeyboard.IsPress(DIK_A)) {
       pos_.x -= kPlayerMoveSpeed;
       if (pos_.x - size_.x * 0.5f < -stageSize_.x / 2.0f){
         pos_.x = -stageSize_.x / 2.0f + size_.x * 0.5f;

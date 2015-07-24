@@ -32,10 +32,13 @@ public:
 private:
   void _ChangeScene(void);
 
+  static const int kFadeWaitTime = 2; // フェードの最大待ち時間(これだけ待ってフェードが終了しないなら強制的に次のシーンにする)
+
   // property
   Scene* pCurScene_;
   SceneFactory* pNextSceneFactory_;
   bool scene_change_flag_;
+  int fade_false_count_;
 };
 
 

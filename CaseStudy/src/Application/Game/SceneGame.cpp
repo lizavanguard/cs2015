@@ -128,11 +128,17 @@ void SceneGame::Update(SceneManager* p_scene_manager, const float elapsed_time) 
     p_ready_->Update();
     return;
   }
+
   if (!p_game_pause_->GetPause()){
+
+    // カメラ更新
+    p_camera_->Update();
+
     // GAME
     // 鳥更新
     p_tori_->Update();
     if (p_tori_->GetEndFlag()){
+      p_camera_->CallAlways(p_uriel_->GetPos());
       if (p_tori_->GetEndFlag()){
         PersistentValue::Instance().SetData("Score", p_timer_->GetValue());
         SceneResultFactory* pResultSceneFactory = new SceneResultFactory();
@@ -140,9 +146,6 @@ void SceneGame::Update(SceneManager* p_scene_manager, const float elapsed_time) 
       }
       return;
     }
-
-    // カメラ更新
-    p_camera_->Update();
 
     // タイマー更新
     p_timer_->Update();

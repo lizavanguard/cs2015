@@ -66,7 +66,9 @@ const char* Stage_Name[] =
 // ctor
 Stage::Stage()
   : map_width_(0)
-  , map_height_(0){
+  , map_height_(0)
+  , tumiki_number_(0)
+  , tumiki_id_max_(0){
   auto p_device = DeviceHolder::Instance().GetDevice();
 
   int no = 1;				// 変数
@@ -98,10 +100,41 @@ Stage::Stage()
     sprintf_s(filename,200, "data/Texture/map%03d.png", i);
     texture_id_[i] = TextureManagerHolder::Instance().GetTextureManager().LoadTexture(filename);
   }
-  tumiki_id_ = TextureManagerHolder::Instance().GetTextureManager().LoadTexture("data/Texture/tumiki000.png");
-  SelectStage(0);
 
   free(filename);
+
+  // 積み木
+  no = 1;
+  filename = (char *)malloc(200);
+  sprintf_s(filename,200, "data/Texture/action_block%02d.png", no);
+  while (1)
+  {
+    fopen_s(&fp,filename, "r");
+    if (fp == NULL)
+    {
+      //ファイルはねえよ！
+      break;
+    }else
+    {
+      //ファイルはあるよ!次だ！次っ！
+      no++;
+      memset(filename, 0, 200);
+      sprintf_s(filename,200, "data/Texture/action_block%02d.png", no);
+      fclose(fp);
+    }
+  }
+  tumiki_id_ = new int[no - 1];
+  tumiki_id_max_ = no - 1;
+  for (int i = 1; i < no;i++)
+  {
+    memset(filename, 0, 200);
+    sprintf_s(filename,200, "data/Texture/action_block%02d.png", i);
+    tumiki_id_[i - 1] = TextureManagerHolder::Instance().GetTextureManager().LoadTexture(filename);
+  }
+
+  free(filename);
+
+  SelectStage(0);
 }
 
 // dtor
@@ -109,6 +142,7 @@ Stage::~Stage() {
   delete[] stage_;
   delete[] mapdata_;
   delete[] texture_id_;
+  delete[] tumiki_id_;
 }
 //
 // ステージ読み込み
@@ -145,8 +179,8 @@ void Stage::SelectStage(int stage_no) {
     for(int width = 0; width < map_width_; width++)
     {
       fscanf_s(fp, "%2d,", &map_id);
-	  mapdata_[id].id_ = map_id;
-	  mapdata_[id].array_id_ = -1;
+      mapdata_[id].id_ = map_id;
+      mapdata_[id].array_id_ = -1;
       id++;
     }
     fscanf_s(fp, "\n");
@@ -193,7 +227,11 @@ void Stage::SelectStage(int stage_no) {
           flower->SetPos(stage_[id].pos_);
         }else if(typetumiki)
         {
-          stage_[id].texture_id_ = tumiki_id_;
+          stage_[id].texture_id_ = tumiki_id_[tumiki_number_];
+          tumiki_number_++;
+          if (tumiki_number_ >= tumiki_id_max_){
+             tumiki_number_ = 0;
+          }
         }else{
           stage_[id].texture_id_ = texture_id_[mapdata_[map_work].id_];
         }
@@ -487,7 +525,7 @@ void Stage::GimmickControll(int id)
     if (pJoypad.IsTrigger(InputDevice::Pads::PAD_Y) || pKeyboard.IsTrigger(DIK_G))
     {
       stage_[id].size_ = kGimmickfirst;
-      stage_[id].texture_id_ = tumiki_id_;
+      stage_[id].texture_id_ = tumiki_id_[tumiki_number_];
     }
     if (pJoypad.IsPress(InputDevice::Pads::PAD_Y) || pKeyboard.IsPress(DIK_G))
     {
@@ -505,6 +543,10 @@ void Stage::GimmickControll(int id)
         mapdata_[stage_[id].stage_data_id_].id_ = MAP_TYPE_GIMMICK_ON;
         stage_[id].size_  = kGimmickdefault;
         gimmick_create_ = true;
+        tumiki_number_++;
+        if (tumiki_number_ >= tumiki_id_max_){
+          tumiki_number_ = 0;
+        }
       }else{
         stage_[id].texture_id_ = texture_id_[MAP_TYPE_GIMMICK_OFF];
         stage_[id].stage_id_ = MAP_TYPE_GIMMICK_OFF;

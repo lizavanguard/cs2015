@@ -25,8 +25,8 @@ typedef struct STAGE_STR
 
 typedef struct STAGE_DATA
 {
-	int id_;
-	int array_id_;
+  int id_;
+  int array_id_;
 }STG_DATA;
 
 typedef struct HIT_CHECK_
@@ -102,7 +102,9 @@ private:
   void GimmickControll(int id);
 
   int* texture_id_;
-  int tumiki_id_;
+  int* tumiki_id_;
+  int tumiki_number_;
+  int tumiki_id_max_;
   int map_width_;
   int map_height_;
   int map_id_max;

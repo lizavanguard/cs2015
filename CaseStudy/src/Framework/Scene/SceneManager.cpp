@@ -24,6 +24,7 @@
 SceneManager::SceneManager(Scene* pFirstScene) : pCurScene_(pFirstScene)
     , pNextSceneFactory_(nullptr)
     ,scene_change_flag_(false)
+    , fade_false_count_(0)
 {
 }
 
@@ -66,6 +67,7 @@ void SceneManager::PushNextSceneFactory(SceneFactory* pNextSceneFactory) {
   pNextSceneFactory_ = pNextSceneFactory;
   SetFade(FADE_OUT);
   scene_change_flag_ = true;
+  fade_false_count_ = 0;
 }
 
 //------------------------------------------------
@@ -90,8 +92,15 @@ void SceneManager::_ChangeScene(void) {
   if (pNextSceneFactory_ != nullptr) {
     // フェードを開始
     bool finished = UpdateFade();
+
+    // フェードが長いので強制的に終了
+    if (fade_false_count_ >= kFadeWaitTime * 60){
+      finished = true;
+    }
+
     // if フェード中なら終了
     if (!finished) {
+      ++fade_false_count_;
       return;
     }
 

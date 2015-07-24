@@ -17,6 +17,7 @@
 #include "Framework/Input/InputManagerHolder.h"
 #include "Framework/Input/InputKeyboard.h"
 #include "Framework\Scene\SceneManager.h"
+#include "Framework/Input/InputXInput.h"
 
 #include "Application/Object/Object2D/WindowBack.h"
 #include "Application\Object\Object2D\Char.h"
@@ -111,7 +112,8 @@ void TitleWindow::Update(SceneManager* p_scene_manager, const float elapsed_time
     const int index = p_game_cursor_->GetCursorIndex();
 
     auto& keyboard = InputManagerHolder::Instance().GetInputManager().GetPrimaryKeyboard();
-    if (keyboard.IsTrigger(DIK_RETURN)) {
+    auto& pJoypad = InputManagerHolder::Instance().GetInputManager().GetPrimaryDevice();
+    if (keyboard.IsTrigger(DIK_RETURN) || pJoypad.IsRelease(InputDevice::Pads::PAD_A)) {
         if (index == STAGE_SELECT)
             p_scene_manager->PushNextSceneFactory(new SceneStageSelectFactory());
         else if (index == TUTORIAL)

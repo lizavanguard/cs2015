@@ -22,6 +22,7 @@
 class ResultTime;
 class StartSymbol;
 class Object2D;
+class BackGroundManager;
 class SceneResult : public Scene {
 public:
     // ctor/dtor
@@ -40,6 +41,7 @@ private:
     bool is_end_;
     ResultTime* p_result_time;
     StartSymbol* p_start_symbol_;
+	BackGroundManager* p_background_manager_;
     Object2D* p_object2D;
 };
 
