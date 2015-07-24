@@ -110,11 +110,11 @@ void GameCursor::_ReactInput(void) {
     is_just_canceled_ = true;
   }
 
-  if (pJoypad.IsTrigger(InputDevice::Pads::PAD_RIGHT) || pJoypad.IsTrigger(InputDevice::Pads::PAD_LTHUMB_RIGHT) || pJoypad.IsTrigger(InputDevice::Pads::PAD_DOWN)) {
+  if (pJoypad.IsTrigger(InputDevice::Pads::PAD_LTHUMB_RIGHT) || pJoypad.IsTrigger(InputDevice::Pads::PAD_LTHUMB_DOWN)) {
     p_cursor_value_->Increment();
     is_just_moved_ = true;
   }
-  if (pJoypad.IsTrigger(InputDevice::Pads::PAD_LEFT) || pJoypad.IsTrigger(InputDevice::Pads::PAD_LTHUMB_LEFT) || pJoypad.IsTrigger(InputDevice::Pads::PAD_UP)) {
+  if (pJoypad.IsTrigger(InputDevice::Pads::PAD_LTHUMB_LEFT) || pJoypad.IsTrigger(InputDevice::Pads::PAD_LTHUMB_UP)) {
     p_cursor_value_->Decrement();
     is_just_moved_ = true;
   }
