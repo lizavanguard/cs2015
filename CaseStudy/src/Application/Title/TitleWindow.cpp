@@ -34,14 +34,14 @@ namespace{
     const D3DXVECTOR3 kCharPos[] = { { kWindowWidth * 0.5f, kWindowHeight * 0.5f + 150.0f, 0.0f }, 
                                      { kWindowWidth * 0.5f, kWindowHeight * 0.5f + 270.0f, 0.0f },
                                };
-    const D3DXVECTOR2 kCharSize[] = { { 300.0f, 75.0f },
-                                    { 300.0f, 75.0f },
+    const D3DXVECTOR2 kCharSize[] = { { 400.0f, 100.0f },
+                                      { 400.0f, 100.0f },
                                 };
     const D3DXVECTOR3 kBoroPos[] = { { kWindowWidth * 0.5f + 200.0f, kWindowHeight * 0.5f + 150.0f, 0.0f },
                                      { kWindowWidth * 0.5f + 200.0f, kWindowHeight * 0.5f + 270.0f, 0.0f }
                                   };
 
-    const char* kPauseCharTextureFileName[] = { { "data/Texture/title_stageSelect.png"} ,
+    const char* kPauseCharTextureFileName[] = { { "data/Texture/stageSelect.png"} ,
                                                 { "data/Texture/title_tutorial.png" },
                                     };
 

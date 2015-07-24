@@ -50,7 +50,7 @@ SceneResult::SceneResult()
 
   p_background_manager_ = new BackGroundManager();
 
-  p_object2D = new Object2D(D3DXVECTOR3(300.0f, 100.0f, 0.0f), D3DXVECTOR2(256.0f, 100.0f), "data/Texture/result_message.png");
+  p_object2D = new Object2D(D3DXVECTOR3(300.0f, 100.0f, 0.0f), D3DXVECTOR2(500.0f, 150.0f), "data/Texture/result_message.png");
 
   p_time_up_ = new Object2D(D3DXVECTOR3(600.0f, 250.0f, 0.0f), D3DXVECTOR2(600.0f, 100.0f), "data/Texture/game_timeup.png");
 

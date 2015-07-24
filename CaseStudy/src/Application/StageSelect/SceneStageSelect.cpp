@@ -61,8 +61,8 @@ const char* kTextureFilenameBottom[] = {
 };
 
 const D3DXVECTOR3 kNameCenterPosition = {kWindowWidth * 0.5f, 150.0f, 0.0f};
-const D3DXVECTOR2 kNameSize = {400.0f, 100.0f};
-const char* kNameTextureFilename = "data/Texture/stageSelect_logo.png";
+const D3DXVECTOR2 kNameSize = {600.0f, 150.0f};
+const char* kNameTextureFilename = "data/Texture/stageSelect.png";
 
 const D3DXVECTOR2 kCursorSize = {100.0f, 100.0f};
 const D3DXVECTOR3 kCursorOffset = {90.0f, 90.0f, 0.0f};

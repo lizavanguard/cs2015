@@ -32,16 +32,15 @@
 namespace{
 
   const D3DXVECTOR3 kWinPos = { kWindowWidth * 0.5f, kWindowHeight * 0.5f + 20.0f, 0.0f };
-  const D3DXVECTOR2 kWinSize = { 500.0f, 765.0f };
+  const D3DXVECTOR2 kWinSize = { 650.0f, 765.0f };
 
   const D3DXVECTOR3 kPauseCharPos = { kWindowWidth * 0.5f, kWindowHeight * 0.5f - 275.0f , 0.0f};
   const D3DXVECTOR2 kPauseCharSize = { 250.0f , 120.0f};
 
-  const D3DXVECTOR3 kCharPos[] = { { kWindowWidth * 0.5f + 175.0f, kWindowHeight * 0.5f - 75.0f, 0.0f }, 
-      { kWindowWidth * 0.5f + 175.0f, kWindowHeight * 0.5f + 60.0f, 0.0f },
-      { kWindowWidth * 0.5f + 175.0f, kWindowHeight * 0.5f + 200.0f, 0.0f },
-      { kWindowWidth * 0.5f + 175.0f, kWindowHeight * 0.5f + 340.0f, 0.0f },
-                             };
+  const D3DXVECTOR3 kCharPos[] = { { kWindowWidth * 0.5f + 270.0f, kWindowHeight * 0.5f - 75.0f, 0.0f },
+                                   { kWindowWidth * 0.5f + 270.0f, kWindowHeight * 0.5f + 35.0f, 0.0f },
+                                   { kWindowWidth * 0.5f + 270.0f, kWindowHeight * 0.5f + 135.0f, 0.0f },
+                                   { kWindowWidth * 0.5f + 270.0f, kWindowHeight * 0.5f + 235.0f, 0.0f },};
   const D3DXVECTOR2 kCharSize[] = { { 300.0f, 100.0f },
                                   { 300.0f, 100.0f },
                                   { 300.0f, 100.0f },
