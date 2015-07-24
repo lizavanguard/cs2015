@@ -36,42 +36,30 @@ const unsigned int kBGMax = sizeof(kBackGroundData) / sizeof(*kBackGroundData);
 // ctor
 //------------------------------------------------
 BackGroundManager::BackGroundManager() {
-  for (int bg_count = 0; bg_count < kBGMax; ++bg_count) {
-    back_grounds_.push_back(
-      new BackGround(kBackGroundData[bg_count].p_texturename, kBackGroundData[bg_count].scroll_speed));
-  }
+  back_ground_top_ = new BackGround("data/Texture/bg_sky1.png", 0.00025f);
+  back_ground_bottom_ = new BackGround("data/Texture/bg_sky2.png", 0.001f);
 }
 
 //------------------------------------------------
 // dtor
 //------------------------------------------------
 BackGroundManager::~BackGroundManager() {
-  _ForEach([](BackGround* p_background) {
-    SafeDelete(p_background);
-  });
+  SafeDelete(back_ground_top_);
+  SafeDelete(back_ground_bottom_);
 }
 
 //------------------------------------------------
 // Update
 //------------------------------------------------
 void BackGroundManager::Update(void) {
-  _ForEach([](BackGround* p_background) {
-    p_background->Update();
-  });
+  back_ground_top_->Update();
+  back_ground_bottom_->Update();
 }
 
 //------------------------------------------------
 // Draw
 //------------------------------------------------
 void BackGroundManager::Draw(void) {
-  _ForEach([](BackGround* p_background) {
-    p_background->Draw();
-  });
-}
-
-//------------------------------------------------
-// internal for_each
-//------------------------------------------------
-void BackGroundManager::_ForEach(void (*function)(BackGround*)) {
-  std::for_each(back_grounds_.begin(), back_grounds_.end(), function);
+  back_ground_top_->Draw();
+  back_ground_bottom_->Draw();
 }

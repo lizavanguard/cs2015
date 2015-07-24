@@ -33,7 +33,7 @@ public:
   void Draw(void);
 
 private:
-  void _ForEach(void (*function)(BackGround*));
 
-  std::list<BackGround*> back_grounds_;
+  BackGround* back_ground_top_;
+  BackGround* back_ground_bottom_;
 };
