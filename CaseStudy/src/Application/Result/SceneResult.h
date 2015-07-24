@@ -41,8 +41,10 @@ private:
     bool is_end_;
     ResultTime* p_result_time;
     StartSymbol* p_start_symbol_;
-	BackGroundManager* p_background_manager_;
+    BackGroundManager* p_background_manager_;
     Object2D* p_object2D;
+    Object2D* p_time_up_;
+    bool time_up_;
 };
 
 #endif

@@ -49,6 +49,7 @@
 Timer::Timer(const D3DXVECTOR3 &pos, const float &rot, const D3DXVECTOR2 &size, NUMBER_TYPE type){
   value_ = kTimerCount;
   count_ = 0;
+  time_up_ = false;
 
   p_number_object_ = new NumberObject *[kMaxFigure];
   // 時間変数
@@ -109,13 +110,19 @@ Timer::~Timer(void){
 // 更新日  :  2015/06/16
 //==============================================================================
 void Timer::Update(){
+  if (time_up_){
+    return;
+  }
+
   ++count_;
   if ((count_ % 30) == 0)
   {
     --value_;
     // タイムリセット
-    if (value_ < 0)
-        value_ = kTimerCount;
+    if (value_ < 0){
+      value_ = 0;
+      time_up_ = true;
+    }
     count_ = 0;
   }
   int minuteTime = value_ / kOneMinute;

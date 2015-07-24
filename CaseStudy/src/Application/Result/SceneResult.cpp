@@ -44,13 +44,21 @@ SceneResult::SceneResult()
     , p_result_time(nullptr)
     , p_object2D(nullptr)
     , p_start_symbol_(nullptr)
-    , p_background_manager_(nullptr){
+    , p_background_manager_(nullptr)
+    , p_time_up_(nullptr)
+    ,time_up_(false){
 
   p_background_manager_ = new BackGroundManager();
 
   p_object2D = new Object2D(D3DXVECTOR3(300.0f, 100.0f, 0.0f), D3DXVECTOR2(256.0f, 100.0f), "data/Texture/result_message.png");
 
+  p_time_up_ = new Object2D(D3DXVECTOR3(600.0f, 250.0f, 0.0f), D3DXVECTOR2(600.0f, 100.0f), "data/Texture/game_timeup.png");
+
   int resultTime = PersistentValue::Instance().GetData("Score");
+
+  if (resultTime <= 0){
+    time_up_ = true;
+  }
 
   p_result_time = new ResultTime(D3DXVECTOR3(300.0f, 250.0f, 0.0f), 0.0f, D3DXVECTOR2(150.0f, 100.0f), resultTime,TIMER);
 
@@ -73,6 +81,7 @@ SceneResult::~SceneResult() {
   SafeDelete(p_start_symbol_);
   SafeDelete(p_background_manager_);
   SafeDelete(p_object2D);
+  SafeDelete(p_time_up_);
 }
 
 
@@ -98,7 +107,7 @@ void SceneResult::Update(SceneManager* p_scene_manager, const float elapsed_time
 
   p_result_time->Update();
 
-  if (p_result_time->GetEnd()){
+  if (p_result_time->GetEnd() || time_up_){
     p_start_symbol_->Update();
   }
 }
@@ -114,9 +123,13 @@ void SceneResult::Update(SceneManager* p_scene_manager, const float elapsed_time
 void SceneResult::Draw(void) {
   p_background_manager_->Draw();
 
-  p_result_time->Draw();
+  if (!time_up_){
+    p_result_time->Draw();
+  } else{
+    p_time_up_->Draw();
+  }
 
-  if (p_result_time->GetEnd()){
+  if (p_result_time->GetEnd() || time_up_){
     p_start_symbol_->Draw();
   }
 

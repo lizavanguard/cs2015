@@ -68,6 +68,8 @@ public:
   void Reset(void);
   // get
   int GetValue(void){ return value_; }
+  // ŠÔ‚ªI—¹‚µ‚½‚©
+  bool GetEnd(void){ return time_up_; }
 
 protected:
 
@@ -84,6 +86,7 @@ private:
   int value_;
   NumberObject **p_number_object_;
   Object2D *p_object2D_;
+  bool time_up_;
 };
 
 //******************************************************************************

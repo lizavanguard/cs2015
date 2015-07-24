@@ -145,6 +145,10 @@ void SceneGame::Update(SceneManager* p_scene_manager, const float elapsed_time) 
         p_scene_manager->PushNextSceneFactory(pResultSceneFactory);
       }
       return;
+    } else if (p_timer_->GetEnd()){
+      PersistentValue::Instance().SetData("Score", p_timer_->GetValue());
+      SceneResultFactory* pResultSceneFactory = new SceneResultFactory();
+      p_scene_manager->PushNextSceneFactory(pResultSceneFactory);
     }
 
     // タイマー更新
